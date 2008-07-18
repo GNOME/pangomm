@@ -1,5 +1,5 @@
 ## Copyright (c) 2001
-## The gtkmm development team.
+## The pangomm development team.
 ##
 ## **** Common rules for inclusion in Makefile.am ****
 ## Included from something/src/Makefile.am
@@ -33,7 +33,7 @@ files_stamp	= $(files_all_hg:%.hg=$(stamp_dir)/stamp-%)
 gmmproc_path = $(GMMPROC)
 gmmproc_dir = $(GMMPROC_DIR)
 
-# We use our own m4 and pm files as well as the ones installed by gtkmm:
+# We use our own m4 and pm files as well as the ones installed by pangomm:
 # Our override m4 include seems to need to be before the default one.
 gmmproc_args	= -I $(tools_dir_m4) --defs $(srcdir)
 run_gmmproc	= $(gmmproc_path) $(gmmproc_args)

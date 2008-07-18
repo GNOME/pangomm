@@ -3,7 +3,7 @@ SUBDIRS = images
 doxygen_configfile = Doxyfile
 doxygen_configfile_source = $(srcdir)/Doxyfile.in
 beautify_docs = @GMMPROC_DIR@/beautify_docs.pl
-devhelp_file = gtkmm-2.4.devhelp
+devhelp_file = pangomm-2.4.devhelp
 devhelp_stylesheet = doxygen_to_devhelp.xsl
 
 include $(top_srcdir)/docs/Makefile_web.am_fragment
@@ -12,8 +12,8 @@ web_path_reference = $(web_path_docs)reference
 hierarchy_files = widget_hierarchy.png widget_hierarchy.html widget_hierarchy.dia
 
 EXTRA_DIST = README Doxyfile.in \
-             gtkmm_header.html_fragment gtkmm_footer.html_fragment \
-             html gtkmm_doxygen_tags doxygen_to_devhelp.xsl $(devhelp_file) \
+             pangomm_header.html_fragment pangomm_footer.html_fragment \
+             html pangomm_doxygen_tags doxygen_to_devhelp.xsl $(devhelp_file) \
              $(hierarchy_files) \
              xml/index.xml #Just to satisfy the dependency when building from the tarball.
 
@@ -42,10 +42,10 @@ xml/index.xml: html/index.html
 $(devhelp_file): xml/index.xml $(devhelp_stylesheet)
 	xsltproc -o $@ $(devhelp_stylesheet) xml/index.xml
 
-gtkmm-reference-html.tar.gz: $(hierarchy_files) html/index.html
+pangomm-reference-html.tar.gz: $(hierarchy_files) html/index.html
 	tar cf - html | gzip -c --best >$@
 
-gtkmm-reference-html.tar.bz2: $(hierarchy_files) html/index.html
+pangomm-reference-html.tar.bz2: $(hierarchy_files) html/index.html
 	tar cf - html | bzip2 -c >$@
 
 post-html: html/index.html $(hierarchy_files)
@@ -54,16 +54,16 @@ post-html: html/index.html $(hierarchy_files)
 
 doc-clean: html-clean
 	-rm -rf xml
-	-rm -f gtkmm_doxygen_tags
+	-rm -f pangomm_doxygen_tags
 	-rm -f $(devhelp_file)  
-	-rm -f gtkmm-reference-html.tar.gz gtkmm-reference-html.tar.bz2
+	-rm -f pangomm-reference-html.tar.gz pangomm-reference-html.tar.bz2
 
 html-clean:
 	-rm -rf html
 
-referencetopdir = $(gtkmm_docdir)/reference
+referencetopdir = $(pangomm_docdir)/reference
 referencedir = $(referencetopdir)/html
-devhelpdir = $(datadir)/devhelp/books/gtkmm-2.4
+devhelpdir = $(datadir)/devhelp/books/pangomm-2.4
 
 hierarchy_to_install = widget_hierarchy.png widget_hierarchy.html
 

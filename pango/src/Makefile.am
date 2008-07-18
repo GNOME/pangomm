@@ -1,5 +1,5 @@
 ## Copyright (c) 2001
-## The gtkmm development team.
+## The pangomm development team.
 
 sublib_name = pangomm
 sublib_namespace = Pango

@@ -1,7 +1,7 @@
-web_host = gtkmm.org
-web_path_gtkmm = /home/murrayc/gtkmm.org/docs/gtkmm-2.4/
-#web_path_gtkmm = /home/groups/g/gt/gtkmm/htdocs/docs/gtkmm-2.4/
-web_path_docs = $(web_path_gtkmm)docs/
+web_host = pangomm.org
+web_path_pangomm = /home/murrayc/pangomm.org/docs/pangomm-2.4/
+#web_path_pangomm = /home/groups/g/gt/pangomm/htdocs/docs/pangomm-2.4/
+web_path_docs = $(web_path_pangomm)docs/
 
 #--delete and --delete-after are causing
 # "
@@ -13,5 +13,5 @@ web_path_docs = $(web_path_gtkmm)docs/
 #rsync_args = -vz --rsh ssh --delete --delete-after
 rsync_args = -vz --rsh ssh
 
-gtkmm_docdir = $(datadir)/doc/gtkmm-2.4/docs
+pangomm_docdir = $(datadir)/doc/pangomm-2.4/docs
 

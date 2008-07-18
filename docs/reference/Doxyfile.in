@@ -3,7 +3,7 @@
 #---------------------------------------------------------------------------
 # Project related configuration options
 #---------------------------------------------------------------------------
-PROJECT_NAME           = "gtkmm 2.4"
+PROJECT_NAME           = "pangomm 2.4"
 PROJECT_NUMBER         = 
 OUTPUT_DIRECTORY       = 
 CREATE_SUBDIRS         = NO
@@ -34,12 +34,12 @@ DETAILS_AT_TOP         = YES
 INHERIT_DOCS           = YES
 SEPARATE_MEMBER_PAGES  = NO
 TAB_SIZE               = 8
-ALIASES                = "newin2p2=\xrefitem newin2p2s \"Since gtkmm 2.2\" \"New API in gtkmm 2.2\" \n" \
-                         "newin2p4=\xrefitem newin2p4s \"Since gtkmm 2.4\" \"New API in gtkmm 2.4\" \n" \
-                         "newin2p6=\xrefitem newin2p6s \"Since gtkmm 2.6\" \"New API in gtkmm 2.6\" \n" \
-                         "newin2p8=\xrefitem newin2p8s \"Since gtkmm 2.8\" \"New API in gtkmm 2.8\" \n" \
-                         "newin2p10=\xrefitem newin2p10s \"Since gtkmm 2.10\" \"New API in gtkmm 2.10\" \n" \
-                         "newin2p12=\xrefitem newin2p12s \"Since gtkmm 2.12\" \"New API in gtkmm 2.12\" \n"
+ALIASES                = "newin2p2=\xrefitem newin2p2s \"Since pangomm 2.2\" \"New API in pangomm 2.2\" \n" \
+                         "newin2p4=\xrefitem newin2p4s \"Since pangomm 2.4\" \"New API in pangomm 2.4\" \n" \
+                         "newin2p6=\xrefitem newin2p6s \"Since pangomm 2.6\" \"New API in pangomm 2.6\" \n" \
+                         "newin2p8=\xrefitem newin2p8s \"Since pangomm 2.8\" \"New API in pangomm 2.8\" \n" \
+                         "newin2p10=\xrefitem newin2p10s \"Since pangomm 2.10\" \"New API in pangomm 2.10\" \n" \
+                         "newin2p12=\xrefitem newin2p12s \"Since pangomm 2.12\" \"New API in pangomm 2.12\" \n"
 OPTIMIZE_OUTPUT_FOR_C  = NO
 OPTIMIZE_OUTPUT_JAVA   = NO
 BUILTIN_STL_SUPPORT    = NO
@@ -87,7 +87,7 @@ WARN_LOGFILE           =
 #---------------------------------------------------------------------------
 # configuration options related to the input files
 #---------------------------------------------------------------------------
-INPUT                  = @GTKMM_DOXYGEN_INPUT@
+INPUT                  = @PANGOMM_DOXYGEN_INPUT@
 FILE_PATTERNS          = *.h
 RECURSIVE              = NO
 EXCLUDE                = 
@@ -123,8 +123,8 @@ IGNORE_PREFIX          =
 GENERATE_HTML          = YES
 HTML_OUTPUT            = html
 HTML_FILE_EXTENSION    = .html
-HTML_HEADER            = gtkmm_header.html_fragment
-HTML_FOOTER            = gtkmm_footer.html_fragment
+HTML_HEADER            = pangomm_header.html_fragment
+HTML_FOOTER            = pangomm_footer.html_fragment
 HTML_STYLESHEET        = 
 HTML_ALIGN_MEMBERS     = YES
 GENERATE_HTMLHELP      = NO
@@ -199,7 +199,6 @@ INCLUDE_FILE_PATTERNS  =
 PREDEFINED             = DOXYGEN_SHOULD_SKIP_THIS \
                          GTKMM_USING_STD(x)= \
                          GTKMM_API \
-                         GTKMM_ATKMM_ENABLED \
                          GLIBMM_VFUNCS_ENABLED \
                          GLIBMM_PROPERTIES_ENABLED \
                          GLIBMM_EXCEPTIONS_ENABLED \
@@ -210,7 +209,7 @@ SKIP_FUNCTION_MACROS   = YES
 # Configuration::additions related to external references   
 #---------------------------------------------------------------------------
 TAGFILES               = ../../../glibmm/docs/reference/glibmm_doxygen_tags
-GENERATE_TAGFILE       = gtkmm_doxygen_tags
+GENERATE_TAGFILE       = pangomm_doxygen_tags
 ALLEXTERNALS           = YES
 EXTERNAL_GROUPS        = YES
 PERL_PATH              = @PERL_PATH@

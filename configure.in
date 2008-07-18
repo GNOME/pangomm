@@ -1,49 +1,49 @@
 # Configure.in
 #
 #  This file tests for various compiler features needed to configure 
-#  the gtkmm package.  Original skeleton was provided by Stephan Kulow.
+#  the pangomm package.  Original skeleton was provided by Stephan Kulow.
 #  All tests were written by Tero Pulkkinen, Mirko Streckenbach, and 
 #  Karl Nelson.
 #
 #  NOTE! IF YOU DO CHANGES HERE, CHECK IF YOU NEED TO MODIFY .m4 TOO!!!
 #
 #  Copyright 2001 Free Software Foundation
-#  Copyright 1999 gtkmm Development Team
+#  Copyright 1999 pangomm Development Team
 #  Copyright 1998 Stephan Kulow 
 #
 
 #We use pushdef here because we can't use shell variables before AC_INIT, but we want to use a variable with AC_INIT:
-pushdef([GTKMM_MAJOR_VERSION],     [2])
-pushdef([GTKMM_MINOR_VERSION],     [13])
-pushdef([GTKMM_MICRO_VERSION],     [4])
-pushdef([GTKMM_EXTRA_VERSION],     [])
-pushdef([GTKMM_VERSION], GTKMM_MAJOR_VERSION.GTKMM_MINOR_VERSION.GTKMM_MICRO_VERSION[]GTKMM_EXTRA_VERSION)
-AC_INIT([gtkmm], GTKMM_VERSION, [gtkmm-list@gnome.org])
-AC_CONFIG_SRCDIR([gtk/gtkmmconfig.h.in])
+pushdef([PANGOMM_MAJOR_VERSION],     [2])
+pushdef([PANGOMM_MINOR_VERSION],     [13])
+pushdef([PANGOMM_MICRO_VERSION],     [4])
+pushdef([PANGOMM_EXTRA_VERSION],     [])
+pushdef([PANGOMM_VERSION], PANGOMM_MAJOR_VERSION.PANGOMM_MINOR_VERSION.PANGOMM_MICRO_VERSION[]PANGOMM_EXTRA_VERSION)
+AC_INIT([pangomm], PANGOMM_VERSION, [pangomm-list@gnome.org])
+AC_CONFIG_SRCDIR([pango/pangommconfig.h.in])
 AC_PREREQ(2.59)
 
 #########################################################################
 #  Version and initialization
 #########################################################################
-[GTKMM_MAJOR_VERSION]=GTKMM_MAJOR_VERSION
-[GTKMM_MINOR_VERSION]=GTKMM_MINOR_VERSION
-[GTKMM_MICRO_VERSION]=GTKMM_MICRO_VERSION
-[GTKMM_EXTRA_VERSION]=GTKMM_EXTRA_VERSION
-[GTKMM_VERSION]=GTKMM_VERSION
-popdef([GTKMM_MAJOR_VERSION])
-popdef([GTKMM_MINOR_VERSION])
-popdef([GTKMM_MICRO_VERSION])
-popdef([GTKMM_EXTRA_VERSION])
-popdef([GTKMM_VERSION])
-GTKMM_RELEASE=$GTKMM_MAJOR_VERSION.$GTKMM_MINOR_VERSION
-AC_DEFINE_UNQUOTED(GTKMM_MAJOR_VERSION, $GTKMM_MAJOR_VERSION, [Major version of gtkmm])
-AC_DEFINE_UNQUOTED(GTKMM_MINOR_VERSION, $GTKMM_MINOR_VERSION, [Minor version of gtkmm])
-AC_DEFINE_UNQUOTED(GTKMM_MICRO_VERSION, $GTKMM_MICRO_VERSION, [Micro version of gtkmm])
-AC_SUBST(GTKMM_MAJOR_VERSION)
-AC_SUBST(GTKMM_MINOR_VERSION)
-AC_SUBST(GTKMM_MICRO_VERSION)
-AC_SUBST(GTKMM_VERSION)
-AC_SUBST(GTKMM_RELEASE)
+[PANGOMM_MAJOR_VERSION]=PANGOMM_MAJOR_VERSION
+[PANGOMM_MINOR_VERSION]=PANGOMM_MINOR_VERSION
+[PANGOMM_MICRO_VERSION]=PANGOMM_MICRO_VERSION
+[PANGOMM_EXTRA_VERSION]=PANGOMM_EXTRA_VERSION
+[PANGOMM_VERSION]=PANGOMM_VERSION
+popdef([PANGOMM_MAJOR_VERSION])
+popdef([PANGOMM_MINOR_VERSION])
+popdef([PANGOMM_MICRO_VERSION])
+popdef([PANGOMM_EXTRA_VERSION])
+popdef([PANGOMM_VERSION])
+PANGOMM_RELEASE=$PANGOMM_MAJOR_VERSION.$PANGOMM_MINOR_VERSION
+AC_DEFINE_UNQUOTED(PANGOMM_MAJOR_VERSION, $PANGOMM_MAJOR_VERSION, [Major version of pangomm])
+AC_DEFINE_UNQUOTED(PANGOMM_MINOR_VERSION, $PANGOMM_MINOR_VERSION, [Minor version of pangomm])
+AC_DEFINE_UNQUOTED(PANGOMM_MICRO_VERSION, $PANGOMM_MICRO_VERSION, [Micro version of pangomm])
+AC_SUBST(PANGOMM_MAJOR_VERSION)
+AC_SUBST(PANGOMM_MINOR_VERSION)
+AC_SUBST(PANGOMM_MICRO_VERSION)
+AC_SUBST(PANGOMM_VERSION)
+AC_SUBST(PANGOMM_RELEASE)
 
 #
 # +1 : ? : +1  == new interface that does not break old one
@@ -52,8 +52,8 @@ AC_SUBST(GTKMM_RELEASE)
 #  ? :+1 : ?   == just some internal changes, nothing breaks but might work 
 #                 better
 # CURRENT : REVISION : AGE
-LIBGTKMM_SO_VERSION=1:30:0
-AC_SUBST(LIBGTKMM_SO_VERSION)
+LIBPANGOMM_SO_VERSION=1:30:0
+AC_SUBST(LIBPANGOMM_SO_VERSION)
 
 AC_CONFIG_AUX_DIR(scripts)
 
@@ -62,7 +62,7 @@ AC_CONFIG_AUX_DIR(scripts)
 AM_INIT_AUTOMAKE([1.9 tar-ustar])
 
 dnl Specify a configuration file (no autoheader)
-AM_CONFIG_HEADER(config.h gdk/gdkmmconfig.h gtk/gtkmmconfig.h)
+AM_CONFIG_HEADER(config.h pango/pangommconfig.h)
 AM_MAINTAINER_MODE
 AL_ACLOCAL_INCLUDE(scripts)
 
@@ -111,11 +111,11 @@ AC_LIBTOOL_WIN32_DLL
 AC_PROG_LIBTOOL
 
 AL_PROG_GNU_M4(AC_MSG_ERROR([dnl
-SUN m4 does not work for building gtkmm. 
+SUN m4 does not work for building pangomm. 
 Please install GNU m4.]))
 
 AL_PROG_GNU_MAKE(AC_MSG_ERROR([dnl
-SUN make does not work for building gtkmm.
+SUN make does not work for building pangomm.
 Please install GNU make.]))
 
 # This macro is installed by glibmm
@@ -123,84 +123,11 @@ Please install GNU make.]))
 GLIBMM_CHECK_PERL([5.6.0])
 
 #########################################################################
-#  Function checks
-#########################################################################
-
-AC_CHECK_FUNC(mkfifo, AC_DEFINE(HAVE_MKFIFO))
-
-# functions used in demos/gtk-demo. Undefined in config.h.
-AC_LANG_PUSH(C++)
-AC_MSG_CHECKING([for flockfile])
-AC_TRY_LINK([
-#include <stdio.h>],[
-flockfile (NULL);],[
-  AC_MSG_RESULT(yes)
-  AC_DEFINE(HAVE_FLOCKFILE, 1,
-    [Define to 1 if you have the `flockfile' function.])],[
-  AC_MSG_RESULT(no)
-  AC_MSG_CHECKING([for flockfile with a custom prototype])
-  AC_TRY_LINK([
-#include <stdio.h>
-
-extern "C" void flockfile (FILE *);],[
-flockfile (NULL);],[
-    AC_MSG_RESULT(yes)
-    AC_DEFINE(HAVE_FLOCKFILE, 1,
-      [Define to 1 if you have the `flockfile' function.])
-    AC_DEFINE(NEED_FLOCKFILE_PROTO, 1,
-      [Define if flockfile() prototype needed.])],[
-    AC_MSG_RESULT(not available)])])
-
-AC_MSG_CHECKING([for funlockfile])
-AC_TRY_LINK([
-#include <stdio.h>],[
-funlockfile (NULL);],[
-  AC_MSG_RESULT(yes)
-  AC_DEFINE(HAVE_FUNLOCKFILE, 1,
-    [Define to 1 if you have the `funlockfile' function.])],[
-  AC_MSG_RESULT(no)
-  AC_MSG_CHECKING([for funlockfile with a custom prototype])
-  AC_TRY_LINK([
-#include <stdio.h>
-
-extern "C" void funlockfile (FILE *);],[
-funlockfile (NULL);],[
-    AC_MSG_RESULT(yes)
-    AC_DEFINE(HAVE_FUNLOCKFILE, 1,
-      [Define to 1 if you have the `funlockfile' function.])
-    AC_DEFINE(NEED_FUNLOCKFILE_PROTO, 1,
-      [Define if funlockfile() prototype needed.])],[
-    AC_MSG_RESULT(not available)])])
-
-AC_MSG_CHECKING([for getc_unlocked])
-AC_TRY_LINK([
-#include <stdio.h>],[
-getc_unlocked (NULL);],[
-  AC_MSG_RESULT(yes)
-  AC_DEFINE(HAVE_GETC_UNLOCKED, 1,
-    [Define to 1 if you have the `getc_unlocked' function.])],[
-  AC_MSG_RESULT(no)
-  AC_MSG_CHECKING([for getc_unlocked with a custom prototype])
-  AC_TRY_LINK([
-#include <stdio.h>
-
-extern "C" int getc_unlocked (FILE *);],[
-getc_unlocked (NULL);],[
-    AC_MSG_RESULT(yes)
-    AC_DEFINE(HAVE_GETC_UNLOCKED, 1,
-      [Define to 1 if you have the `getc_unlocked' function.])
-    AC_DEFINE(NEED_GETC_UNLOCKED_PROTO, 1,
-      [Define if getc_unlocked() prototype needed.])],[
-    AC_MSG_RESULT(not available)])])
-AC_LANG_POP(C++)
-
-#########################################################################
 #  Dependancy checks
 #########################################################################
-gtkmm_min_glibmm_version=2.14.1
-gtkmm_min_giomm_version=2.16.0
-gtkmm_min_gtk_version=2.13.4
-gtkmm_min_cairomm_version=1.2.2
+pangomm_min_glibmm_version=2.14.1
+pangomm_min_pango_version=2.13.4
+pangomm_min_cairomm_version=1.2.2
 
 
 GLIBMM_LIBDIR=`pkg-config --variable=libdir glibmm-2.4`
@@ -209,34 +136,10 @@ AC_SUBST(GMMPROC_DIR)
 GMMPROC=$GMMPROC_DIR/gmmproc
 AC_SUBST(GMMPROC)
 
-
-PKG_CHECK_MODULES(ATKMM, glibmm-2.4 >= ${gtkmm_min_glibmm_version} atk >= 1.9.0)
-AC_SUBST(ATKMM_CFLAGS)
-AC_SUBST(ATKMM_LIBS)
-
-PKG_CHECK_MODULES(PANGOMM, glibmm-2.4 >= ${gtkmm_min_glibmm_version} cairomm-1.0 >= ${gtkmm_min_cairomm_version} pangocairo >= 1.5.2)
+PKG_CHECK_MODULES(PANGOMM, glibmm-2.4 >= ${pangomm_min_glibmm_version} cairomm-1.0 >= ${pangomm_min_cairomm_version} pangocairo >= 1.5.2)
 AC_SUBST(PANGOMM_CFLAGS)
 AC_SUBST(PANGOMM_LIBS)
 
-# gdkmm really does need GTK+, because part of Gdk::DragContext is in GTK+.
-PKG_CHECK_MODULES(GDKMM, glibmm-2.4 >= ${gtkmm_min_glibmm_version} cairomm-1.0 >= ${gtkmm_min_cairomm_version} gtk+-2.0 >= ${gtkmm_min_gtk_version})
-AC_SUBST(GDKMM_CFLAGS)
-AC_SUBST(GDKMM_LIBS)
-
-# Only check for gtk+-unix-print-2.0 on non-win32 platform, as 
-# gtk+-unix-print-2.0.pc is not always included in win32 installers. 
-if test x"$os_win32" = xyes; then
-  PKG_CHECK_MODULES(GTKMM, glibmm-2.4 >= ${gtkmm_min_glibmm_version} giomm-2.4 >= ${gtkmm_min_giomm_version} cairomm-1.0 >= ${gtkmm_min_cairomm_version} gtk+-2.0 >= ${gtkmm_min_gtk_version})
-else
-  PKG_CHECK_MODULES(GTKMM, glibmm-2.4 >= ${gtkmm_min_glibmm_version} giomm-2.4 >= ${gtkmm_min_giomm_version} cairomm-1.0 >= ${gtkmm_min_cairomm_version} gtk+-2.0 >= ${gtkmm_min_gtk_version} gtk+-unix-print-2.0 >= ${gtkmm_min_gtk_version})
-fi
-AC_SUBST(GTKMM_CFLAGS)
-AC_SUBST(GTKMM_LIBS)
-
-# gthread isn't a requirement, but we should use its CFLAGS if available.
-PKG_CHECK_MODULES(GTHREAD, gthread-2.0 >= 2.4.0,[],[GTHREAD_CFLAGS=''; GTHREAD_LIBS=''])
-AC_SUBST(GTHREAD_CFLAGS)
-AC_SUBST(GTHREAD_LIBS)
 
 #########################################################################
 #  C++ checks
@@ -285,10 +188,10 @@ AC_LANG_CPLUSPLUS
 
 
 # Create a list of input directories for Doxygen.
-GTKMM_DOXYGEN_INPUT_SUBDIRS([pango atk gdk gtk])
+GTKMM_DOXYGEN_INPUT_SUBDIRS([pango])
 
 # Evaluate the --enable-warnings=level option.
-GTKMM_ARG_ENABLE_WARNINGS()
+PANGOMM_ARG_ENABLE_WARNINGS()
 
 # Add an --enable-use-deprecations configure option:
 AC_ARG_ENABLE(deprecations,
@@ -299,10 +202,7 @@ AC_ARG_ENABLE(deprecations,
 if test "x$enable_use_deprecations" = "xyes"; then
    DISABLE_DEPRECATED_CFLAGS="\
 -DG_DISABLE_DEPRECATED \
--DGDK_DISABLE_DEPRECATED \
--DGTK_DISABLE_DEPRECATED \
--DGDK_PIXBUF_DISABLE_DEPRECATED \
--DGNOME_DISABLE_DEPRECATED"
+-DPANGO_DISABLE_DEPRECATED"
    AC_SUBST(DISABLE_DEPRECATED_CFLAGS)
 fi
 	
@@ -314,55 +214,10 @@ if test "x$enable_deprecated_api" = "xyes"; then
 AC_MSG_WARN([Deprecated API will be built, for backwards-compatibility.])
 else
   AC_DEFINE(PANGOMM_DISABLE_DEPRECATED, 1, [Whether not to build deprecated API in pangomm])
-  AC_DEFINE(ATKMM_DISABLE_DEPRECATED, 1, [Whether not to build deprecated API in atkmm])
-  AC_DEFINE(GDKMM_DISABLE_DEPRECATED, 1, [Whether not to build deprecated API in gdkmm])
-  AC_DEFINE(GTKMM_DISABLE_DEPRECATED, 1, [Whether not to build deprecated API in gtkmm])
-  DISABLE_DEPRECATED_API_CFLAGS="-DPANGOMM_DISABLE_DEPRECATED -DATKMM_DISABLE_DEPRECATED -DGDKMM_DISABLE_DEPRECATED -DGTKMM_DISABLE_DEPRECATED"
+  DISABLE_DEPRECATED_API_CFLAGS="-DPANGOMM_DISABLE_DEPRECATED"
 AC_SUBST(DISABLE_DEPRECATED_API_CFLAGS)
 AC_MSG_WARN([Deprecated API will not be built, breaking backwards-compatibility. Do not use this build for distribution packages.])
 fi
-
-
-AC_ARG_ENABLE(demos, [AC_HELP_STRING([--enable-demos],
-              [build the included demos [default=yes]])],,
-                        [enable_demos=yes])
-if test "x$enable_demos" = "xyes"; then
-  DEMO_SUBDIR="demos"
-  AC_CONFIG_FILES([
-    demos/Makefile
-      demos/gtk-demo/Makefile
-  ])
-else
-  DEMO_SUBDIR=""
-fi
-
-AC_SUBST(DEMO_SUBDIR)
-
-
-#Offer the ability to omit some API from the library, 
-#to reduce the code size:
-#Note that there are other options in glibmm, which affect gtkmm.
-GTKMM_ARG_ENABLE_API_ATKMM()
-
-if test "x$gtkmm_enable_api_atkmm" = "xyes"; then
-  AC_CONFIG_FILES([
-	atk/Makefile
-  	atk/atkmm-1.6.pc
-	atk/src/Makefile
-	atk/atkmm/Makefile
-	atk/atkmm/private/Makefile
-  ])
-  GTKMM_PC_ATKMM_DEP="atkmm-1.6"
-else
-  GTKMM_PC_ATKMM_DEP=""
-fi
-AC_SUBST(GTKMM_PC_ATKMM_DEP)
-
-#Allow us to test for atkmm support in Makefile.am files:
-AM_CONDITIONAL(GTKMM_ATKMM_ENABLED, test "x$gtkmm_enable_api_atkmm" = "xyes")
-
-
-GTKMM_ARG_ENABLE_API_MAEMO_EXTENSIONS()
 
 
 AC_ARG_ENABLE(docs, [AC_HELP_STRING([--enable-docs],
@@ -372,7 +227,6 @@ if test "x$enable_docs" = "xyes"; then
   DOCS_SUBDIR="docs"
   AC_CONFIG_FILES([
     docs/Makefile
-      docs/FAQ/Makefile
       docs/images/Makefile
       docs/reference/Makefile
       docs/reference/Doxyfile
@@ -386,7 +240,7 @@ AC_SUBST(DOCS_SUBDIR)
 
 # Dummy conditional just to make automake-1.4 happy.
 # We need an always-false condition in docs/Makefile.am.
-AM_CONDITIONAL(GTKMM_FALSE,[false])
+AM_CONDITIONAL(PANGOMM_FALSE,[false])
 
 # HACK:  Assign a dummy in order to prevent execution of autoheader by the
 # maintainer-mode rules.  That would fail since we aren't using autoheader.
@@ -395,18 +249,6 @@ AUTOHEADER=':'
 
 AC_CONFIG_FILES([
   Makefile
-
-  gdk/Makefile
-  gdk/gdkmm-2.4.pc
-    gdk/src/Makefile
-    gdk/gdkmm/Makefile
-      gdk/gdkmm/private/Makefile
-
-  gtk/Makefile
-  gtk/gtkmm-2.4.pc
-    gtk/src/Makefile
-    gtk/gtkmm/Makefile
-      gtk/gtkmm/private/Makefile
 
   pango/Makefile
   pango/pangomm-1.4.pc
@@ -420,39 +262,9 @@ AC_CONFIG_FILES([
 ])
 
 AC_CONFIG_FILES([
-  tests/Makefile
-    tests/child_widget/Makefile
-    tests/child_widget2/Makefile
-    tests/child_widget_managed/Makefile
-    tests/refcount_dialog/Makefile
-    tests/dialog/Makefile
-    tests/dialog_deletethis/Makefile
-    tests/delete_cpp_child/Makefile
-    tests/main_with_options/Makefile
-    tests/menu_destruction/Makefile
-    tests/property_notification/Makefile
-    tests/scrolledwindow/Makefile
-    tests/wrap_existing/Makefile
-])
-
-AC_CONFIG_FILES([
   scripts/Makefile
 ])
 
-AC_CONFIG_FILES([
-  MSVC_Net2003/Makefile
-    MSVC_Net2003/gendef/Makefile
-    MSVC_Net2003/atkmm/Makefile
-    MSVC_Net2003/atkmm/atkmm.rc
-    MSVC_Net2003/pangomm/Makefile
-    MSVC_Net2003/pangomm/pangomm.rc
-    MSVC_Net2003/gdkmm/Makefile
-    MSVC_Net2003/gdkmm/gdkmm.rc
-    MSVC_Net2003/gtkmm/Makefile
-    MSVC_Net2003/gtkmm/gtkmm.rc
-    MSVC_Net2003/demos/Makefile
-      MSVC_Net2003/demos/gtk-demo/Makefile
-])
 
 AC_OUTPUT()
 

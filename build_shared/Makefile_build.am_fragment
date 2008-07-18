@@ -1,5 +1,5 @@
 ## Copyright (c) 2001
-## The gtkmm development team.
+## The pangomm development team.
 ##
 ## **** Common rules for inclusion in Makefile.am ****
 ## Included by Makefile_build_gensrc.am_fragment
@@ -28,9 +28,6 @@ common_ldflags	= -version-info $(sublib_libversion) $(no_undefined)
 # for instance, so that gdkmm can use headers in pangomm.
 all_includes	= -I$(top_builddir)/$(sublib_topdir)		-I$(top_srcdir)/$(sublib_topdir)	\
 		  -I$(top_builddir)/pango	-I$(top_srcdir)/pango	\
-		  -I$(top_builddir)/atk		-I$(top_srcdir)/atk	\
-		  -I$(top_builddir)/gdk		-I$(top_srcdir)/gdk	\
-		  -I$(top_builddir)/gtk		-I$(top_srcdir)/gtk	\
 		  $(sublib_cflags) $(GTHREAD_CFLAGS)
 
 dist_sources	= $(files_all_built_cc) $(files_all_extra_cc) $(files_all_built_h) $(files_all_extra_h)

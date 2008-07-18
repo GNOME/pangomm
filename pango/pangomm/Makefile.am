@@ -1,11 +1,11 @@
 ## Copyright (c) 2001
-## The gtkmm development team.
+## The pangomm development team.
 
 SUBDIRS			= private
 
 sublib_name		= pangomm
 sublib_libname		= pangomm-1.4
-sublib_libversion = $(LIBGTKMM_SO_VERSION)
+sublib_libversion = $(LIBPANGOMM_SO_VERSION)
 sublib_namespace	= Pango
 sublib_cflags		= $(PANGOMM_CFLAGS)
 sublib_topdir = pango

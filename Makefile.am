@@ -1,17 +1,11 @@
-if GTKMM_ATKMM_ENABLED
-  ATK_SUBDIR=atk
-else
-  ATK_SUBDIR=
-endif
-
-SUBDIRS		= tools $(ATK_SUBDIR) pango gdk gtk @DEMO_SUBDIR@ @DOCS_SUBDIR@ tests MSVC_Net2003
+SUBDIRS		= tools pango @DOCS_SUBDIR@
 DIST_SUBDIRS	= $(SUBDIRS) scripts
 
 EXTRA_DIST	= build_shared/Makefile_build.am_fragment \
 		  build_shared/Makefile_build_gensrc.am_fragment \
 		  build_shared/Makefile_gensrc.am_fragment \
 		  build_shared/Makefile_conditional.am_fragment \
-		  CHANGES README.win32 README.SUN PORTING \
+		  README.win32 README.SUN \
       autogen.sh
 
 
@@ -41,7 +35,7 @@ doc_tarball_files = \
 # This doesn't work very well in a $(srcdir) != $(builddir) setup,
 # but this target is for maintainer use only anyway.
 
-gtkmm-2-4-docs.tar.gz:
+pangomm-2-4-docs.tar.gz:
 	tar cf - --files-from - $(doc_tarball_files) | gzip -c --best >$@
 
 # Upload documentation:
@@ -51,8 +45,8 @@ post-html-recursive:
 	  test "$$subdir" = . || (cd $$subdir && $(MAKE) $(AM_MAKEFLAGS) post-html); \
 	done
 
-post-html-local: gtkmm-2-4-docs.tar.gz
-	rsync $(rsync_args) gtkmm-2-4-docs.tar.gz $$USER@$(web_host):$(web_path_gtkmm)
+post-html-local: pangomm-2-4-docs.tar.gz
+	rsync $(rsync_args) pangomm-2-4-docs.tar.gz $$USER@$(web_host):$(web_path_pangomm)
 
 post-html: post-html-recursive post-html-local
 

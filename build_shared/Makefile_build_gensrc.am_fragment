@@ -1,10 +1,10 @@
 ## Copyright (c) 2001-2004
-## The gtkmm development team.
+## The pangomm development team.
 ##
 ## Included by src/Makefile_list_of_hg.am_fragment
 ##
 ## This Makefile.am helper transforms lists of source files that are
-## specific to a sublibrary (atkmm, pangomm, gdkmm or gtkmm) into more
+## specific to a sublibrary (atkmm, pangomm, gdkmm or pangomm) into more
 ## generic lists. These lists of files are processed by the automake
 ## rules contained in Makefile_build.am_fragment (sublib/sublibmm
 ## directory) and Makefile_gensrc.am_fragment (sublib/src directory).

@@ -1,6 +1,6 @@
 #! /bin/sh
 
-# Copyright (c) 2006, The gtkmm Development Team
+# Copyright (c) 2006, The pangomm Development Team
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Lesser General Public
@@ -28,7 +28,7 @@ elif test -n "${BASH_VERSION+set}" && (set -o posix) >/dev/null 2>&1; then
   set -o posix
 fi
 
-PROJECT=gtkmm
+PROJECT=pangomm
 MIN_AUTOMAKE_VERSION=1.9
 
 srcdir=`dirname "$0"`

@@ -1,11 +1,11 @@
 ## Copyright (c) 2001
-## The gtkmm development team.
+## The pangomm development team.
 
-SUBDIRS = FAQ images reference
+SUBDIRS = images reference
 
 EXTRA_DIST = Makefile_web.am_fragment index.html
 
-gtkmm_doc_DATA = index.html
+pangomm_doc_DATA = index.html
 
 include $(top_srcdir)/docs/Makefile_web.am_fragment
 
