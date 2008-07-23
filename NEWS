@@ -1,1 +1,4 @@
+2.13.5:
 
+This is a first version of pangomm in its own tarball.
+The API and ABI are not changed.
