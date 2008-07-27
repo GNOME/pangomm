@@ -15,10 +15,10 @@
 #We use pushdef here because we can't use shell variables before AC_INIT, but we want to use a variable with AC_INIT:
 pushdef([PANGOMM_MAJOR_VERSION],     [2])
 pushdef([PANGOMM_MINOR_VERSION],     [13])
-pushdef([PANGOMM_MICRO_VERSION],     [5])
+pushdef([PANGOMM_MICRO_VERSION],     [6])
 pushdef([PANGOMM_EXTRA_VERSION],     [])
 pushdef([PANGOMM_VERSION], PANGOMM_MAJOR_VERSION.PANGOMM_MINOR_VERSION.PANGOMM_MICRO_VERSION[]PANGOMM_EXTRA_VERSION)
-AC_INIT([pangomm], PANGOMM_VERSION, [pangomm-list@gnome.org])
+AC_INIT([pangomm], PANGOMM_VERSION, [gtkmm-list@gnome.org])
 AC_CONFIG_SRCDIR([pango/pangommconfig.h.in])
 AC_PREREQ(2.59)
 

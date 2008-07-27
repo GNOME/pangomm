@@ -1,17 +1,16 @@
-2008-07-27  Murray Cumming,,,  <murrayc@murrayc.com>
+2.13.6:
 
-	reviewed by: <delete if not using a buddy>
-	patch by: <delete if not someone else's patch>
+2008-07-27  Murray Cumming  <murrayc@murrayc.com>
 
-	* docs/reference/Doxyfile.in:
-	* pango/src/layout.hg:
-	* pango/src/layoutiter.ccg:
-	* pango/src/layoutiter.hg:
 	* pango/src/pango_docs.xml:
 	* pango/src/pango_enums.defs:
-	* pango/src/pango_methods.defs:
-	* pango/src/renderer.hg:
-	* tools/extra_defs_gen/generate_defs_pango.cc:
+	* pango/src/pango_methods.defs: Regenerated.
+
+	* pango/src/layout.hg: Added get_height(), set_height(), 
+	get_baseline().
+	* pango/src/layoutiter.ccg:
+	* pango/src/layoutiter.hg: Added get_layout().
+	* pango/src/renderer.hg: Added get_layout() and get_layout_line().
 
 2.13.5:
 

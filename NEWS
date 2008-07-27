@@ -1,3 +1,10 @@
+2.13.6:
+
+* Layout: Added get_height(), set_height(), get_baseline().
+* LayoutIter: Added get_layout().
+* Renderer: Added get_layout() and get_layout_line().
+  (Murray Cumming)
+
 2.13.5:
 
 This is a first version of pangomm in its own tarball.
