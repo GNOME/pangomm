@@ -1,5 +1,5 @@
-web_host = pangomm.org
-web_path_pangomm = /home/murrayc/pangomm.org/docs/pangomm-2.4/
+web_host = gtkmm.org
+web_path_pangomm = /home/murrayc/gtkmm.org/docs/pangomm-2.4/
 #web_path_pangomm = /home/groups/g/gt/pangomm/htdocs/docs/pangomm-2.4/
 web_path_docs = $(web_path_pangomm)docs/
 

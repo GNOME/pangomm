@@ -1,3 +1,9 @@
+2008-07-27  Murray Cumming  <murrayc@murrayc.com>
+
+	* docs/Makefile_web.am_fragment: Corrected the upload location.
+	* docs/reference/Doxyfile.in: Corrected a variable so we really 
+	generate documentation.
+
 2.13.6:
 
 2008-07-27  Murray Cumming  <murrayc@murrayc.com>
