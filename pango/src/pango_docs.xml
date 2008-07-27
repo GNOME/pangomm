@@ -55,20 +55,45 @@ Since: 1.8
 <return></return>
 </function>
 
-<function name="pango_layout_get_alignment">
+<function name="pango_renderer_get_layout_line">
 <description>
-Gets the alignment for the layout: how partial lines are
-positioned within the horizontal space available.
+Gets the layout line currently being rendered using @renderer.
+Calling this function only makes sense from inside a subclass&apos;s
+methods, like in its draw_shape&amp;lt;!----&amp;gt;() for example.
+
+The returned layout line should not be modified while still being
+rendered.
 
 
 </description>
 <parameters>
-<parameter name="layout">
-<parameter_description> a #PangoLayout
+<parameter name="renderer">
+<parameter_description> a #PangoRenderer
 </parameter_description>
 </parameter>
 </parameters>
-<return> the alignment.
+<return> the layout line, or %NULL if no layout line is being
+rendered using @renderer at this time.
+
+Since: 1.20
+</return>
+</function>
+
+<function name="pango_matrix_get_font_scale_factor">
+<description>
+Return value: the scale factor of @matrix on the height of the font,
+
+</description>
+<parameters>
+<parameter name="matrix">
+<parameter_description> a #PangoMatrix, may be %NULL
+</parameter_description>
+</parameter>
+</parameters>
+<return> the scale factor of @matrix on the height of the font,
+or 1.0 if @matrix is %NULL.
+
+Since: 1.12
 </return>
 </function>
 
@@ -189,12 +214,15 @@ or %PANGO_OT_DEFAULT_LANGUAGE to use the default language of the script.
 </return>
 </function>
 
-<function name="pango_layout_get_auto_dir">
+<function name="pango_layout_set_text">
 <description>
-Gets whether to calculate the bidirectional base direction
-for the layout according to the contents of the layout.
-See pango_layout_set_auto_dir().
+Sets the text of the layout.
 
+Note that if you have used
+pango_layout_set_markup() or pango_layout_set_markup_with_accel() on
+@layout before, you may want to call pango_layout_set_attributes() to clear
+the attributes set on the layout from the markup as this function does not
+clear attributes.
 
 </description>
 <parameters>
@@ -202,50 +230,86 @@ See pango_layout_set_auto_dir().
 <parameter_description> a #PangoLayout
 </parameter_description>
 </parameter>
-</parameters>
-<return> %TRUE if the bidirectional base direction
-is computed from the layout&apos;s contents, %FALSE otherwise.
-
-Since: 1.4
-</return>
-</function>
-
-<function name="pango_ot_buffer_set_rtl">
-<description>
-Sets whether glyphs will be rendered right-to-left.  This setting
-is needed for proper horizontal positioning of right-to-left scripts.
-
-Since: 1.4
-
-</description>
-<parameters>
-<parameter name="buffer">
-<parameter_description> a #PangoOTBuffer
+<parameter name="text">
+<parameter_description> a valid UTF-8 string
 </parameter_description>
 </parameter>
-<parameter name="rtl">
-<parameter_description> %TRUE for right-to-left text
+<parameter name="length">
+<parameter_description> maximum length of @text, in bytes. -1 indicates that
+the string is nul-terminated and the length should be
+calculated.  The text will also be truncated on
+encountering a nul-termination even when @length is
+positive.
 </parameter_description>
 </parameter>
 </parameters>
 <return></return>
 </function>
 
-<function name="_pango_glyph_item_iter_prev_cluster">
+<function name="pango_parse_enum">
 <description>
-Moves the iterator to the preceding cluster in the glyph item.
+Parses an enum type and stored the result in @value.
+
+If @str does not match the nick name of any of the possible values for the
+enum, %FALSE is returned, a warning is issued if @warn is %TRUE, and a
+string representing the list of possible values is stored in
+@possible_values.  The list is slash-separated, eg.
+&quot;none/start/middle/end&quot;.  If failed and @possible_values is not %NULL,
+returned string should be freed using g_free().
 
 
 </description>
 <parameters>
-<parameter name="iter">
-<parameter_description> a #PangoGlyphItemIter
+<parameter name="type">
+<parameter_description> enum type to parse, eg. %PANGO_TYPE_ELLIPSIZE_MODE.
+</parameter_description>
+</parameter>
+<parameter name="str">
+<parameter_description> string to parse.  May be %NULL.
+</parameter_description>
+</parameter>
+<parameter name="value">
+<parameter_description> integer to store the result in, or %NULL.
+</parameter_description>
+</parameter>
+<parameter name="warn">
+<parameter_description> if %TRUE, issue a g_warning() on bad input.
+</parameter_description>
+</parameter>
+<parameter name="possible_values">
+<parameter_description> place to store list of possible values on failure, or %NULL.
 </parameter_description>
 </parameter>
 </parameters>
-<return> %TRUE if the iterator was moved, %FALSE if we were already on the
-first cluster.
+<return> %TRUE if @str was successfully parsed.
+
+Since: 1.16
 </return>
+</function>
+
+<function name="pango_font_description_set_size">
+<description>
+Sets the size field of a font description in fractional points. This is mutually
+exclusive with pango_font_description_set_absolute_size().
+
+</description>
+<parameters>
+<parameter name="desc">
+<parameter_description> a #PangoFontDescription
+</parameter_description>
+</parameter>
+<parameter name="size">
+<parameter_description> the size of the font in points, scaled by PANGO_SCALE. (That is,
+a @size value of 10 * PANGO_SCALE is a 10 point font. The conversion
+factor between points and device units depends on system configuration
+and the output device. For screen display, a logical DPI of 96 is
+common, in which case a 10 point font corresponds to a 10 * (96 / 72) = 13.3
+pixel font. Use pango_font_description_set_absolute_size() if you need
+a particular size in device units.
+</parameter_description>
+</parameter>
+</parameters>
+<return></return>
 </function>
 
 <function name="pango_fc_decoder_get_charset">
@@ -338,38 +402,30 @@ coordinates (origin at top left of the entire layout).
 </return>
 </function>
 
-<function name="pango_cairo_layout_path">
+<function name="pango_attr_language_new">
 <description>
-Adds the text in a #PangoLayout to the current path in the
-specified cairo context.  The top-left corner of the #PangoLayout
-will be at the current point of the cairo context.
+Create a new language tag attribute.
 
-Since: 1.10
 
 </description>
 <parameters>
-<parameter name="cr">
-<parameter_description> a Cairo context
-</parameter_description>
-</parameter>
-<parameter name="layout">
-<parameter_description> a Pango layout
+<parameter name="language">
+<parameter_description> language tag
 </parameter_description>
 </parameter>
 </parameters>
-<return></return>
+<return> the newly allocated #PangoAttribute, which should be
+freed with pango_attribute_destroy().
+</return>
 </function>
 
 <function name="pango_layout_get_pixel_extents">
 <description>
 Computes the logical and ink extents of @layout in device units.
 This function just calls pango_layout_get_extents() followed by
-pango_extents_to_pixels().
-
-See pango_extents_to_pixels() for details of how ink and logical rectangles
-are rounded to pixels.  In certain situations you may want to use
-pango_layout_get_extents() directly and pass the resulting logical
-rectangle to pango_extents_to_pixels() as an ink rectangle().
+two pango_extents_to_pixels() calls, rounding @ink_rect and @logical_rect
+such that the rounded rectangles fully contain the unrounded one (that is,
+passes them as first argument to pango_extents_to_pixels()).
 
 </description>
 <parameters>
@@ -559,19 +615,22 @@ means to use the resolution from the font map.
 <return></return>
 </function>
 
-<function name="pango_attr_type_register">
+<function name="pango_xft_font_get_unknown_glyph">
 <description>
-Allocate a new attribute type ID.
-
+Return value: a glyph index into @font.
 
 </description>
 <parameters>
-<parameter name="name">
-<parameter_description> an identifier for the type (currently unused.)
+<parameter name="font">
+<parameter_description> a #PangoFont.
+</parameter_description>
+</parameter>
+<parameter name="wc">
+<parameter_description> the Unicode character for which a glyph is needed.
 </parameter_description>
 </parameter>
 </parameters>
-<return> the new type ID.
+<return> a glyph index into @font.
 </return>
 </function>
 
@@ -618,24 +677,21 @@ to modify the contents of the run (glyphs, glyph widths, etc.).
 </return>
 </function>
 
-<function name="pango_tab_array_resize">
+<function name="pango_attribute_copy">
 <description>
-Resizes a tab array. You must subsequently initialize any tabs that
-were added as a result of growing the array.
+Make a copy of an attribute.
 
 
 </description>
 <parameters>
-<parameter name="tab_array">
-<parameter_description> a #PangoTabArray
-</parameter_description>
-</parameter>
-<parameter name="new_size">
-<parameter_description> new size of the array
+<parameter name="attr">
+<parameter_description> a #PangoAttribute
 </parameter_description>
 </parameter>
 </parameters>
-<return></return>
+<return> the newly allocated #PangoAttribute, which should be
+freed with pango_attribute_destroy().
+</return>
 </function>
 
 <function name="pango_atsui_font_get_atsu_font_id">
@@ -837,8 +893,7 @@ Since: 1.6
 
 <function name="pango_layout_get_spacing">
 <description>
-Gets the amount of spacing in #PangoGlyphUnit between the lines of the
-layout.
+Gets the amount of spacing between the lines of the layout.
 
 
 </description>
@@ -848,7 +903,7 @@ layout.
 </parameter_description>
 </parameter>
 </parameters>
-<return> the spacing.
+<return> the spacing in Pango units.
 </return>
 </function>
 
@@ -875,7 +930,7 @@ Increase the reference count of a #PangoLayoutLine by one.
 </description>
 <parameters>
 <parameter name="line">
-<parameter_description> a #PangoLayoutLine
+<parameter_description> a #PangoLayoutLine, may be %NULL
 </parameter_description>
 </parameter>
 </parameters>
@@ -947,7 +1002,7 @@ that is the closest match for @desc.
 </parameter_description>
 </parameter>
 </parameters>
-<return>the font loaded, or %NULL if no font matched.
+<return> the font loaded, or %NULL if no font matched.
 </return>
 </function>
 
@@ -961,7 +1016,7 @@ internal use by renderers and Pango.
 </description>
 <parameters>
 <parameter name="language">
-<parameter_description> a #PangoLanguage
+<parameter_description> a #PangoLanguage, or %NULL
 </parameter_description>
 </parameter>
 </parameters>
@@ -996,6 +1051,29 @@ in this case, the state of @iter is undefined.
 </return>
 </function>
 
+<function name="pango_attr_type_get_name">
+<description>
+Fetches the attribute type name passed in when registering the type using
+pango_attr_type_register().
+
+The returned value is an interned string (see g_intern_string() for what
+that means) that should not be modified or freed.
+
+
+</description>
+<parameters>
+<parameter name="type">
+<parameter_description> an attribute type ID to fetch the name for
+</parameter_description>
+</parameter>
+</parameters>
+<return> the type ID name (which may be %NULL), or %NULL if @type is
+a built-in Pango attribute type or invalid. 
+
+Since: 1.22
+</return>
+</function>
+
 <function name="pango_units_to_double">
 <description>
 Converts a number in Pango units to floating-point: divides
@@ -1015,22 +1093,27 @@ Since: 1.16
 </return>
 </function>
 
-<function name="pango_layout_new">
+<function name="pango_x_font_cache_load">
 <description>
-Create a new #PangoLayout object with attributes initialized to
-default values for a particular #PangoContext.
+Loads a #XFontStruct from a X Logical Font Description. The
+result may be newly loaded, or it may have been previously
+stored.
 
 
 </description>
 <parameters>
-<parameter name="context">
-<parameter_description> a #PangoContext
+<parameter name="cache">
+<parameter_description> a #PangoXFontCache
+</parameter_description>
+</parameter>
+<parameter name="xlfd">
+<parameter_description> the X Logical Font Description to load.
 </parameter_description>
 </parameter>
 </parameters>
-<return> the newly allocated #PangoLayout, with a reference
-count of one, which should be freed with
-g_object_unref().
+<return> The font structure, or %NULL if the font could
+not be loaded. In order to free this structure, you must call
+pango_x_font_cache_unload().
 </return>
 </function>
 
@@ -1056,14 +1139,13 @@ newly-allocated string and must be freed with g_free().
 <function name="pango_matrix_free">
 <description>
 Free a #PangoMatrix created with pango_matrix_copy().
-Does nothing if @matrix is %NULL.
 
 Since: 1.6
 
 </description>
 <parameters>
 <parameter name="matrix">
-<parameter_description> a #PangoMatrix, or %NULL
+<parameter_description> a #PangoMatrix, may be %NULL
 </parameter_description>
 </parameter>
 </parameters>
@@ -1136,25 +1218,28 @@ Render a #PangoLayout onto a FreeType2 bitmap
 <return></return>
 </function>
 
-<function name="_pango_cairo_font_install">
+<function name="pango_ot_buffer_set_zero_width_marks">
 <description>
-Makes @font the current font for rendering in the specified
-Cairo context.
+Sets whether characters with a mark class should be forced to zero width.
+This setting is needed for proper positioning of Arabic accents,
+but will produce incorrect results with standard OpenType Indic
+fonts.
 
+Since: 1.6
 
 </description>
 <parameters>
-<parameter name="font">
-<parameter_description> a #PangoCairoFont
+<parameter name="buffer">
+<parameter_description> a #PangoOTBuffer
 </parameter_description>
 </parameter>
-<parameter name="cr">
-<parameter_description> a #cairo_t
+<parameter name="zero_width_marks">
+<parameter_description> %TRUE if characters with a mark class should
+be forced to zero width.
 </parameter_description>
 </parameter>
 </parameters>
-<return> %TRUE if font was installed successfully, %FALSE otherwise.
-</return>
+<return></return>
 </function>
 
 <function name="pango_layout_xy_to_index">
@@ -1176,12 +1261,12 @@ function returns %FALSE; on an exact hit, it returns %TRUE.
 </parameter_description>
 </parameter>
 <parameter name="x">
-<parameter_description>         the X offset (in #PangoGlyphUnit)
+<parameter_description>         the X offset (in Pango units)
 from the left edge of the layout.
 </parameter_description>
 </parameter>
 <parameter name="y">
-<parameter_description>         the Y offset (in #PangoGlyphUnit)
+<parameter_description>         the Y offset (in Pango units)
 from the top edge of the layout
 </parameter_description>
 </parameter>
@@ -1318,6 +1403,28 @@ Since: 1.2
 <return></return>
 </function>
 
+<function name="pango_attribute_init">
+<description>
+Initializes @attr&apos;s klass to @klass, it&apos;s start_index to zero,
+and end_index to %G_MAXUINT such that the attribute applies
+to the entire text by default.
+
+Since: 1.20
+
+</description>
+<parameters>
+<parameter name="attr">
+<parameter_description> a #PangoAttribute
+</parameter_description>
+</parameter>
+<parameter name="klass">
+<parameter_description> a #PangoAttributeClass
+</parameter_description>
+</parameter>
+</parameters>
+<return></return>
+</function>
+
 <function name="pango_cairo_font_map_create_context">
 <description>
 Create a #PangoContext for the given fontmap.
@@ -1396,6 +1503,9 @@ coordinates extending to the right and down. The macros PANGO_ASCENT(),
 PANGO_DESCENT(), PANGO_LBEARING(), and PANGO_RBEARING() can be used to convert
 from the extents rectangle to more traditional font metrics. The units
 of the rectangles are in 1/PANGO_SCALE of a device unit.
+
+If @font is %NULL, this function gracefully sets some sane values in the
+output variables and returns.
 
 </description>
 <parameters>
@@ -1566,7 +1676,7 @@ Render a #PangoGlyphString onto a Windows DC
 
 <function name="pango_ft2_font_get_face">
 <description>
-Return value: a pointer to a &amp;lt;type&amp;gt;FT_Face&amp;lt;/type&amp;gt; structure, with the size set correctly
+Return value: a pointer to a &amp;lt;type&amp;gt;FT_Face&amp;lt;/type&amp;gt; structure, with the size set correctly,
 
 </description>
 <parameters>
@@ -1575,39 +1685,42 @@ Return value: a pointer to a &amp;lt;type&amp;gt;FT_Face&amp;lt;/type&amp;gt; st
 </parameter_description>
 </parameter>
 </parameters>
-<return> a pointer to a &amp;lt;type&amp;gt;FT_Face&amp;lt;/type&amp;gt; structure, with the size set correctly
+<return> a pointer to a &amp;lt;type&amp;gt;FT_Face&amp;lt;/type&amp;gt; structure, with the size set correctly,
+or %NULL if @font is %NULL.
 </return>
 </function>
 
-<function name="pango_attr_background_new">
+<function name="pango_win32_font_description_from_logfont">
 <description>
-Create a new background color attribute.
+Creates a #PangoFontDescription that matches the specified LOGFONTA.
+
+The face name, italicness and weight fields in the LOGFONTA are used
+to set up the resulting #PangoFontDescription. If the face name in
+the LOGFONTA contains non-ASCII characters the font is temporarily
+loaded (using CreateFontIndirect()) and an ASCII (usually English)
+name for it is looked up from the font name tables in the font
+data. If that doesn&apos;t work, the face name is converted from the
+system codepage to UTF-8 and that is used.
 
 
 </description>
 <parameters>
-<parameter name="red">
-<parameter_description> the red value (ranging from 0 to 65535)
-</parameter_description>
-</parameter>
-<parameter name="green">
-<parameter_description> the green value
-</parameter_description>
-</parameter>
-<parameter name="blue">
-<parameter_description> the blue value
+<parameter name="lfp">
+<parameter_description> a LOGFONTA
 </parameter_description>
 </parameter>
 </parameters>
-<return> the newly allocated #PangoAttribute, which should be
-freed with pango_attribute_destroy().
+<return> the newly allocated #PangoFontDescription, which
+should be freed using pango_font_description_free()
+
+Since: 1.12
 </return>
 </function>
 
 <function name="pango_coverage_unref">
 <description>
-Increase the reference count on the #PangoCoverage by one.
-if the result is zero, free the coverage and all associated memory.
+Decrease the reference count on the #PangoCoverage by one.
+If the result is zero, free the coverage and all associated memory.
 
 </description>
 <parameters>
@@ -1639,29 +1752,28 @@ Computes the coverage map for a given font and language tag.
 </return>
 </function>
 
-<function name="pango_get_mirror_char">
+<function name="pango_attr_iterator_get">
 <description>
-If @ch has the Unicode mirrored property and there is another Unicode
-character that typically has a glyph that is the mirror image of @ch&apos;s
-glyph, puts that character in the address pointed to by @mirrored_ch.
-
-Use g_unichar_get_mirror_char() instead; the docs for that function
-provide full details.
+Find the current attribute of a particular type at the iterator
+location. When multiple attributes of the same type overlap,
+the attribute whose range starts closest to the current location
+is used.
 
 
 </description>
 <parameters>
-<parameter name="ch">
-<parameter_description> a Unicode character
+<parameter name="iterator">
+<parameter_description> a #PangoAttrIterator
 </parameter_description>
 </parameter>
-<parameter name="mirrored_ch">
-<parameter_description> location to store the mirrored character
+<parameter name="type">
+<parameter_description> the type of attribute to find.
 </parameter_description>
 </parameter>
 </parameters>
-<return> %TRUE if @ch has a mirrored character and @mirrored_ch is
-filled in, %FALSE otherwise
+<return> the current attribute of the given type, or %NULL
+if no attribute of that type applies to the current
+location.
 </return>
 </function>
 
@@ -1688,29 +1800,12 @@ a literal quote. Leading white space outside of quotes is skipped.
 </return>
 </function>
 
-<function name="pango_context_set_language">
+<function name="pango_layout_get_auto_dir">
 <description>
-Sets the global language tag for the context.  The default language
-for the locale of the running process can be found using
-pango_language_get_default().
+Gets whether to calculate the bidirectional base direction
+for the layout according to the contents of the layout.
+See pango_layout_set_auto_dir().
 
-</description>
-<parameters>
-<parameter name="context">
-<parameter_description> a #PangoContext
-</parameter_description>
-</parameter>
-<parameter name="language">
-<parameter_description> the new language tag.
-</parameter_description>
-</parameter>
-</parameters>
-<return></return>
-</function>
-
-<function name="pango_layout_set_text">
-<description>
-Sets the text of the layout.
 
 </description>
 <parameters>
@@ -1718,20 +1813,12 @@ Sets the text of the layout.
 <parameter_description> a #PangoLayout
 </parameter_description>
 </parameter>
-<parameter name="text">
-<parameter_description> a valid UTF-8 string
-</parameter_description>
-</parameter>
-<parameter name="length">
-<parameter_description> maximum length of @text, in bytes. -1 indicates that
-the string is nul-terminated and the length should be
-calculated.  The text will also be truncated on
-encountering a nul-termination even when @length is
-positive.
-</parameter_description>
-</parameter>
 </parameters>
-<return></return>
+<return> %TRUE if the bidirectional base direction
+is computed from the layout&apos;s contents, %FALSE otherwise.
+
+Since: 1.4
+</return>
 </function>
 
 <function name="pango_attribute_equal">
@@ -1900,6 +1987,26 @@ where the cursor should be displayed.
 <return></return>
 </function>
 
+<function name="pango_layout_iter_copy">
+<description>
+Copies a #PangLayoutIter.
+
+
+</description>
+<parameters>
+<parameter name="iter">
+<parameter_description> a #PangoLayoutIter, may be %NULL
+</parameter_description>
+</parameter>
+</parameters>
+<return> the newly allocated #PangoLayoutIter, which should
+be freed with pango_layout_iter_free(), or %NULL if
+@iter was %NULL.
+
+Since: 1.20
+</return>
+</function>
+
 <function name="pango_attr_gravity_new">
 <description>
 Create a new gravity attribute.
@@ -2012,84 +2119,61 @@ Releases any resources allocated by pango_win32_font_done_font()
 <return></return>
 </function>
 
-<function name="pango_parse_enum">
+<function name="pango_ot_buffer_set_rtl">
 <description>
-Parses an enum type and stored the result in @value.
+Sets whether glyphs will be rendered right-to-left.  This setting
+is needed for proper horizontal positioning of right-to-left scripts.
 
-If @str does not match the nick name of any of the possible values for the
-enum, %FALSE is returned, a warning is issued if @warn is %TRUE, and a
-string representing the list of possible values is stored in
-@possible_values.  The list is slash-separated, eg.
-&quot;none/start/middle/end&quot;.  If failed and @possible_values is not %NULL,
-returned string should be freed using g_free().
+Since: 1.4
+
+</description>
+<parameters>
+<parameter name="buffer">
+<parameter_description> a #PangoOTBuffer
+</parameter_description>
+</parameter>
+<parameter name="rtl">
+<parameter_description> %TRUE for right-to-left text
+</parameter_description>
+</parameter>
+</parameters>
+<return></return>
+</function>
+
+<function name="pango_version_string">
+<description>
+This is similar to the macro %PANGO_VERSION_STRING except that
+it returns the version of Pango available at run-time, as opposed to
+the version available at compile-time.
 
 
 </description>
 <parameters>
-<parameter name="type">
-<parameter_description> enum type to parse, eg. %PANGO_TYPE_ELLIPSIZE_MODE.
-</parameter_description>
-</parameter>
-<parameter name="str">
-<parameter_description> string to parse.  May be %NULL.
-</parameter_description>
-</parameter>
-<parameter name="value">
-<parameter_description> integer to store the result in, or %NULL.
-</parameter_description>
-</parameter>
-<parameter name="warn">
-<parameter_description> if %TRUE, issue a g_warning() on bad input.
-</parameter_description>
-</parameter>
-<parameter name="possible_values">
-<parameter_description> place to store list of possible values on failure, or %NULL.
-</parameter_description>
-</parameter>
 </parameters>
-<return> %TRUE if @str was successfully parsed.
+<return> A string containing the version of Pango library
+available at run time.
+The returned string is owned by Pango and should not be modified
+or freed.
 
 Since: 1.16
 </return>
 </function>
 
-<function name="pango_attribute_destroy">
+<function name="_pango_glyph_item_iter_prev_cluster">
 <description>
-Destroy a #PangoAttribute and free all associated memory.
+Moves the iterator to the preceding cluster in the glyph item.
+
 
 </description>
 <parameters>
-<parameter name="attr">
-<parameter_description> a #PangoAttribute.
+<parameter name="iter">
+<parameter_description> a #PangoGlyphItemIter
 </parameter_description>
 </parameter>
 </parameters>
-<return></return>
-</function>
-
-<function name="pango_font_description_set_size">
-<description>
-Sets the size field of a font description in fractional points. This is mutually
-exclusive with pango_font_description_set_absolute_size().
-
-</description>
-<parameters>
-<parameter name="desc">
-<parameter_description> a #PangoFontDescription
-</parameter_description>
-</parameter>
-<parameter name="size">
-<parameter_description> the size of the font in points, scaled by PANGO_SCALE. (That is,
-a @size value of 10 * PANGO_SCALE is a 10 point font. The conversion
-factor between points and device units depends on system configuration
-and the output device. For screen display, a logical DPI of 96 is
-common, in which case a 10 point font corresponds to a 10 * (96 / 72) = 13.3
-pixel font. Use pango_font_description_set_absolute_size() if you need
-a particular size in device units.
-</parameter_description>
-</parameter>
-</parameters>
-<return></return>
+<return> %TRUE if the iterator was moved, %FALSE if we were already on the
+first cluster.
+</return>
 </function>
 
 <function name="pango_cairo_show_layout_line">
@@ -2327,7 +2411,8 @@ through this font cache will be freed along with the cache.
 
 <function name="pango_layout_set_width">
 <description>
-Sets the width to which the lines of the #PangoLayout should wrap.
+Sets the width to which the lines of the #PangoLayout should wrap or
+ellipsized.  The default value is -1: no width set.
 
 </description>
 <parameters>
@@ -2337,28 +2422,33 @@ Sets the width to which the lines of the #PangoLayout should wrap.
 </parameter>
 <parameter name="width">
 <parameter_description> the desired width in Pango units, or -1 to indicate that no
-wrapping should be performed.
+wrapping or ellipsization should be performed.
 </parameter_description>
 </parameter>
 </parameters>
 <return></return>
 </function>
 
-<function name="pango_attr_language_new">
+<function name="pango_cairo_layout_path">
 <description>
-Create a new language tag attribute.
+Adds the text in a #PangoLayout to the current path in the
+specified cairo context.  The top-left corner of the #PangoLayout
+will be at the current point of the cairo context.
 
+Since: 1.10
 
 </description>
 <parameters>
-<parameter name="language">
-<parameter_description> language tag
+<parameter name="cr">
+<parameter_description> a Cairo context
+</parameter_description>
+</parameter>
+<parameter name="layout">
+<parameter_description> a Pango layout
 </parameter_description>
 </parameter>
 </parameters>
-<return> the newly allocated #PangoAttribute, which should be
-freed with pango_attribute_destroy().
-</return>
+<return></return>
 </function>
 
 <function name="pango_context_set_gravity_hint">
@@ -2385,25 +2475,25 @@ Since: 1.16
 <return></return>
 </function>
 
-<function name="pango_layout_set_indent">
+<function name="pango_layout_get_font_description">
 <description>
-Sets the width in Pango units to indent each paragraph. A negative value
-of @indent will produce a hanging indentation. That is, the first line will
-have the full width, and subsequent lines will be indented by the
-absolute value of @indent.
+Gets the font description for the layout, if any.
+
 
 </description>
 <parameters>
 <parameter name="layout">
-<parameter_description> a #PangoLayout.
-</parameter_description>
-</parameter>
-<parameter name="indent">
-<parameter_description> the amount by which to indent.
+<parameter_description> a #PangoLayout
 </parameter_description>
 </parameter>
 </parameters>
-<return></return>
+<return> a pointer to the layout&apos;s font description,
+or %NULL if the font description from the layout&apos;s
+context is inherited. This value is owned by the layout
+and must not be modified or freed.
+
+Since: 1.8
+</return>
 </function>
 
 <function name="pango_parse_weight">
@@ -2554,7 +2644,7 @@ Since: 1.6
 </description>
 <parameters>
 <parameter name="glyph_item">
-<parameter_description> a #PangoGlyphItem
+<parameter_description> a #PangoGlyphItem, may be %NULL
 </parameter_description>
 </parameter>
 </parameters>
@@ -2677,9 +2767,8 @@ simply use pango_get_log_attrs().
 
 <function name="pango_layout_set_spacing">
 <description>
-Sets the amount of spacing in #PangoGlyphUnit between the lines of the
+Sets the amount of spacing in Pango unit between the lines of the
 layout.
-
 
 </description>
 <parameters>
@@ -2713,21 +2802,24 @@ freed with pango_attribute_destroy().
 </return>
 </function>
 
-<function name="pango_attr_list_get_iterator">
+<function name="pango_ft2_get_unknown_glyph">
 <description>
-Create a iterator initialized to the beginning of the list.
-@list must not be modified until this iterator is freed.
+Return the index of a glyph suitable for drawing unknown characters with
+@font, or %PANGO_GLYPH_EMPTY if no suitable glyph found.
+
+If you want to draw an unknown-box for a character that is not covered
+by the font,
+use PANGO_GET_UNKNOWN_GLYPH() instead.
 
 
 </description>
 <parameters>
-<parameter name="list">
-<parameter_description> a #PangoAttrList
+<parameter name="font">
+<parameter_description> a #PangoFont
 </parameter_description>
 </parameter>
 </parameters>
-<return> the newly allocated #PangoAttrIterator, which should
-be freed with pango_attr_iterator_destroy().
+<return> a glyph index into @font, or %PANGO_GLYPH_EMPTY
 </return>
 </function>
 
@@ -2956,11 +3048,13 @@ Since: 1.18
 </return>
 </function>
 
-<function name="pango_font_description_hash">
+<function name="pango_font_description_to_string">
 <description>
-Computes a hash of a #PangoFontDescription structure suitable
-to be used, for example, as an argument to g_hash_table_new().
-The hash value is independent of @desc-&amp;gt;mask.
+Creates a string representation of a font description. See
+pango_font_description_from_string() for a description of the
+format of the string representation. The family list in the
+string description will only have a terminating comma if the
+last word of the list is a valid style option.
 
 
 </description>
@@ -2970,8 +3064,34 @@ The hash value is independent of @desc-&amp;gt;mask.
 </parameter_description>
 </parameter>
 </parameters>
-<return> the hash value.
+<return> a new string that must be freed with g_free().
 </return>
+</function>
+
+<function name="pango_layout_line_get_extents">
+<description>
+Computes the logical and ink extents of a layout line. See
+pango_font_get_glyph_extents() for details about the interpretation
+of the rectangles.
+
+</description>
+<parameters>
+<parameter name="line">
+<parameter_description>     a #PangoLayoutLine
+</parameter_description>
+</parameter>
+<parameter name="ink_rect">
+<parameter_description> rectangle used to store the extents of the glyph string
+as drawn, or %NULL
+</parameter_description>
+</parameter>
+<parameter name="logical_rect">
+<parameter_description> rectangle used to store the logical extents of the glyph
+string, or %NULL
+</parameter_description>
+</parameter>
+</parameters>
+<return></return>
 </function>
 
 <function name="pango_font_face_is_synthesized">
@@ -3165,7 +3285,7 @@ Frees a color allocated by pango_color_copy().
 </description>
 <parameters>
 <parameter name="color">
-<parameter_description> an allocated #PangoColor
+<parameter_description> an allocated #PangoColor, may be %NULL
 </parameter_description>
 </parameter>
 </parameters>
@@ -3196,11 +3316,33 @@ Since: 1.8
 </return>
 </function>
 
+<function name="pango_glyph_item_copy">
+<description>
+Make a deep copy an existing #PangoGlyphItem structure.
+
+
+</description>
+<parameters>
+<parameter name="orig">
+<parameter_description> a #PangoGlyphItem, may be %NULL
+</parameter_description>
+</parameter>
+</parameters>
+<return> the newly allocated #PangoGlyphItem, which should
+be freed with pango_glyph_item_free(), or %NULL
+if @orig was %NULL.
+
+Since: 1.20
+</return>
+</function>
+
 <function name="pango_cairo_context_set_font_options">
 <description>
 Sets the font options used when rendering text with this context.
 These options override any options that pango_cairo_update_context()
 derives from the target surface.
+
+Since: 1.10
 
 </description>
 <parameters>
@@ -3252,23 +3394,24 @@ off the end).
 <return></return>
 </function>
 
-<function name="pango_font_map_get_shape_engine_type">
+<function name="pango_layout_set_wrap">
 <description>
-Return value: the ID string for shape engines for
+Sets the wrap mode; the wrap mode only has effect if a width
+is set on the layout with pango_layout_set_width().
+To turn off wrapping, set the width to -1.
 
 </description>
 <parameters>
-<parameter name="fontmap">
-<parameter_description> a #PangoFontMap
+<parameter name="layout">
+<parameter_description> a #PangoLayout
+</parameter_description>
+</parameter>
+<parameter name="wrap">
+<parameter_description> the wrap mode
 </parameter_description>
 </parameter>
 </parameters>
-<return> the ID string for shape engines for
-this fontmap. Owned by Pango, should not be modified
-or freed.
-
-Since: 1.4
-</return>
+<return></return>
 </function>
 
 <function name="pango_attr_shape_new_with_data">
@@ -3383,12 +3526,13 @@ Copy an existing #PangoItem structure.
 </description>
 <parameters>
 <parameter name="item">
-<parameter_description> a #PangoItem
+<parameter_description> a #PangoItem, may be %NULL
 </parameter_description>
 </parameter>
 </parameters>
 <return> the newly allocated #PangoItem, which should
-be freed with pango_item_free().
+be freed with pango_item_free(), or %NULL if
+@item was NULL.
 </return>
 </function>
 
@@ -3404,7 +3548,7 @@ should be and how much you should shift the layout when rendering.
 
 For better accuracy, you should use pango_matrix_transform_rectangle() on
 original rectangle in Pango units and convert to pixels afterward
-using pango_extents_to_pixels() as @ink_rect.
+using pango_extents_to_pixels()&apos;s first argument.
 
 Since: 1.16
 
@@ -3442,17 +3586,48 @@ Since: 1.6
 </return>
 </function>
 
-<function name="pango_ot_ruleset_description_free">
+<function name="pango_cairo_create_context">
 <description>
-Frees a ruleset description allocated by 
-pango_ot_ruleset_description_copy().
+Creates a context object set up to match the current transformation
+and target surface of the Cairo context.  This context can then be
+used to create a layout using pango_layout_new().
 
-Since: 1.18
+This function is a convenience function that creates a context using
+the default font map, then updates it to @cr.  If you just need to
+create a layout for use with @cr and do not need to access #PangoContext
+directly, you can use pango_cairo_create_layout() instead.
+
 
 </description>
 <parameters>
-<parameter name="desc">
-<parameter_description> an allocated #PangoOTRulesetDescription
+<parameter name="cr">
+<parameter_description> a Cairo context
+</parameter_description>
+</parameter>
+</parameters>
+<return> the newly created #PangoContext. Free with
+g_object_unref().
+
+Since: 1.22
+</return>
+</function>
+
+<function name="pango_layout_iter_get_char_extents">
+<description>
+Gets the extents of the current character, in layout coordinates
+(origin is the top left of the entire layout). Only logical extents
+can sensibly be obtained for characters; ink extents make sense only
+down to the level of clusters.
+
+
+</description>
+<parameters>
+<parameter name="iter">
+<parameter_description> a #PangoLayoutIter
+</parameter_description>
+</parameter>
+<parameter name="logical_rect">
+<parameter_description> rectangle to fill with logical extents
 </parameter_description>
 </parameter>
 </parameters>
@@ -3503,7 +3678,7 @@ current font description
 <description>
 This is a convenience function that 
 for each feature in the feature map array @features
-converts the feature name to a #PangoOTTag feature tag using FT_MAKE_TAG()
+converts the feature name to a #PangoOTTag feature tag using PANGO_OT_TAG_MAKE()
 and calls pango_ot_ruleset_maybe_add_feature() on it.
 
 
@@ -3530,25 +3705,6 @@ and calls pango_ot_ruleset_maybe_add_feature() on it.
 and added to @ruleset.
 
 Since: 1.18
-</return>
-</function>
-
-<function name="pango_xft_font_get_unknown_glyph">
-<description>
-Return value: a glyph index into @font.
-
-</description>
-<parameters>
-<parameter name="font">
-<parameter_description> a #PangoFont.
-</parameter_description>
-</parameter>
-<parameter name="wc">
-<parameter_description> the Unicode character for which a glyph is needed.
-</parameter_description>
-</parameter>
-</parameters>
-<return> a glyph index into @font.
 </return>
 </function>
 
@@ -3591,24 +3747,21 @@ Since: 1.4
 <return></return>
 </function>
 
-<function name="pango_ft2_get_unknown_glyph">
+<function name="pango_attr_list_get_iterator">
 <description>
-Return the index of a glyph suitable for drawing unknown characters with
-@font, or %PANGO_GLYPH_EMPTY if no suitable glyph found.
-
-If you want to draw an unknown-box for a character that is not covered
-by the font,
-use PANGO_GET_UNKNOWN_GLYPH() instead.
+Create a iterator initialized to the beginning of the list.
+@list must not be modified until this iterator is freed.
 
 
 </description>
 <parameters>
-<parameter name="font">
-<parameter_description> a #PangoFont
+<parameter name="list">
+<parameter_description> a #PangoAttrList
 </parameter_description>
 </parameter>
 </parameters>
-<return> a glyph index into @font, or %PANGO_GLYPH_EMPTY
+<return> the newly allocated #PangoAttrIterator, which should
+be freed with pango_attr_iterator_destroy().
 </return>
 </function>
 
@@ -3631,20 +3784,21 @@ Return value: a glyph index into @font
 </return>
 </function>
 
-<function name="pango_context_get_language">
+<function name="pango_renderer_deactivate">
 <description>
-Retrieves the global language tag for the context.
+Cleans up after rendering operations on @renderer. See
+docs for pango_renderer_activate().
 
+Since: 1.8
 
 </description>
 <parameters>
-<parameter name="context">
-<parameter_description> a #PangoContext
+<parameter name="renderer">
+<parameter_description> a #PangoRenderer
 </parameter_description>
 </parameter>
 </parameters>
-<return> the global language tag.
-</return>
+<return></return>
 </function>
 
 <function name="pango_font_metrics_get_approximate_digit_width">
@@ -3888,6 +4042,11 @@ Since: 1.18
 Counts the number unknown glyphs in @layout.  That is, zero if
 glyphs for all characters in the layout text were found, or more
 than zero otherwise.
+
+This function can be used to determine if there are any fonts
+available to render all characters in a certain string, or when
+used in combination with %PANGO_ATTR_FALLBACK, to check if a
+certain font supports all the characters in the string.
 
 
 </description>
@@ -4137,30 +4296,48 @@ Since: 1.6
 <return></return>
 </function>
 
-<function name="pango_find_map">
+<function name="pango_layout_set_height">
 <description>
-Locate a #PangoMap for a particular engine type and render
-type. The resulting map can be used to determine the engine
-for each character.
+Sets the height to which the #PangoLayout should be ellipsized at.  There
+are two different behaviors, based on whether @height is positive or
+negative.
 
+If @height is positive, it will be the maximum height of the layout.  Only
+lines would be shown that would fit, and if there is any text omitted,
+an ellipsis added.  At least one line is included in each paragraph regardless
+of how small the height value is.  A value of zero will render exactly one
+line for the entire layout.
+
+If @height is negative, it will be the (negative of) maximum number of lines per
+paragraph.  That is, the total number of lines shown may well be more than
+this value if the layout contains multiple paragraphs of text.
+The default value of -1 means that first line of each paragraph is ellipsized.
+This behvaior may be changed in the future to act per layout instead of per
+paragraph.  File a bug against pango at &amp;lt;ulink
+url=&quot;http://bugzilla.gnome.org/&quot;&amp;gt;http://bugzilla.gnome.org/&amp;lt;/ulink&amp;gt; if your
+code relies on this behavior.
+
+Height setting only has effect if a positive width is set on
+@layout and ellipsization mode of @layout is not %PANGO_ELLIPSIZE_NONE.
+The behavior is undefined if a height other than -1 is set and
+ellipsization mode is set to %PANGO_ELLIPSIZE_NONE, and may change in the
+future.
+
+Since: 1.20
 
 </description>
 <parameters>
-<parameter name="language">
-<parameter_description> the language tag for which to find the map
+<parameter name="layout">
+<parameter_description> a #PangoLayout.
 </parameter_description>
 </parameter>
-<parameter name="engine_type_id">
-<parameter_description> the engine type for the map to find
-</parameter_description>
-</parameter>
-<parameter name="render_type_id">
-<parameter_description> the render type for the map to find
+<parameter name="height">
+<parameter_description> the desired height of the layout in Pango units if positive,
+or desired number of lines if negative.
 </parameter_description>
 </parameter>
 </parameters>
-<return> the suitable #PangoMap.
-</return>
+<return></return>
 </function>
 
 <function name="pango_context_get_font_description">
@@ -4303,20 +4480,28 @@ when it is no longer needed.
 <return></return>
 </function>
 
-<function name="pango_font_describe_with_absolute_size">
+<function name="pango_context_load_fontset">
 <description>
-Return value: a newly-allocated #PangoFontDescription object.
+Load a set of fonts in the context that can be used to render
+a font matching @desc.
+
 
 </description>
 <parameters>
-<parameter name="font">
-<parameter_description> a #PangoFont
+<parameter name="context">
+<parameter_description> a #PangoContext
+</parameter_description>
+</parameter>
+<parameter name="desc">
+<parameter_description> a #PangoFontDescription describing the fonts to load
+</parameter_description>
+</parameter>
+<parameter name="language">
+<parameter_description> a #PangoLanguage the fonts will be used for
 </parameter_description>
 </parameter>
 </parameters>
-<return> a newly-allocated #PangoFontDescription object.
-
-Since: 1.14
+<return> the fontset, or %NULL if no font matched.
 </return>
 </function>
 
@@ -4342,21 +4527,20 @@ Since: 1.16
 <return></return>
 </function>
 
-<function name="pango_matrix_get_font_scale_factor">
+<function name="pango_layout_get_alignment">
 <description>
-Return value: the scale factor of @matrix on the height of the font,
+Gets the alignment for the layout: how partial lines are
+positioned within the horizontal space available.
+
 
 </description>
 <parameters>
-<parameter name="matrix">
-<parameter_description> a #PangoMatrix, may be %NULL
+<parameter name="layout">
+<parameter_description> a #PangoLayout
 </parameter_description>
 </parameter>
 </parameters>
-<return> the scale factor of @matrix on the height of the font,
-or 1.0 if @matrix is %NULL.
-
-Since: 1.12
+<return> the alignment.
 </return>
 </function>
 
@@ -4389,20 +4573,21 @@ Since: 1.4
 </return>
 </function>
 
-<function name="pango_attr_list_unref">
+<function name="pango_attr_type_register">
 <description>
-Decrease the reference count of the given attribute list by one.
-If the result is zero, free the attribute list and the attributes
-it contains.
+Allocate a new attribute type ID.  The attribute type name can be accessed
+later by using pango_attr_type_get_name().
+
 
 </description>
 <parameters>
-<parameter name="list">
-<parameter_description> a #PangoAttrList
+<parameter name="name">
+<parameter_description> an identifier for the type
 </parameter_description>
 </parameter>
 </parameters>
-<return></return>
+<return> the new type ID.
+</return>
 </function>
 
 <function name="pango_font_metrics_get_strikethrough_thickness">
@@ -4463,12 +4648,12 @@ Converts an index within a line to a X position.
 </parameter>
 <parameter name="trailing">
 <parameter_description> an integer indicating the edge of the grapheme to retrieve
-the position of. If 0, the trailing edge of the grapheme,
-if &amp;gt; 0, the leading of the grapheme.
+the position of. If &amp;gt; 0, the trailing edge of the grapheme,
+if 0, the leading of the grapheme.
 </parameter_description>
 </parameter>
 <parameter name="x_pos">
-<parameter_description> location to store the x_offset (in #PangoGlyphUnit)
+<parameter_description> location to store the x_offset (in Pango unit)
 </parameter_description>
 </parameter>
 </parameters>
@@ -4509,10 +4694,9 @@ in Pango units.
 <description>
 Clear all cached information and fontsets for this font map;
 this should be called whenever there is a change in the
-output of the default_substitute() virtual function.
-
-This function is intended to be used only by backend implementations
-deriving from #PangoFcFontmap.
+output of the default_substitute() virtual function of the
+font map, or if fontconfig has been reinitialized to new
+configuration.
 
 Since: 1.4
 
@@ -4599,30 +4783,32 @@ applications in most circumstances.
 to write @language or if nothing is known about @language
 (including the case that @language is %NULL),
 %FALSE otherwise.
-
+ 
 Since: 1.4
 </return>
 </function>
 
-<function name="pango_glyph_string_get_width">
+<function name="pango_xft_shutdown_display">
 <description>
-Computes the logical width of the glyph string as can also be computed
-using pango_glyph_string_extents().  However, since this only computes the
-width, it&apos;s much faster.  This is in fact only a convenience function that
-computes the sum of geometry.width for each glyph in the @glyphs.
+Release any resources that have been cached for the
+combination of @display and @screen. Note that when the
+X display is closed, resources are released automatically,
+without needing to call this function.
 
+Since: 1.2
 
 </description>
 <parameters>
-<parameter name="glyphs">
-<parameter_description>   a #PangoGlyphString
+<parameter name="display">
+<parameter_description> an X display
+</parameter_description>
+</parameter>
+<parameter name="screen">
+<parameter_description> the screen number of a screen within @display
 </parameter_description>
 </parameter>
 </parameters>
-<return> the logical width of the glyph string.
-
-Since: 1.14
-</return>
+<return></return>
 </function>
 
 <function name="pango_font_family_get_name">
@@ -4708,7 +4894,7 @@ Load the font in the fontmap that is the closest match for @desc.
 </parameter_description>
 </parameter>
 </parameters>
-<return>the font loaded, or %NULL if no font matched.
+<return> the font loaded, or %NULL if no font matched.
 </return>
 </function>
 
@@ -4830,20 +5016,18 @@ Free a #PangoItem and all associated memory.
 </description>
 <parameters>
 <parameter name="item">
-<parameter_description> a #PangoItem
+<parameter_description> a #PangoItem, may be %NULL
 </parameter_description>
 </parameter>
 </parameters>
 <return></return>
 </function>
 
-<function name="pango_font_description_to_string">
+<function name="pango_font_description_hash">
 <description>
-Creates a string representation of a font description. See
-pango_font_description_from_string() for a description of the
-format of the string representation. The family list in the
-string description will only have a terminating comma if the
-last word of the list is a valid style option.
+Computes a hash of a #PangoFontDescription structure suitable
+to be used, for example, as an argument to g_hash_table_new().
+The hash value is independent of @desc-&amp;gt;mask.
 
 
 </description>
@@ -4853,7 +5037,7 @@ last word of the list is a valid style option.
 </parameter_description>
 </parameter>
 </parameters>
-<return> a new string that must be freed with g_free().
+<return> the hash value.
 </return>
 </function>
 
@@ -5002,22 +5186,31 @@ Return value: a #PangoFT2FontMap.
 </return>
 </function>
 
-<function name="pango_ft2_font_map_new">
+<function name="pango_fc_font_description_from_pattern">
 <description>
-Create a new #PangoFT2FontMap object; a fontmap is used
-to cache information about available fonts, and holds
-certain global parameters such as the resolution and
-the default substitute function (see
-pango_ft2_font_map_set_default_substitute()).
+Creates a #PangoFontDescription that matches the specified
+Fontconfig pattern as closely as possible. Many possible Fontconfig
+pattern values, such as %FC_RASTERIZER or %FC_DPI, don&apos;t make sense in
+the context of #PangoFontDescription, so will be ignored.
 
 
 </description>
 <parameters>
+<parameter name="pattern">
+<parameter_description> a #FcPattern
+</parameter_description>
+</parameter>
+<parameter name="include_size">
+<parameter_description> if %TRUE, the pattern will include the size from
+the @pattern; otherwise the resulting pattern will be unsized.
+(only %FC_SIZE is examined, not %FC_PIXEL_SIZE)
+</parameter_description>
+</parameter>
 </parameters>
-<return> the newly created fontmap object. Unref
-with g_object_unref() when you are finished with it.
+<return> a new #PangoFontDescription. Free with
+pango_font_description_free().
 
-Since: 1.2
+Since: 1.4
 </return>
 </function>
 
@@ -5081,38 +5274,19 @@ text or properties.
 </return>
 </function>
 
-<function name="pango_cairo_show_layout">
-<description>
-Draws a #PangoLayoutLine in the specified cairo context.
-The top-left corner of the #PangoLayout will be drawn
-at the current point of the cairo context.
-
-Since: 1.10
-
-</description>
-<parameters>
-<parameter name="cr">
-<parameter_description> a Cairo context
-</parameter_description>
-</parameter>
-<parameter name="layout">
-<parameter_description> a Pango layout
-</parameter_description>
-</parameter>
-</parameters>
-<return></return>
-</function>
-
 <function name="pango_layout_set_ellipsize">
 <description>
 Sets the type of ellipsization being performed for @layout.
 Depending on the ellipsization mode @ellipsize text is
-removed from the start, middle, or end of lines so they
-fit within the width of layout set with pango_layout_set_width ().
+removed from the start, middle, or end of text so they
+fit within the width and height of layout set with
+pango_layout_set_width() and pango_layout_set_height().
 
 If the layout contains characters such as newlines that
-force it to be layed out in multiple lines, then each line
-is ellipsized separately.
+force it to be layed out in multiple paragraphs, then whether
+each paragraph is ellipsized separately or the entire layout
+is ellipsized as a whole depends on the set height of the layout.
+See pango_layout_set_height() for details.
 
 Since: 1.6
 
@@ -5130,27 +5304,25 @@ Since: 1.6
 <return></return>
 </function>
 
-<function name="pango_xft_shutdown_display">
+<function name="pango_glyph_string_get_width">
 <description>
-Release any resources that have been cached for the
-combination of @display and @screen. Note that when the
-X display is closed, resources are released automatically,
-without needing to call this function.
+Computes the logical width of the glyph string as can also be computed
+using pango_glyph_string_extents().  However, since this only computes the
+width, it&apos;s much faster.  This is in fact only a convenience function that
+computes the sum of geometry.width for each glyph in the @glyphs.
 
-Since: 1.2
 
 </description>
 <parameters>
-<parameter name="display">
-<parameter_description> an X display
-</parameter_description>
-</parameter>
-<parameter name="screen">
-<parameter_description> the screen number of a screen within @display
+<parameter name="glyphs">
+<parameter_description>   a #PangoGlyphString
 </parameter_description>
 </parameter>
 </parameters>
-<return></return>
+<return> the logical width of the glyph string.
+
+Since: 1.14
+</return>
 </function>
 
 <function name="pango_layout_set_markup">
@@ -5172,6 +5344,31 @@ the markup text isn&apos;t scanned for accelerators.
 <parameter name="length">
 <parameter_description> length of marked-up text in bytes, or -1 if @markup is
 nul-terminated
+</parameter_description>
+</parameter>
+</parameters>
+<return></return>
+</function>
+
+<function name="pango_context_set_base_dir">
+<description>
+Sets the base direction for the context.
+
+The base direction is used in applying the Unicode bidirectional
+algorithm; if the @direction is %PANGO_DIRECTION_LTR or
+%PANGO_DIRECTION_RTL, then the value will be used as the paragraph
+direction in the Unicode bidirectional algorithm.  A value of
+%PANGO_DIRECTION_WEAK_LTR or %PANGO_DIRECTION_WEAK_RTL is used only
+for paragraphs that do not contain any strong characters themselves.
+
+</description>
+<parameters>
+<parameter name="context">
+<parameter_description> a #PangoContext
+</parameter_description>
+</parameter>
+<parameter name="direction">
+<parameter_description> the new base direction
 </parameter_description>
 </parameter>
 </parameters>
@@ -5266,16 +5463,32 @@ available scripts.  Should be freed using g_free().
 </return>
 </function>
 
-<function name="pango_script_iter_free">
+<function name="pango_renderer_part_changed">
 <description>
-Frees a #PangoScriptIter created with pango_script_iter_new().
+Informs Pango that the way that the rendering is done
+for @part has changed in a way that would prevent multiple
+pieces being joined together into one drawing call. For
+instance, if a subclass of #PangoRenderer was to add a stipple
+option for drawing underlines, it needs to call
 
-Since: 1.4
+&amp;lt;informalexample&amp;gt;&amp;lt;programlisting&amp;gt;
+pango_renderer_part_changed (render, PANGO_RENDER_PART_UNDERLINE);
+&amp;lt;/programlisting&amp;gt;&amp;lt;/informalexample&amp;gt;
+
+When the stipple changes or underlines with different stipples
+might be joined together. Pango automatically calls this for
+changes to colors. (See pango_renderer_set_color())
+
+Since: 1.8
 
 </description>
 <parameters>
-<parameter name="iter">
-<parameter_description> a #PangoScriptIter
+<parameter name="renderer">
+<parameter_description> a #PangoRenderer
+</parameter_description>
+</parameter>
+<parameter name="part">
+<parameter_description> the part for which rendering has changed.
 </parameter_description>
 </parameter>
 </parameters>
@@ -5286,7 +5499,9 @@ Since: 1.4
 <description>
 Computes the logical and ink extents of @layout_line in device units.
 This function just calls pango_layout_line_get_extents() followed by
-pango_extents_to_pixels().
+two pango_extents_to_pixels() calls, rounding @ink_rect and @logical_rect
+such that the rounded rectangles fully contain the unrounded one (that is,
+passes them as first argument to pango_extents_to_pixels()).
 
 </description>
 <parameters>
@@ -5378,27 +5593,22 @@ Since: 1.10
 <return></return>
 </function>
 
-<function name="pango_x_font_cache_load">
+<function name="pango_layout_new">
 <description>
-Loads a #XFontStruct from a X Logical Font Description. The
-result may be newly loaded, or it may have been previously
-stored.
+Create a new #PangoLayout object with attributes initialized to
+default values for a particular #PangoContext.
 
 
 </description>
 <parameters>
-<parameter name="cache">
-<parameter_description> a #PangoXFontCache
-</parameter_description>
-</parameter>
-<parameter name="xlfd">
-<parameter_description> the X Logical Font Description to load.
+<parameter name="context">
+<parameter_description> a #PangoContext
 </parameter_description>
 </parameter>
 </parameters>
-<return> The font structure, or %NULL if the font could
-not be loaded. In order to free this structure, you must call
-pango_x_font_cache_unload().
+<return> the newly allocated #PangoLayout, with a reference
+count of one, which should be freed with
+g_object_unref().
 </return>
 </function>
 
@@ -5625,51 +5835,74 @@ Since: 1.16
 Converts extents from Pango units to device units, dividing by the
 %PANGO_SCALE factor and performing rounding.
 
-The ink rectangle is converted by flooring the x/y coordinates and extending
+The @inclusive rectangle is converted by flooring the x/y coordinates and extending
 width/height, such that the final rectangle completely includes the original
 rectangle.
 
-The logical rectangle is converted by rounding the coordinates
-of the rectangle to the nearest device unit.
+The @nearest rectangle is converted by rounding the coordinates
+of the rectangle to the nearest device unit (pixel).
 
-Note that in certain situations you may want pass a logical extents
-rectangle to this function as @ink_rect.  The rule is: if you want the
-resulting device-space rectangle to completely contain the original
-rectangle, pass it in as @ink_rect.
+The rule to which argument to use is: if you want the resulting device-space
+rectangle to completely contain the original rectangle, pass it in as @inclusive.
+If you want two touching-but-not-overlapping rectangles stay
+touching-but-not-overlapping after rounding to device units, pass them in
+as @nearest.
 
 Since: 1.16
 
 </description>
 <parameters>
-<parameter name="ink_rect">
-<parameter_description> ink rectangle to convert, or %NULL.
+<parameter name="inclusive">
+<parameter_description> rectangle to round to pixels inclusively, or %NULL.
 </parameter_description>
 </parameter>
-<parameter name="logical_rect">
-<parameter_description> logical rectangle to convert, or %NULL.
+<parameter name="nearest">
+<parameter_description> rectangle to round to nearest pixels, or %NULL.
 </parameter_description>
 </parameter>
 </parameters>
 <return></return>
 </function>
 
-<function name="pango_ot_tag_to_language">
+<function name="pango_glyph_string_index_to_x">
 <description>
-Finds a #PangoLanguage corresponding to @language_tag.
-
+Converts from character position to x position. (X position
+is measured from the left edge of the run). Character positions
+are computed by dividing up each cluster into equal portions.
 
 </description>
 <parameters>
-<parameter name="language_tag">
-<parameter_description> A #PangoOTTag OpenType language-system tag
+<parameter name="glyphs">
+<parameter_description>    the glyphs return from pango_shape()
+</parameter_description>
+</parameter>
+<parameter name="text">
+<parameter_description>      the text for the run
+</parameter_description>
+</parameter>
+<parameter name="length">
+<parameter_description>    the number of bytes (not characters) in @text.
+</parameter_description>
+</parameter>
+<parameter name="analysis">
+<parameter_description>  the analysis information return from pango_itemize()
+</parameter_description>
+</parameter>
+<parameter name="index_">
+<parameter_description>    the byte index within @text
+</parameter_description>
+</parameter>
+<parameter name="trailing">
+<parameter_description>  whether we should compute the result for the beginning (%FALSE)
+or end (%TRUE) of the character.
+</parameter_description>
+</parameter>
+<parameter name="x_pos">
+<parameter_description>     location to store result
 </parameter_description>
 </parameter>
 </parameters>
-<return> #PangoLanguage best matching @language_tag or
-#PangoLanguage corresponding to the string &quot;xx&quot; if none found.
-
-Since: 1.18
-</return>
+<return></return>
 </function>
 
 <function name="pango_x_get_context">
@@ -5735,32 +5968,21 @@ Since: 1.8
 </return>
 </function>
 
-<function name="pango_break">
+<function name="pango_attr_list_insert">
 <description>
-Determines possible line, word, and character breaks
-for a string of Unicode text with a single analysis.  For most
-purposes you may want to use pango_get_log_attrs().
+Insert the given attribute into the #PangoAttrList. It will
+be inserted after all other attributes with a matching
+@start_index.
 
 </description>
 <parameters>
-<parameter name="text">
-<parameter_description>      the text to process
+<parameter name="list">
+<parameter_description> a #PangoAttrList
 </parameter_description>
 </parameter>
-<parameter name="length">
-<parameter_description>    length of @text in bytes (may be -1 if @text is nul-terminated)
-</parameter_description>
-</parameter>
-<parameter name="analysis">
-<parameter_description>  #PangoAnalysis structure from pango_itemize()
-</parameter_description>
-</parameter>
-<parameter name="attrs">
-<parameter_description>     an array to store character information in
-</parameter_description>
-</parameter>
-<parameter name="attrs_len">
-<parameter_description> size of the array passed as @attrs
+<parameter name="attr">
+<parameter_description> the attribute to insert. Ownership of this value is
+assumed by the list.
 </parameter_description>
 </parameter>
 </parameters>
@@ -5817,6 +6039,25 @@ Use of the global PangoFT2 fontmap is deprecated.
 <parameters>
 </parameters>
 <return></return>
+</function>
+
+<function name="pango_font_map_get_shape_engine_type">
+<description>
+Return value: the ID string for shape engines for
+
+</description>
+<parameters>
+<parameter name="fontmap">
+<parameter_description> a #PangoFontMap
+</parameter_description>
+</parameter>
+</parameters>
+<return> the ID string for shape engines for
+this fontmap. Owned by Pango, should not be modified
+or freed.
+
+Since: 1.4
+</return>
 </function>
 
 <function name="pango_x_render_layout_line">
@@ -5895,26 +6136,16 @@ Since: 1.4
 </return>
 </function>
 
-<function name="pango_attr_iterator_range">
+<function name="pango_layout_line_unref">
 <description>
-Get the range of the current segment. Note that the
-stored return values are signed, not unsigned like
-the values in #PangoAttribute. To deal with this API
-oversight, stored return values that wouldn&apos;t fit into
-a signed integer are clamped to %G_MAXINT.
+Decrease the reference count of a #PangoLayoutLine by one.
+If the result is zero, the line and all associated memory
+will be freed.
 
 </description>
 <parameters>
-<parameter name="iterator">
-<parameter_description> a #PangoAttrIterator
-</parameter_description>
-</parameter>
-<parameter name="start">
-<parameter_description> location to store the start of the range
-</parameter_description>
-</parameter>
-<parameter name="end">
-<parameter_description> location to store the end of the range
+<parameter name="line">
+<parameter_description> a #PangoLayoutLine
 </parameter_description>
 </parameter>
 </parameters>
@@ -5933,7 +6164,7 @@ References @attrs, so the caller can unref its reference.
 </parameter_description>
 </parameter>
 <parameter name="attrs">
-<parameter_description> a #PangoAttrList
+<parameter_description> a #PangoAttrList, can be %NULL
 </parameter_description>
 </parameter>
 </parameters>
@@ -6010,6 +6241,19 @@ is returned.
 <return> %TRUE if @iter was successfully advanced.
 
 Since: 1.4
+</return>
+</function>
+
+<function name="pango_attr_list_new">
+<description>
+Create a new empty attribute list with a reference count of one.
+
+
+</description>
+<parameters>
+</parameters>
+<return> the newly allocated #PangoAttrList, which should
+be freed with pango_attr_list_unref().
 </return>
 </function>
 
@@ -6092,16 +6336,6 @@ Since: 1.18
 </return>
 </function>
 
-<function name="pango_win32_shutdown_display">
-<description>
-Free cached resources.
-
-</description>
-<parameters>
-</parameters>
-<return></return>
-</function>
-
 <function name="pango_parse_markup">
 <description>
 Parses marked-up text (see
@@ -6155,32 +6389,16 @@ for @error.
 </return>
 </function>
 
-<function name="pango_renderer_part_changed">
+<function name="pango_script_iter_free">
 <description>
-Informs Pango that the way that the rendering is done
-for @part has changed in a way that would prevent multiple
-pieces being joined together into one drawing call. For
-instance, if a subclass of #PangoRenderer was to add a stipple
-option for drawing underlines, it needs to call
+Frees a #PangoScriptIter created with pango_script_iter_new().
 
-&amp;lt;informalexample&amp;gt;&amp;lt;programlisting&amp;gt;
-pango_renderer_part_changed (render, PANGO_RENDER_PART_UNDERLINE);
-&amp;lt;/programlisting&amp;gt;&amp;lt;/informalexample&amp;gt;
-
-When the stipple changes or underlines with different stipples
-might be joined together. Pango automatically calls this for
-changes to colors. (See pango_renderer_set_color())
-
-Since: 1.8
+Since: 1.4
 
 </description>
 <parameters>
-<parameter name="renderer">
-<parameter_description> a #PangoRenderer
-</parameter_description>
-</parameter>
-<parameter name="part">
-<parameter_description> the part for which rendering has changed.
+<parameter name="iter">
+<parameter_description> a #PangoScriptIter
 </parameter_description>
 </parameter>
 </parameters>
@@ -6255,6 +6473,29 @@ not be freed.
 </return>
 </function>
 
+<function name="pango_cairo_font_map_set_default">
+<description>
+Sets a default #PangoCairoFontMap to use with Cairo.
+
+This can be used to change the Cairo font backend that the
+default fontmap uses for example.  The old default font map
+is unreffed and the new font map referenced.
+
+A value of %NULL for @fontmap will cause a new default font
+map to be created on demand, using pango_cairo_font_map_new().
+
+Since: 1.22
+
+</description>
+<parameters>
+<parameter name="fontmap">
+<parameter_description> The new default font map, or %NULL
+</parameter_description>
+</parameter>
+</parameters>
+<return></return>
+</function>
+
 <function name="pango_quantize_line_geometry">
 <description>
 Quantizes the thickness and position of a line, typically an
@@ -6262,12 +6503,16 @@ underline or strikethrough, to whole device pixels, that is integer
 multiples of %PANGO_SCALE. The purpose of this function is to avoid
 such lines looking blurry.
 
+Care is taken to make sure @thickness is at least one pixel when this
+function returns, but returned @position may become zero as a result
+of rounding.
+
 Since: 1.12
 
 </description>
 <parameters>
 <parameter name="thickness">
-<parameter_description> pointer to the thickness of a line, in Pango scaled units
+<parameter_description> pointer to the thickness of a line, in Pango units
 </parameter_description>
 </parameter>
 <parameter name="position">
@@ -6322,6 +6567,9 @@ Unicode Standard Annex #24). No check is made for @ch being a
 valid Unicode character; if you pass in invalid character, the
 result is undefined.
 
+As of Pango 1.18, this function simply returns the return value of
+g_unichar_get_script().
+
 
 </description>
 <parameters>
@@ -6348,7 +6596,7 @@ attributes for the text to compute the valid cursor position.
 </description>
 <parameters>
 <parameter name="glyphs">
-<parameter_description>    the glyphs return from pango_shape()
+<parameter_description>    the glyphs returned from pango_shape()
 </parameter_description>
 </parameter>
 <parameter name="text">
@@ -6364,7 +6612,7 @@ attributes for the text to compute the valid cursor position.
 </parameter_description>
 </parameter>
 <parameter name="x_pos">
-<parameter_description>     the x offset (in #PangoGlyphUnit)
+<parameter_description>     the x offset (in Pango units)
 </parameter_description>
 </parameter>
 <parameter name="index_">
@@ -6372,7 +6620,7 @@ attributes for the text to compute the valid cursor position.
 </parameter_description>
 </parameter>
 <parameter name="trailing">
-<parameter_description>  location to store a integer indicating where
+<parameter_description>  location to store a boolean indicating
 whether the user clicked on the leading or trailing
 edge of the character.
 </parameter_description>
@@ -6426,24 +6674,23 @@ fields will get back to their default values.
 <return></return>
 </function>
 
-<function name="pango_layout_set_wrap">
+<function name="_pango_xft_font_get_mini_font">
 <description>
-Sets the wrap mode; the wrap mode only has effect if a width
-is set on the layout with pango_layout_set_width(). To turn off wrapping,
-set the width to -1.
+Gets the font used for drawing the digits in the
+missing-character hex squares
+
 
 </description>
 <parameters>
-<parameter name="layout">
-<parameter_description> a #PangoLayout
-</parameter_description>
-</parameter>
-<parameter name="wrap">
-<parameter_description> the wrap mode
+<parameter name="xfont">
+<parameter_description> a #PangoXftFont
 </parameter_description>
 </parameter>
 </parameters>
-<return></return>
+<return> the #PangoFont used for the digits; this
+value is associated with the main font and will be freed
+along with the main font.
+</return>
 </function>
 
 <function name="pango_ft2_font_map_set_resolution">
@@ -6485,6 +6732,24 @@ Since: 1.6
 </parameter>
 </parameters>
 <return></return>
+</function>
+
+<function name="pango_layout_get_baseline">
+<description>
+Gets the Y position of baseline of the first line in @layout.
+
+
+</description>
+<parameters>
+<parameter name="layout">
+<parameter_description> a #PangoLayout
+</parameter_description>
+</parameter>
+</parameters>
+<return> baseline of first line, from top of @layout.
+
+Since: 1.22
+</return>
 </function>
 
 <function name="pango_context_get_font_map">
@@ -6580,6 +6845,8 @@ that are derived from the target surface by pango_cairo_update_context()
 <return> the font options previously set on the context, or %NULL
 if no options have been set. This value is owned by the context
 and must not be modified or freed.
+
+Since: 1.10
 </return>
 </function>
 
@@ -6706,6 +6973,27 @@ Since: 1.4
 <return></return>
 </function>
 
+<function name="pango_attr_list_insert_before">
+<description>
+Insert the given attribute into the #PangoAttrList. It will
+be inserted before all other attributes with a matching
+@start_index.
+
+</description>
+<parameters>
+<parameter name="list">
+<parameter_description> a #PangoAttrList
+</parameter_description>
+</parameter>
+<parameter name="attr">
+<parameter_description> the attribute to insert. Ownership of this value is
+assumed by the list.
+</parameter_description>
+</parameter>
+</parameters>
+<return></return>
+</function>
+
 <function name="pango_ot_info_find_language">
 <description>
 Finds the index of a language and its required feature index.
@@ -6778,7 +7066,8 @@ Since: 1.10
 
 <function name="pango_ft2_font_get_coverage">
 <description>
-Gets the #PangoCoverage for a #PangoFT2Font. Use pango_font_get_coverage() instead.
+Gets the #PangoCoverage for a #PangoFT2Font. Use
+pango_font_get_coverage() instead.
 
 </description>
 <parameters>
@@ -6868,29 +7157,21 @@ Gets the singleton PangoFT2Renderer for this fontmap.
 </return>
 </function>
 
-<function name="pango_context_set_base_dir">
+<function name="pango_language_to_string">
 <description>
-Sets the base direction for the context.
+Gets the RFC-3066 format string representing the given language tag. 
 
-The base direction is used in applying the Unicode bidirectional
-algorithm; if the @direction is %PANGO_DIRECTION_LTR or
-%PANGO_DIRECTION_RTL, then the value will be used as the paragraph
-direction in the Unicode bidirectional algorithm.  A value of
-%PANGO_DIRECTION_WEAK_LTR or %PANGO_DIRECTION_WEAK_RTL is used only
-for paragraphs that do not contain any strong characters themselves.
 
 </description>
 <parameters>
-<parameter name="context">
-<parameter_description> a #PangoContext
-</parameter_description>
-</parameter>
-<parameter name="direction">
-<parameter_description> the new base direction
+<parameter name="language">
+<parameter_description> a language tag.
 </parameter_description>
 </parameter>
 </parameters>
-<return></return>
+<return> a string representing the language tag.  This is owned by
+Pango and should not be freed.
+</return>
 </function>
 
 <function name="pango_tab_array_new_with_positions">
@@ -7183,7 +7464,7 @@ Frees an iterator that&apos;s no longer in use.
 </description>
 <parameters>
 <parameter name="iter">
-<parameter_description> a #PangoLayoutIter
+<parameter_description> a #PangoLayoutIter, may be %NULL
 </parameter_description>
 </parameter>
 </parameters>
@@ -7297,6 +7578,9 @@ substantially different for different scripts, a language tag can
 be provided to indicate that the metrics should be retrieved that
 correspond to the script(s) used by that language.
 
+If @font is %NULL, this function gracefully sets some sane values in the
+output variables and returns.
+
 
 </description>
 <parameters>
@@ -7316,35 +7600,41 @@ when finished using the object.
 </return>
 </function>
 
-<function name="pango_layout_get_line_readonly">
+<function name="pango_matrix_transform_distance">
 <description>
-Retrieves a particular line from a #PangoLayout.
+Transforms the distance vector (@dx,@dy) by @matrix. This is
+similar to pango_matrix_transform_point() except that the translation
+components of the transformation are ignored. The calculation of
+the returned vector is as follows:
 
-This is a faster alternative to pango_layout_get_line(),
-but the user is not expected
-to modify the contents of the line (glyphs, glyph widths, etc.).
+&amp;lt;programlisting&amp;gt;
+dx2 = dx1 * xx + dy1 * xy;
+dy2 = dx1 * yx + dy1 * yy;
+&amp;lt;/programlisting&amp;gt;
 
+Affine transformations are position invariant, so the same vector
+always transforms to the same vector. If (@x1,@y1) transforms
+to (@x2,@y2) then (@x1+@dx1,@y1+@dy1) will transform to
+(@x1+@dx2,@y1+@dy2) for all values of @x1 and @x2.
+
+Since: 1.16
 
 </description>
 <parameters>
-<parameter name="layout">
-<parameter_description> a #PangoLayout
+<parameter name="matrix">
+<parameter_description> a #PangoMatrix, or %NULL
 </parameter_description>
 </parameter>
-<parameter name="line">
-<parameter_description> the index of a line, which must be between 0 and
-&amp;lt;literal&amp;gt;pango_layout_get_line_count(layout) - 1&amp;lt;/literal&amp;gt;, inclusive.
+<parameter name="dx">
+<parameter_description> in/out X component of a distance vector
+</parameter_description>
+</parameter>
+<parameter name="dy">
+<parameter_description> yn/out Y component of a distance vector
 </parameter_description>
 </parameter>
 </parameters>
-<return> the requested #PangoLayoutLine, or %NULL if the
-index is out of range. This layout line can
-be ref&apos;ed and retained, but will become invalid
-if changes are made to the #PangoLayout.
-No changes should be made to the line.
-
-Since: 1.16
-</return>
+<return></return>
 </function>
 
 <function name="pango_tab_array_set_tab">
@@ -7426,63 +7716,35 @@ Since: 1.4
 <return></return>
 </function>
 
-<function name="pango_matrix_transform_distance">
+<function name="pango_layout_get_line_readonly">
 <description>
-Transforms the distance vector (@dx,@dy) by @matrix. This is
-similar to pango_matrix_transform_point() except that the translation
-components of the transformation are ignored. The calculation of
-the returned vector is as follows:
+Retrieves a particular line from a #PangoLayout.
 
-&amp;lt;programlisting&amp;gt;
-dx2 = dx1 * xx + dy1 * xy;
-dy2 = dx1 * yx + dy1 * yy;
-&amp;lt;/programlisting&amp;gt;
+This is a faster alternative to pango_layout_get_line(),
+but the user is not expected
+to modify the contents of the line (glyphs, glyph widths, etc.).
 
-Affine transformations are position invariant, so the same vector
-always transforms to the same vector. If (@x1,@y1) transforms
-to (@x2,@y2) then (@x1+@dx1,@y1+@dy1) will transform to
-(@x1+@dx2,@y1+@dy2) for all values of @x1 and @x2.
+
+</description>
+<parameters>
+<parameter name="layout">
+<parameter_description> a #PangoLayout
+</parameter_description>
+</parameter>
+<parameter name="line">
+<parameter_description> the index of a line, which must be between 0 and
+&amp;lt;literal&amp;gt;pango_layout_get_line_count(layout) - 1&amp;lt;/literal&amp;gt;, inclusive.
+</parameter_description>
+</parameter>
+</parameters>
+<return> the requested #PangoLayoutLine, or %NULL if the
+index is out of range. This layout line can
+be ref&apos;ed and retained, but will become invalid
+if changes are made to the #PangoLayout.
+No changes should be made to the line.
 
 Since: 1.16
-
-</description>
-<parameters>
-<parameter name="matrix">
-<parameter_description> a #PangoMatrix, or %NULL
-</parameter_description>
-</parameter>
-<parameter name="dx">
-<parameter_description> in/out X component of a distance vector
-</parameter_description>
-</parameter>
-<parameter name="dy">
-<parameter_description> yn/out Y component of a distance vector
-</parameter_description>
-</parameter>
-</parameters>
-<return></return>
-</function>
-
-<function name="pango_layout_iter_get_char_extents">
-<description>
-Gets the extents of the current character, in layout coordinates
-(origin is the top left of the entire layout). Only logical extents
-can sensibly be obtained for characters; ink extents make sense only
-down to the level of clusters.
-
-
-</description>
-<parameters>
-<parameter name="iter">
-<parameter_description> a #PangoLayoutIter
-</parameter_description>
-</parameter>
-<parameter name="logical_rect">
-<parameter_description> rectangle to fill with logical extents
-</parameter_description>
-</parameter>
-</parameters>
-<return></return>
+</return>
 </function>
 
 <function name="pango_layout_index_to_line_x">
@@ -7520,28 +7782,27 @@ between 0 and pango_layout_get_line_count(layout) - 1)
 <return></return>
 </function>
 
-<function name="pango_layout_iter_get_cluster_extents">
+<function name="pango_unichar_direction">
 <description>
-Gets the extents of the current cluster, in layout coordinates
-(origin is the top left of the entire layout).
+Determines the inherent direction of a character; either
+%PANGO_DIRECTION_LTR, %PANGO_DIRECTION_RTL, or
+%PANGO_DIRECTION_NEUTRAL.
+
+This function is useful to categorize characters into left-to-right
+letters, right-to-left letters, and everything else.  If full
+Unicode bidirectional type of a character is needed,
+pango_bidi_type_for_gunichar() can be used instead.
 
 
 </description>
 <parameters>
-<parameter name="iter">
-<parameter_description> a #PangoLayoutIter
-</parameter_description>
-</parameter>
-<parameter name="ink_rect">
-<parameter_description> rectangle to fill with ink extents, or %NULL
-</parameter_description>
-</parameter>
-<parameter name="logical_rect">
-<parameter_description> rectangle to fill with logical extents, or %NULL
+<parameter name="ch">
+<parameter_description> a Unicode character
 </parameter_description>
 </parameter>
 </parameters>
-<return></return>
+<return> the direction of the character.
+</return>
 </function>
 
 <function name="pango_attr_size_new_absolute">
@@ -7586,27 +7847,22 @@ Make a copy of a #PangoFontDescription.
 </description>
 <parameters>
 <parameter name="desc">
-<parameter_description> a #PangoFontDescription
+<parameter_description> a #PangoFontDescription, may be %NULL
 </parameter_description>
 </parameter>
 </parameters>
 <return> the newly allocated #PangoFontDescription, which should
-be freed with pango_font_description_free().
+be freed with pango_font_description_free(), or %NULL
+if @desc was %NULL.
 </return>
 </function>
 
-<function name="pango_ot_buffer_clear">
+<function name="pango_win32_shutdown_display">
 <description>
-Empties a #PangoOTBuffer, make it ready to add glyphs to.
-
-Since: 1.4
+Free cached resources.
 
 </description>
 <parameters>
-<parameter name="buffer">
-<parameter_description> a #PangoOTBuffer
-</parameter_description>
-</parameter>
 </parameters>
 <return></return>
 </function>
@@ -7660,7 +7916,7 @@ indicates a hanging indentation.
 </parameter_description>
 </parameter>
 </parameters>
-<return> the indent.
+<return> the indent in Pango units.
 </return>
 </function>
 
@@ -7764,7 +8020,8 @@ cairo_scaled_font_reference().
 </parameter_description>
 </parameter>
 </parameters>
-<return> the #cairo_scaled_font_t used by @font
+<return> the #cairo_scaled_font_t used by @font,
+or %NULL if @font is %NULL.
 
 Since: 1.18
 </return>
@@ -7878,7 +8135,7 @@ PANGO_VERSION_ENCODE().
 </description>
 <parameters>
 </parameters>
-<return>value: The encoded version of Pango library
+<return> The encoded version of Pango library
 available at run time.
 
 Since: 1.16
@@ -7910,7 +8167,7 @@ a font matching @desc.
 </parameter_description>
 </parameter>
 </parameters>
-<return>the fontset, or %NULL if no font matched.
+<return> the fontset, or %NULL if no font matched.
 </return>
 </function>
 
@@ -8115,30 +8372,34 @@ by assignment in C).
 </description>
 <parameters>
 <parameter name="src">
-<parameter_description> color to copy
+<parameter_description> color to copy, may be %NULL
 </parameter_description>
 </parameter>
 </parameters>
 <return> the newly allocated #PangoColor, which should
-be freed with pango_color_free().
+be freed with pango_color_free(), or %NULL
+if @src was %NULL.
 </return>
 </function>
 
-<function name="pango_attribute_copy">
+<function name="pango_tab_array_resize">
 <description>
-Make a copy of an attribute.
+Resizes a tab array. You must subsequently initialize any tabs that
+were added as a result of growing the array.
 
 
 </description>
 <parameters>
-<parameter name="attr">
-<parameter_description> a #PangoAttribute
+<parameter name="tab_array">
+<parameter_description> a #PangoTabArray
+</parameter_description>
+</parameter>
+<parameter name="new_size">
+<parameter_description> new size of the array
 </parameter_description>
 </parameter>
 </parameters>
-<return> the newly allocated #PangoAttribute, which should be
-freed with pango_attribute_destroy().
-</return>
+<return></return>
 </function>
 
 <function name="pango_win32_font_select_font">
@@ -8331,21 +8592,24 @@ being loaded, but still compare %FALSE.)
 </return>
 </function>
 
-<function name="pango_attr_family_new">
+<function name="pango_context_set_language">
 <description>
-Create a new font family attribute.
-
+Sets the global language tag for the context.  The default language
+for the locale of the running process can be found using
+pango_language_get_default().
 
 </description>
 <parameters>
-<parameter name="family">
-<parameter_description> the family or comma separated list of families
+<parameter name="context">
+<parameter_description> a #PangoContext
+</parameter_description>
+</parameter>
+<parameter name="language">
+<parameter_description> the new language tag.
 </parameter_description>
 </parameter>
 </parameters>
-<return> the newly allocated #PangoAttribute, which should be
-freed with pango_attribute_destroy().
-</return>
+<return></return>
 </function>
 
 <function name="pango_cairo_font_map_new_for_font_type">
@@ -8368,7 +8632,7 @@ or in fact in most of those cases, just use
 <return> the newly allocated #PangoFontMap of suitable type
 which should be freed with g_object_unref(),
 or %NULL if the requested cairo font backend is
-not supported.
+not supported / compiled in.
 
 Since: 1.18
 </return>
@@ -8475,6 +8739,30 @@ should be freed with pango_coverage_unref().
 </return>
 </function>
 
+<function name="pango_renderer_get_layout">
+<description>
+Gets the layout currently being rendered using @renderer.
+Calling this function only makes sense from inside a subclass&apos;s
+methods, like in its draw_shape&amp;lt;!----&amp;gt;() for example.
+
+The returned layout should not be modified while still being
+rendered.
+
+
+</description>
+<parameters>
+<parameter name="renderer">
+<parameter_description> a #PangoRenderer
+</parameter_description>
+</parameter>
+</parameters>
+<return> the layout, or %NULL if no layout is being
+rendered using @renderer at this time.
+
+Since: 1.20
+</return>
+</function>
+
 <function name="pango_attr_iterator_get_font">
 <description>
 Get the font and other attributes at the current iterator position.
@@ -8528,89 +8816,83 @@ Since: 1.16
 </return>
 </function>
 
-<function name="pango_attr_list_new">
+<function name="_pango_fc_font_set_decoder">
 <description>
-Create a new empty attribute list with a reference count of one.
+This sets a custom decoder for this font.  Any previous decoder
+will be released before this one is set.
 
+Since: 1.6
 
 </description>
 <parameters>
-</parameters>
-<return> the newly allocated #PangoAttrList, which should
-be freed with pango_attr_list_unref().
-</return>
-</function>
-
-<function name="pango_unichar_direction">
-<description>
-Determines the direction of a character; either
-%PANGO_DIRECTION_LTR, %PANGO_DIRECTION_RTL, or
-%PANGO_DIRECTION_NEUTRAL.
-
-
-</description>
-<parameters>
-<parameter name="ch">
-<parameter_description> a Unicode character
+<parameter name="font">
+<parameter_description> a #PangoFcFont
+</parameter_description>
+</parameter>
+<parameter name="decoder">
+<parameter_description> a #PangoFcDecoder to set for this font
 </parameter_description>
 </parameter>
 </parameters>
-<return> the direction of the character, as used in the
-Unicode bidirectional algorithm.
-</return>
+<return></return>
 </function>
 
 <function name="pango_cairo_font_map_get_default">
 <description>
-Gets a default font map to use with Cairo.
+Gets a default #PangoCairoFontMap to use with Cairo.
+
+Note that the type of the returned object will depend
+on the particular font backend Cairo was compiled to use;
+You generally should only use the #PangoFontMap and
+#PangoCairoFontMap interfaces on the returned object.
+
+The default Cairo fontmap can be changed by using
+pango_cairo_font_map_set_default().  This can be used to
+change the Cairo font backend that the default fontmap
+uses for example.
 
 
 </description>
 <parameters>
 </parameters>
-<return> the default Cairo fontmap for #Pango. This
+<return> the default Cairo fontmap for Pango. This
 object is owned by Pango and must not be freed.
 
 Since: 1.10
 </return>
 </function>
 
-<function name="pango_attr_list_insert_before">
+<function name="pango_ot_ruleset_description_free">
 <description>
-Insert the given attribute into the #PangoAttrList. It will
-be inserted before all other attributes with a matching
-@start_index.
+Frees a ruleset description allocated by 
+pango_ot_ruleset_description_copy().
+
+Since: 1.18
 
 </description>
 <parameters>
-<parameter name="list">
-<parameter_description> a #PangoAttrList
-</parameter_description>
-</parameter>
-<parameter name="attr">
-<parameter_description> the attribute to insert. Ownership of this value is
-assumed by the list.
+<parameter name="desc">
+<parameter_description> an allocated #PangoOTRulesetDescription
 </parameter_description>
 </parameter>
 </parameters>
 <return></return>
 </function>
 
-<function name="pango_renderer_deactivate">
+<function name="pango_context_get_language">
 <description>
-Cleans up after rendering operations on @renderer. See
-docs for pango_renderer_activate().
+Retrieves the global language tag for the context.
 
-Since: 1.8
 
 </description>
 <parameters>
-<parameter name="renderer">
-<parameter_description> a #PangoRenderer
+<parameter name="context">
+<parameter_description> a #PangoContext
 </parameter_description>
 </parameter>
 </parameters>
-<return></return>
+<return> the global language tag.
+</return>
 </function>
 
 <function name="pango_parse_stretch">
@@ -8641,6 +8923,26 @@ ignored and the &apos;_&apos; characters may be omitted.
 </return>
 </function>
 
+<function name="pango_layout_get_height">
+<description>
+Gets the height of layout used for ellipsization.  See
+pango_layout_set_height() for details.
+
+
+</description>
+<parameters>
+<parameter name="layout">
+<parameter_description> a #PangoLayout
+</parameter_description>
+</parameter>
+</parameters>
+<return> the height, in Pango units if positive, or
+number of lines if negative.
+
+Since: 1.20
+</return>
+</function>
+
 <function name="pango_layout_get_width">
 <description>
 Gets the width to which the lines of the #PangoLayout should wrap.
@@ -8653,7 +8955,7 @@ Gets the width to which the lines of the #PangoLayout should wrap.
 </parameter_description>
 </parameter>
 </parameters>
-<return> the width, or -1 if no width set.
+<return> the width in Pango units, or -1 if no width set.
 </return>
 </function>
 
@@ -8675,12 +8977,13 @@ the current locale of the process.
 </description>
 <parameters>
 <parameter name="language">
-<parameter_description> a string representing a language tag
+<parameter_description> a string representing a language tag, or %NULL
 </parameter_description>
 </parameter>
 </parameters>
-<return> an opaque pointer to a #PangoLanguage structure.
-this will be valid forever after.
+<return> an opaque pointer to a #PangoLanguage structure, or %NULL
+if @language was %NULL.  The returned pointer will be valid
+forever after, and should not be freed.
 </return>
 </function>
 
@@ -8758,31 +9061,22 @@ separated list of family names for this field.
 <return></return>
 </function>
 
-<function name="pango_fc_font_description_from_pattern">
+<function name="pango_ft2_font_map_new">
 <description>
-Creates a #PangoFontDescription that matches the specified
-Fontconfig pattern as closely as possible. Many possible Fontconfig
-pattern values, such as %FC_RASTERIZER or %FC_DPI, don&apos;t make sense in
-the context of #PangoFontDescription, so will be ignored.
+Create a new #PangoFT2FontMap object; a fontmap is used
+to cache information about available fonts, and holds
+certain global parameters such as the resolution and
+the default substitute function (see
+pango_ft2_font_map_set_default_substitute()).
 
 
 </description>
 <parameters>
-<parameter name="pattern">
-<parameter_description> a #FcPattern
-</parameter_description>
-</parameter>
-<parameter name="include_size">
-<parameter_description> if %TRUE, the pattern will include the size from
-the @pattern; otherwise the resulting pattern will be unsized.
-(only %FC_SIZE is examined, not %FC_PIXEL_SIZE)
-</parameter_description>
-</parameter>
 </parameters>
-<return> a new #PangoFontDescription. Free with
-pango_font_description_free().
+<return> the newly created fontmap object. Unref
+with g_object_unref() when you are finished with it.
 
-Since: 1.4
+Since: 1.2
 </return>
 </function>
 
@@ -8872,7 +9166,7 @@ Frees a list of font descriptions from pango_font_map_list_fonts()
 </description>
 <parameters>
 <parameter name="descs">
-<parameter_description> a pointer to an array of #PangoFontDescription, or %NULL
+<parameter_description> a pointer to an array of #PangoFontDescription, may be %NULL
 </parameter_description>
 </parameter>
 <parameter name="n_descs">
@@ -8897,7 +9191,7 @@ The original list is unmodified.
 </parameter_description>
 </parameter>
 </parameters>
-<return>a #GList of #PangoItem structures in visual order.
+<return> a #GList of #PangoItem structures in visual order.
 
 (Please open a bug if you use this function.
 It is not a particularly convenient interface, and the code
@@ -8940,45 +9234,23 @@ Since: 1.18
 </return>
 </function>
 
-<function name="pango_glyph_string_index_to_x">
+<function name="pango_ot_tag_to_language">
 <description>
-Converts from character position to x position. (X position
-is measured from the left edge of the run). Character positions
-are computed by dividing up each cluster into equal portions.
+Finds a #PangoLanguage corresponding to @language_tag.
+
 
 </description>
 <parameters>
-<parameter name="glyphs">
-<parameter_description>    the glyphs return from pango_shape()
-</parameter_description>
-</parameter>
-<parameter name="text">
-<parameter_description>      the text for the run
-</parameter_description>
-</parameter>
-<parameter name="length">
-<parameter_description>    the number of bytes (not characters) in @text.
-</parameter_description>
-</parameter>
-<parameter name="analysis">
-<parameter_description>  the analysis information return from pango_itemize()
-</parameter_description>
-</parameter>
-<parameter name="index_">
-<parameter_description>    the byte index within @text
-</parameter_description>
-</parameter>
-<parameter name="trailing">
-<parameter_description>  whether we should compute the result for the beginning
-or end of the character.
-</parameter_description>
-</parameter>
-<parameter name="x_pos">
-<parameter_description>     location to store result
+<parameter name="language_tag">
+<parameter_description> A #PangoOTTag OpenType language-system tag
 </parameter_description>
 </parameter>
 </parameters>
-<return></return>
+<return> #PangoLanguage best matching @language_tag or
+#PangoLanguage corresponding to the string &quot;xx&quot; if none found.
+
+Since: 1.18
+</return>
 </function>
 
 <function name="pango_matrix_transform_rectangle">
@@ -8996,8 +9268,9 @@ pango_matrix_transform_pixel_rectangle().
 If you have the rectangle in Pango units and want to convert to
 transformed pixel bounding box, it is more accurate to transform it first
 (using this function) and pass the result to pango_extents_to_pixels(),
-as @ink_rect.  However, there is a reason that you may want to convert
-to pixels first and then transform, and that is when the transformed
+first argument, for an inclusive rounded rectangle.
+However, there are valid reasons that you may want to convert
+to pixels first and then transform, for example when the transformed
 coordinates may overflow in Pango units (large matrix translation for
 example).
 
@@ -9025,7 +9298,7 @@ Increase the reference count of the given attribute list by one.
 </description>
 <parameters>
 <parameter name="list">
-<parameter_description> a #PangoAttrList
+<parameter_description> a #PangoAttrList, may be %NULL
 </parameter_description>
 </parameter>
 </parameters>
@@ -9035,51 +9308,60 @@ Since: 1.10
 </return>
 </function>
 
-<function name="pango_attr_list_insert">
+<function name="pango_break">
 <description>
-Insert the given attribute into the #PangoAttrList. It will
-be inserted after all other attributes with a matching
-@start_index.
+Determines possible line, word, and character breaks
+for a string of Unicode text with a single analysis.  For most
+purposes you may want to use pango_get_log_attrs().
 
 </description>
 <parameters>
-<parameter name="list">
-<parameter_description> a #PangoAttrList
+<parameter name="text">
+<parameter_description>      the text to process
 </parameter_description>
 </parameter>
-<parameter name="attr">
-<parameter_description> the attribute to insert. Ownership of this value is
-assumed by the list.
+<parameter name="length">
+<parameter_description>    length of @text in bytes (may be -1 if @text is nul-terminated)
+</parameter_description>
+</parameter>
+<parameter name="analysis">
+<parameter_description>  #PangoAnalysis structure from pango_itemize()
+</parameter_description>
+</parameter>
+<parameter name="attrs">
+<parameter_description>     an array to store character information in
+</parameter_description>
+</parameter>
+<parameter name="attrs_len">
+<parameter_description> size of the array passed as @attrs
 </parameter_description>
 </parameter>
 </parameters>
 <return></return>
 </function>
 
-<function name="pango_win32_font_description_from_logfont">
+<function name="pango_attr_background_new">
 <description>
-Creates a #PangoFontDescription that matches the specified LOGFONTA.
-
-The face name, italicness and weight fields in the LOGFONTA are used
-to set up the resulting #PangoFontDescription. If the face name in
-the LOGFONTA contains non-ASCII characters the font is temporarily
-loaded (using CreateFontIndirect()) and an ASCII (usually English)
-name for it is looked up from the font name tables in the font
-data. If that doesn&apos;t work, the face name is converted from the
-system codepage to UTF-8 and that is used.
+Create a new background color attribute.
 
 
 </description>
 <parameters>
-<parameter name="lfp">
-<parameter_description> a LOGFONTA
+<parameter name="red">
+<parameter_description> the red value (ranging from 0 to 65535)
+</parameter_description>
+</parameter>
+<parameter name="green">
+<parameter_description> the green value
+</parameter_description>
+</parameter>
+<parameter name="blue">
+<parameter_description> the blue value
 </parameter_description>
 </parameter>
 </parameters>
-<return> the newly allocated #PangoFontDescription, which
-should be freed using pango_font_description_free()
-
-Since: 1.12
+<return> the newly allocated #PangoAttribute, which should be
+freed with pango_attribute_destroy().
 </return>
 </function>
 
@@ -9166,7 +9448,7 @@ be avoided.
 </parameter_description>
 </parameter>
 </parameters>
-<return>a new #PangoFont.
+<return> a new #PangoFont.
 </return>
 </function>
 
@@ -9189,21 +9471,47 @@ should be freed with pango_coverage_unref().
 </return>
 </function>
 
-<function name="_pango_fc_font_set_decoder">
+<function name="pango_xft_render_transformed">
 <description>
-This sets a custom decoder for this font.  Any previous decoder
-will be released before this one is set.
+Renders a #PangoGlyphString onto a #XftDraw, possibly
+transforming the layed-out coordinates through a transformation
+matrix. Note that the transformation matrix for @font is not
+changed, so to produce correct rendering results, the @font
+must have been loaded using a #PangoContext with an identical
+transformation matrix to that passed in to this function.
 
-Since: 1.6
+Since: 1.8
 
 </description>
 <parameters>
-<parameter name="font">
-<parameter_description> a #PangoFcFont
+<parameter name="draw">
+<parameter_description>    an #XftDraw
 </parameter_description>
 </parameter>
-<parameter name="decoder">
-<parameter_description> a #PangoFcDecoder to set for this font
+<parameter name="color">
+<parameter_description>   the color in which to draw the glyphs
+</parameter_description>
+</parameter>
+<parameter name="font">
+<parameter_description>    the font in which to draw the string
+</parameter_description>
+</parameter>
+<parameter name="matrix">
+<parameter_description>  a #PangoMatrix, or %NULL to use an identity transformation
+</parameter_description>
+</parameter>
+<parameter name="glyphs">
+<parameter_description>  the glyph string to draw
+</parameter_description>
+</parameter>
+<parameter name="x">
+<parameter_description>       the x position of the start of the string (in Pango
+units in user space coordinates)
+</parameter_description>
+</parameter>
+<parameter name="y">
+<parameter_description>       the y position of the baseline (in Pango units
+in user space coordinates)
 </parameter_description>
 </parameter>
 </parameters>
@@ -9271,17 +9579,16 @@ the result must be freed using g_free().
 <description>
 Copy @list and return an identical new list.
 
+Returns %NULL if @list was %NULL.
 
 </description>
 <parameters>
 <parameter name="list">
-<parameter_description> a #PangoAttrList
+<parameter_description> a #PangoAttrList, may be %NULL
 </parameter_description>
 </parameter>
 </parameters>
-<return> the newly allocated #PangoAttrList, with a
-reference count of one, which should
-be freed with pango_attr_list_unref().
+<return>%NULL if @list was %NULL.
 </return>
 </function>
 
@@ -9346,6 +9653,22 @@ Since: 1.6
 <return></return>
 </function>
 
+<function name="pango_ot_buffer_clear">
+<description>
+Empties a #PangoOTBuffer, make it ready to add glyphs to.
+
+Since: 1.4
+
+</description>
+<parameters>
+<parameter name="buffer">
+<parameter_description> a #PangoOTBuffer
+</parameter_description>
+</parameter>
+</parameters>
+<return></return>
+</function>
+
 <function name="pango_fc_font_kern_glyphs">
 <description>
 Adjust each adjacent pair of glyphs in @glyphs according to
@@ -9367,30 +9690,27 @@ Since: 1.4
 <return></return>
 </function>
 
-<function name="pango_layout_line_get_extents">
+<function name="pango_bidi_type_for_unichar">
 <description>
-Computes the logical and ink extents of a layout line. See
-pango_font_get_glyph_extents() for details about the interpretation
-of the rectangles.
+Determines the normative bidirectional character type of a
+character, as specified in the Unicode Character Database.
+
+A simplified version of this function is available as
+pango_unichar_get_direction().
+
 
 </description>
 <parameters>
-<parameter name="line">
-<parameter_description>     a #PangoLayoutLine
-</parameter_description>
-</parameter>
-<parameter name="ink_rect">
-<parameter_description> rectangle used to store the extents of the glyph string
-as drawn, or %NULL
-</parameter_description>
-</parameter>
-<parameter name="logical_rect">
-<parameter_description> rectangle used to store the logical extents of the glyph
-string, or %NULL
+<parameter name="ch">
+<parameter_description> a Unicode character
 </parameter_description>
 </parameter>
 </parameters>
-<return></return>
+<return> the bidirectional character type, as used in the
+Unicode bidirectional algorithm.
+
+Since: 1.22
+</return>
 </function>
 
 <function name="pango_x_font_get_unknown_glyph">
@@ -9568,7 +9888,7 @@ Frees a font description.
 </description>
 <parameters>
 <parameter name="desc">
-<parameter_description> a #PangoFontDescription, or %NULL
+<parameter_description> a #PangoFontDescription, may be %NULL
 </parameter_description>
 </parameter>
 </parameters>
@@ -10014,28 +10334,25 @@ pango_win32_font_cache_unload().
 </return>
 </function>
 
-<function name="pango_ot_buffer_set_zero_width_marks">
+<function name="_pango_cairo_font_install">
 <description>
-Sets whether characters with a mark class should be forced to zero width.
-This setting is needed for proper positioning of Arabic accents,
-but will produce incorrect results with standard OpenType Indic
-fonts.
+Makes @font the current font for rendering in the specified
+Cairo context.
 
-Since: 1.6
 
 </description>
 <parameters>
-<parameter name="buffer">
-<parameter_description> a #PangoOTBuffer
+<parameter name="font">
+<parameter_description> a #PangoCairoFont
 </parameter_description>
 </parameter>
-<parameter name="zero_width_marks">
-<parameter_description> %TRUE if characters with a mark class should
-be forced to zero width.
+<parameter name="cr">
+<parameter_description> a #cairo_t
 </parameter_description>
 </parameter>
 </parameters>
-<return></return>
+<return> %TRUE if font was installed successfully, %FALSE otherwise.
+</return>
 </function>
 
 <function name="pango_language_get_default">
@@ -10077,28 +10394,29 @@ older than 1.18.
 <return></return>
 </function>
 
-<function name="pango_attr_iterator_get">
+<function name="pango_get_mirror_char">
 <description>
-Find the current attribute of a particular type at the iterator
-location. When multiple attributes of the same type overlap,
-the attribute whose range starts closest to the current location
-is used.
+If @ch has the Unicode mirrored property and there is another Unicode
+character that typically has a glyph that is the mirror image of @ch&apos;s
+glyph, puts that character in the address pointed to by @mirrored_ch.
+
+Use g_unichar_get_mirror_char() instead; the docs for that function
+provide full details.
 
 
 </description>
 <parameters>
-<parameter name="iterator">
-<parameter_description> a #PangoAttrIterator
+<parameter name="ch">
+<parameter_description> a Unicode character
 </parameter_description>
 </parameter>
-<parameter name="type">
-<parameter_description> the type of attribute to find.
+<parameter name="mirrored_ch">
+<parameter_description> location to store the mirrored character
 </parameter_description>
 </parameter>
 </parameters>
-<return> the current attribute of the given type, or %NULL
-if no attribute of that type applies to the current
-location.
+<return> %TRUE if @ch has a mirrored character and @mirrored_ch is
+filled in, %FALSE otherwise
 </return>
 </function>
 
@@ -10163,7 +10481,7 @@ the field was explicitly set or not.
 
 <function name="pango_xft_font_get_font">
 <description>
-Return value: the XftFont associated to @font.
+Return value: the XftFont associated to @font, or %NULL if @font is %NULL.
 
 </description>
 <parameters>
@@ -10172,7 +10490,7 @@ Return value: the XftFont associated to @font.
 </parameter_description>
 </parameter>
 </parameters>
-<return> the XftFont associated to @font.
+<return> the XftFont associated to @font, or %NULL if @font is %NULL.
 </return>
 </function>
 
@@ -10206,25 +10524,28 @@ should be freed with g_object_unref().
 </return>
 </function>
 
-<function name="pango_layout_get_font_description">
+<function name="pango_layout_set_indent">
 <description>
-Gets the font description for the layout, if any.
+Sets the width in Pango units to indent each paragraph. A negative value
+of @indent will produce a hanging indentation. That is, the first line will
+have the full width, and subsequent lines will be indented by the
+absolute value of @indent.
 
+The indent setting is ignored if layout alignment is set to
+%PANGO_ALIGN_CENTER.
 
 </description>
 <parameters>
 <parameter name="layout">
-<parameter_description> a #PangoLayout
+<parameter_description> a #PangoLayout.
+</parameter_description>
+</parameter>
+<parameter name="indent">
+<parameter_description> the amount by which to indent.
 </parameter_description>
 </parameter>
 </parameters>
-<return> a pointer to the layout&apos;s font description,
-or %NULL if the font description from the layout&apos;s
-context is inherited. This value is owned by the layout
-and must not be modified or freed.
-
-Since: 1.8
-</return>
+<return></return>
 </function>
 
 <function name="pango_attr_variant_new">
@@ -10265,7 +10586,7 @@ in that grapheme. The reverse is true for a left-to-right line.
 </parameter_description>
 </parameter>
 <parameter name="x_pos">
-<parameter_description>     the X offset (in #PangoGlyphUnit)
+<parameter_description>     the X offset (in Pango units)
 from the left edge of the line.
 </parameter_description>
 </parameter>
@@ -10275,10 +10596,10 @@ the grapheme in which the user clicked.
 </parameter_description>
 </parameter>
 <parameter name="trailing">
-<parameter_description>  location to store a integer indicating where
+<parameter_description>  location to store an integer indicating where
 in the grapheme the user clicked. It will either
 be zero, or the number of characters in the
-grapheme. 0 represents the trailing edge of the grapheme.
+grapheme. 0 represents the leading edge of the grapheme.
 </parameter_description>
 </parameter>
 </parameters>
@@ -10294,7 +10615,7 @@ Copies a #PangoMatrix.
 </description>
 <parameters>
 <parameter name="matrix">
-<parameter_description> a #PangoMatrix, can be %NULL
+<parameter_description> a #PangoMatrix, may be %NULL
 </parameter_description>
 </parameter>
 </parameters>
@@ -10306,16 +10627,26 @@ Since: 1.6
 </return>
 </function>
 
-<function name="pango_layout_line_unref">
+<function name="pango_attr_iterator_range">
 <description>
-Decrease the reference count of a #PangoLayoutLine by one.
-If the result is zero, the line and all associated memory
-will be freed.
+Get the range of the current segment. Note that the
+stored return values are signed, not unsigned like
+the values in #PangoAttribute. To deal with this API
+oversight, stored return values that wouldn&apos;t fit into
+a signed integer are clamped to %G_MAXINT.
 
 </description>
 <parameters>
-<parameter name="line">
-<parameter_description> a #PangoLayoutLine
+<parameter name="iterator">
+<parameter_description> a #PangoAttrIterator
+</parameter_description>
+</parameter>
+<parameter name="start">
+<parameter_description> location to store the start of the range
+</parameter_description>
+</parameter>
+<parameter name="end">
+<parameter_description> location to store the end of the range
 </parameter_description>
 </parameter>
 </parameters>
@@ -10400,23 +10731,18 @@ in Pango units.
 <return></return>
 </function>
 
-<function name="pango_version_string">
+<function name="pango_attribute_destroy">
 <description>
-This is similar to the macro %PANGO_VERSION_STRING except that
-it returns the version of Pango available at run-time, as opposed to
-the version available at compile-time.
-
+Destroy a #PangoAttribute and free all associated memory.
 
 </description>
 <parameters>
+<parameter name="attr">
+<parameter_description> a #PangoAttribute.
+</parameter_description>
+</parameter>
 </parameters>
-<return>value: A string containing the version of Pango library
-available at run time.
-The returned string is owned by Pango and should not be modified
-or freed.
-
-Since: 1.16
-</return>
+<return></return>
 </function>
 
 <function name="pango_glyph_string_new">
@@ -10429,25 +10755,6 @@ Create a new #PangoGlyphString.
 </parameters>
 <return> the newly allocated #PangoGlyphString, which
 should be freed with pango_glyph_string_free().
-</return>
-</function>
-
-<function name="_pango_xft_font_get_mini_font">
-<description>
-Gets the font used for drawing the digits in the
-missing-character hex squares
-
-
-</description>
-<parameters>
-<parameter name="xfont">
-<parameter_description> a #PangoXftFont
-</parameter_description>
-</parameter>
-</parameters>
-<return> the #PangoFont used for the digits; this
-value is associated with the main font and will be freed
-along with the main font.
 </return>
 </function>
 
@@ -10486,11 +10793,37 @@ Free a glyph string and associated storage.
 </description>
 <parameters>
 <parameter name="string">
-<parameter_description>    a #PangoGlyphString.
+<parameter_description> a #PangoGlyphString, may be %NULL
 </parameter_description>
 </parameter>
 </parameters>
 <return></return>
+</function>
+
+<function name="pango_find_map">
+<description>
+Locate a #PangoMap for a particular engine type and render
+type. The resulting map can be used to determine the engine
+for each character.
+
+
+</description>
+<parameters>
+<parameter name="language">
+<parameter_description> the language tag for which to find the map
+</parameter_description>
+</parameter>
+<parameter name="engine_type_id">
+<parameter_description> the engine type for the map to find
+</parameter_description>
+</parameter>
+<parameter name="render_type_id">
+<parameter_description> the render type for the map to find
+</parameter_description>
+</parameter>
+</parameters>
+<return> the suitable #PangoMap.
+</return>
 </function>
 
 <function name="_pango_layout_line_ellipsize">
@@ -10606,6 +10939,22 @@ Since: 1.10
 </return>
 </function>
 
+<function name="pango_attr_list_unref">
+<description>
+Decrease the reference count of the given attribute list by one.
+If the result is zero, free the attribute list and the attributes
+it contains.
+
+</description>
+<parameters>
+<parameter name="list">
+<parameter_description> a #PangoAttrList, may be %NULL
+</parameter_description>
+</parameter>
+</parameters>
+<return></return>
+</function>
+
 <function name="pango_font_metrics_ref">
 <description>
 Increase the reference count of a font metrics structure by one.
@@ -10614,7 +10963,7 @@ Increase the reference count of a font metrics structure by one.
 </description>
 <parameters>
 <parameter name="metrics">
-<parameter_description> a #PangoFontMetrics structure
+<parameter_description> a #PangoFontMetrics structure, may be %NULL
 </parameter_description>
 </parameter>
 </parameters>
@@ -10812,7 +11161,7 @@ The array will be of length &amp;lt;literal&amp;gt;2*n_ranges&amp;lt;/literal&am
 with each range starting at &amp;lt;literal&amp;gt;(*ranges)[2*n]&amp;lt;/literal&amp;gt;
 and of width &amp;lt;literal&amp;gt;(*ranges)[2*n + 1] - (*ranges)[2*n]&amp;lt;/literal&amp;gt;.
 This array must be freed with g_free(). The coordinates are relative
-to the layout and are in #PangoGlyphUnit.
+to the layout and are in Pango units.
 </parameter_description>
 </parameter>
 <parameter name="n_ranges">
@@ -10881,11 +11230,28 @@ memory.
 </description>
 <parameters>
 <parameter name="metrics">
-<parameter_description> a #PangoFontMetrics structure
+<parameter_description> a #PangoFontMetrics structure, may be %NULL
 </parameter_description>
 </parameter>
 </parameters>
 <return></return>
+</function>
+
+<function name="pango_attr_family_new">
+<description>
+Create a new font family attribute.
+
+
+</description>
+<parameters>
+<parameter name="family">
+<parameter_description> the family or comma separated list of families
+</parameter_description>
+</parameter>
+</parameters>
+<return> the newly allocated #PangoAttribute, which should be
+freed with pango_attribute_destroy().
+</return>
 </function>
 
 <function name="pango_xft_render_layout_line">
@@ -10921,30 +11287,25 @@ Since: 1.8
 <return></return>
 </function>
 
-<function name="pango_win32_font_description_from_logfontw">
+<function name="pango_font_metrics_get_underline_position">
 <description>
-Creates a #PangoFontDescription that matches the specified LOGFONTW.
-
-The face name, italicness and weight fields in the LOGFONTW are used
-to set up the resulting #PangoFontDescription. If the face name in
-the LOGFONTW contains non-ASCII characters the font is temporarily
-loaded (using CreateFontIndirect()) and an ASCII (usually English)
-name for it is looked up from the font name tables in the font
-data. If that doesn&apos;t work, the face name is converted from UTF-16
-to UTF-8 and that is used.
+Gets the suggested position to draw the underline.
+The value returned is the distance &amp;lt;emphasis&amp;gt;above&amp;lt;/emphasis&amp;gt; the
+baseline of the top of the underline. Since most fonts have
+underline positions beneath the baseline, this value is typically
+negative.
 
 
 </description>
 <parameters>
-<parameter name="lfp">
-<parameter_description> a LOGFONTW
+<parameter name="metrics">
+<parameter_description> a #PangoFontMetrics structure
 </parameter_description>
 </parameter>
 </parameters>
-<return> the newly allocated #PangoFontDescription, which
-should be freed using pango_font_description_free()
+<return> the suggested underline position, in Pango units.
 
-Since: 1.16
+Since: 1.6
 </return>
 </function>
 
@@ -10980,12 +11341,13 @@ when the copy is only needed temporarily.
 </description>
 <parameters>
 <parameter name="desc">
-<parameter_description> a #PangoFontDescription
+<parameter_description> a #PangoFontDescription, may be %NULL
 </parameter_description>
 </parameter>
 </parameters>
 <return> the newly allocated #PangoFontDescription, which should
-be freed with pango_font_description_free().
+be freed with pango_font_description_free(), or %NULL
+if @desc was %NULL.
 </return>
 </function>
 
@@ -11040,7 +11402,7 @@ Gets the font map for which the font was created.
 </parameter_description>
 </parameter>
 </parameters>
-<return> the #PangoFontMap for the font
+<return> the #PangoFontMap for the font, or %NULL if @font is %NULL.
 
 Since: 1.10
 </return>
@@ -11131,6 +11493,30 @@ ignored.
 </return>
 </function>
 
+<function name="pango_layout_iter_get_cluster_extents">
+<description>
+Gets the extents of the current cluster, in layout coordinates
+(origin is the top left of the entire layout).
+
+
+</description>
+<parameters>
+<parameter name="iter">
+<parameter_description> a #PangoLayoutIter
+</parameter_description>
+</parameter>
+<parameter name="ink_rect">
+<parameter_description> rectangle to fill with ink extents, or %NULL
+</parameter_description>
+</parameter>
+<parameter name="logical_rect">
+<parameter_description> rectangle to fill with logical extents, or %NULL
+</parameter_description>
+</parameter>
+</parameters>
+<return></return>
+</function>
+
 <function name="pango_attr_strikethrough_new">
 <description>
 Create a new strike-through attribute.
@@ -11156,12 +11542,13 @@ Copy a glyph string and associated storage.
 </description>
 <parameters>
 <parameter name="string">
-<parameter_description> a #PangoGlyphString.
+<parameter_description> a #PangoGlyphString, may be %NULL
 </parameter_description>
 </parameter>
 </parameters>
 <return> the newly allocated #PangoGlyphString, which
-should be freed with pango_glyph_string_free().
+should be freed with pango_glyph_string_free(),
+or %NULL if @string was %NULL.
 </return>
 </function>
 
@@ -11274,47 +11661,22 @@ or %NULL to indicate that the result is not needed.
 <return></return>
 </function>
 
-<function name="pango_xft_render_transformed">
+<function name="pango_cairo_show_layout">
 <description>
-Renders a #PangoGlyphString onto a #XftDraw, possibly
-transforming the layed-out coordinates through a transformation
-matrix. Note that the transformation matrix for @font is not
-changed, so to produce correct rendering results, the @font
-must have been loaded using a #PangoContext with an identical
-transformation matrix to that passed in to this function.
+Draws a #PangoLayoutLine in the specified cairo context.
+The top-left corner of the #PangoLayout will be drawn
+at the current point of the cairo context.
 
-Since: 1.8
+Since: 1.10
 
 </description>
 <parameters>
-<parameter name="draw">
-<parameter_description>    an #XftDraw
+<parameter name="cr">
+<parameter_description> a Cairo context
 </parameter_description>
 </parameter>
-<parameter name="color">
-<parameter_description>   the color in which to draw the glyphs
-</parameter_description>
-</parameter>
-<parameter name="font">
-<parameter_description>    the font in which to draw the string
-</parameter_description>
-</parameter>
-<parameter name="matrix">
-<parameter_description>  a #PangoMatrix, or %NULL to use an identity transformation
-</parameter_description>
-</parameter>
-<parameter name="glyphs">
-<parameter_description>  the glyph string to draw
-</parameter_description>
-</parameter>
-<parameter name="x">
-<parameter_description>       the x position of the start of the string (in Pango
-units in user space coordinates)
-</parameter_description>
-</parameter>
-<parameter name="y">
-<parameter_description>       the y position of the baseline (in Pango units
-in user space coordinates)
+<parameter name="layout">
+<parameter_description> a Pango layout
 </parameter_description>
 </parameter>
 </parameters>
@@ -11327,7 +11689,6 @@ If @setting is %TRUE, do not treat newlines and similar characters
 as paragraph separators; instead, keep all text in a single paragraph,
 and display a glyph for paragraph separator characters. Used when
 you want to allow editing of newlines on a single text line.
-
 
 </description>
 <parameters>
@@ -11471,6 +11832,24 @@ freed with pango_attribute_destroy().
 </return>
 </function>
 
+<function name="pango_layout_iter_get_layout">
+<description>
+Gets the layout associated with a #PangoLayoutIter.
+
+
+</description>
+<parameters>
+<parameter name="iter">
+<parameter_description> a #PangoLayoutIter
+</parameter_description>
+</parameter>
+</parameters>
+<return> the layout associated with @iter.
+
+Since: 1.20
+</return>
+</function>
+
 <function name="pango_ot_tag_from_script">
 <description>
 Finds the OpenType script tag corresponding to @script.
@@ -11580,25 +11959,30 @@ be freed with pango_tab_array_free().
 </return>
 </function>
 
-<function name="pango_font_metrics_get_underline_position">
+<function name="pango_win32_font_description_from_logfontw">
 <description>
-Gets the suggested position to draw the underline.
-The value returned is the distance &amp;lt;emphasis&amp;gt;above&amp;lt;/emphasis&amp;gt; the
-baseline of the top of the underline. Since most fonts have
-underline positions beneath the baseline, this value is typically
-negative.
+Creates a #PangoFontDescription that matches the specified LOGFONTW.
+
+The face name, italicness and weight fields in the LOGFONTW are used
+to set up the resulting #PangoFontDescription. If the face name in
+the LOGFONTW contains non-ASCII characters the font is temporarily
+loaded (using CreateFontIndirect()) and an ASCII (usually English)
+name for it is looked up from the font name tables in the font
+data. If that doesn&apos;t work, the face name is converted from UTF-16
+to UTF-8 and that is used.
 
 
 </description>
 <parameters>
-<parameter name="metrics">
-<parameter_description> a #PangoFontMetrics structure
+<parameter name="lfp">
+<parameter_description> a LOGFONTW
 </parameter_description>
 </parameter>
 </parameters>
-<return> the suggested underline position, in Pango units.
+<return> the newly allocated #PangoFontDescription, which
+should be freed using pango_font_description_free()
 
-Since: 1.6
+Since: 1.16
 </return>
 </function>
 
@@ -11654,28 +12038,20 @@ if changes are made to the #PangoLayout.
 </return>
 </function>
 
-<function name="pango_context_load_fontset">
+<function name="pango_font_describe_with_absolute_size">
 <description>
-Load a set of fonts in the context that can be used to render
-a font matching @desc.
-
+Return value: a newly-allocated #PangoFontDescription object.
 
 </description>
 <parameters>
-<parameter name="context">
-<parameter_description> a #PangoContext
-</parameter_description>
-</parameter>
-<parameter name="desc">
-<parameter_description> a #PangoFontDescription describing the fonts to load
-</parameter_description>
-</parameter>
-<parameter name="language">
-<parameter_description> a #PangoLanguage the fonts will be used for
+<parameter name="font">
+<parameter_description> a #PangoFont
 </parameter_description>
 </parameter>
 </parameters>
-<return>the fontset, or %NULL if no font matched.
+<return> a newly-allocated #PangoFontDescription object.
+
+Since: 1.14
 </return>
 </function>
 

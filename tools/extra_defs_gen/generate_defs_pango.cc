@@ -23,11 +23,12 @@
 #include <pango/pango.h>
 
 
-int main (int argc, char *argv[])
+int main (int /* argc */, char ** /* argv */)
 {
-  //gtk_init(&argc, &argv);
+  g_type_init();
 
-  std::cout << "TODO: pangomm .defs?" << std::endl;
+  //Pango doesn't seem to have any public signals or properties.
+  std::cout << get_defs( PANGO_TYPE_LAYOUT ) << std::endl;
 
 
   return 0;

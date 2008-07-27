@@ -1,3 +1,18 @@
+2008-07-27  Murray Cumming,,,  <murrayc@murrayc.com>
+
+	reviewed by: <delete if not using a buddy>
+	patch by: <delete if not someone else's patch>
+
+	* docs/reference/Doxyfile.in:
+	* pango/src/layout.hg:
+	* pango/src/layoutiter.ccg:
+	* pango/src/layoutiter.hg:
+	* pango/src/pango_docs.xml:
+	* pango/src/pango_enums.defs:
+	* pango/src/pango_methods.defs:
+	* pango/src/renderer.hg:
+	* tools/extra_defs_gen/generate_defs_pango.cc:
+
 2.13.5:
 
 Created a standalone pangomm module from gtkmm in svn trunk, 

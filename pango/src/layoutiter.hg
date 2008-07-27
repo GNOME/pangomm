@@ -48,7 +48,11 @@ public:
   _WRAP_METHOD(Glib::RefPtr<LayoutLine> get_line() const, pango_layout_iter_get_line, refreturn)
   //TODO: We should really have a const and non-const version: _WRAP_METHOD(Glib::RefPtr<const LayoutLine> get_line() const, pango_layout_iter_get_line_readonly, refreturn)
 
+
   _WRAP_METHOD(bool at_last_line() const, pango_layout_iter_at_last_line)
+
+  _WRAP_METHOD(Glib::RefPtr<Layout> get_layout(), pango_layout_iter_get_layout, refreturn)
+  _WRAP_METHOD(Glib::RefPtr<const Layout> get_layout() const, pango_layout_iter_get_layout, refreturn, constversion)
 
   _WRAP_METHOD(bool next_char(), pango_layout_iter_next_char)
   _WRAP_METHOD(bool next_cluster(), pango_layout_iter_next_cluster)

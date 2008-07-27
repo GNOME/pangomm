@@ -125,6 +125,8 @@ public:
 
   _WRAP_METHOD(void set_width(int width), pango_layout_set_width)
   _WRAP_METHOD(int get_width() const, pango_layout_get_width)
+  _WRAP_METHOD(void set_height(int height), pango_layout_set_height)
+  _WRAP_METHOD(int get_height() const, pango_layout_get_height)
   _WRAP_METHOD(void set_wrap(WrapMode wrap), pango_layout_set_wrap)
   _WRAP_METHOD(WrapMode get_wrap() const, pango_layout_get_wrap)
   _WRAP_METHOD(bool is_wrapped() const, pango_layout_is_wrapped)
@@ -218,6 +220,8 @@ public:
 
   _WRAP_METHOD(void get_size(int& width, int& height) const, pango_layout_get_size)
   _WRAP_METHOD(void get_pixel_size(int& width, int& height) const, pango_layout_get_pixel_size)
+
+  _WRAP_METHOD(int get_baseline() const, pango_layout_get_baseline)
 
   _WRAP_METHOD(int get_line_count() const, pango_layout_get_line_count)
   

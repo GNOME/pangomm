@@ -1,4 +1,4 @@
-;; From /home/murrayc/svn/gnome218/pango/pango/pango-attributes.h
+;; From /home/murrayc/svn/gnome220/pango/pango/pango-attributes.h
 
 (define-enum-extended AttrType
   (in-module "Pango")
@@ -42,7 +42,49 @@
   )
 )
 
-;; From /home/murrayc/svn/gnome218/pango/pango/pango-coverage.h
+;; From /home/murrayc/svn/gnome220/pango/pango/pango-bidi-type.h
+
+(define-enum-extended BidiType
+  (in-module "Pango")
+  (c-name "PangoBidiType")
+  (values
+    '("l" "PANGO_BIDI_TYPE_L" "0")
+    '("lre" "PANGO_BIDI_TYPE_LRE" "1")
+    '("lro" "PANGO_BIDI_TYPE_LRO" "2")
+    '("r" "PANGO_BIDI_TYPE_R" "3")
+    '("al" "PANGO_BIDI_TYPE_AL" "4")
+    '("rle" "PANGO_BIDI_TYPE_RLE" "5")
+    '("rlo" "PANGO_BIDI_TYPE_RLO" "6")
+    '("pdf" "PANGO_BIDI_TYPE_PDF" "7")
+    '("en" "PANGO_BIDI_TYPE_EN" "8")
+    '("es" "PANGO_BIDI_TYPE_ES" "9")
+    '("et" "PANGO_BIDI_TYPE_ET" "10")
+    '("an" "PANGO_BIDI_TYPE_AN" "11")
+    '("cs" "PANGO_BIDI_TYPE_CS" "12")
+    '("nsm" "PANGO_BIDI_TYPE_NSM" "13")
+    '("bn" "PANGO_BIDI_TYPE_BN" "14")
+    '("b" "PANGO_BIDI_TYPE_B" "15")
+    '("s" "PANGO_BIDI_TYPE_S" "16")
+    '("ws" "PANGO_BIDI_TYPE_WS" "17")
+    '("on" "PANGO_BIDI_TYPE_ON" "18")
+  )
+)
+
+(define-enum-extended Direction
+  (in-module "Pango")
+  (c-name "PangoDirection")
+  (values
+    '("ltr" "PANGO_DIRECTION_LTR" "0")
+    '("rtl" "PANGO_DIRECTION_RTL" "1")
+    '("ttb-ltr" "PANGO_DIRECTION_TTB_LTR" "2")
+    '("ttb-rtl" "PANGO_DIRECTION_TTB_RTL" "3")
+    '("weak-ltr" "PANGO_DIRECTION_WEAK_LTR" "4")
+    '("weak-rtl" "PANGO_DIRECTION_WEAK_RTL" "5")
+    '("neutral" "PANGO_DIRECTION_NEUTRAL" "6")
+  )
+)
+
+;; From /home/murrayc/svn/gnome220/pango/pango/pango-coverage.h
 
 (define-enum-extended CoverageLevel
   (in-module "Pango")
@@ -55,7 +97,7 @@
   )
 )
 
-;; From /home/murrayc/svn/gnome218/pango/pango/pango-font.h
+;; From /home/murrayc/svn/gnome220/pango/pango/pango-font.h
 
 (define-enum-extended Style
   (in-module "Pango")
@@ -120,7 +162,7 @@
   )
 )
 
-;; From /home/murrayc/svn/gnome218/pango/pango/pango-gravity.h
+;; From /home/murrayc/svn/gnome220/pango/pango/pango-gravity.h
 
 (define-enum-extended Gravity
   (in-module "Pango")
@@ -144,7 +186,7 @@
   )
 )
 
-;; From /home/murrayc/svn/gnome218/pango/pango/pango-layout.h
+;; From /home/murrayc/svn/gnome220/pango/pango/pango-layout.h
 
 (define-enum-extended Alignment
   (in-module "Pango")
@@ -177,7 +219,7 @@
   )
 )
 
-;; From /home/murrayc/svn/gnome218/pango/pango/pango-ot.h
+;; From /home/murrayc/svn/gnome220/pango/pango/pango-ot.h
 
 (define-enum-extended OTTableType
   (in-module "Pango")
@@ -188,7 +230,7 @@
   )
 )
 
-;; From /home/murrayc/svn/gnome218/pango/pango/pango-renderer.h
+;; From /home/murrayc/svn/gnome220/pango/pango/pango-renderer.h
 
 (define-enum-extended RenderPart
   (in-module "Pango")
@@ -201,7 +243,7 @@
   )
 )
 
-;; From /home/murrayc/svn/gnome218/pango/pango/pango-script.h
+;; From /home/murrayc/svn/gnome220/pango/pango/pango-script.h
 
 (define-enum-extended Script
   (in-module "Pango")
@@ -275,10 +317,21 @@
     '("phoenician" "PANGO_SCRIPT_PHOENICIAN" "64")
     '("phags-pa" "PANGO_SCRIPT_PHAGS_PA" "65")
     '("nko" "PANGO_SCRIPT_NKO" "66")
+    '("kayah-li" "PANGO_SCRIPT_KAYAH_LI" "67")
+    '("lepcha" "PANGO_SCRIPT_LEPCHA" "68")
+    '("rejang" "PANGO_SCRIPT_REJANG" "69")
+    '("sundanese" "PANGO_SCRIPT_SUNDANESE" "70")
+    '("saurashtra" "PANGO_SCRIPT_SAURASHTRA" "71")
+    '("cham" "PANGO_SCRIPT_CHAM" "72")
+    '("ol-chiki" "PANGO_SCRIPT_OL_CHIKI" "73")
+    '("vai" "PANGO_SCRIPT_VAI" "74")
+    '("carian" "PANGO_SCRIPT_CARIAN" "75")
+    '("lycian" "PANGO_SCRIPT_LYCIAN" "76")
+    '("lydian" "PANGO_SCRIPT_LYDIAN" "77")
   )
 )
 
-;; From /home/murrayc/svn/gnome218/pango/pango/pango-tabs.h
+;; From /home/murrayc/svn/gnome220/pango/pango/pango-tabs.h
 
 (define-enum-extended TabAlign
   (in-module "Pango")
@@ -288,23 +341,7 @@
   )
 )
 
-;; From /home/murrayc/svn/gnome218/pango/pango/pango-types.h
-
-(define-enum-extended Direction
-  (in-module "Pango")
-  (c-name "PangoDirection")
-  (values
-    '("ltr" "PANGO_DIRECTION_LTR" "0")
-    '("rtl" "PANGO_DIRECTION_RTL" "1")
-    '("ttb-ltr" "PANGO_DIRECTION_TTB_LTR" "2")
-    '("ttb-rtl" "PANGO_DIRECTION_TTB_RTL" "3")
-    '("weak-ltr" "PANGO_DIRECTION_WEAK_LTR" "4")
-    '("weak-rtl" "PANGO_DIRECTION_WEAK_RTL" "5")
-    '("neutral" "PANGO_DIRECTION_NEUTRAL" "6")
-  )
-)
-
-;; From /home/murrayc/svn/gnome218/pango/pango/pangowin32-private.h
+;; From /home/murrayc/svn/gnome220/pango/pango/pangowin32-private.h
 
 (define-enum-extended Win32CoverageLanguageClass
   (in-module "Pango")

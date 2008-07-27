@@ -69,6 +69,12 @@ public:
   _WRAP_METHOD(void set_matrix(const Matrix& matrix), pango_renderer_set_matrix)
   Matrix get_matrix() const;
   _IGNORE(pango_renderer_get_matrix)
+
+  _WRAP_METHOD(Glib::RefPtr<Layout> get_layout(), pango_renderer_get_layout, refreturn)
+  _WRAP_METHOD(Glib::RefPtr<const Layout> get_layout() const, pango_renderer_get_layout, refreturn, constversion)
+
+  _WRAP_METHOD(Glib::RefPtr<LayoutLine> get_layout_line(), pango_renderer_get_layout_line, refreturn)
+  _WRAP_METHOD(Glib::RefPtr<const LayoutLine> get_layout_line() const, pango_renderer_get_layout_line, refreturn, constversion)
 };
 
 } /* namespace Pango */
