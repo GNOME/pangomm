@@ -126,7 +126,7 @@ GLIBMM_CHECK_PERL([5.6.0])
 #  Dependancy checks
 #########################################################################
 pangomm_min_glibmm_version=2.14.1
-pangomm_min_pango_version=2.13.4
+pangomm_min_pango_version=1.21.3
 pangomm_min_cairomm_version=1.2.2
 
 

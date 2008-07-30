@@ -1,3 +1,7 @@
+2008-07-30  Sebastien Bacher  <seb128@ubuntu.com>
+
+	* configure.in: require a correct pango version (bug #545378)
+
 2008-07-27  Murray Cumming  <murrayc@murrayc.com>
 
 	* docs/Makefile_web.am_fragment: Corrected the upload location.
