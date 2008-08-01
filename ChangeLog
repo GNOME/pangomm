@@ -1,3 +1,10 @@
+2008-08-01  Murray Cumming  <murrayc@murrayc.com>
+
+	* docs/Makefile.am:
+	* docs/index.html: Removed index.html. It was just a copy from 
+	gtkmm (from where I will also be removing it.) The true copy is in 
+	gnomemm-website (uploaded to gtkmm.org).
+
 2008-07-30  Sebastien Bacher  <seb128@ubuntu.com>
 
 	* configure.in: require a correct pango version (bug #545378)

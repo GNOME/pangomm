@@ -5,7 +5,7 @@ SUBDIRS = images reference
 
 EXTRA_DIST = Makefile_web.am_fragment index.html
 
-pangomm_doc_DATA = index.html
+# pangomm_doc_DATA = 
 
 include $(top_srcdir)/docs/Makefile_web.am_fragment
 
