@@ -3,7 +3,7 @@ SUBDIRS = images
 doxygen_configfile = Doxyfile
 doxygen_configfile_source = $(srcdir)/Doxyfile.in
 beautify_docs = @GMMPROC_DIR@/beautify_docs.pl
-devhelp_file = pangomm-2.4.devhelp
+devhelp_file = pangomm-1.4.devhelp
 devhelp_stylesheet = doxygen_to_devhelp.xsl
 
 include $(top_srcdir)/docs/Makefile_web.am_fragment
@@ -63,7 +63,7 @@ html-clean:
 
 referencetopdir = $(pangomm_docdir)/reference
 referencedir = $(referencetopdir)/html
-devhelpdir = $(datadir)/devhelp/books/pangomm-2.4
+devhelpdir = $(datadir)/devhelp/books/pangomm-1.4
 
 hierarchy_to_install = widget_hierarchy.png widget_hierarchy.html
 

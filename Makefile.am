@@ -35,7 +35,7 @@ doc_tarball_files = \
 # This doesn't work very well in a $(srcdir) != $(builddir) setup,
 # but this target is for maintainer use only anyway.
 
-pangomm-2-4-docs.tar.gz:
+pangomm-1-4-docs.tar.gz:
 	tar cf - --files-from - $(doc_tarball_files) | gzip -c --best >$@
 
 # Upload documentation:
@@ -45,8 +45,8 @@ post-html-recursive:
 	  test "$$subdir" = . || (cd $$subdir && $(MAKE) $(AM_MAKEFLAGS) post-html); \
 	done
 
-post-html-local: pangomm-2-4-docs.tar.gz
-	rsync $(rsync_args) pangomm-2-4-docs.tar.gz $$USER@$(web_host):$(web_path_pangomm)
+post-html-local: pangomm-1-4-docs.tar.gz
+	rsync $(rsync_args) pangomm-1-4-docs.tar.gz $$USER@$(web_host):$(web_path_pangomm)
 
 post-html: post-html-recursive post-html-local
 
