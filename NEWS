@@ -1,3 +1,10 @@
+2.13.7:
+
+* Build: Require a correct version of pango.
+  (Sebastian Bacher)
+* Documentation: Correct some mentions of pangomm-2.4 to pangomm-1.4.
+  (Deng Xiyue)
+
 2.13.6:
 
 * Layout: Added get_height(), set_height(), get_baseline().

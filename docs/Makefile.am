@@ -3,7 +3,7 @@
 
 SUBDIRS = images reference
 
-EXTRA_DIST = Makefile_web.am_fragment index.html
+EXTRA_DIST = Makefile_web.am_fragment
 
 # pangomm_doc_DATA = 
 
