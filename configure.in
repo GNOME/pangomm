@@ -259,6 +259,11 @@ AC_CONFIG_FILES([
   tools/Makefile
     tools/m4/Makefile
     tools/extra_defs_gen/Makefile
+
+  MSVC_Net2005/Makefile
+    MSVC_Net2005/gendef/Makefile
+    MSVC_Net2005/pangomm/Makefile
+    MSVC_Net2005/pangomm/pangomm.rc
 ])
 
 AC_CONFIG_FILES([

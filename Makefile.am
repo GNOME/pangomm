@@ -1,4 +1,4 @@
-SUBDIRS		= tools pango @DOCS_SUBDIR@
+SUBDIRS		= tools pango MSVC_Net2005 @DOCS_SUBDIR@
 DIST_SUBDIRS	= $(SUBDIRS) scripts
 
 EXTRA_DIST	= build_shared/Makefile_build.am_fragment \

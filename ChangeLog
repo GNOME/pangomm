@@ -1,3 +1,19 @@
+2008-08-09  Armin Burgmeier  <armin@arbur.net>
+
+	* MSVC_Net2005/gendef/gendef.cc:
+	* MSVC_Net2005/gendef/gendef.vcproj:
+	* MSVC_Net2005/gendef/Makefile.am:
+	* MSVC_Net2005/pangomm/pangomm.vcproj:
+	* MSVC_Net2005/pangomm/pangomm.rc.in:
+	* MSVC_Net2005/pangomm/Makefile.am:
+	* MSVC_Net2005/pangomm.sln:
+	* MSVC_Net2005/blank.cpp:
+	* MSVC_Net2005/Makefile.am: Added project files to build pangomm with
+	Visual Studio 2005.
+
+	* configure.in:
+	* Makefile.am: Adapt build files.
+
 2.13.7:
 
 2008-08-02  Murray Cumming  <murrayc@murrayc.com>
