@@ -84,6 +84,9 @@ _CONVERSION(`PangoGlyphString*',`const GlyphString',`GlyphString(($3))')
 _CONVERSION(`const Pango::GlyphString&',`PangoGlyphString*',const_cast<PangoGlyphString*>($3.gobj()))
 _CONVERSION(`const GlyphString&',`PangoGlyphString*',const_cast<PangoGlyphString*>($3.gobj()))
 
+_CONVERSION(`PangoGlyphItem*',`GlyphItem',`GlyphItem(($3))')
+_CONVERSION(`const GlyphItme&',`PangoGlyphItem*',const_cast<PangoGlyphItem*>($3.gobj()))
+
 _CONVERSION(`PangoFont*',`Glib::RefPtr<Font>',Glib::wrap($3))
 _CONVERSION(`PangoFont*',`Glib::RefPtr<Pango::Font>',Glib::wrap($3))
 _CONVERSION(`PangoFont*',`Glib::RefPtr<const Font>',Glib::wrap($3))
@@ -159,4 +162,7 @@ _CONVERSION(`GSList*',`SListHandle_ConstLayoutLine',__FL2H_SHALLOW)
 _CONVERSION(`PangoFontMap*',`Glib::RefPtr<Pango::FontMap>',`Glib::wrap($3)')
 
 _CONVERSION(`const Cairo::FontOptions&',`const cairo_font_options_t*',`($3).cobj()')
+
+_CONVERSION(`const LogAttr&',`PangoLogAttr*',&(const_cast<LogAttr&>($3)))
+
 

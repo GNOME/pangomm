@@ -17,6 +17,7 @@
  * Software Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
+#include <pangomm/attributes.h> //For LogAttr.
 #include <pango/pango-layout.h>
 
 _DEFS(pangomm,pango)
@@ -26,6 +27,11 @@ namespace Pango
 
 class Item;
 class GlyphString;
+class LayoutRun;
+
+typedef LayoutRun GlyphItem;
+
+//TODO: The Pango docs now say "it is simply an alternate name for PangoGlyphItem. See the PangoGlyphItem docs for details on the fields. "
 
 /** A Pango::LayoutRun represents a single run within a PangoLayoutLine.
  */
@@ -38,6 +44,11 @@ protected:
 
 public:
   explicit LayoutRun(const PangoLayoutRun* src);
+
+  _WRAP_METHOD(GlyphItem split(const Glib::ustring& text, int split_index), pango_glyph_item_split)
+
+  //This takes ownership of the GlyphItem, which is strange: _WRAP_METHOD(GSList* apply_attrs(const Glib::ustring& text, const AttrList& list), pango_glyph_item_apply_attrs)
+  _WRAP_METHOD(void letter_space(const Glib::ustring& text, const LogAttr& log_attrs, int letter_spacing = 0), pango_glyph_item_letter_space)
 
   /** Gets the Pango::Item object that provides information about the segment of text in this run.
    * @return A Pango::Item object.

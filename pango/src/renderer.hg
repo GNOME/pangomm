@@ -22,6 +22,7 @@
 
 #include <glibmm/object.h>
 #include <pangomm/context.h>
+#include <pangomm/layoutrun.h> //Has a typedef for GlyphItem
 #include <pangomm/glyphstring.h>
 #include <pangomm/layout.h>
 #include <pangomm/layoutline.h>
@@ -51,6 +52,7 @@ public:
   _WRAP_METHOD(void draw_layout(const Glib::RefPtr<Layout>& layout, int x, int y), pango_renderer_draw_layout)
   _WRAP_METHOD(void draw_layout_line(const Glib::RefPtr<LayoutLine>& line, int x, int y), pango_renderer_draw_layout_line)
   _WRAP_METHOD(void draw_glyphs(const Glib::RefPtr<Font>& font, const GlyphString& glyphs, int x, int y), pango_renderer_draw_glyphs)
+  _WRAP_METHOD(void draw_glyph_item(const Glib::ustring& text, const GlyphItem& glyph_item, int x, int y), pango_renderer_draw_glyph_item)
   _WRAP_METHOD(void draw_rectangle(RenderPart part, int x, int y, int width, int height), pango_renderer_draw_rectangle)
   _WRAP_METHOD(void draw_error_underline(int x, int y, int width, int height), pango_renderer_draw_error_underline)
   _WRAP_METHOD(void draw_trapezoid(RenderPart part, double y1, double x11, double x21, double y2, double x12, double x22), pango_renderer_draw_trapezoid)
@@ -67,6 +69,8 @@ public:
   _WRAP_METHOD(Color get_color(RenderPart part) const, pango_renderer_get_color)
 
   _WRAP_METHOD(void set_matrix(const Matrix& matrix), pango_renderer_set_matrix)
+
+  //TODO: Documentation:
   Matrix get_matrix() const;
   _IGNORE(pango_renderer_get_matrix)
 

@@ -1,3 +1,14 @@
+2008-08-12  Murray Cumming  <murrayc@murrayc.com>
+
+	* pango/src/layoutrun.hg: Typedef this to GlyphItem, because 
+	that is what it is (and is documented as) in Pango.
+	Added splt() and letter() space to LayoutRun, wrapping PangoGlyphItem 
+	functions. 
+	* tools/m4/convert_pango.m4:
+	* pango/src/renderer.hg: Added draw_glyph_item().
+
+	* pango/src/cairofontmap.hg: Added set_default().
+
 2008-08-09  Armin Burgmeier  <armin@arbur.net>
 
 	* MSVC_Net2005/gendef/gendef.cc:

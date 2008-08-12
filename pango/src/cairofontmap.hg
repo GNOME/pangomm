@@ -43,6 +43,7 @@ class CairoFontMap : public Glib::Interface
 
 public:
   //_WRAP_METHOD(static Glib::RefPtr<PangoFontMap> get_default(), pango_cairo_font_map_get_default) //TODO: ref this?
+  _WRAP_METHOD(void set_default(), pango_cairo_font_map_set_default)
 
 #m4 _CONVERSION(`cairo_font_type_t',`Cairo::FontType',`static_cast<Cairo::FontType>($3)')
   _WRAP_METHOD(Cairo::FontType get_font_type() const, pango_cairo_font_map_get_font_type)
