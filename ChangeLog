@@ -1,5 +1,14 @@
 2008-08-12  Murray Cumming  <murrayc@murrayc.com>
 
+	* pango/src/layoutrun.ccg:
+	* pango/src/layoutrun.hg: Wrap this with CLASS_BOXEDTYPE() instead of 
+	_CLASS_GENERIC(), because the PangoGlyphItem (of which PangoLayoutRun 
+	is a typedef) is a boxed type. This reduces the amount of code in .hg, 
+	while apparently not breaking API or ABI.
+	This should be renamed to GlyphItem when we can break ABI.
+
+2008-08-12  Murray Cumming  <murrayc@murrayc.com>
+
 	* pango/src/layoutrun.hg: Typedef this to GlyphItem, because 
 	that is what it is (and is documented as) in Pango.
 	Added splt() and letter() space to LayoutRun, wrapping PangoGlyphItem 

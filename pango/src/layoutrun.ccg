@@ -22,28 +22,7 @@
 namespace Pango
 {
 
-LayoutRun::LayoutRun()
-{}
-
-LayoutRun::LayoutRun(const PangoLayoutRun* src)
-{
-  gobject_ = *src;
-}
-
 } /* namespace Pango */
 
 
-namespace Glib
-{
 
-Pango::LayoutRun& wrap(PangoLayoutRun* object)
-{
-  return *reinterpret_cast<Pango::LayoutRun*>(object);
-}
-
-const Pango::LayoutRun& wrap(const PangoLayoutRun* object)
-{
-  return *reinterpret_cast<const Pango::LayoutRun*>(object);
-}
-
-} /* namespace Glib */

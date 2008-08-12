@@ -42,13 +42,8 @@ typedef LayoutRun GlyphItem;
  */
 class LayoutRun
 {
-  _CLASS_GENERIC(LayoutRun, PangoLayoutRun)
-
-protected:
-  LayoutRun();
-
-public:
-  explicit LayoutRun(const PangoLayoutRun* src);
+  _CLASS_BOXEDTYPE(LayoutRun, PangoGlyphItem, NONE, pango_glyph_item_copy, pango_glyph_item_free)
+  _IGNORE(pango_glyph_item_free, pango_glyph_item_copy)
 
   _WRAP_METHOD(GlyphItem split(const Glib::ustring& text, int split_index), pango_glyph_item_split)
 
@@ -64,27 +59,9 @@ public:
    * @return A Pango::GlyphString object.
    */
   _MEMBER_GET(glyphs, glyphs, GlyphString, PangoGlyphString*)
-
-  /// Provides access to the underlying C GObject.  
-  PangoLayoutRun*       gobj()       { return &gobject_; }
-  /// Provides access to the underlying C GObject.
-  const PangoLayoutRun* gobj() const { return &gobject_; }
-
-protected:
-  PangoLayoutRun gobject_;
 };
 
 } /* namespace Pango */
 
 
-namespace Glib
-{
-
-/** @relates Pango::LayoutRun */
-Pango::LayoutRun& wrap(PangoLayoutRun* object);
-
-/** @relates Pango::LayoutRun */
-const Pango::LayoutRun& wrap(const PangoLayoutRun* object);
-
-} /* namepspace Glib */
 
