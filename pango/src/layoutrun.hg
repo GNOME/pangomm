@@ -29,11 +29,16 @@ class Item;
 class GlyphString;
 class LayoutRun;
 
+/** A Pango::GlyphItem is a pair of a Pango::Items and the glyphs resulting from shaping the text corresponding to an item.
+ * As an example of the usage of Pango::GlyphItem, the results of shaping text with Pango::Layout is a list of Pango::LayoutLine, 
+ * each of which contains a list of Pango::GlyphItem. 
+ */
 typedef LayoutRun GlyphItem;
 
-//TODO: The Pango docs now say "it is simply an alternate name for PangoGlyphItem. See the PangoGlyphItem docs for details on the fields. "
+//TODO: Change this to just GlyphItem when we can break API/ABI.
 
-/** A Pango::LayoutRun represents a single run within a PangoLayoutLine.
+/** A Pango::LayoutRun represents a single run within a LayoutLine.
+ * It is simply an alternate name for GlyphItem.
  */
 class LayoutRun
 {
