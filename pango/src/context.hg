@@ -73,10 +73,11 @@ _WRAP_ENUM(GravityHint, PangoGravityHint)
 class Context : public Glib::Object
 {
    _CLASS_GOBJECT(Context, PangoContext, PANGO_CONTEXT, Glib::Object, GObject)
-   _IGNORE(pango_context_new, pango_context_set_font_map) //PANGO_ENABLE_BACKEND
+   _IGNORE(pango_context_set_font_map) //PANGO_ENABLE_BACKEND
    _IGNORE(pango_context_list_families)
 protected:
   _CTOR_DEFAULT
+  _IGNORE(pango_context_new)
   
 public:
   /** List all available font families for a context.
@@ -86,6 +87,8 @@ public:
    */
   Glib::ArrayHandle< Glib::RefPtr<FontFamily> > list_families() const;
   
+  _WRAP_METHOD(void set_font_map(const Glib::RefPtr<FontMap>& font_map), pango_context_set_font_map)
+
   _WRAP_METHOD(Glib::RefPtr<FontMap> get_font_map(), pango_context_get_font_map)
   _WRAP_METHOD(Glib::RefPtr<const FontMap> get_font_map() const, pango_context_get_font_map)  
 

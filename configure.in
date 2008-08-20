@@ -15,7 +15,7 @@
 #We use pushdef here because we can't use shell variables before AC_INIT, but we want to use a variable with AC_INIT:
 pushdef([PANGOMM_MAJOR_VERSION],     [2])
 pushdef([PANGOMM_MINOR_VERSION],     [13])
-pushdef([PANGOMM_MICRO_VERSION],     [7])
+pushdef([PANGOMM_MICRO_VERSION],     [8])
 pushdef([PANGOMM_EXTRA_VERSION],     [])
 pushdef([PANGOMM_VERSION], PANGOMM_MAJOR_VERSION.PANGOMM_MINOR_VERSION.PANGOMM_MICRO_VERSION[]PANGOMM_EXTRA_VERSION)
 AC_INIT([pangomm], PANGOMM_VERSION, [gtkmm-list@gnome.org])
@@ -126,7 +126,7 @@ GLIBMM_CHECK_PERL([5.6.0])
 #  Dependancy checks
 #########################################################################
 pangomm_min_glibmm_version=2.14.1
-pangomm_min_pango_version=1.21.3
+pangomm_min_pango_version=1.21.4
 pangomm_min_cairomm_version=1.2.2
 
 
@@ -136,7 +136,7 @@ AC_SUBST(GMMPROC_DIR)
 GMMPROC=$GMMPROC_DIR/gmmproc
 AC_SUBST(GMMPROC)
 
-PKG_CHECK_MODULES(PANGOMM, glibmm-2.4 >= ${pangomm_min_glibmm_version} cairomm-1.0 >= ${pangomm_min_cairomm_version} pangocairo >= 1.5.2)
+PKG_CHECK_MODULES(PANGOMM, glibmm-2.4 >= ${pangomm_min_glibmm_version} cairomm-1.0 >= ${pangomm_min_cairomm_version} pangocairo >= 1.21.3)
 AC_SUBST(PANGOMM_CFLAGS)
 AC_SUBST(PANGOMM_LIBS)
 

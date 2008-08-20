@@ -1,3 +1,10 @@
+2.13.8:
+
+2008-08-12  Murray Cumming  <murrayc@murrayc.com>
+
+	* pango/src/context.hg: Added set_font_map() because it is now public 
+	(non backend-only) API.
+
 2008-08-12  Murray Cumming  <murrayc@murrayc.com>
 
 	* pango/src/layoutrun.ccg:
