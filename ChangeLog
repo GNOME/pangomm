@@ -1,3 +1,9 @@
+2008-08-27  Armin Burgmeier  <armin@arbur.net>
+
+	* MSVC_Net2005/pangomm/pangomm.rc.in: Replaced #include "afxres.h" by
+	#include <windows.h> which does the job equally well, and allows
+	compilation with the freely available Visual Studio Express compiler.
+
 2008-08-20  Murray Cumming  <murrayc@murrayc.com>
 
 	* pango/src/language.ccg:
