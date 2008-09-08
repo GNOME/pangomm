@@ -1,3 +1,7 @@
+2008-09-08  Deng Xiyue  <manphiz@gmail.com>
+
+	* README: Mention pangomm instead of gtkmm. Bug #550789.
+
 2008-08-27  Armin Burgmeier  <armin@arbur.net>
 
 	* MSVC_Net2005/pangomm/pangomm.rc.in: Replaced #include "afxres.h" by
