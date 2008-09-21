@@ -1,3 +1,12 @@
+2.14.0:
+
+* Language: Added get_scripts().
+  (Murray Cumming)
+* README and COPYING fixes.
+  (Deng Xiyue)
+* Fixed the Windows build with Visual Studio Express.
+  (Armin Burgmeier)
+
 2.13.8:
 
 * Context: Added set_font_map() because the C function is now 

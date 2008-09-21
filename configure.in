@@ -14,8 +14,8 @@
 
 #We use pushdef here because we can't use shell variables before AC_INIT, but we want to use a variable with AC_INIT:
 pushdef([PANGOMM_MAJOR_VERSION],     [2])
-pushdef([PANGOMM_MINOR_VERSION],     [13])
-pushdef([PANGOMM_MICRO_VERSION],     [8])
+pushdef([PANGOMM_MINOR_VERSION],     [14])
+pushdef([PANGOMM_MICRO_VERSION],     [0])
 pushdef([PANGOMM_EXTRA_VERSION],     [])
 pushdef([PANGOMM_VERSION], PANGOMM_MAJOR_VERSION.PANGOMM_MINOR_VERSION.PANGOMM_MICRO_VERSION[]PANGOMM_EXTRA_VERSION)
 AC_INIT([pangomm], PANGOMM_VERSION, [gtkmm-list@gnome.org])
