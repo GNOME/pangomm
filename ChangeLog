@@ -1,3 +1,13 @@
+2008-10-09  Armin Burgmeier  <armin@openismus.com>
+
+	* MSVC_Net2005/pangomm/pangomm.vcproj: Changed the library DLL name to
+	match the new naming convention.
+
+	* MSVC_Net2008/: Added Visual Studio 2008 project files.
+
+	* Makefile.am:
+	* configure.in: Added the new files to the distribution.
+
 2.14.0 (wraps pango 1.22):
 
 2008-09-08  Deng Xiyue  <manphiz@gmail.com>

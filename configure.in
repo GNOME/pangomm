@@ -264,6 +264,10 @@ AC_CONFIG_FILES([
     MSVC_Net2005/gendef/Makefile
     MSVC_Net2005/pangomm/Makefile
     MSVC_Net2005/pangomm/pangomm.rc
+  MSVC_Net2008/Makefile
+    MSVC_Net2008/gendef/Makefile
+    MSVC_Net2008/pangomm/Makefile
+    MSVC_Net2008/pangomm/pangomm.rc
 ])
 
 AC_CONFIG_FILES([
