@@ -1,3 +1,10 @@
+2008-10-23  Jonathon Jongsma  <jonathon@quotidian.org>
+
+	* configure.in:
+	* docs/reference/Makefile.am:
+	* docs/reference/images: Removed gtk stock image stuff that was accidentally
+	left over from splitting up pangomm from gtkmm.
+
 2008-10-09  Armin Burgmeier  <armin@openismus.com>
 
 	* MSVC_Net2005/pangomm/pangomm.vcproj: Changed the library DLL name to
