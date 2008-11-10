@@ -1,3 +1,11 @@
+2.14.1:
+
+* Windows build: Use the new DLL naming convention, like boost.
+  (Armin Burgmeier)
+* Documentation:
+  - Corrected the index page for DevHelp.
+    (Deng Xiyue) Bug #559896
+
 2.14.0:
 
 * Language: Added get_scripts().
