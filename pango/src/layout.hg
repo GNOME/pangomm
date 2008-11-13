@@ -247,11 +247,13 @@ public:
    */
   void add_to_cairo_context(const Cairo::RefPtr<Cairo::Context>& context);
 
-  /** Draws a Layout in the specified cairo @a context. The top-left
-   *  corner of the PangoLayout will be drawn at the current point of the
+  /** Draws a Layout in the specified Cairo @a context. The top-left
+   *  corner of the Layout will be drawn at the current point of the
    *  cairo context.
    *
    * @param context A Cairo context.
+   *
+   * @newin2p16
    */
   void show_in_cairo_context(const Cairo::RefPtr<Cairo::Context>& context);
 };

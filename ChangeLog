@@ -1,3 +1,8 @@
+2008-11-13  Murray Cumming  <murrayc@murrayc.com>
+
+	* docs/reference/Doxyfile.in: Add some more newin2p* aliases.
+	* pango/src/layout.hg: Mark show_in_cairo_context as since 2.16.
+
 2008-11-12  Louis-Francis Ratté-Boulianne <louisfrancis.rb@gmail.com>
 
 	* pango/src/layout.cgg:
