@@ -129,4 +129,9 @@ void Layout::add_to_cairo_context(const Cairo::RefPtr<Cairo::Context>& context)
   pango_cairo_layout_path(context->cobj(), gobj());
 }
 
+void Layout::show_in_cairo_context(const Cairo::RefPtr<Cairo::Context>& context)
+{
+  pango_cairo_show_layout(context->cobj(), gobj());
+}
+
 } /* namespace Pango */
