@@ -1,3 +1,9 @@
+2009-02-05  Theppitak Karoonboonyanan  <thep@linux.thai.net>	
+
+	* docs/reference/Doxyfile.in:
+	* docs/reference/Makefile.am: Allow pangomm to build outside the source 
+	tree. Bug #570322
+
 2009-01-20  Deng Xiyue  <manphiz@gmail.com>
 
 	* Change license header to mention Lesser General Public License
