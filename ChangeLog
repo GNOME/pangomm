@@ -1,3 +1,9 @@
+2009-03-09  Theppitak Karoonboonyanan  <thep@linux.thai.net>	
+
+	* docs/reference/Makefile.am: Split out devhelp installation rule, so
+	VPATH reference is possible for both tarball and VCS builds, fixing
+	distcheck correctly.
+
 2.24.0:
 
 2009-03-09  Murray Cumming  <murrayc@murrayc.com>

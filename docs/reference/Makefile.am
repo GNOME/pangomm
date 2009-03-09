@@ -1,7 +1,7 @@
 doxygen_configfile = Doxyfile
 doxygen_configfile_source = $(srcdir)/Doxyfile.in
 beautify_docs = @GMMPROC_DIR@/beautify_docs.pl
-devhelp_file = $(srcdir)/pangomm-1.4.devhelp
+devhelp_file = pangomm-1.4.devhelp
 devhelp_stylesheet = doxygen_to_devhelp.xsl
 
 include $(top_srcdir)/docs/Makefile_web.am_fragment
@@ -59,7 +59,7 @@ devhelpdir = $(datadir)/devhelp/books/pangomm-1.4
 
 hierarchy_to_install = widget_hierarchy.png widget_hierarchy.html
 
-install-reference: html/index.html $(devhelp_file)
+install-reference-html: html/index.html
 	@$(NORMAL_INSTALL)
 	$(mkinstalldirs) $(DESTDIR)$(referencedir)
 	@dir='$(<D)'; for p in $$dir/*.html $$dir/*.css $$dir/*.png $$dir/*.dot ; do \
@@ -67,22 +67,30 @@ install-reference: html/index.html $(devhelp_file)
 	  echo " $(INSTALL_DATA) $$p $(DESTDIR)$(referencedir)/$$f"; \
 	  $(INSTALL_DATA) $$p $(DESTDIR)$(referencedir)/$$f; \
 	done
+	$(INSTALL_DATA) $(srcdir)/widget_hierarchy.png $(DESTDIR)$(referencetopdir)
+	$(INSTALL_DATA) $(srcdir)/widget_hierarchy.html $(DESTDIR)$(referencetopdir)
+
+install-reference-devhelp: $(devhelp_file)
+	@$(NORMAL_INSTALL)
 	$(mkinstalldirs) $(DESTDIR)$(devhelpdir)
-	$(INSTALL_DATA) $(devhelp_file) $(DESTDIR)$(devhelpdir)/$$f;
-	$(INSTALL_DATA) $(srcdir)/widget_hierarchy.png $(DESTDIR)$(referencetopdir)/$$f;
-	$(INSTALL_DATA) $(srcdir)/widget_hierarchy.html $(DESTDIR)$(referencetopdir)/$$f;
+	$(INSTALL_DATA) $< $(DESTDIR)$(devhelpdir)
 
+install-reference: install-reference-html install-reference-devhelp
 
-uninstall-reference: html/index.html
+uninstall-reference-html: html/index.html
 	@$(NORMAL_UNINSTALL)
 	@dir='$(<D)'; for p in $$dir/*.html $$dir/*.css $$dir/*.png $$dir/*.dot ; do \
 	  f="`echo $$p | sed -e 's|^.*/||'`"; \
 	  echo " rm -f $(DESTDIR)$(referencedir)/$$f"; \
 	  rm -f $(DESTDIR)$(referencedir)/$$f; \
 	done
-	rm -f $(DESTDIR)$(devhelpdir)/$(devhelp_file)
 	rm -f $(DESTDIR)$(referencetopdir)/widget_hierarchy.png
 	rm -f $(DESTDIR)$(referencetopdir)/widget_hierarchy.html
+
+uninstall-reference-devhelp:
+	rm -f $(DESTDIR)$(devhelpdir)/$(devhelp_file)
+
+uninstall-reference: uninstall-reference-html uninstall-reference-devhelp
 
 all-local: html/index.html
 
@@ -93,6 +101,7 @@ uninstall-local: uninstall-reference
 maintainer-clean-local: doc-clean
 
 .PHONY: post-html doc-clean install-reference uninstall-reference html-clean
+.PHONY: install-reference-html install-reference-devhelp uninstall-reference-html uninstall-reference-devhelp
 
 
 # Direct all the doxygen console output to a text file, so we can read it later:
