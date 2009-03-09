@@ -1,3 +1,10 @@
+2.24.0:
+
+2009-03-09  Murray Cumming  <murrayc@murrayc.com>
+
+	* docs/reference/Makefile.am: Added srcdir before the devhelp file, to 
+	fix distcheck.
+
 2009-03-09  Murray Cumming  <murrayc@murrayc.com>
 
 	* pango/src/pango_docs.xml: Regenerated with doxextract_to_xml.py.

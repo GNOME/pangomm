@@ -1,7 +1,7 @@
 doxygen_configfile = Doxyfile
 doxygen_configfile_source = $(srcdir)/Doxyfile.in
 beautify_docs = @GMMPROC_DIR@/beautify_docs.pl
-devhelp_file = pangomm-1.4.devhelp
+devhelp_file = $(srcdir)/pangomm-1.4.devhelp
 devhelp_stylesheet = doxygen_to_devhelp.xsl
 
 include $(top_srcdir)/docs/Makefile_web.am_fragment

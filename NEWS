@@ -1,3 +1,13 @@
+2.24.0:
+(Skipped version numbers since 2.14.1, to match pango 1.24 
+(apart from the first digit, which we can't decrease.)
+
+* Layout: Added show_in_cairo_context().
+  (Louis-Francis Ratté-Boulianne) Bug #560232.
+* Build: Allow pangomm to build outside the source tree. Bug #570322
+  (Theppitak Karoonboonyanan)
+* License Header consistency. (Deng Xiyue)
+
 2.14.1:
 
 * Windows build: Use the new DLL naming convention, like boost.
