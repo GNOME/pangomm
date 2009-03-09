@@ -1,3 +1,7 @@
+2009-03-09  Murray Cumming  <murrayc@murrayc.com>
+
+	* pango/src/pango_docs.xml: Regenerated with doxextract_to_xml.py.
+
 2009-02-05  Theppitak Karoonboonyanan  <thep@linux.thai.net>	
 
 	* docs/reference/Doxyfile.in:
