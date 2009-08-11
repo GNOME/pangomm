@@ -8,5 +8,5 @@ EXTRA_DIST = pangommconfig.h pangomm.vcproj pangomm.rc
 # wht respect to the .h.in file, to prevent an error with 'make distcheck'.
 # See http://sources.redhat.com/automake/automake.html#distcleancheck
 
-pangommconfig.h: $(top_srcdir)/pango/pangommconfig.h.in $(top_srcdir)/configure.in
+pangommconfig.h: $(top_srcdir)/pango/pangommconfig.h.in $(top_srcdir)/configure.ac
 	cp -f $(top_builddir)/pango/pangommconfig.h $@
