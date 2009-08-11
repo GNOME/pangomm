@@ -23,8 +23,20 @@ src_subdirs = tools pango/src
 else
 src_subdirs =
 endif
+if ENABLE_DOCUMENTATION
+doc_subdirs = docs
+else
+doc_subdirs =
+endif
 SUBDIRS = $(src_subdirs) pango/pangomm
-DIST_SUBDIRS = tools pango/src pango/pangomm docs scripts MSVC_Net2005 MSVC_Net2008
 
-dist_noinst_DATA = COPYING.tools README.SUN README.win32
+include $(srcdir)/MSVC_Net2005/filelist.am
+include $(srcdir)/MSVC_Net2008/filelist.am
+
+text_files = COPYING.tools README.SUN README.win32 scripts/README
+msvc_files = $(msvc_net2005_data:%=MSVC_Net2005/%) $(msvc_net2008_data:%=MSVC_Net2008/%)
+
+dist_noinst_DATA = $(text_files) $(msvc_files)
 dist_noinst_SCRIPTS = autogen.sh
+
+DISTCLEANFILES = MSVC_Net2005/pangomm/pangommconfig.h MSVC_Net2008/pangomm/pangommconfig.h

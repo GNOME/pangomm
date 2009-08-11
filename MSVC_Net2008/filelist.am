@@ -1,0 +1,10 @@
+## This file is part of pangomm.
+
+msvc_net2008_data =				\
+	blank.cpp				\
+	pangomm.sln				\
+	gendef/gendef.vcproj			\
+	gendef/gendef.cc			\
+	pangomm/pangomm.rc			\
+	pangomm/pangomm.vcproj			\
+	pangomm/pangommconfig.h

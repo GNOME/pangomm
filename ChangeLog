@@ -1,5 +1,23 @@
 2009-08-11  Daniel Elstner  <danielk@openismus.com>
 
+	Further reduce pointless make recursion
+
+	* scripts/Makefile.am: Delete file.
+	* MSVC_Net200[58]/**/Makefile.am: Delete files.
+	* MSVC_Net200[58]/filelist.am: New files, defining the files to
+	distribute from the MSVC subdirectories.
+	* Makefile.am: Include MSVC_Net200[58]/filelist.am and distribute
+	the files listed there.
+	(SUBDIRS): Remove scripts/ and MSVC_Net200[58]/.  Temporarily
+	remove docs/ subdirectory.
+	* configure.ac: Use mm-common Autoconf macros for setting up the
+	documentation build.
+	(AC_CONFIG_FILES): Remove deleted Makefiles from the list.
+	(AC_CONFIG_COMMANDS): Append commands to config.status to copy the
+	pangommconfig.h configuration header into the MSVC subdirectories.
+
+2009-08-11  Daniel Elstner  <danielk@openismus.com>
+
 	Convert tools/ and pango/ to new infrastructure
 
 	* Makefile.am (SUBDIRS): Skip the pango/ subdirectory and recurse
