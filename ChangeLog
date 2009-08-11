@@ -1,5 +1,13 @@
 2009-08-11  Daniel Elstner  <danielk@openismus.com>
 
+	Generate more complete extra defs
+
+	* tools/extra_defs_gen/generate_defs_pango.cc (main): Query the
+	defs for all not backend-specific GObject classes in Pango, just
+	in case.
+
+2009-08-11  Daniel Elstner  <danielk@openismus.com>
+
 	Rename scripts/ subdirectory to build/
 
 	* configure.ac (AC_CONFIG_AUX_DIR): Point to build/ directory.

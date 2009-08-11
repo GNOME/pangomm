@@ -19,17 +19,23 @@
  * Software Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
-#include "glibmm_generate_extra_defs/generate_extra_defs.h"
+#include <glibmm_generate_extra_defs/generate_extra_defs.h>
 #include <pango/pango.h>
+#include <pango/pangocairo.h>
 
-
-int main (int /* argc */, char ** /* argv */)
+int main(int, char**)
 {
   g_type_init();
 
-  //Pango doesn't seem to have any public signals or properties.
-  std::cout << get_defs( PANGO_TYPE_LAYOUT ) << std::endl;
-
-
+  std::cout << get_defs(PANGO_TYPE_CONTEXT)        << std::endl
+            << get_defs(PANGO_TYPE_FONT)           << std::endl
+            << get_defs(PANGO_TYPE_FONT_FACE)      << std::endl
+            << get_defs(PANGO_TYPE_FONT_FAMILY)    << std::endl
+            << get_defs(PANGO_TYPE_FONT_MAP)       << std::endl
+            << get_defs(PANGO_TYPE_CAIRO_FONT)     << std::endl
+            << get_defs(PANGO_TYPE_CAIRO_FONT_MAP) << std::endl
+            << get_defs(PANGO_TYPE_FONTSET)        << std::endl
+            << get_defs(PANGO_TYPE_LAYOUT)         << std::endl
+            << get_defs(PANGO_TYPE_RENDERER)       << std::endl;
   return 0;
 }
