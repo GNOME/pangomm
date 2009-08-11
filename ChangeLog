@@ -1,5 +1,14 @@
 2009-08-11  Daniel Elstner  <danielk@openismus.com>
 
+	Delete obsolete Autoconf M4 files from scripts/
+
+	* scripts/*.m4: Delete all Autoconf M4 files from version control.
+	* scripts/README: Delete superfluous file.
+	* Makefile.am (text_files): Remove scripts/README.
+	(msvc_files): Use $(addprefix ...) for readability.
+
+2009-08-11  Daniel Elstner  <danielk@openismus.com>
+
 	Transition to mm-common documentation build
 
 	* configure.ac (AC_CONFIG_FILES): List docs/Makefile.am and

@@ -33,8 +33,9 @@ SUBDIRS = $(src_subdirs) pango/pangomm $(doc_subdirs)
 include $(srcdir)/MSVC_Net2005/filelist.am
 include $(srcdir)/MSVC_Net2008/filelist.am
 
-text_files = COPYING.tools README.SUN README.win32 scripts/README
-msvc_files = $(msvc_net2005_data:%=MSVC_Net2005/%) $(msvc_net2008_data:%=MSVC_Net2008/%)
+text_files = COPYING.tools README.SUN README.win32
+msvc_files = $(addprefix MSVC_Net2005/,$(msvc_net2005_data)) \
+             $(addprefix MSVC_Net2008/,$(msvc_net2008_data))
 
 dist_noinst_DATA = $(text_files) $(msvc_files)
 dist_noinst_SCRIPTS = autogen.sh
