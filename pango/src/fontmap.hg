@@ -46,6 +46,8 @@ public:
   _WRAP_METHOD(Glib::RefPtr<Font> load_font(const Glib::RefPtr<Context>& context, const FontDescription& desc) const, pango_font_map_load_font)
   _WRAP_METHOD(Glib::RefPtr<Fontset> load_fontset(const Glib::RefPtr<Context>& context, const FontDescription& desc, const Language& language) const, pango_font_map_load_fontset)
 
+  _WRAP_METHOD(Glib::RefPtr<Context> create_context(), pango_font_map_create_context)
+
   /** List all families for the fontmap.
    * @return an array of pointers to Pango::FontFamily objects.
    */

@@ -1,5 +1,16 @@
 2009-08-11  Daniel Elstner  <danielk@openismus.com>
 
+	Wrap pango_font_map_create_context()
+
+	* pango/src/fontmap.hg (FontMap::create_context): Wrap new
+	pango_font_map_create_context() method.
+	* pango/src/cairofontmap.{ccg,hg} (CairoFontMap::create_context):
+	Wrap method manually in terms of pango_font_map_create_context(),
+	so that it longer uses deprecated API.  The wrapper method should
+	be removed altogether when we can break API and ABI.
+
+2009-08-11  Daniel Elstner  <danielk@openismus.com>
+
 	Fix typo in tools/m4/convert_pango.m4
 
 2009-08-11  Daniel Elstner  <danielk@openismus.com>

@@ -28,7 +28,7 @@ _PINCLUDE(glibmm/private/interface_p.h)
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 typedef struct _PangoCairoFontMapIface PangoCairoFontMapIface;
-#endif //DOXYGEN_SHOULD_SKIP_THIS
+#endif
 
 namespace Pango
 {
@@ -50,8 +50,10 @@ public:
 
   _WRAP_METHOD(void set_resolution(double dpi), pango_cairo_font_map_set_resolution)
   _WRAP_METHOD(double get_resolution() const, pango_cairo_font_map_get_resolution)
-  _WRAP_METHOD(Glib::RefPtr<Context> create_context(), pango_cairo_font_map_create_context)
+
+  // TODO: Remove this when we can break ABI.
+  _WRAP_METHOD_DOCS_ONLY(pango_cairo_font_map_create_context)
+  Glib::RefPtr<Context> create_context();
 };
 
-} /* namespace Pango */
-
+} // namespace Pango

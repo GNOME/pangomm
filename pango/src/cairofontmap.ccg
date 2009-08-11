@@ -1,8 +1,4 @@
-// -*- c++ -*-
-/* $Id: cairofontmap.ccg,v 1.1 2006/05/30 17:14:21 murrayc Exp $ */
-
-/* 
- *
+/*
  * Copyright 2001      The gtkmm Development Team
  *
  * This library is free software; you can redistribute it and/or
@@ -26,5 +22,9 @@
 namespace Pango
 {
 
-} /* namespace Pango */
+Glib::RefPtr<Context> CairoFontMap::create_context()
+{
+  return Glib::wrap(pango_font_map_create_context(PANGO_FONT_MAP(gobj())), false);
+}
 
+} // namespace Pango
