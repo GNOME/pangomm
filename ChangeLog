@@ -1,5 +1,9 @@
 2009-08-11  Daniel Elstner  <danielk@openismus.com>
 
+	Fix typo in tools/m4/convert_pango.m4
+
+2009-08-11  Daniel Elstner  <danielk@openismus.com>
+
 	Regenerate pango/src/pango_methods.defs
 
 2009-08-11  Daniel Elstner  <danielk@openismus.com>

@@ -85,7 +85,7 @@ _CONVERSION(`const Pango::GlyphString&',`PangoGlyphString*',const_cast<PangoGlyp
 _CONVERSION(`const GlyphString&',`PangoGlyphString*',const_cast<PangoGlyphString*>($3.gobj()))
 
 _CONVERSION(`PangoGlyphItem*',`GlyphItem',`GlyphItem(($3))')
-_CONVERSION(`const GlyphItme&',`PangoGlyphItem*',const_cast<PangoGlyphItem*>($3.gobj()))
+_CONVERSION(`const GlyphItem&',`PangoGlyphItem*',const_cast<PangoGlyphItem*>($3.gobj()))
 
 _CONVERSION(`PangoFont*',`Glib::RefPtr<Font>',Glib::wrap($3))
 _CONVERSION(`PangoFont*',`Glib::RefPtr<Pango::Font>',Glib::wrap($3))
