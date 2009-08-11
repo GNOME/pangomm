@@ -1,5 +1,9 @@
 2009-08-11  Daniel Elstner  <danielk@openismus.com>
 
+	Regenerate pango/src/pango_methods.defs
+
+2009-08-11  Daniel Elstner  <danielk@openismus.com>
+
 	Generate more complete extra defs
 
 	* tools/extra_defs_gen/generate_defs_pango.cc (main): Query the
