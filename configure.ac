@@ -77,6 +77,7 @@ AC_CONFIG_FILES([Makefile
                  pango/src/Makefile
                  pango/pangomm/Makefile
                  docs/Makefile
+                 docs/reference/Doxyfile
                  MSVC_Net2005/pangomm/pangomm.rc
                  MSVC_Net2008/pangomm/pangomm.rc])
 

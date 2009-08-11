@@ -1,5 +1,24 @@
 2009-08-11  Daniel Elstner  <danielk@openismus.com>
 
+	Transition to mm-common documentation build
+
+	* configure.ac (AC_CONFIG_FILES): List docs/Makefile.am and
+	docs/reference/Doxyfile as output files.
+	* Makefile.am (SUBDIRS): Resurrect docs/ subdirectory.
+	* docs/Makefile.am: Rewrite based upon the new mm-common build
+	infrastructure for the reference documentation.
+	* docs/reference/Doxyfile.in: Heavily modernize and adapt to the
+	new documentation build organization.
+	* docs/Makefile_web.am_fragment: Delete obsolete file.
+	* docs/images/Makefile.am: ditto,
+	* docs/reference/Makefile.am: ditto,
+	* docs/reference/doxygen_to_devhelp.xsl: ditto,
+	* docs/reference/README: ditto.
+	* docs/reference/widget_hierarchy.{dia,html,png}: Delete files as
+	they belong to the documentation of the gtkmm module, not pangomm.
+
+2009-08-11  Daniel Elstner  <danielk@openismus.com>
+
 	Further reduce pointless make recursion
 
 	* scripts/Makefile.am: Delete file.

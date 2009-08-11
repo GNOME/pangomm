@@ -28,7 +28,7 @@ doc_subdirs = docs
 else
 doc_subdirs =
 endif
-SUBDIRS = $(src_subdirs) pango/pangomm
+SUBDIRS = $(src_subdirs) pango/pangomm $(doc_subdirs)
 
 include $(srcdir)/MSVC_Net2005/filelist.am
 include $(srcdir)/MSVC_Net2008/filelist.am
