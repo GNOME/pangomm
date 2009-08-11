@@ -1,5 +1,13 @@
 2009-08-11  Daniel Elstner  <danielk@openismus.com>
 
+	Provide documentation location via pkg-config
+
+	* pango/pangomm-1.4.pc.in (datadir), (datarootdir): Substitute.
+	(docdir), (doxytagfile), (htmlrefdir), (htmlrefpub): Point to the
+	location of the reference documentation.
+
+2009-08-11  Daniel Elstner  <danielk@openismus.com>
+
 	Wrap pango_font_map_create_context()
 
 	* pango/src/fontmap.hg (FontMap::create_context): Wrap new

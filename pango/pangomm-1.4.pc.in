@@ -1,11 +1,19 @@
 prefix=@prefix@
 exec_prefix=@exec_prefix@
 libdir=@libdir@
+datarootdir=@datarootdir@
+datadir=@datadir@
 includedir=@includedir@
 
-Name: Pangomm
-Description: C++ wrapper for Pango
-Requires: glibmm-2.4 cairomm-1.0 pango pangocairo
-Version: @VERSION@
-Libs: -L${libdir} -lpangomm-1.4
-Cflags: -I${includedir}/pangomm-1.4
+docdir=${datarootdir}/doc/@PANGOMM_MODULE_NAME@
+doxytagfile=${docdir}/reference/@PANGOMM_MODULE_NAME@.tag
+htmlrefdir=${docdir}/reference/html
+htmlrefpub=http://www.gtkmm.org/docs/@PANGOMM_MODULE_NAME@/docs/reference/html
+
+Name: pangomm
+Description: C++ binding for Pango
+Version: @PACKAGE_VERSION@
+URL: http://www.gtkmm.org/
+Requires: @PANGOMM_MODULES@
+Libs: -L${libdir} -lpangomm-@PANGOMM_API_VERSION@
+Cflags: -I${includedir}/@PANGOMM_MODULE_NAME@  -I${libdir}/@PANGOMM_MODULE_NAME@/include
