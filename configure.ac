@@ -20,8 +20,8 @@ AC_INIT([pangomm], [2.24.0], [http://bugzilla.gnome.org/enter_bug.cgi?product=pa
 AC_PREREQ([2.59])
 
 AC_CONFIG_SRCDIR([pango/pangomm.h])
-AC_CONFIG_AUX_DIR([scripts])
-AC_CONFIG_MACRO_DIR([scripts])
+AC_CONFIG_AUX_DIR([build])
+AC_CONFIG_MACRO_DIR([build])
 AC_CONFIG_HEADERS([config.h pango/pangommconfig.h])
 
 MM_INIT_MODULE([pangomm-1.4], m4_expand([AC_PACKAGE_VERSION]))

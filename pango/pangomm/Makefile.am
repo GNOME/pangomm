@@ -19,7 +19,7 @@ lib_LTLIBRARIES = libpangomm-1.4.la
 
 include $(srcdir)/../src/filelist.am
 include $(srcdir)/filelist.am
-include $(top_srcdir)/scripts/compile-binding.am
+include $(top_srcdir)/build/compile-binding.am
 
 AM_CPPFLAGS = $(binding_includes) $(binding_cppflags) $(GTHREAD_CFLAGS) $(PANGOMM_CFLAGS)
 AM_CXXFLAGS = $(PANGOMM_WXXFLAGS)
