@@ -67,23 +67,14 @@ Do not use this option for distribution packages.]])
 ])
 AC_SUBST([DISABLE_DEPRECATED_API_CFLAGS])
 
-# TODO: Remove dummies
-AC_SUBST([GMMPROC], ['${GMMPROC_DIR}/gmmproc'])
-AM_CONDITIONAL([OS_WIN32], [false])
-AM_CONDITIONAL([PLATFORM_WIN32], [false])
-
 AC_CONFIG_FILES([
   Makefile
 
-  pango/Makefile
   pango/pangomm-1.4.pc
     pango/src/Makefile
     pango/pangomm/Makefile
-      pango/pangomm/private/Makefile
 
   tools/Makefile
-    tools/m4/Makefile
-    tools/extra_defs_gen/Makefile
 
   MSVC_Net2005/Makefile
     MSVC_Net2005/gendef/Makefile

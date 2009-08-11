@@ -1,0 +1,38 @@
+## This file is part of pangomm.
+
+files_defs =			\
+	pango.defs		\
+	pango_methods.defs	\
+	pango_enums.defs	\
+	pango_vfuncs.defs	\
+	pango_docs.xml		\
+	pango_docs_override.xml
+
+files_hg =			\
+	attributes.hg		\
+	attriter.hg		\
+	attrlist.hg		\
+	cairofontmap.hg		\
+	color.hg		\
+	context.hg		\
+	coverage.hg		\
+	font.hg			\
+	fontdescription.hg	\
+	fontface.hg		\
+	fontfamily.hg		\
+	fontmap.hg		\
+	fontmetrics.hg		\
+	fontset.hg		\
+	glyph.hg		\
+	glyphstring.hg		\
+	item.hg			\
+	language.hg		\
+	layout.hg		\
+	layoutiter.hg		\
+	layoutline.hg		\
+	layoutrun.hg		\
+	rectangle.hg		\
+	renderer.hg		\
+	tabarray.hg
+
+files_ccg = $(files_hg:.hg=.ccg)

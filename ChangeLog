@@ -1,5 +1,29 @@
 2009-08-11  Daniel Elstner  <danielk@openismus.com>
 
+	Convert tools/ and pango/ to new infrastructure
+
+	* Makefile.am (SUBDIRS): Skip the pango/ subdirectory and recurse
+	directly into pango/src/ and pango/pangomm/.
+	(EXTRA_DIST): Remove the old build_shared/ include files.
+	* configure.ac (AC_CONFIG_FILES): Remove files pango/Makefile.am,
+	pango/pangomm/private/Makefile.am and tools/m4/Makefile.am from
+	the list of output files.
+	* pango/src/filelist.am: Rename Makefile_list_of_hg.am_fragment
+	and adapt to new mm-common Automake include files.
+	* pango/pangomm/filelist.am: New file, defining the list of source
+	code files to compile.
+	* pango/pangomm/private/Makefile.am: Delete obsolete file.
+	* pango/src/Makefile.am: Rewrite to use new mm-common build
+	infrastructure.
+	* pango/pangomm/Makefile.am: ditto,
+	* tools/Makefile.am: ditto.
+	* tools/m4/filelist.am: Rename Makefile_list_of_sources.am_fragment
+	and adapt to new mm-common Automake include files.
+	* tools/m4/Makefile.am: Delete obsolete file.
+	* build_shared/*.am_fragment: Delete obsolete build support files.
+
+2009-08-11  Daniel Elstner  <danielk@openismus.com>
+
 	Begin transition to mm-common build system
 
 	* autogen.sh: Replace with minimal version using mm-common-prepare
