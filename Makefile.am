@@ -30,6 +30,14 @@ doc_subdirs =
 endif
 SUBDIRS = $(src_subdirs) pango/pangomm $(doc_subdirs)
 
+pangomm_includedir = $(includedir)/$(PANGOMM_MODULE_NAME)
+pangomm_include_HEADERS = pango/pangomm.h
+pangomm_libincludedir = $(libdir)/$(PANGOMM_MODULE_NAME)/include
+nodist_pangomm_libinclude_HEADERS = pango/pangommconfig.h
+
+pkgconfigdir = $(libdir)/pkgconfig
+nodist_pkgconfig_DATA = pango/$(PANGOMM_MODULE_NAME).pc
+
 include $(srcdir)/MSVC_Net2005/filelist.am
 include $(srcdir)/MSVC_Net2008/filelist.am
 

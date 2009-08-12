@@ -1,3 +1,12 @@
+2009-08-12  Daniel Elstner  <danielk@openismus.com>
+
+	Install pangomm.h and pangomm-1.4.pc again
+
+	* Makefile.am (pangomm_include_HEADERS): Install pango/pangomm.h.
+	(nodist_pangomm_libinclude_HEADERS): Install pango/pangommconfig.h.
+	(nodist_pkgconfig_DATA): Install pango/pangomm-1.4.pc.
+	* pango/Makefile.am: Delete already unused file.
+
 2009-08-11  Daniel Elstner  <danielk@openismus.com>
 
 	Provide documentation location via pkg-config
