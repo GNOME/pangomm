@@ -1,4 +1,8 @@
 /* This file is part of pangomm. */
+#ifndef PANGOMM_PANGOMMCONFIG_H_INCLUDED
+#define PANGOMM_PANGOMMCONFIG_H_INCLUDED
+
+#include <glibmmconfig.h>
 
 /* Major version number of pangomm. */
 #undef PANGOMM_MAJOR_VERSION
@@ -8,3 +12,5 @@
 
 /* Minor version number of pangomm. */
 #undef PANGOMM_MINOR_VERSION
+
+#endif /* !PANGOMM_PANGOMMCONFIG_H_INCLUDED */

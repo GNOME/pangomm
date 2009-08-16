@@ -1,5 +1,12 @@
 2009-08-16  Daniel Elstner  <daniel.kitta@gmail.com>
 
+	Include glibmmconfig.h from pangommconfig.h
+
+	* pango/pangommconfig.h.in: Include glibmmconfig.h for
+	consistency with gtkmm.  Also define an include guard.
+
+2009-08-16  Daniel Elstner  <daniel.kitta@gmail.com>
+
 	List PANGOMM_* macros in pangommconfig.h.in
 
 	* pango/pangommconfig.h.in (PANGOMM_*_VERSION): Add #undef
