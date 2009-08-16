@@ -1,5 +1,14 @@
 2009-08-16  Daniel Elstner  <daniel.kitta@gmail.com>
 
+	Add pkg-config file for uninstalled use
+
+	* pango/pangomm-1.4-uninstalled.pc.in: New pkg-config metadata
+	file for building against a non-installed pangomm library.
+	* configure.ac (AC_CONFIG_FILES): Add configure output file
+	pango/pangomm-1.4-uninstalled.pc.
+
+2009-08-16  Daniel Elstner  <daniel.kitta@gmail.com>
+
 	Make use of latest mm-common features
 
 	* configure.ac: Insert MM_PREREQ([0.4]) macro call.

@@ -75,6 +75,7 @@ MM_ARG_ENABLE_WARNINGS([PANGOMM_WXXFLAGS],
 AC_CONFIG_FILES([Makefile
                  tools/Makefile
                  pango/pangomm-1.4.pc
+                 pango/pangomm-1.4-uninstalled.pc
                  pango/src/Makefile
                  pango/pangomm/Makefile
                  docs/Makefile
