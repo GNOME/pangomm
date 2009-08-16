@@ -1,3 +1,10 @@
+2009-08-16  Daniel Elstner  <daniel.kitta@gmail.com>
+
+	Get rid of GLIBMM_USING_STD()
+
+	* pango/src/tabarray.hg: Stop using GLIBMM_USING_STD(), now
+	that it has been removed from glibmm.
+
 2009-08-12  Daniel Elstner  <danielk@openismus.com>
 
 	Install pangomm.h and pangomm-1.4.pc again
