@@ -24,7 +24,8 @@ AC_CONFIG_AUX_DIR([build])
 AC_CONFIG_MACRO_DIR([build])
 AC_CONFIG_HEADERS([config.h pango/pangommconfig.h])
 
-MM_INIT_MODULE([pangomm-1.4], m4_expand([AC_PACKAGE_VERSION]))
+MM_PREREQ([0.4])
+MM_INIT_MODULE([pangomm-1.4])
 
 # http://www.gnu.org/software/libtool/manual/html_node/Updating-version-info.html
 AC_SUBST([LIBPANGOMM_SO_VERSION], [1:30:0])

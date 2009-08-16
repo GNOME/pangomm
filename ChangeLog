@@ -1,5 +1,14 @@
 2009-08-16  Daniel Elstner  <daniel.kitta@gmail.com>
 
+	Make use of latest mm-common features
+
+	* configure.ac: Insert MM_PREREQ([0.4]) macro call.
+	(MM_INIT_MODULE): Remove now optional second argument.
+	* pango/pangomm-1.4.pc.in (htmlrefpub): Append trailing slash
+	as per new mm-common guidelines.
+
+2009-08-16  Daniel Elstner  <daniel.kitta@gmail.com>
+
 	Get rid of GLIBMM_USING_STD()
 
 	* pango/src/tabarray.hg: Stop using GLIBMM_USING_STD(), now

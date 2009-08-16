@@ -8,7 +8,7 @@ includedir=@includedir@
 docdir=${datarootdir}/doc/@PANGOMM_MODULE_NAME@
 doxytagfile=${docdir}/reference/@PANGOMM_MODULE_NAME@.tag
 htmlrefdir=${docdir}/reference/html
-htmlrefpub=http://www.gtkmm.org/docs/@PANGOMM_MODULE_NAME@/docs/reference/html
+htmlrefpub=http://www.gtkmm.org/docs/@PANGOMM_MODULE_NAME@/docs/reference/html/
 
 Name: pangomm
 Description: C++ binding for Pango
