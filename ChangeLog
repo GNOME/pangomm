@@ -1,5 +1,12 @@
 2009-08-16  Daniel Elstner  <daniel.kitta@gmail.com>
 
+	List PANGOMM_* macros in pangommconfig.h.in
+
+	* pango/pangommconfig.h.in (PANGOMM_*_VERSION): Add #undef
+	statements for the version number component macros.
+
+2009-08-16  Daniel Elstner  <daniel.kitta@gmail.com>
+
 	Add pkg-config file for uninstalled use
 
 	* pango/pangomm-1.4-uninstalled.pc.in: New pkg-config metadata

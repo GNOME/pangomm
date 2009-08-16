@@ -1,0 +1,10 @@
+/* This file is part of pangomm. */
+
+/* Major version number of pangomm. */
+#undef PANGOMM_MAJOR_VERSION
+
+/* Micro version number of pangomm. */
+#undef PANGOMM_MICRO_VERSION
+
+/* Minor version number of pangomm. */
+#undef PANGOMM_MINOR_VERSION
