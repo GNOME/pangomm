@@ -45,26 +45,11 @@ PKG_CHECK_MODULES([PANGOMM], [$PANGOMM_MODULES])
 MM_PKG_CONFIG_SUBST([GTHREAD_CFLAGS], [--cflags-only-other gthread-2.0])
 MM_PKG_CONFIG_SUBST([GMMPROC_DIR], [--variable=gmmprocdir glibmm-2.4])
 
+MM_ARG_DISABLE_DEPRECATED_API
 MM_ARG_ENABLE_DOCUMENTATION
 MM_ARG_WITH_TAGFILE_DOC([libstdc++.tag], [mm-common-libstdc++])
 MM_ARG_WITH_TAGFILE_DOC([libsigc++-2.0.tag], [sigc++-2.0])
 MM_ARG_WITH_TAGFILE_DOC([glibmm-2.4.tag], [glibmm-2.4])
-
-AC_ARG_ENABLE([deprecated-api],
-              [AS_HELP_STRING([--disable-deprecated-api],
-                              [omit deprecated API from the library])],
-              [pangomm_deprecated_api=$enableval],
-              [pangomm_deprecated_api=yes])
-AS_IF([test "x$pangomm_deprecated_api" = xyes],
-[
-  AC_MSG_NOTICE([[Deprecated API will be built, for backwards-compatibility.]])
-  DISABLE_DEPRECATED_API_CFLAGS=dnl
-], [
-  AC_MSG_WARN([[Deprecated API will not be built, breaking compatibility.
-Do not use this option for distribution packages.]])
-  DISABLE_DEPRECATED_API_CFLAGS='-DPANGOMM_DISABLE_DEPRECATED'dnl
-])
-AC_SUBST([DISABLE_DEPRECATED_API_CFLAGS])
 
 AC_LANG([C++])
 MM_ARG_ENABLE_WARNINGS([PANGOMM_WXXFLAGS],

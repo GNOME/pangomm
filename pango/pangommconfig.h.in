@@ -4,6 +4,9 @@
 
 #include <glibmmconfig.h>
 
+/* Define to omit deprecated API from the library. */
+#undef PANGOMM_DISABLE_DEPRECATED
+
 /* Major version number of pangomm. */
 #undef PANGOMM_MAJOR_VERSION
 
