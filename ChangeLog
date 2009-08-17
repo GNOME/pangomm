@@ -1,5 +1,11 @@
 2009-08-17  Daniel Elstner  <danielk@openismus.com>
 
+	Define PANGOMM_BUILD macro during build
+
+	* pango/pangomm/Makefile.am (local_cppflags): Add -DPANGOMM_BUILD=1.
+
+2009-08-17  Daniel Elstner  <danielk@openismus.com>
+
 	Make use of new MM_ARG_DISABLE_DEPRECATED macro
 
 	* configure.ac (PANGOMM_DISABLE_DEPRECATED): Call the new

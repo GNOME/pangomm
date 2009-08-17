@@ -21,7 +21,9 @@ include $(srcdir)/../src/filelist.am
 include $(srcdir)/filelist.am
 include $(top_srcdir)/build/compile-binding.am
 
-AM_CPPFLAGS = $(binding_includes) $(binding_cppflags) $(GTHREAD_CFLAGS) $(PANGOMM_CFLAGS)
+local_cppflags = $(binding_includes) $(binding_cppflags) -DPANGOMM_BUILD=1
+
+AM_CPPFLAGS = $(local_cppflags) $(GTHREAD_CFLAGS) $(PANGOMM_CFLAGS)
 AM_CXXFLAGS = $(PANGOMM_WXXFLAGS)
 
 libpangomm_1_4_la_SOURCES = $(binding_sources)
