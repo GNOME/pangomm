@@ -66,7 +66,7 @@ public:
    *
    * @result A container of Script values.
    *
-   * @newin2p14
+   * @since{2,14}
    */
   Glib::ArrayHandle<Script> get_scripts() const;
   _IGNORE(pango_language_get_scripts)
