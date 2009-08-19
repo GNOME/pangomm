@@ -1,3 +1,11 @@
+2009-08-19  Daniel Elstner  <daniel.kitta@gmail.com>
+
+	Reference external cairomm documentation
+
+	* configure.ac (MM_ARG_WITH_TAGFILE_DOC): Specify cairomm-1.0.tag
+	as Doxygen tag file dependency for links to the external reference
+	documentation of cairomm.
+
 2009-08-18  Daniel Elstner  <danielk@openismus.com>
 
 	Use parametric Doxygen alias @since{m,n}
