@@ -253,7 +253,7 @@ public:
    *
    * @param context A Cairo context.
    *
-   * @since{2,16}
+   * @newin{2,16}
    */
   void show_in_cairo_context(const Cairo::RefPtr<Cairo::Context>& context);
 };
