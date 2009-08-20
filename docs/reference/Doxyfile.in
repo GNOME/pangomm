@@ -27,7 +27,7 @@ ALWAYS_DETAILED_SEC    = NO
 INLINE_INHERITED_MEMB  = NO
 FULL_PATH_NAMES        = YES
 STRIP_FROM_PATH        = "@abs_top_builddir@/pango/" \
-                         "@abs_top_srcdir@/pango/" \
+                         "@abs_top_srcdir@/pango/"
 STRIP_FROM_INC_PATH    = "@abs_top_builddir@/pango/" \
                          "@abs_top_srcdir@/pango/"
 SHORT_NAMES            = NO

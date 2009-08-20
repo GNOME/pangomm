@@ -1,5 +1,14 @@
 2009-08-20  Daniel Elstner  <danielk@openismus.com>
 
+	Remove bogus backslash in Doxygen configuration
+
+	* docs/reference/Doxyfile.in (STRIP_FROM_PATH): Remove bogus
+	trailing \ after the the last assigned value.  This probably
+	caused the following assignment to STRIP_FROM_INC_PATH to be
+	eaten.
+
+2009-08-20  Daniel Elstner  <danielk@openismus.com>
+
 	Substitute API version in filenames dynamically
 
 	* pango/pangomm.pc.in: Rename file from pango/pangomm-1.4.pc.in.
