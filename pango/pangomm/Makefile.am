@@ -15,7 +15,7 @@
 ## You should have received a copy of the GNU Lesser General Public License
 ## along with this library.  If not, see <http://www.gnu.org/licenses/>.
 
-lib_LTLIBRARIES = libpangomm-1.4.la
+lib_LTLIBRARIES = libpangomm-@PANGOMM_API_VERSION@.la
 
 include $(srcdir)/../src/filelist.am
 include $(srcdir)/filelist.am
@@ -26,6 +26,6 @@ local_cppflags = $(binding_includes) $(binding_cppflags) -DPANGOMM_BUILD=1
 AM_CPPFLAGS = $(local_cppflags) $(GTHREAD_CFLAGS) $(PANGOMM_CFLAGS)
 AM_CXXFLAGS = $(PANGOMM_WXXFLAGS)
 
-libpangomm_1_4_la_SOURCES = $(binding_sources)
-libpangomm_1_4_la_LDFLAGS = -no-undefined -version-info $(LIBPANGOMM_SO_VERSION)
-libpangomm_1_4_la_LIBADD  = $(PANGOMM_LIBS)
+libpangomm_@PANGOMM_API_VERSION@_la_SOURCES = $(binding_sources)
+libpangomm_@PANGOMM_API_VERSION@_la_LDFLAGS = -no-undefined -version-info $(LIBPANGOMM_SO_VERSION)
+libpangomm_@PANGOMM_API_VERSION@_la_LIBADD  = $(PANGOMM_LIBS)
