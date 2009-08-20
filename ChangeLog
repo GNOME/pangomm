@@ -1,3 +1,11 @@
+2009-08-20  Daniel Elstner  <danielk@openismus.com>
+
+	Do not hard-code API version in resource files
+
+	* MSVC_Net200[58]/pangomm/pangomm.rc.in: Use newer @PACKAGE_VERSION@
+	substitution in place of @VERSION@.  Use "@PANGOMM_MODULE_NAME@.dll"
+	instead of hardcoding the API version.
+
 2009-08-19  Daniel Elstner  <daniel.kitta@gmail.com>
 
 	Reference external cairomm documentation
