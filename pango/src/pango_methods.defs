@@ -1,5 +1,17 @@
 ;; -*- scheme -*-
 ; object definitions ...
+(define-object CairoFont
+  (in-module "Pango")
+  (c-name "PangoCairoFont")
+  (gtype-id "PANGO_TYPE_CAIRO_FONT")
+)
+
+(define-object CairoFontMap
+  (in-module "Pango")
+  (c-name "PangoCairoFontMap")
+  (gtype-id "PANGO_TYPE_CAIRO_FONT_MAP")
+)
+
 (define-object Engine
   (in-module "Pango")
   (parent "GObject")
@@ -42,6 +54,13 @@
   (gtype-id "PANGO_TYPE_FC_FONT")
 )
 
+(define-object ATSUIFont
+  (in-module "Pango")
+  (parent "PangoFont")
+  (c-name "PangoATSUIFont")
+  (gtype-id "PANGO_TYPE_ATSUI_FONT")
+)
+
 (define-object FontFace
   (in-module "Pango")
   (parent "GObject")
@@ -70,6 +89,13 @@
   (gtype-id "PANGO_TYPE_FC_FONT_MAP")
 )
 
+(define-object ATSUIFontMap
+  (in-module "Pango")
+  (parent "PangoFontMap")
+  (c-name "PangoATSUIFontMap")
+  (gtype-id "PANGO_TYPE_ATSUI_FONT_MAP")
+)
+
 (define-object Fontset
   (in-module "Pango")
   (parent "GObject")
@@ -77,11 +103,39 @@
   (gtype-id "PANGO_TYPE_FONTSET")
 )
 
+(define-object OTInfo
+  (in-module "Pango")
+  (parent "GObject")
+  (c-name "PangoOTInfo")
+  (gtype-id "PANGO_TYPE_OT_INFO")
+)
+
+(define-object OTRuleset
+  (in-module "Pango")
+  (parent "GObject")
+  (c-name "PangoOTRuleset")
+  (gtype-id "PANGO_TYPE_OT_RULESET")
+)
+
 (define-object Renderer
   (in-module "Pango")
   (parent "GObject")
   (c-name "PangoRenderer")
   (gtype-id "PANGO_TYPE_RENDERER")
+)
+
+(define-object Win32Font
+  (in-module "Pango")
+  (parent "PangoFont")
+  (c-name "PangoWin32Font")
+  (gtype-id "PANGO_TYPE_WIN32_FONT")
+)
+
+(define-object Win32FontMap
+  (in-module "Pango")
+  (parent "PangoFontMap")
+  (c-name "PangoWin32FontMap")
+  (gtype-id "PANGO_TYPE_WIN32_FONT_MAP")
 )
 
 (define-object XftRenderer
@@ -438,6 +492,30 @@
     '("left" "PANGO_TAB_LEFT")
   )
 )
+
+
+;; From pangoatsui.h
+
+(define-method get_cgfont
+  (of-object "PangoATSUIFont")
+  (c-name "pango_atsui_font_get_cgfont")
+  (return-type "CGFontRef")
+)
+
+(define-function pango_atsui_font_get_type
+  (c-name "pango_atsui_font_get_type")
+  (return-type "GType")
+)
+
+
+
+;; From pangoatsui-private.h
+
+(define-function pango_atsui_font_map_get_type
+  (c-name "pango_atsui_font_map_get_type")
+  (return-type "GType")
+)
+
 
 
 ;; From pango-attributes.h
@@ -979,6 +1057,33 @@
 
 
 
+;; From pangocairo-atsuifont.h
+
+(define-function pango_cairo_atsui_font_get_type
+  (c-name "pango_cairo_atsui_font_get_type")
+  (return-type "GType")
+)
+
+
+
+;; From pangocairo-atsui.h
+
+(define-function pango_cairo_atsui_font_map_get_type
+  (c-name "pango_cairo_atsui_font_map_get_type")
+  (return-type "GType")
+)
+
+
+
+;; From pangocairo-fc.h
+
+(define-function pango_cairo_fc_font_map_get_type
+  (c-name "pango_cairo_fc_font_map_get_type")
+  (return-type "GType")
+)
+
+
+
 ;; From pangocairo.h
 
 (define-function pango_cairo_font_map_get_type
@@ -1226,6 +1331,28 @@
     '("double" "height")
   )
 )
+
+
+
+;; From pangocairo-private.h
+
+(define-function pango_cairo_renderer_get_type
+  (c-name "pango_cairo_renderer_get_type")
+  (return-type "GType")
+)
+
+
+
+;; From pangocairo-win32.h
+
+(define-function pango_cairo_win32_font_map_get_type
+  (c-name "pango_cairo_win32_font_map_get_type")
+  (return-type "GType")
+)
+
+
+
+;; From pango-color-table.h
 
 
 
@@ -1545,6 +1672,10 @@
 
 
 
+;; From pango-engine-private.h
+
+
+
 ;; From pango-enum-types.h
 
 (define-function pango_attr_type_get_type
@@ -1829,6 +1960,31 @@
   (parameters
     '("FcPattern*" "pattern")
     '("gboolean" "include_size")
+  )
+)
+
+
+
+;; From pangofc-private.h
+
+(define-method get_raw_extents
+  (of-object "PangoFcFont")
+  (c-name "pango_fc_font_get_raw_extents")
+  (return-type "none")
+  (parameters
+    '("FT_Int32" "load_flags")
+    '("PangoGlyph" "glyph")
+    '("PangoRectangle*" "ink_rect")
+    '("PangoRectangle*" "logical_rect")
+  )
+)
+
+(define-method create_metrics_for_context
+  (of-object "PangoFcFont")
+  (c-name "pango_fc_font_create_metrics_for_context")
+  (return-type "PangoFontMetrics*")
+  (parameters
+    '("PangoContext*" "context")
   )
 )
 
@@ -2568,6 +2724,20 @@
 
 
 
+;; From pangoft2-private.h
+
+(define-function pango_ft2_font_get_type
+  (c-name "pango_ft2_font_get_type")
+  (return-type "GType")
+)
+
+(define-function pango_ft2_renderer_get_type
+  (c-name "pango_ft2_renderer_get_type")
+  (return-type "GType")
+)
+
+
+
 ;; From pango-glyph.h
 
 (define-function pango_glyph_string_new
@@ -2743,6 +2913,16 @@
   )
 )
 
+(define-method get_logical_widths
+  (of-object "PangoGlyphItem")
+  (c-name "pango_glyph_item_get_logical_widths")
+  (return-type "none")
+  (parameters
+    '("const-char*" "text")
+    '("int*" "logical_widths")
+  )
+)
+
 (define-function pango_glyph_item_iter_get_type
   (c-name "pango_glyph_item_iter_get_type")
   (return-type "GType")
@@ -2834,6 +3014,10 @@
 
 
 ;; From pango.h
+
+
+
+;; From pango-impl-utils.h
 
 
 
@@ -2932,6 +3116,10 @@
     '("int*" "num_scripts")
   )
 )
+
+
+
+;; From pango-language-sample-table.h
 
 
 
@@ -3598,6 +3786,10 @@
 
 
 
+;; From pango-layout-private.h
+
+
+
 ;; From pango-matrix.h
 
 (define-function pango_matrix_get_type
@@ -4056,6 +4248,10 @@
 
 
 
+;; From pango-ot-private.h
+
+
+
 ;; From pango-renderer.h
 
 (define-function pango_renderer_get_type
@@ -4278,6 +4474,14 @@
   (c-name "pango_script_get_sample_language")
   (return-type "PangoLanguage*")
 )
+
+
+
+;; From pango-script-lang-table.h
+
+
+
+;; From pango-script-private.h
 
 
 
@@ -4597,6 +4801,208 @@
 
 
 
+;; From pangowin32.h
+
+(define-function pango_win32_get_context
+  (c-name "pango_win32_get_context")
+  (return-type "PangoContext*")
+)
+
+(define-function pango_win32_render
+  (c-name "pango_win32_render")
+  (return-type "none")
+  (parameters
+    '("HDC" "hdc")
+    '("PangoFont*" "font")
+    '("PangoGlyphString*" "glyphs")
+    '("gint" "x")
+    '("gint" "y")
+  )
+)
+
+(define-function pango_win32_render_layout_line
+  (c-name "pango_win32_render_layout_line")
+  (return-type "none")
+  (parameters
+    '("HDC" "hdc")
+    '("PangoLayoutLine*" "line")
+    '("int" "x")
+    '("int" "y")
+  )
+)
+
+(define-function pango_win32_render_layout
+  (c-name "pango_win32_render_layout")
+  (return-type "none")
+  (parameters
+    '("HDC" "hdc")
+    '("PangoLayout*" "layout")
+    '("int" "x")
+    '("int" "y")
+  )
+)
+
+(define-function pango_win32_render_transformed
+  (c-name "pango_win32_render_transformed")
+  (return-type "none")
+  (parameters
+    '("HDC" "hdc")
+    '("const-PangoMatrix*" "matrix")
+    '("PangoFont*" "font")
+    '("PangoGlyphString*" "glyphs")
+    '("int" "x")
+    '("int" "y")
+  )
+)
+
+(define-function pango_win32_get_unknown_glyph
+  (c-name "pango_win32_get_unknown_glyph")
+  (return-type "PangoGlyph")
+  (parameters
+    '("PangoFont*" "font")
+    '("gunichar" "wc")
+  )
+)
+
+(define-function pango_win32_font_get_glyph_index
+  (c-name "pango_win32_font_get_glyph_index")
+  (return-type "gint")
+  (parameters
+    '("PangoFont*" "font")
+    '("gunichar" "wc")
+  )
+)
+
+(define-function pango_win32_get_dc
+  (c-name "pango_win32_get_dc")
+  (return-type "HDC")
+)
+
+(define-function pango_win32_get_debug_flag
+  (c-name "pango_win32_get_debug_flag")
+  (return-type "gboolean")
+)
+
+(define-function pango_win32_font_select_font
+  (c-name "pango_win32_font_select_font")
+  (return-type "gboolean")
+  (parameters
+    '("PangoFont*" "font")
+    '("HDC" "hdc")
+  )
+)
+
+(define-function pango_win32_font_done_font
+  (c-name "pango_win32_font_done_font")
+  (return-type "none")
+  (parameters
+    '("PangoFont*" "font")
+  )
+)
+
+(define-function pango_win32_font_get_metrics_factor
+  (c-name "pango_win32_font_get_metrics_factor")
+  (return-type "double")
+  (parameters
+    '("PangoFont*" "font")
+  )
+)
+
+(define-function pango_win32_font_cache_new
+  (c-name "pango_win32_font_cache_new")
+  (is-constructor-of "PangoWin32FontCache")
+  (return-type "PangoWin32FontCache*")
+)
+
+(define-method free
+  (of-object "PangoWin32FontCache")
+  (c-name "pango_win32_font_cache_free")
+  (return-type "none")
+)
+
+(define-method load
+  (of-object "PangoWin32FontCache")
+  (c-name "pango_win32_font_cache_load")
+  (return-type "HFONT")
+  (parameters
+    '("const-LOGFONTA*" "logfont")
+  )
+)
+
+(define-method loadw
+  (of-object "PangoWin32FontCache")
+  (c-name "pango_win32_font_cache_loadw")
+  (return-type "HFONT")
+  (parameters
+    '("const-LOGFONTW*" "logfont")
+  )
+)
+
+(define-method unload
+  (of-object "PangoWin32FontCache")
+  (c-name "pango_win32_font_cache_unload")
+  (return-type "none")
+  (parameters
+    '("HFONT" "hfont")
+  )
+)
+
+(define-function pango_win32_font_map_for_display
+  (c-name "pango_win32_font_map_for_display")
+  (return-type "PangoFontMap*")
+)
+
+(define-function pango_win32_shutdown_display
+  (c-name "pango_win32_shutdown_display")
+  (return-type "none")
+)
+
+(define-function pango_win32_font_map_get_font_cache
+  (c-name "pango_win32_font_map_get_font_cache")
+  (return-type "PangoWin32FontCache*")
+  (parameters
+    '("PangoFontMap*" "font_map")
+  )
+)
+
+(define-function pango_win32_font_logfont
+  (c-name "pango_win32_font_logfont")
+  (return-type "LOGFONTA*")
+  (parameters
+    '("PangoFont*" "font")
+  )
+)
+
+(define-function pango_win32_font_logfontw
+  (c-name "pango_win32_font_logfontw")
+  (return-type "LOGFONTW*")
+  (parameters
+    '("PangoFont*" "font")
+  )
+)
+
+(define-function pango_win32_font_description_from_logfont
+  (c-name "pango_win32_font_description_from_logfont")
+  (return-type "PangoFontDescription*")
+  (parameters
+    '("const-LOGFONTA*" "lfp")
+  )
+)
+
+(define-function pango_win32_font_description_from_logfontw
+  (c-name "pango_win32_font_description_from_logfontw")
+  (return-type "PangoFontDescription*")
+  (parameters
+    '("const-LOGFONTW*" "lfp")
+  )
+)
+
+
+
+;; From pangowin32-private.h
+
+
+
 ;; From pangoxft.h
 
 (define-function pango_xft_get_font_map
@@ -4715,6 +5121,10 @@
     '("gunichar" "wc")
   )
 )
+
+
+
+;; From pangoxft-private.h
 
 
 
@@ -5024,6 +5434,108 @@
     '("gunichar**" "glyphs")
     '("int*" "n_glyphs")
     '("int**" "clusters")
+  )
+)
+
+
+
+;; From pangox-private.h
+
+(define-function pango_x_font_map_get_type
+  (c-name "pango_x_font_map_get_type")
+  (return-type "GType")
+)
+
+(define-function pango_x_font_new
+  (c-name "pango_x_font_new")
+  (is-constructor-of "PangoXFont")
+  (return-type "PangoXFont*")
+  (parameters
+    '("PangoFontMap*" "fontmap")
+    '("const-char*" "spec")
+    '("int" "size")
+  )
+)
+
+(define-function pango_x_get_shaper_map
+  (c-name "pango_x_get_shaper_map")
+  (return-type "PangoMap*")
+  (parameters
+    '("PangoLanguage*" "language")
+  )
+)
+
+(define-function pango_x_make_matching_xlfd
+  (c-name "pango_x_make_matching_xlfd")
+  (return-type "char*")
+  (parameters
+    '("PangoFontMap*" "fontmap")
+    '("char*" "xlfd")
+    '("const-char*" "charset")
+    '("int" "size")
+  )
+)
+
+(define-method get_coverage
+  (of-object "PangoXFace")
+  (c-name "pango_x_face_get_coverage")
+  (return-type "PangoCoverage*")
+  (parameters
+    '("PangoFont*" "font")
+    '("PangoLanguage*" "language")
+  )
+)
+
+(define-method remove
+  (of-object "PangoXFace")
+  (c-name "pango_x_face_remove")
+  (return-type "none")
+  (parameters
+    '("PangoFont*" "font")
+  )
+)
+
+(define-function pango_x_fontmap_get_display
+  (c-name "pango_x_fontmap_get_display")
+  (return-type "Display*")
+  (parameters
+    '("PangoFontMap*" "fontmap")
+  )
+)
+
+(define-function pango_x_fontmap_cache_add
+  (c-name "pango_x_fontmap_cache_add")
+  (return-type "none")
+  (parameters
+    '("PangoFontMap*" "fontmap")
+    '("PangoXFont*" "xfont")
+  )
+)
+
+(define-function pango_x_fontmap_cache_remove
+  (c-name "pango_x_fontmap_cache_remove")
+  (return-type "none")
+  (parameters
+    '("PangoFontMap*" "fontmap")
+    '("PangoXFont*" "xfont")
+  )
+)
+
+(define-function pango_x_fontmap_atom_from_name
+  (c-name "pango_x_fontmap_atom_from_name")
+  (return-type "Atom")
+  (parameters
+    '("PangoFontMap*" "fontmap")
+    '("const-char*" "atomname")
+  )
+)
+
+(define-function pango_x_fontmap_name_from_atom
+  (c-name "pango_x_fontmap_name_from_atom")
+  (return-type "const-char*")
+  (parameters
+    '("PangoFontMap*" "fontmap")
+    '("Atom" "atom")
   )
 )
 
