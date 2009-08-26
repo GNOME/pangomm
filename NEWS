@@ -1,4 +1,10 @@
+2.25.1:
+
+* Reworked the build system, using mm-common.
+  (Daniel Elstner)
+
 2.24.0:
+
 (Skipped version numbers since 2.14.1, to match pango 1.24 
 (apart from the first digit, which we can't decrease.)
 
