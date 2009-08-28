@@ -23,10 +23,6 @@ pangomm_files_h = $(files_built_h) $(filter-out wrap_init.h,$(files_extra_h))
 book_name = $(PANGOMM_MODULE_NAME)
 doc_input = $(addprefix $(top_srcdir)/pango/pangomm/,$(pangomm_files_h))
 
-# Override the web location to use the old-style path with redundant
-# directory components.
-htmlrefpub = http://www.gtkmm.org/docs/$(book_name)/docs/reference/html/
-
 docimagesdir = $(libdocdir)/images
 dist_docimages_DATA = images/gtkmm_logo.gif images/top.gif
 
