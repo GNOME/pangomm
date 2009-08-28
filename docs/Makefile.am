@@ -31,7 +31,3 @@ docimagesdir = $(libdocdir)/images
 dist_docimages_DATA = images/gtkmm_logo.gif images/top.gif
 
 include $(top_srcdir)/build/doc-reference.am
-
-dist_noinst_DATA +=				\
-	reference/pangomm_header.html_fragment	\
-	reference/pangomm_footer.html_fragment
