@@ -1,3 +1,8 @@
+2.25.1.3:
+
+* Change public documentation location to library.gnome.org in
+  the pkg-config files as well.  (Daniel Elstner)
+
 2.25.1.2:
 
 * Change public documentation location to library.gnome.org.
