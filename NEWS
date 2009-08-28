@@ -1,3 +1,10 @@
+2.25.1.1:
+
+* Reenable the per-class hierarchy graphs in the reference documentation.
+  (Daniel Elstner)
+* Drop the custom HTML header and footer, and use the shared doxygen.css
+  file from mm-common. (Daniel Elstner)
+
 2.25.1:
 
 * Reworked the build system, using mm-common.

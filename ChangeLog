@@ -1,5 +1,13 @@
 2009-08-28  Daniel Elstner  <danielk@openismus.com>
 
+	Increment version to 2.25.1.1 and update news
+
+	* configure.ac (AC_INIT): Bump version to pangomm 2.25.1.1.
+	(MM_PREREQ): Require mm-common 0.7.1.
+	* NEWS: Write news entry for pangomm 2.25.1.1.
+
+2009-08-28  Daniel Elstner  <danielk@openismus.com>
+
 	Use shared mm-common Doxygen style sheet
 
 	* configure.ac (MM_PREREQ): Require mm-common 0.7.

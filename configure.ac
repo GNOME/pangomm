@@ -15,7 +15,7 @@
 ## You should have received a copy of the GNU Lesser General Public License
 ## along with this library.  If not, see <http://www.gnu.org/licenses/>.
 
-AC_INIT([pangomm], [2.25.1], [http://bugzilla.gnome.org/enter_bug.cgi?product=pangomm],
+AC_INIT([pangomm], [2.25.1.1], [http://bugzilla.gnome.org/enter_bug.cgi?product=pangomm],
         [pangomm], [http://www.gtkmm.org/])
 AC_PREREQ([2.59])
 
@@ -24,7 +24,7 @@ AC_CONFIG_AUX_DIR([build])
 AC_CONFIG_MACRO_DIR([build])
 AC_CONFIG_HEADERS([config.h pango/pangommconfig.h])
 
-MM_PREREQ([0.7])
+MM_PREREQ([0.7.1])
 MM_INIT_MODULE([pangomm-1.4])
 
 # http://www.gnu.org/software/libtool/manual/html_node/Updating-version-info.html
