@@ -1,5 +1,12 @@
 2009-08-28  Daniel Elstner  <danielk@openismus.com>
 
+	Fix documentation location in pkg-config files
+
+	* pango/pangomm{,-uninstalled}.pc.in (htmlrefpub): Point to
+	library.gnome.org.
+
+2009-08-28  Daniel Elstner  <danielk@openismus.com>
+
 	Increment version to 2.25.1.2 and update news
 
 	* configure.ac (AC_INIT): Bump version to pangomm 2.25.1.2.
