@@ -1,3 +1,11 @@
+2009-09-19  Daniel Elstner  <daniel.kitta@gmail.com>
+
+	Support Automake silent rules
+
+	* configure.ac: Call the AM_SILENT_RULES macro if it is defined.
+	(AM_INIT_AUTOMAKE): Add check-news option.
+	(MM_INIT_MODULE): Move block below Automake initialization.
+
 2009-09-07  Daniel Elstner  <danielk@openismus.com>
 
 	Update Doxygen configuration for Doxygen 1.6.1
