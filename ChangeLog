@@ -1,3 +1,10 @@
+2010-03-17  Murray Cumming  <murrayc@murrayc.com>
+
+    Regenerated pango function .defs.
+
+	* pango/src/pango_methods.defs: Regnerated with h2defs.py thought there is 
+    no significant change.
+
 2.26.0:
 
 2009-09-19  Daniel Elstner  <daniel.kitta@gmail.com>

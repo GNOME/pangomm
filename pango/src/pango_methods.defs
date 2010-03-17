@@ -502,6 +502,12 @@
   (return-type "CGFontRef")
 )
 
+(define-method get_atsfont
+  (of-object "PangoATSUIFont")
+  (c-name "pango_atsui_font_get_atsfont")
+  (return-type "ATSFontRef")
+)
+
 (define-function pango_atsui_font_get_type
   (c-name "pango_atsui_font_get_type")
   (return-type "GType")
