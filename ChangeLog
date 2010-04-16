@@ -1,8 +1,14 @@
+2010-04-16  Murray Cumming  <murrayc@murrayc.com>
+
+    Regenerated C documentation XML.
+
+	* pango/src/pango_docs.xml: Regenerated with the improved docextract_to_xml.py.
+
 2010-03-17  Murray Cumming  <murrayc@murrayc.com>
 
     Regenerated pango function .defs.
 
-	* pango/src/pango_methods.defs: Regnerated with h2defs.py thought there is 
+	* pango/src/pango_methods.defs: Regnerated with h2defs.py thought there is
     no significant change.
 
 2.26.0:
@@ -373,7 +379,7 @@ This is the master branch. See also the pangomm-2-24 branch.
 	* MSVC_Net200[58]/pangomm/Makefile.am: Change rule dependency
 	configure.in to configure.ac.
 
-2009-03-09  Theppitak Karoonboonyanan  <thep@linux.thai.net>	
+2009-03-09  Theppitak Karoonboonyanan  <thep@linux.thai.net>
 
 	* docs/reference/Makefile.am: Split out devhelp installation rule, so
 	VPATH reference is possible for both tarball and VCS builds, fixing
@@ -383,17 +389,17 @@ This is the master branch. See also the pangomm-2-24 branch.
 
 2009-03-09  Murray Cumming  <murrayc@murrayc.com>
 
-	* docs/reference/Makefile.am: Added srcdir before the devhelp file, to 
+	* docs/reference/Makefile.am: Added srcdir before the devhelp file, to
 	fix distcheck.
 
 2009-03-09  Murray Cumming  <murrayc@murrayc.com>
 
 	* pango/src/pango_docs.xml: Regenerated with doxextract_to_xml.py.
 
-2009-02-05  Theppitak Karoonboonyanan  <thep@linux.thai.net>	
+2009-02-05  Theppitak Karoonboonyanan  <thep@linux.thai.net>
 
 	* docs/reference/Doxyfile.in:
-	* docs/reference/Makefile.am: Allow pangomm to build outside the source 
+	* docs/reference/Makefile.am: Allow pangomm to build outside the source
 	tree. Bug #570322
 
 2009-01-20  Deng Xiyue  <manphiz@gmail.com>
@@ -441,7 +447,7 @@ This is the master branch. See also the pangomm-2-24 branch.
 
 2008-09-08  Deng Xiyue  <manphiz@gmail.com>
 
-	* Added COPYING.tools with the GPL because the tools/*.cc file is 
+	* Added COPYING.tools with the GPL because the tools/*.cc file is
 	GPL. Bug #550789.
 
 2008-09-08  Deng Xiyue  <manphiz@gmail.com>
@@ -463,24 +469,24 @@ This is the master branch. See also the pangomm-2-24 branch.
 
 2008-08-12  Murray Cumming  <murrayc@murrayc.com>
 
-	* pango/src/context.hg: Added set_font_map() because it is now public 
+	* pango/src/context.hg: Added set_font_map() because it is now public
 	(non backend-only) API.
 
 2008-08-12  Murray Cumming  <murrayc@murrayc.com>
 
 	* pango/src/layoutrun.ccg:
-	* pango/src/layoutrun.hg: Wrap this with CLASS_BOXEDTYPE() instead of 
-	_CLASS_GENERIC(), because the PangoGlyphItem (of which PangoLayoutRun 
-	is a typedef) is a boxed type. This reduces the amount of code in .hg, 
+	* pango/src/layoutrun.hg: Wrap this with CLASS_BOXEDTYPE() instead of
+	_CLASS_GENERIC(), because the PangoGlyphItem (of which PangoLayoutRun
+	is a typedef) is a boxed type. This reduces the amount of code in .hg,
 	while apparently not breaking API or ABI.
 	This should be renamed to GlyphItem when we can break ABI.
 
 2008-08-12  Murray Cumming  <murrayc@murrayc.com>
 
-	* pango/src/layoutrun.hg: Typedef this to GlyphItem, because 
+	* pango/src/layoutrun.hg: Typedef this to GlyphItem, because
 	that is what it is (and is documented as) in Pango.
-	Added splt() and letter() space to LayoutRun, wrapping PangoGlyphItem 
-	functions. 
+	Added splt() and letter() space to LayoutRun, wrapping PangoGlyphItem
+	functions.
 	* tools/m4/convert_pango.m4:
 	* pango/src/renderer.hg: Added draw_glyph_item().
 
@@ -508,7 +514,7 @@ This is the master branch. See also the pangomm-2-24 branch.
 
 	* docs/Makefile.am: Do not try to upload a non-existant index.html
 	* docs/images/Makefile.am: Correct the filenames.
-	* docs/reference/pangomm_header.html_fragment: Change the links as 
+	* docs/reference/pangomm_header.html_fragment: Change the links as
 	in glibmm.
 
 2008-08-01  Deng Xiyue <manphiz@gmail.com>
@@ -516,16 +522,16 @@ This is the master branch. See also the pangomm-2-24 branch.
 	* docs/Makefile_web.am_fragment:
 	* docs/reference/Makefile.am:
 	* tools/m4/Makefile.am:
-	* Makefile.am: Fix all references of ABI version 2.4 to version 1.4, 
-	though the tarball version (as reported by pkgconfig --modversion) 
+	* Makefile.am: Fix all references of ABI version 2.4 to version 1.4,
+	though the tarball version (as reported by pkgconfig --modversion)
 	must stay as 2.x.
 	Bug #545537.
 
 2008-08-01  Murray Cumming  <murrayc@murrayc.com>
 
 	* docs/Makefile.am:
-	* docs/index.html: Removed index.html. It was just a copy from 
-	gtkmm (from where I will also be removing it.) The true copy is in 
+	* docs/index.html: Removed index.html. It was just a copy from
+	gtkmm (from where I will also be removing it.) The true copy is in
 	gnomemm-website (uploaded to gtkmm.org).
 
 2008-07-30  Sebastien Bacher  <seb128@ubuntu.com>
@@ -535,7 +541,7 @@ This is the master branch. See also the pangomm-2-24 branch.
 2008-07-27  Murray Cumming  <murrayc@murrayc.com>
 
 	* docs/Makefile_web.am_fragment: Corrected the upload location.
-	* docs/reference/Doxyfile.in: Corrected a variable so we really 
+	* docs/reference/Doxyfile.in: Corrected a variable so we really
 	generate documentation.
 
 2.13.6:
@@ -546,7 +552,7 @@ This is the master branch. See also the pangomm-2-24 branch.
 	* pango/src/pango_enums.defs:
 	* pango/src/pango_methods.defs: Regenerated.
 
-	* pango/src/layout.hg: Added get_height(), set_height(), 
+	* pango/src/layout.hg: Added get_height(), set_height(),
 	get_baseline().
 	* pango/src/layoutiter.ccg:
 	* pango/src/layoutiter.hg: Added get_layout().
@@ -554,6 +560,6 @@ This is the master branch. See also the pangomm-2-24 branch.
 
 2.13.5:
 
-Created a standalone pangomm module from gtkmm in svn trunk, 
-so that things can depend on pangomm without needing gtkmm at 
+Created a standalone pangomm module from gtkmm in svn trunk,
+so that things can depend on pangomm without needing gtkmm at
 build time.
