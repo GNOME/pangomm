@@ -1,3 +1,8 @@
+2.26.1:
+
+* Minor documentation improvements.
+  (Murray Cumming, José Alburquerque)
+
 2.26.0:
 
 * Minor documentation build fixes. (Daniel Elstner)
@@ -26,7 +31,7 @@
 
 2.24.0:
 
-(Skipped version numbers since 2.14.1, to match pango 1.24 
+(Skipped version numbers since 2.14.1, to match pango 1.24
 (apart from the first digit, which we can't decrease.)
 
 * Layout: Added show_in_cairo_context().
@@ -54,7 +59,7 @@
 
 2.13.8:
 
-* Context: Added set_font_map() because the C function is now 
+* Context: Added set_font_map() because the C function is now
   public (non backend-only) API.
 * LayoutRun/GlyphItem: Added split() and letter().
 * Renderer: Added draw_glyph_item().
