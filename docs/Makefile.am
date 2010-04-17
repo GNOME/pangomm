@@ -21,7 +21,8 @@ include $(top_srcdir)/pango/pangomm/filelist.am
 pangomm_files_h = $(files_built_h) $(filter-out wrap_init.h,$(files_extra_h))
 
 book_name = $(PANGOMM_MODULE_NAME)
-doc_input = $(addprefix $(top_srcdir)/pango/pangomm/,$(pangomm_files_h))
+doc_input = $(addprefix $(top_srcdir)/pango/pangomm/,$(pangomm_files_h)) \
+            $(top_srcdir)/pango/pangomm.h
 
 docimagesdir = $(libdocdir)/images
 dist_docimages_DATA = images/gtkmm_logo.gif images/top.gif

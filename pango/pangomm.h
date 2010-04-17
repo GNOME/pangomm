@@ -1,5 +1,3 @@
-/* $Id: pangomm.h 2 2003-01-21 13:41:59Z murrayc $ */
-
 /* pangomm - a C++ wrapper for the GLib toolkit
  *
  * Copyright 2002 Free Software Foundation
@@ -22,6 +20,38 @@
 #ifndef _PANGOMM_H
 #define _PANGOMM_H
 
+/** @mainpage pangomm Reference Manual
+ *
+ * @section description Description
+ *
+ * pangomm is the official C++ interface for the font layout library %Pango.
+ * More information on %Pango can be found at http://www.pango.org/
+ *
+ * @section basics Basic usage
+ *
+ * Include the pangomm header:
+ * @code
+ * #include <pangomm.h>
+ * @endcode
+ * This includes every header installed by pangomm, so can slow down
+ * compilation, but suffices for this simple example. Assuming that your
+ * program source file is @c program.cc, compile it with:
+ * @code
+ * g++ program.cc -o program  `pkg-config --cflags --libs pangomm`
+ * @endcode
+ * Alternatively, if using autoconf, use the following in @c configure.ac:
+ * @code
+ * PKG_CHECK_MODULES([PANGOMM], [pangomm])
+ * @endcode
+ * Then use the generated @c PANGOMM_CFLAGS and @c PANGOMM_LIBS variables in
+ * the project @c Makefile.am files. For example:
+ * @code
+ * program_CPPFLAGS = $(PANGOMM_CFLAGS)
+ * program_LDADD = $(PANGOMM_LIBS)
+ * @endcode
+ */
+
+
 #include <pangomm/attrlist.h>
 #include <pangomm/context.h>
 #include <pangomm/coverage.h>
@@ -38,4 +68,3 @@
 #include <pangomm/tabarray.h>
 
 #endif /* _PANGOMM_H */
-
