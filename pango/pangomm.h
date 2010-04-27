@@ -25,7 +25,8 @@
  * @section description Description
  *
  * pangomm is the official C++ interface for the font layout library %Pango.
- * More information on %Pango can be found at http://www.pango.org/
+ * More information on %Pango can be found at <a href="http://www.pango.org/">
+ * the Pango website</a>.
  *
  * @section basics Basic usage
  *
