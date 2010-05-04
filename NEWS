@@ -1,35 +1,40 @@
-2.26.1:
+2.26.2 (stable):
+
+* Documentation: Added main page text at index.html.
+  (David King, Murray Cumming)
+  
+2.26.1 (stable):
 
 * Minor documentation improvements.
   (Murray Cumming, José Alburquerque)
 
-2.26.0:
+2.26.0 (stable):
 
 * Minor documentation build fixes. (Daniel Elstner)
 
-2.25.1.3:
+2.25.1.3 (unstable):
 
 * Change public documentation location to library.gnome.org in
   the pkg-config files as well.  (Daniel Elstner)
 
-2.25.1.2:
+2.25.1.2 (unstable):
 
 * Change public documentation location to library.gnome.org.
   (Daniel Elstner)
 
-2.25.1.1:
+2.25.1.1 (unstable):
 
 * Reenable the per-class hierarchy graphs in the reference documentation.
   (Daniel Elstner)
 * Drop the custom HTML header and footer, and use the shared doxygen.css
   file from mm-common. (Daniel Elstner)
 
-2.25.1:
+2.25.1 (unstable):
 
 * Reworked the build system, using mm-common.
   (Daniel Elstner)
 
-2.24.0:
+2.24.0 (stable):
 
 (Skipped version numbers since 2.14.1, to match pango 1.24
 (apart from the first digit, which we can't decrease.)
@@ -40,7 +45,7 @@
   (Theppitak Karoonboonyanan)
 * License Header consistency. (Deng Xiyue)
 
-2.14.1:
+2.14.1 (stable):
 
 * Windows build: Use the new DLL naming convention, like boost.
   (Armin Burgmeier)
@@ -48,7 +53,7 @@
   - Corrected the index page for DevHelp.
     (Deng Xiyue) Bug #559896
 
-2.14.0:
+2.14.0 (stable):
 
 * Language: Added get_scripts().
   (Murray Cumming)
@@ -57,7 +62,7 @@
 * Fixed the Windows build with Visual Studio Express.
   (Armin Burgmeier)
 
-2.13.8:
+2.13.8 (unstable):
 
 * Context: Added set_font_map() because the C function is now
   public (non backend-only) API.
@@ -68,21 +73,21 @@
 * Build: Updated the MS Visual Studio 2005 build.
   (Armin Burgmeier)
 
-2.13.7:
+2.13.7 (unstable):
 
 * Build: Require a correct version of pango.
   (Sebastian Bacher)
 * Documentation: Correct some mentions of pangomm-2.4 to pangomm-1.4.
   (Deng Xiyue)
 
-2.13.6:
+2.13.6 (unstable):
 
 * Layout: Added get_height(), set_height(), get_baseline().
 * LayoutIter: Added get_layout().
 * Renderer: Added get_layout() and get_layout_line().
   (Murray Cumming)
 
-2.13.5:
+2.13.5 (unstable):
 
 This is a first version of pangomm in its own tarball.
 The API and ABI are not changed.
