@@ -24,9 +24,8 @@
  *
  * @section description Description
  *
- * pangomm is the official C++ interface for the font layout library %Pango.
- * More information on %Pango can be found at <a href="http://www.pango.org/">
- * the Pango website</a>.
+ * pangomm is the official C++ interface for the <a href="http://www.pango.org/">Pango</a> font layout library.
+ * See, for instance, the Pango::Layout class.
  *
  * @section basics Basic usage
  *
@@ -38,11 +37,11 @@
  * compilation, but suffices for this simple example. Assuming that your
  * program source file is @c program.cc, compile it with:
  * @code
- * g++ program.cc -o program  `pkg-config --cflags --libs pangomm`
+ * g++ program.cc -o program  `pkg-config --cflags --libs pangomm-1.4`
  * @endcode
  * Alternatively, if using autoconf, use the following in @c configure.ac:
  * @code
- * PKG_CHECK_MODULES([PANGOMM], [pangomm])
+ * PKG_CHECK_MODULES([PANGOMM], [pangomm-1.4])
  * @endcode
  * Then use the generated @c PANGOMM_CFLAGS and @c PANGOMM_LIBS variables in
  * the project @c Makefile.am files. For example:

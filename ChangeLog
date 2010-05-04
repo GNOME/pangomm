@@ -1,3 +1,11 @@
+2010-05-04  Murray Cumming  <murrayc@murrayc-x61>
+
+	Documentation: Main page: Improve, linking to class and correcting pkg-config
+
+	* pango/pangomm.h: Simplify the text, improving the link, and link to 
+	Pango::Layout as a starting point. Correct the pkg-config check from pangomm 
+	to pangomm-1.4.
+
 2010-04-27  David King  <davidk@openismus.com>
 
 	Update link formatting in main page of documentation
