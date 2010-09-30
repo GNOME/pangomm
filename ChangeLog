@@ -1,3 +1,22 @@
+2010-09-30  Armin Burgmeier  <armin@arbur.net>
+
+	* MSVC_Net2005/gendef/gendef.vcproj:
+	* MSVC_Net2005/pangomm.sln:
+	* MSVC_Net2005/pangomm/pangomm.vcproj:
+	* MSVC_Net2008/gendef/gendef.vcproj:
+	* MSVC_Net2008/pangomm.sln:
+	* MSVC_Net2008/pangomm/pangomm.vcproj:
+	* MSVC_Net2010/filelist.am:
+	* MSVC_Net2010/gendef/gendef.cc:
+	* MSVC_Net2010/gendef/gendef.vcxproj:
+	* MSVC_Net2010/gendef/gendef.vcxproj.filters:
+	* MSVC_Net2010/pangomm.sln:
+	* MSVC_Net2010/pangomm/pangomm.rc.in:
+	* MSVC_Net2010/pangomm/pangomm.vcxproj:
+	* MSVC_Net2010/pangomm/pangomm.vcxproj.filters:
+	* Makefile.am:
+	* configure.ac: Add support for MSVC 2010 and 64 bit.
+
 2.26.2:
 
 2010-05-04  Murray Cumming  <murrayc@murrayc-x61>

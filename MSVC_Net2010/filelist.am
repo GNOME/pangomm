@@ -1,0 +1,11 @@
+## This file is part of pangomm.
+
+msvc_net2010_data =				\
+	pangomm.sln				\
+	gendef/gendef.vcxproj			\
+	gendef/gendef.vcxproj.filters		\
+	gendef/gendef.cc			\
+	pangomm/pangomm.rc			\
+	pangomm/pangomm.vcxproj			\
+	pangomm/pangomm.vcxproj.filters		\
+	pangomm/pangommconfig.h
