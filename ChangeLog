@@ -1,3 +1,12 @@
+2010-12-09  Murray Cumming  <murrayc@murrayc.com>
+
+	Include convert_glibmm.m4 instead of convert_gtkmm.m4. 
+
+	* tools/m4/convert.m4: Inlcude convert_glibmm.m4, just added to glibmm, 
+	instead of convert_gtkmm.m4, which glibmm no longer provides.
+	Also include convert_pangomm.m4 - we probably used the copy in glibmm until 
+	now. 
+
 2010-09-30  Armin Burgmeier  <armin@arbur.net>
 
 	* MSVC_Net2005/gendef/gendef.vcproj:
