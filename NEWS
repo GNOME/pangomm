@@ -1,3 +1,8 @@
+2.26.3 (stable):
+
+* Build/Installer: Added support for MSVC 2010 and 64 bit.
+  (Armin Burgmeier)
+
 2.26.2 (stable):
 
 * Documentation: Added main page text at index.html.
