@@ -57,8 +57,8 @@ MM_ARG_WITH_TAGFILE_DOC([cairomm-1.0.tag], [cairomm-1.0])
 AC_LANG([C++])
 MM_ARG_ENABLE_WARNINGS([PANGOMM_WXXFLAGS],
                        [-Wall],
-                       [-pedantic -Wall -Wextra],
-                       [G PANGO])
+                       [-pedantic -Wall -Wextra -Wno-long-long -DGSEAL_ENABLE],
+                       [G PANGO GLIBMM])
 
 AC_CONFIG_FILES([Makefile
                  tools/Makefile
