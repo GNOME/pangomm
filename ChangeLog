@@ -1,3 +1,11 @@
+2011-01-08  Murray Cumming  <murrayc@murrayc.com>
+
+	Added conversions used by gtkmm.
+
+	* tools/m4/convert_pango.m4: Added the extra conversions that were in the 
+	gtkmm copy of this file. They will probably be needed by other modules so 
+	it makes sense to keep them to here to avoid duplication.
+
 2011-01-07  Murray Cumming  <murrayc@murrayc.com>
 
 	Allow other modules to use the m4 files.
