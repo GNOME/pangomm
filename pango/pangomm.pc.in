@@ -5,6 +5,8 @@ datarootdir=@datarootdir@
 datadir=@datadir@
 includedir=@includedir@
 
+gmmprocm4dir=${libdir}/@PANGOMM_MODULE_NAME@/proc/m4
+
 docdir=${datarootdir}/doc/@PANGOMM_MODULE_NAME@
 doxytagfile=${docdir}/reference/@PANGOMM_MODULE_NAME@.tag
 htmlrefdir=${docdir}/reference/html

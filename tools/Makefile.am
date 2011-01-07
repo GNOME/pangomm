@@ -19,7 +19,14 @@ AUTOMAKE_OPTIONS = subdir-objects
 
 include $(srcdir)/m4/filelist.am
 
-dist_noinst_DATA = $(addprefix m4/,$(files_codegen_m4))
+# Install m4 files for reuse by other *mm projects, when building from git:
+# TODO: All these Perl scripts and M4 files are architecture-independent
+# and should probably go somewhere below $(pkgdatadir) instead.
+gmmproc_bindir = $(libdir)/$(PANGOMM_MODULE_NAME)/proc
+gmmproc_m4dir  = $(gmmproc_bindir)/m4
+dist_gmmproc_m4_DATA = $(files_codegen_m4:%=m4/%)
+
+dist_noinst_DATA = README
 noinst_PROGRAMS  = extra_defs_gen/generate_extra_defs
 
 extra_defs_gen_generate_extra_defs_SOURCES = extra_defs_gen/generate_defs_pango.cc
