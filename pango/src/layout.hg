@@ -245,6 +245,8 @@ _DEPRECATE_IFDEF_END
   
   /** Gets an iterator to iterate over the visual extents of the layout.
    * @result The iterator.
+   *
+   * @newin{2,28}
    */
   LayoutIter get_iter();
 

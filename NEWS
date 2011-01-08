@@ -1,3 +1,9 @@
+2.27.1 (unstable):
+
+* LayoutIter: This now has a copy constructor.
+* Layout::get_iter(): There is now a version of this method that returns a 
+  LayoutIter. The version with the output parameter is now deprecated.
+  
 2.26.2 (stable):
 
 * Documentation: Added main page text at index.html.
