@@ -32,14 +32,10 @@ namespace Pango
  */
 class LayoutIter
 {
-  _CLASS_GENERIC(LayoutIter, PangoLayoutIter)
-  _IGNORE(pango_layout_iter_free, pango_layout_iter_get_char_extents)
+  _CLASS_BOXEDTYPE(LayoutIter, PangoLayoutIter, NONE, pango_layout_iter_copy, pango_layout_iter_free)
+  _IGNORE(pango_layout_iter_copy, pango_layout_iter_free)
 
 public:
-  // There's no other ctor, and the default ctor creates an invalid object.
-  // Therefore, Pango::LayoutIter is usable only as output argument.
-  LayoutIter();
-  ~LayoutIter();
 
   _WRAP_METHOD(int get_index() const, pango_layout_iter_get_index)
   _WRAP_METHOD(LayoutRun get_run() const, pango_layout_iter_get_run)
@@ -64,6 +60,7 @@ public:
    * @return The logical extents of the current character.
    */
   Rectangle get_char_extents() const;
+  _IGNORE(pango_layout_iter_get_char_extents)
 
   _WRAP_METHOD(void get_cluster_extents(Rectangle& ink_rect, Rectangle& logical_rect) const, pango_layout_iter_get_cluster_extents)
 
@@ -89,7 +86,7 @@ public:
    */
   Rectangle get_run_logical_extents() const;
 
-  _WRAP_METHOD(void get_line_extents(Rectangle& ink_rect, Rectangle& logical_rect) const, pango_layout_iter_get_line_extents)
+  _WRAP_METHOD(void get_line_extents(Rectangle& ink_rect, Rectangle& logical_rect) const,   pango_layout_iter_get_line_extents)
 
   /** Obtains the ink extents of the current line.
    * @return The extents of the current line as drawn.
@@ -117,22 +114,12 @@ public:
 
   _WRAP_METHOD(int get_baseline() const, pango_layout_iter_get_baseline)
 
-  /// Provides access to the underlying C GObject.  
-  PangoLayoutIter*       gobj()       { return gobject_; }
-  /// Provides access to the underlying C GObject.
-  const PangoLayoutIter* gobj() const { return gobject_; }
-
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
+  /** @deprecated Use the copy constructor instead.
+   * This was only ever for internal use anyway.
+   */
   void assign_gobj(PangoLayoutIter* src);
 #endif
-
-protected:
-  PangoLayoutIter* gobject_;
-
-private:
-  // noncopyable
-  LayoutIter(const LayoutIter&);
-  LayoutIter& operator=(const LayoutIter&);
 };
 
 } //namespace Pango

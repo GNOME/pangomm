@@ -1,5 +1,17 @@
 2011-01-08  Murray Cumming  <murrayc@murrayc.com>
 
+	LayoutIter: Wrap this as a boxed type, which needs less code.
+	
+	* pango/src/layoutiter.[hg|ccg]: PangoLayoutIter became a boxed type at some 
+	point, with a pango_layout_iter_copy() function, so we can now wrap it 
+	normally without so much hand-coding. This also adds a copy constructor.
+	* pango/src/layout.ccg: get_iter(): Use the LayoutIter copy constructor 
+	instead of the crappy old assign_gobj() function. Also deprecate this 
+	method, adding a get_iter(void), now that the copy constructor allows us to 
+	use LayoutIter as a return type. 
+	
+2011-01-08  Murray Cumming  <murrayc@murrayc.com>
+
 	Improve the generated API documentation.
 
 	* pango/src/pango_methods.defs: Regenerated with h2defs.py

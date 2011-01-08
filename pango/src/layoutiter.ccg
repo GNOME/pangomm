@@ -25,26 +25,10 @@
 namespace Pango
 {
 
-LayoutIter::LayoutIter()
-:
-  gobject_ (0)
-{}
-
-LayoutIter::~LayoutIter()
+void LayoutIter::assign_gobj(PangoLayoutIter* /* src */)
 {
-  if(gobject_)
-    pango_layout_iter_free(gobject_);
-}
-
-void LayoutIter::assign_gobj(PangoLayoutIter* src)
-{
-  if(src != gobject_)
-  {
-    if(gobject_)
-      pango_layout_iter_free(gobject_);
-
-    gobject_ = src;
-  }
+  //We don't actually use this anymore, and it was only ever for internal use.
+  //We just have not removed it completely to avoid appearing to break the ABI.
 }
 
 Rectangle LayoutIter::get_char_extents() const
