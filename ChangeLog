@@ -1,5 +1,17 @@
 2011-01-08  Murray Cumming  <murrayc@murrayc.com>
 
+	Improve the generated API documentation.
+
+	* pango/src/pango_methods.defs: Regenerated with h2defs.py
+	* pango/src/pango_extra_objects.defs: Added some object definitions to help
+	the documentation generator, avoiding warnings about not being able to 
+	transform C function names into C++ function names. I did the same thing in 
+	gtkmm a few months ago.
+	* pango/src/filelist.am: Mention the new files.
+	* pango/src/pango.defs: Include the new file.
+
+2011-01-08  Murray Cumming  <murrayc@murrayc.com>
+
 	Added conversions used by gtkmm.
 
 	* tools/m4/convert_pango.m4: Added the extra conversions that were in the 

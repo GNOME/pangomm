@@ -5,6 +5,7 @@ files_defs =			\
 	pango_methods.defs	\
 	pango_enums.defs	\
 	pango_vfuncs.defs	\
+	pango_extra_objects.defs \
 	pango_docs.xml		\
 	pango_docs_override.xml
 
