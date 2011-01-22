@@ -119,20 +119,20 @@ Language AttrIter::get_language() const
   return Language(language, true);
 }
 
-SListHandle_Attribute AttrIter::get_extra_attrs() const
+std::vector<Attribute> AttrIter::get_extra_attrs() const
 {
   FontDescription desc;
   GSList* extra_attrs = 0;
 
   pango_attr_iterator_get_font(const_cast<PangoAttrIterator*>(gobj()), desc.gobj(), 0, &extra_attrs);
 
-  return SListHandle_Attribute(extra_attrs, Glib::OWNERSHIP_DEEP);
+  return Glib::SListHandler<Attribute, AttributeTraits>::slist_to_vector (extra_attrs, Glib::OWNERSHIP_DEEP);
 }
 
-SListHandle_Attribute AttrIter::get_attrs() const
+std::vector<Attribute> AttrIter::get_attrs() const
 {
   GSList* attrs = pango_attr_iterator_get_attrs( const_cast<PangoAttrIterator*>(gobj()) );
-  return SListHandle_Attribute(attrs, Glib::OWNERSHIP_DEEP);
+  return Glib::SListHandler<Attribute, AttributeTraits>::slist_to_vector (attrs, Glib::OWNERSHIP_DEEP);
 }
    
 

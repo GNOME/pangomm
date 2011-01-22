@@ -18,6 +18,8 @@
 #include <pango/pango-enum-types.h>
 #include <pango/pango-script.h>
 
+#include <glibmm/vectorutils.h>
+
 namespace Pango
 {
 
@@ -62,11 +64,11 @@ Glib::ustring Language::get_string() const
     return Glib::ustring();
 }
 
-Glib::ArrayHandle<Script> Language::get_scripts() const
+std::vector<Script> Language::get_scripts() const
 {
   int num_scripts = 0;
   const PangoScript* carray = pango_language_get_scripts(const_cast<PangoLanguage*>(gobj()), &num_scripts);
-  return Glib::ArrayHandle<Script>((const Script*)carray, num_scripts, Glib::OWNERSHIP_NONE);
+  return Glib::ArrayHandler<Script>::array_to_vector ((const Script*)carray, num_scripts, Glib::OWNERSHIP_NONE);
 }
 
 

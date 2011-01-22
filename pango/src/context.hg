@@ -19,10 +19,9 @@
  * Software Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
+#include <vector>
 
 #include <glibmm/object.h>
-#include <glibmm/arrayhandle.h>
-#include <glibmm/listhandle.h>
 #include <pangomm/fontdescription.h>
 #include <pangomm/fontmetrics.h>
 #include <pangomm/fontset.h>
@@ -85,7 +84,7 @@ public:
    * objects you use, e.g. in the default font description of the context.
    * @return An array of Pango::FontFamily objects.
    */
-  Glib::ArrayHandle< Glib::RefPtr<FontFamily> > list_families() const;
+  std::vector< Glib::RefPtr<FontFamily> > list_families() const;
   
   _WRAP_METHOD(void set_font_map(const Glib::RefPtr<FontMap>& font_map), pango_context_set_font_map)
 
@@ -129,7 +128,7 @@ public:
    * @param attrs The set of attributes that apply.
    * @return A list of Pango::Item objects.
    */
-  ListHandle_Item itemize(const Glib::ustring& text, const AttrList& attrs) const;
+  std::vector<Item> itemize(const Glib::ustring& text, const AttrList& attrs) const;
 
   /** Breaks a piece of text into segments with consistent directional level and shaping engine.
    * Each byte of @a text will be contained in exactly one of the items in the returned list. 
@@ -148,8 +147,8 @@ public:
    * @param cached_iter Cached attribute iterator.
    * @return A list of Pango::Item structures.
    */
-  ListHandle_Item itemize(const Glib::ustring& text, int start_index, int length,
-                          const AttrList& attrs, AttrIter& cached_iter) const;
+  std::vector<Item> itemize(const Glib::ustring& text, int start_index, int length,
+                            const AttrList& attrs, AttrIter& cached_iter) const;
 
   /** Updates a Pango Context previously created for use with Cairo to
    * match the current transformation and target surface of a Cairo

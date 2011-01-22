@@ -14,10 +14,13 @@
  * License along with this library; if not, write to the Free
  * Software Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
- 
+
+#include <vector>
+
+#include <pango/pango-item.h>
+
 #include <pangomm/attributes.h>
 #include <pangomm/language.h>
-#include <pango/pango-item.h>
 
 _DEFS(pangomm,pango)
 
@@ -66,7 +69,7 @@ public:
   /** Gets a list of non-font attributes for this segment.
    * @return A list of non-font attributes for this segment.
    */
-  SListHandle_Attribute get_extra_attrs() const;
+  std::vector<Attribute> get_extra_attrs() const;
 
   /// Provides access to the underlying C GObject.
   PangoAnalysis*       gobj()       { return &gobject_; }
@@ -160,8 +163,6 @@ struct ItemTraits
   static CppType to_cpp_type    (CType ptr) { return CppType(const_cast<CTypeNonConst>(ptr), true); }
   static void    release_c_type (CType ptr) { pango_item_free(const_cast<CTypeNonConst>(ptr)); }
 };
-
-typedef Glib::ListHandle<Item, ItemTraits> ListHandle_Item;
 
 } // namespace Pango
 

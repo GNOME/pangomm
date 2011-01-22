@@ -15,6 +15,8 @@
  * Software Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
+#include <vector>
+
 #include <pango/pango-attributes.h>
 
 _DEFS(pangomm,pango)
@@ -68,7 +70,7 @@ public:
    *
    * @newin{2,14}
    */
-  Glib::ArrayHandle<Script> get_scripts() const;
+  std::vector<Script> get_scripts() const;
   _IGNORE(pango_language_get_scripts)
 };
 

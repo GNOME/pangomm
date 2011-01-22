@@ -23,14 +23,14 @@
 namespace Pango
 {
 
-Glib::ArrayHandle< Glib::RefPtr<FontFace> > FontFamily::list_faces() const
+std::vector< Glib::RefPtr<FontFace> > FontFamily::list_faces() const
 {
   //Get the array:
   PangoFontFace** pFontFaces = 0;
   int n_fonts = 0;
   pango_font_family_list_faces(const_cast<PangoFontFamily*>(gobj()), &pFontFaces, &n_fonts);
 
-  return Glib::ArrayHandle<Glib::RefPtr <FontFace> > (pFontFaces, n_fonts, Glib::OWNERSHIP_SHALLOW);
+  return Glib::ArrayHandler<Glib::RefPtr <FontFace> >::array_to_vector (pFontFaces, n_fonts, Glib::OWNERSHIP_SHALLOW);
 }
 
 } /* namespace Pango */

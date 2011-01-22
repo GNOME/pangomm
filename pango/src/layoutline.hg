@@ -19,7 +19,8 @@
  * Software Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
-#include <glibmm/slisthandle.h> // For the Glib::SListHandle typedef
+#include <vector>
+
 #include <pangomm/rectangle.h>
 #include <cairomm/context.h>
 #include <pango/pango-layout.h>
@@ -67,7 +68,7 @@ public:
    * Otherwise, it will end at the trailing edge of the last character.
    * @return An array of ranges represented by pairs of integers marking the start and end pixel coordinates of the ranges.
    */
-  Glib::ArrayHandle<std::pair<int,int> > get_x_ranges(int start_index, int end_index) const;
+  std::vector<std::pair<int,int> > get_x_ranges(int start_index, int end_index) const;
 
   _WRAP_METHOD(void get_extents(Rectangle& ink_rect, Rectangle& logical_rect) const, pango_layout_line_get_extents)
 
@@ -143,9 +144,6 @@ struct LayoutLineTraits
   static CppType to_cpp_type    (CType          ptr) { return Glib::wrap(ptr, true); }
   static void    release_c_type (CType          ptr) { pango_layout_line_unref(ptr); }
 };
-
-typedef Glib::SListHandle< Glib::RefPtr<LayoutLine>, LayoutLineTraits > SListHandle_LayoutLine;
-typedef Glib::SListHandle< Glib::RefPtr<const LayoutLine>, LayoutLineTraits > SListHandle_ConstLayoutLine;
 
 } // namespace Pango
 
