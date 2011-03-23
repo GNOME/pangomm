@@ -1,25 +1,30 @@
+2.28.0 (stable):
+
+Just a version increase and a regenerated tarball due to changes in an m4
+macro in mm-common.
+
 2.27.1:
 
 2011-01-08  Murray Cumming  <murrayc@murrayc.com>
 
 	LayoutIter: Wrap this as a boxed type, which needs less code.
-	
-	* pango/src/layoutiter.[hg|ccg]: PangoLayoutIter became a boxed type at some 
-	point, with a pango_layout_iter_copy() function, so we can now wrap it 
+
+	* pango/src/layoutiter.[hg|ccg]: PangoLayoutIter became a boxed type at some
+	point, with a pango_layout_iter_copy() function, so we can now wrap it
 	normally without so much hand-coding. This also adds a copy constructor.
-	* pango/src/layout.ccg: get_iter(): Use the LayoutIter copy constructor 
-	instead of the crappy old assign_gobj() function. Also deprecate this 
-	method, adding a get_iter(void), now that the copy constructor allows us to 
-	use LayoutIter as a return type. 
-	
+	* pango/src/layout.ccg: get_iter(): Use the LayoutIter copy constructor
+	instead of the crappy old assign_gobj() function. Also deprecate this
+	method, adding a get_iter(void), now that the copy constructor allows us to
+	use LayoutIter as a return type.
+
 2011-01-08  Murray Cumming  <murrayc@murrayc.com>
 
 	Improve the generated API documentation.
 
 	* pango/src/pango_methods.defs: Regenerated with h2defs.py
 	* pango/src/pango_extra_objects.defs: Added some object definitions to help
-	the documentation generator, avoiding warnings about not being able to 
-	transform C function names into C++ function names. I did the same thing in 
+	the documentation generator, avoiding warnings about not being able to
+	transform C function names into C++ function names. I did the same thing in
 	gtkmm a few months ago.
 	* pango/src/filelist.am: Mention the new files.
 	* pango/src/pango.defs: Include the new file.
@@ -28,8 +33,8 @@
 
 	Added conversions used by gtkmm.
 
-	* tools/m4/convert_pango.m4: Added the extra conversions that were in the 
-	gtkmm copy of this file. They will probably be needed by other modules so 
+	* tools/m4/convert_pango.m4: Added the extra conversions that were in the
+	gtkmm copy of this file. They will probably be needed by other modules so
 	it makes sense to keep them to here to avoid duplication.
 
 2011-01-07  Murray Cumming  <murrayc@murrayc.com>
@@ -37,8 +42,8 @@
 	Allow other modules to use the m4 files.
 
 	* codegen/Makefile.am: Install the m4 files, like gtkmm installs its files.
-	* pango/pangomm.pc.in: Add the gmmproc4mdir variable so that other modules such 
-	as gtkmm and cluttermm can get the path to the m4 file, to avoid 
+	* pango/pangomm.pc.in: Add the gmmproc4mdir variable so that other modules such
+	as gtkmm and cluttermm can get the path to the m4 file, to avoid
 	duplicating its contents.
 
 2011-01-07  Murray Cumming  <murrayc@murrayc.com>
@@ -50,12 +55,12 @@
 
 2010-12-09  Murray Cumming  <murrayc@murrayc.com>
 
-	Include convert_glibmm.m4 instead of convert_gtkmm.m4. 
+	Include convert_glibmm.m4 instead of convert_gtkmm.m4.
 
-	* tools/m4/convert.m4: Inlcude convert_glibmm.m4, just added to glibmm, 
+	* tools/m4/convert.m4: Inlcude convert_glibmm.m4, just added to glibmm,
 	instead of convert_gtkmm.m4, which glibmm no longer provides.
-	Also include convert_pangomm.m4 - we probably used the copy in glibmm until 
-	now. 
+	Also include convert_pangomm.m4 - we probably used the copy in glibmm until
+	now.
 
 2010-09-30  Armin Burgmeier  <armin@arbur.net>
 
@@ -82,8 +87,8 @@
 
 	Documentation: Main page: Improve, linking to class and correcting pkg-config
 
-	* pango/pangomm.h: Simplify the text, improving the link, and link to 
-	Pango::Layout as a starting point. Correct the pkg-config check from pangomm 
+	* pango/pangomm.h: Simplify the text, improving the link, and link to
+	Pango::Layout as a starting point. Correct the pkg-config check from pangomm
 	to pangomm-1.4.
 
 2010-04-27  David King  <davidk@openismus.com>
