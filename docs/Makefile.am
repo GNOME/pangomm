@@ -28,3 +28,10 @@ docimagesdir = $(libdocdir)/images
 dist_docimages_DATA = images/gtkmm_logo.gif images/top.gif
 
 include $(top_srcdir)/build/doc-reference.am
+
+# These are copied here by mm-common:
+dist_noinst_DATA += \
+	doc-install.pl \
+	doc-postprocess.pl \
+	tagfile-to-devhelp2.xsl \
+	doxygen.css
