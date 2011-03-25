@@ -19,7 +19,7 @@ ACLOCAL_AMFLAGS = -I build ${ACLOCAL_FLAGS}
 DISTCHECK_CONFIGURE_FLAGS = --enable-warnings=fatal
 
 if MAINTAINER_MODE
-src_subdirs = tools pango/src
+src_subdirs = pango/src
 else
 src_subdirs =
 endif
@@ -28,7 +28,7 @@ doc_subdirs = docs
 else
 doc_subdirs =
 endif
-SUBDIRS = $(src_subdirs) pango/pangomm $(doc_subdirs)
+SUBDIRS = tools $(src_subdirs) pango/pangomm $(doc_subdirs)
 
 pangomm_includedir = $(includedir)/$(PANGOMM_MODULE_NAME)
 pangomm_include_HEADERS = pango/pangomm.h
