@@ -1,3 +1,8 @@
+2.28.1 (stable):
+
+* Avoid a tarball dependency on mm-common.
+  (Murray Cumming)
+
 2.28.0 (stable):
 
 Just a version increase and a regenerated tarball due to changes in an m4
