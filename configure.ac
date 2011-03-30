@@ -30,7 +30,7 @@ m4_ifdef([AM_SILENT_RULES], [AM_SILENT_RULES])
 AM_MAINTAINER_MODE
 AC_ARG_VAR([ACLOCAL_FLAGS], [aclocal flags, e.g. -I <macro dir>])
 
-MM_PREREQ([0.7.1])
+MM_PREREQ([0.9.5])
 MM_INIT_MODULE([pangomm-1.4])
 
 # Copy the mm-common .pl scripts into docs/,
