@@ -1,3 +1,9 @@
+2.28.2 (stable):
+
+* Install the m4 files even without --enable-maintainer-mode, as with
+  other modules.
+  (Kalev Lember) Bug #645669
+
 2.28.1 (stable):
 
 * Avoid a tarball dependency on mm-common.
