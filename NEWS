@@ -1,3 +1,11 @@
+2.28.3 (stable):
+
+Build
+* Ship convert_pangomm.m4 in tarballs.
+	(Frederic Peters) Bug #657817
+* Don't use obsolete macros.
+  (Krzesimir Nowak)
+
 2.28.2 (stable):
 
 * Install the m4 files even without --enable-maintainer-mode, as with
