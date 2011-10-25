@@ -20,8 +20,9 @@
  */
 
 
-#include <glibmm/object.h>
 #include <pangomm/fontdescription.h>
+#include <glibmm/object.h>
+#include <glibmm/arrayhandle.h>
 #include <pango/pango-font.h>
 
 _DEFS(pangomm,pango)

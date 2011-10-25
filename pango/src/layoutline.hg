@@ -22,6 +22,7 @@
 #include <glibmm/slisthandle.h> // For the Glib::SListHandle typedef
 #include <pangomm/rectangle.h>
 #include <cairomm/context.h>
+#include <glibmm/arrayhandle.h>
 #include <pango/pango-layout.h>
 
 _DEFS(pangomm,pango)

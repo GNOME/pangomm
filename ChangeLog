@@ -1,3 +1,17 @@
+2011-10-25  Murray Cumming  <murrayc@murrayc.com>
+
+	Add #includes needed with the latest glibmm.
+
+	* pango/src/attributes.hg:
+	* pango/src/color.hg:
+	* pango/src/fontdescription.hg:
+	* pango/src/fontface.hg:
+	* pango/src/fontmetrics.hg:
+	* pango/src/item.hg:
+	* pango/src/language.hg:
+	* pango/src/layoutline.hg: Add individual includes now that gmmproc does not 
+	add #include glibmm.h at the top of every generated header.
+
 2.28.3 (stable):
 
 2011-09-21 Krzesimir Nowak <qdlacz@gmail.com>
