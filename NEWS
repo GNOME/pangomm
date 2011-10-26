@@ -1,3 +1,8 @@
+2.28.4 (stable):
+
+* Add #includes needed with the latest glibmm.
+  (Murray Cumming)
+  
 2.28.3 (stable):
 
 Build
