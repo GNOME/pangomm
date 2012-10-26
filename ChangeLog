@@ -1,3 +1,11 @@
+2012-10-26  José Alburquerque  <jaalburquerque@gmail.com>
+
+	Remove the use of g_type_init() because it has been deprecated.
+
+	* tools/extra_defs_gen/generate_defs_pango.cc: The docs for the
+	function says that the GType system is initialized automatically now
+	as of glib-2.36.
+
 2.28.4 (stable):
 
 2011-10-25  Murray Cumming  <murrayc@murrayc.com>

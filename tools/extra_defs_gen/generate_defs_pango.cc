@@ -25,7 +25,8 @@
 
 int main(int, char**)
 {
-  g_type_init();
+  // g_type_init() is deprecated as of glib-2.36.
+  // g_type_init();
 
   std::cout << get_defs(PANGO_TYPE_CONTEXT)        << std::endl
             << get_defs(PANGO_TYPE_FONT)           << std::endl
