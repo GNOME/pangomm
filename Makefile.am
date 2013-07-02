@@ -51,3 +51,6 @@ dist_noinst_DATA = $(text_files) $(msvc_files)
 dist_noinst_SCRIPTS = autogen.sh
 
 DISTCLEANFILES = MSVC_Net2005/pangomm/pangommconfig.h MSVC_Net2008/pangomm/pangommconfig.h MSVC_Net2010/pangomm/pangommconfig.h
+
+# Optional: auto-generate the ChangeLog file from the git log on make dist
+include $(top_srcdir)/build/dist-changelog.am
