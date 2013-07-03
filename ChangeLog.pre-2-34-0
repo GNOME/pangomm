@@ -1,0 +1,745 @@
+2.34.0 (stable):
+
+2012-10-26  José Alburquerque  <jaalburquerque@gmail.com>
+
+	Remove the use of g_type_init() because it has been deprecated.
+
+	* tools/extra_defs_gen/generate_defs_pango.cc: The docs for the
+	function says that the GType system is initialized automatically now
+	as of glib-2.36.
+
+2.28.4 (stable):
+
+2011-10-25  Murray Cumming  <murrayc@murrayc.com>
+
+	Add #includes needed with the latest glibmm.
+
+	* pango/src/attributes.hg:
+	* pango/src/color.hg:
+	* pango/src/fontdescription.hg:
+	* pango/src/fontface.hg:
+	* pango/src/fontmetrics.hg:
+	* pango/src/item.hg:
+	* pango/src/language.hg:
+	* pango/src/layoutline.hg: Add individual includes now that gmmproc does not 
+	add #include glibmm.h at the top of every generated header.
+
+2.28.3 (stable):
+
+2011-09-21 Krzesimir Nowak <qdlacz@gmail.com>
+
+  Don't use obsolete macros.
+    
+  * autogen.sh: Warn about everything during autoreconf.
+  * configure.ac: Replaced obsolete macros with their modern counterparts.
+    
+2011-08-31  Frederic Peters  <fpeters@0d.be>
+
+	Ship convert_pangomm.m4 in tarballs.
+	Bug #657817
+
+2011-05-24  Olav Vitters <olav@vitters.nl>
+
+    Use tar-ustar instead of tar-pax to ensure OpenBSD compatibility
+
+2.28.2 (stable):
+
+2011-03-30  Murray Cumming  <murrayc@murrayc.com>
+
+	Use the latest mm-common.
+
+	* configure.ac: Require the latest version.
+	* doc/Makefile.am: Don't specify the mm-common .pl files to distribute
+	because mm-common now does this automatically.
+
+2011-03-25  Kalev Lember  <kalev@smartlink.ee>
+
+	Install the m4 files without --enable-maintainer-mode
+
+	* Makefile.am: Install the convert.m4 files even if we aren't in
+	maintainer mode; this makes sure distro packages pick up the files.
+
+2.28.1 (stable):
+
+2011-03-25  Murray Cumming  <murrayc@murrayc.com>
+
+	Avoid a tarball dependency on mm-common.
+
+	* configure.ac: Add a call to MM_CONFIG_DOCTOOL_DIR() telling it to
+	copy the files locally and use them from there.
+	* docs/Makefile.am: Dist the copied files, so that the build does not
+	try to use the versions installed by mm-common.
+
+2.28.0 (stable):
+
+Just a version increase and a regenerated tarball due to changes in an m4
+macro in mm-common.
+
+2.27.1:
+
+2011-01-08  Murray Cumming  <murrayc@murrayc.com>
+
+	LayoutIter: Wrap this as a boxed type, which needs less code.
+
+	* pango/src/layoutiter.[hg|ccg]: PangoLayoutIter became a boxed type at some
+	point, with a pango_layout_iter_copy() function, so we can now wrap it
+	normally without so much hand-coding. This also adds a copy constructor.
+	* pango/src/layout.ccg: get_iter(): Use the LayoutIter copy constructor
+	instead of the crappy old assign_gobj() function. Also deprecate this
+	method, adding a get_iter(void), now that the copy constructor allows us to
+	use LayoutIter as a return type.
+
+2011-01-08  Murray Cumming  <murrayc@murrayc.com>
+
+	Improve the generated API documentation.
+
+	* pango/src/pango_methods.defs: Regenerated with h2defs.py
+	* pango/src/pango_extra_objects.defs: Added some object definitions to help
+	the documentation generator, avoiding warnings about not being able to
+	transform C function names into C++ function names. I did the same thing in
+	gtkmm a few months ago.
+	* pango/src/filelist.am: Mention the new files.
+	* pango/src/pango.defs: Include the new file.
+
+2011-01-08  Murray Cumming  <murrayc@murrayc.com>
+
+	Added conversions used by gtkmm.
+
+	* tools/m4/convert_pango.m4: Added the extra conversions that were in the
+	gtkmm copy of this file. They will probably be needed by other modules so
+	it makes sense to keep them to here to avoid duplication.
+
+2011-01-07  Murray Cumming  <murrayc@murrayc.com>
+
+	Allow other modules to use the m4 files.
+
+	* codegen/Makefile.am: Install the m4 files, like gtkmm installs its files.
+	* pango/pangomm.pc.in: Add the gmmproc4mdir variable so that other modules such
+	as gtkmm and cluttermm can get the path to the m4 file, to avoid
+	duplicating its contents.
+
+2011-01-07  Murray Cumming  <murrayc@murrayc.com>
+
+	Fix the build with --enable-warnings=fatal.
+
+	* configure.ac: Add no-long-long to avoid a warning caused by a newer glib.
+	Also avoid use of deprecated GLIBMM API and make sure that GSEAL is defined.
+
+2010-12-09  Murray Cumming  <murrayc@murrayc.com>
+
+	Include convert_glibmm.m4 instead of convert_gtkmm.m4.
+
+	* tools/m4/convert.m4: Inlcude convert_glibmm.m4, just added to glibmm,
+	instead of convert_gtkmm.m4, which glibmm no longer provides.
+	Also include convert_pangomm.m4 - we probably used the copy in glibmm until
+	now.
+
+2010-09-30  Armin Burgmeier  <armin@arbur.net>
+
+	* MSVC_Net2005/gendef/gendef.vcproj:
+	* MSVC_Net2005/pangomm.sln:
+	* MSVC_Net2005/pangomm/pangomm.vcproj:
+	* MSVC_Net2008/gendef/gendef.vcproj:
+	* MSVC_Net2008/pangomm.sln:
+	* MSVC_Net2008/pangomm/pangomm.vcproj:
+	* MSVC_Net2010/filelist.am:
+	* MSVC_Net2010/gendef/gendef.cc:
+	* MSVC_Net2010/gendef/gendef.vcxproj:
+	* MSVC_Net2010/gendef/gendef.vcxproj.filters:
+	* MSVC_Net2010/pangomm.sln:
+	* MSVC_Net2010/pangomm/pangomm.rc.in:
+	* MSVC_Net2010/pangomm/pangomm.vcxproj:
+	* MSVC_Net2010/pangomm/pangomm.vcxproj.filters:
+	* Makefile.am:
+	* configure.ac: Add support for MSVC 2010 and 64 bit.
+
+2.26.2:
+
+2010-05-04  Murray Cumming  <murrayc@murrayc-x61>
+
+	Documentation: Main page: Improve, linking to class and correcting pkg-config
+
+	* pango/pangomm.h: Simplify the text, improving the link, and link to
+	Pango::Layout as a starting point. Correct the pkg-config check from pangomm
+	to pangomm-1.4.
+
+2010-04-27  David King  <davidk@openismus.com>
+
+	Update link formatting in main page of documentation
+
+	* pango/pangomm.h: Add link text to Pango link.
+
+2010-04-23  David King  <davidk@openismus.com>
+
+	Add main page to Doxygen documentation
+
+	* docs/Makefile.am: Parse pango/pangomm.h for documentation.
+	* pango/pangomm.h: Add main page to Doxygen documentation.
+
+2.26.1:
+
+2010-04-16  Murray Cumming  <murrayc@murrayc.com>
+
+    Regenerated C documentation XML.
+
+	* pango/src/pango_docs.xml: Regenerated with the improved docextract_to_xml.py.
+
+2010-03-17  Murray Cumming  <murrayc@murrayc.com>
+
+    Regenerated pango function .defs.
+
+	* pango/src/pango_methods.defs: Regnerated with h2defs.py thought there is
+    no significant change.
+
+2.26.0:
+
+2009-09-19  Daniel Elstner  <daniel.kitta@gmail.com>
+
+	Support Automake silent rules
+
+	* configure.ac: Call the AM_SILENT_RULES macro if it is defined.
+	(AM_INIT_AUTOMAKE): Add check-news option.
+	(MM_INIT_MODULE): Move block below Automake initialization.
+
+2009-09-07  Daniel Elstner  <danielk@openismus.com>
+
+	Update Doxygen configuration for Doxygen 1.6.1
+
+	* docs/reference/Doxyfile.in: Update file using Doxygen 1.6.1.
+	(SORT_MEMBERS_CTORS_1ST): Set option to YES.
+
+2.25.1.3:
+
+2009-08-28  Daniel Elstner  <danielk@openismus.com>
+
+	Increment version to 2.25.1.3 and update news
+
+	* configure.ac (AC_INIT): Bump version to pangomm 2.25.1.3.
+	* NEWS: Write news entry for pangomm 2.25.1.3.
+
+2009-08-28  Daniel Elstner  <danielk@openismus.com>
+
+	Fix documentation location in pkg-config files
+
+	* pango/pangomm{,-uninstalled}.pc.in (htmlrefpub): Point to
+	library.gnome.org.
+
+2009-08-28  Daniel Elstner  <danielk@openismus.com>
+
+	Increment version to 2.25.1.2 and update news
+
+	* configure.ac (AC_INIT): Bump version to pangomm 2.25.1.2.
+	* NEWS: Write news entry for pangomm 2.25.1.2.
+
+2009-08-28  Daniel Elstner  <danielk@openismus.com>
+
+	Remove documentation location override
+
+	* docs/Makefile.am (htmlrefpub): Remove variable override as
+	the documentation is now hosted on library.gnome.org.  D'oh.
+
+2009-08-28  Daniel Elstner  <danielk@openismus.com>
+
+	Increment version to 2.25.1.1 and update news
+
+	* configure.ac (AC_INIT): Bump version to pangomm 2.25.1.1.
+	(MM_PREREQ): Require mm-common 0.7.1.
+	* NEWS: Write news entry for pangomm 2.25.1.1.
+
+2009-08-28  Daniel Elstner  <danielk@openismus.com>
+
+	Use shared mm-common Doxygen style sheet
+
+	* configure.ac (MM_PREREQ): Require mm-common 0.7.
+	* docs/reference/Doxyfile.in (HTML_STYLESHEET): Assign path
+	to the shared doxygen.css provided by mm-common.
+
+2009-08-28  Daniel Elstner  <danielk@openismus.com>
+
+	Remove header and footer HTML fragments
+
+	* docs/reference/pangomm_{header,footer}.html_fragment: Delete
+	files.  These custom fragments were an unnecessary maintenance
+	hassle.  Also, the files were out of date with respect to the
+	encoding and CSS classes used by Doxygen.
+	* docs/reference/Doxyfile.in (HTML_HEADER), (HTML_FOOTER): Set
+	to the empty string.
+	(PROJECT_NUMBER): Substitute @PACKAGE_VERSION@.  It does look
+	nicer in the generated HTML pages, and is probably also less
+	confusing.
+	(SORT_GROUP_NAMES): Enable for predictability.
+	* docs/Makefile.am (dist_noinst_DATA): Remove deleted HTML
+	fragment files.
+
+2009-08-26  Daniel Elstner  <danielk@openismus.com>
+
+	Reenable hierarchy graphs for each class
+
+	* docs/reference/Doxyfile.in (COLLABORATION_GRAPH): Set option
+	to YES to enable the per-class inheritance graphs.
+
+2.25.1:
+
+2009-08-25  Murray Cumming  <murrayc@murrayc.com>
+
+	Regenerated .defs files.
+
+	* pango/src/pango_docs.xml:
+	* pango/src/pango_methods.defs: Regenerated.
+
+This is the master branch. See also the pangomm-2-24 branch.
+
+2009-08-20  Daniel Elstner  <danielk@openismus.com>
+
+	Rename @since back to @newin
+
+	* docs/reference/Doxyfile.in (ALIASES): Rename the @since alias
+	back to its old name @newin, but otherwise keep the parameters.
+	Apparently there is a @since command predefined in Doxygen which
+	I hadn't noticed.  It does seem to get overridden silently, but
+	it is better not to rely on this.
+	* pango/src/{language,layout}.hg: Replace all uses of @since with
+	@newin.
+
+2009-08-20  Daniel Elstner  <danielk@openismus.com>
+
+	Remove bogus backslash in Doxygen configuration
+
+	* docs/reference/Doxyfile.in (STRIP_FROM_PATH): Remove bogus
+	trailing \ after the the last assigned value.  This probably
+	caused the following assignment to STRIP_FROM_INC_PATH to be
+	eaten.
+
+2009-08-20  Daniel Elstner  <danielk@openismus.com>
+
+	Substitute API version in filenames dynamically
+
+	* pango/pangomm.pc.in: Rename file from pango/pangomm-1.4.pc.in.
+	* pango/pangomm-uninstalled.pc.in: Rename file from
+	pango/pangomm-1.4-uninstalled.pc.in.
+	* configure.ac (AC_CONFIG_FILES): Insert ${PANGOMM_MODULE_NAME}
+	into output filenames and remove the hard-coded version from the
+	input filenames.
+	* pango/pangomm/Makefile.am (lib_LTLIBRARIES): Substitute
+	@PANGOMM_API_VERSION@ into the libtool archive name as well as
+	the variable names derived from it instead of hard-coding the
+	API version.
+
+2009-08-20  Daniel Elstner  <danielk@openismus.com>
+
+	Do not hard-code API version in resource files
+
+	* MSVC_Net200[58]/pangomm/pangomm.rc.in: Use newer @PACKAGE_VERSION@
+	substitution in place of @VERSION@.  Use "@PANGOMM_MODULE_NAME@.dll"
+	instead of hardcoding the API version.
+
+2009-08-19  Daniel Elstner  <daniel.kitta@gmail.com>
+
+	Reference external cairomm documentation
+
+	* configure.ac (MM_ARG_WITH_TAGFILE_DOC): Specify cairomm-1.0.tag
+	as Doxygen tag file dependency for links to the external reference
+	documentation of cairomm.
+
+2009-08-18  Daniel Elstner  <danielk@openismus.com>
+
+	Use parametric Doxygen alias @since{m,n}
+
+	* docs/reference/Doxyfile.in (ALIASES): Define a parametrized alias
+	@since{major,minor} to replace the old @newin?p?* aliases which had
+	to be defined manually for every version number used.
+	* pango/src/*.hg: Change all uses of @newin?p?* to @since{m,n}.
+
+2009-08-17  Daniel Elstner  <danielk@openismus.com>
+
+	Define PANGOMM_BUILD macro during build
+
+	* pango/pangomm/Makefile.am (local_cppflags): Add -DPANGOMM_BUILD=1.
+
+2009-08-17  Daniel Elstner  <danielk@openismus.com>
+
+	Make use of new MM_ARG_DISABLE_DEPRECATED macro
+
+	* configure.ac (PANGOMM_DISABLE_DEPRECATED): Call the new
+	MM_ARG_DISABLE_DEPRECATED_API macro from mm-common in order
+	to provide the option to omit deprecated API from the library
+	build, and to define the corresponding configuration macro.
+	* pango/pangommconfig.h.in (PANGOMM_DISABLE_DEPRECATED): Copy
+	the #undef statement from the generated config.h.in template.
+
+2009-08-17  Daniel Elstner  <daniel.kitta@gmail.com>
+
+	Append slash to overridden $(htmlrefpub)
+
+	* docs/Makefile.am (htmlrefpub): Append trailing slash for
+	consistency with the non-overridden value.
+
+2009-08-17  Daniel Elstner  <daniel.kitta@gmail.com>
+
+	Reenable JAVADOC_AUTOBRIEF mode of Doxygen
+
+	* docs/reference/Doxyfile.in (JAVADOC_AUTOBRIEF): Change value
+	back to 'YES'.  I accidentally turned off the setting during the
+	build infrastructure transition.
+
+2009-08-16  Daniel Elstner  <daniel.kitta@gmail.com>
+
+	Include glibmmconfig.h from pangommconfig.h
+
+	* pango/pangommconfig.h.in: Include glibmmconfig.h for
+	consistency with gtkmm.  Also define an include guard.
+
+2009-08-16  Daniel Elstner  <daniel.kitta@gmail.com>
+
+	List PANGOMM_* macros in pangommconfig.h.in
+
+	* pango/pangommconfig.h.in (PANGOMM_*_VERSION): Add #undef
+	statements for the version number component macros.
+
+2009-08-16  Daniel Elstner  <daniel.kitta@gmail.com>
+
+	Add pkg-config file for uninstalled use
+
+	* pango/pangomm-1.4-uninstalled.pc.in: New pkg-config metadata
+	file for building against a non-installed pangomm library.
+	* configure.ac (AC_CONFIG_FILES): Add configure output file
+	pango/pangomm-1.4-uninstalled.pc.
+
+2009-08-16  Daniel Elstner  <daniel.kitta@gmail.com>
+
+	Make use of latest mm-common features
+
+	* configure.ac: Insert MM_PREREQ([0.4]) macro call.
+	(MM_INIT_MODULE): Remove now optional second argument.
+	* pango/pangomm-1.4.pc.in (htmlrefpub): Append trailing slash
+	as per new mm-common guidelines.
+
+2009-08-16  Daniel Elstner  <daniel.kitta@gmail.com>
+
+	Get rid of GLIBMM_USING_STD()
+
+	* pango/src/tabarray.hg: Stop using GLIBMM_USING_STD(), now
+	that it has been removed from glibmm.
+
+2009-08-12  Daniel Elstner  <danielk@openismus.com>
+
+	Install pangomm.h and pangomm-1.4.pc again
+
+	* Makefile.am (pangomm_include_HEADERS): Install pango/pangomm.h.
+	(nodist_pangomm_libinclude_HEADERS): Install pango/pangommconfig.h.
+	(nodist_pkgconfig_DATA): Install pango/pangomm-1.4.pc.
+	* pango/Makefile.am: Delete already unused file.
+
+2009-08-11  Daniel Elstner  <danielk@openismus.com>
+
+	Provide documentation location via pkg-config
+
+	* pango/pangomm-1.4.pc.in (datadir), (datarootdir): Substitute.
+	(docdir), (doxytagfile), (htmlrefdir), (htmlrefpub): Point to the
+	location of the reference documentation.
+
+2009-08-11  Daniel Elstner  <danielk@openismus.com>
+
+	Wrap pango_font_map_create_context()
+
+	* pango/src/fontmap.hg (FontMap::create_context): Wrap new
+	pango_font_map_create_context() method.
+	* pango/src/cairofontmap.{ccg,hg} (CairoFontMap::create_context):
+	Wrap method manually in terms of pango_font_map_create_context(),
+	so that it longer uses deprecated API.  The wrapper method should
+	be removed altogether when we can break API and ABI.
+
+2009-08-11  Daniel Elstner  <danielk@openismus.com>
+
+	Fix typo in tools/m4/convert_pango.m4
+
+2009-08-11  Daniel Elstner  <danielk@openismus.com>
+
+	Regenerate pango/src/pango_methods.defs
+
+2009-08-11  Daniel Elstner  <danielk@openismus.com>
+
+	Generate more complete extra defs
+
+	* tools/extra_defs_gen/generate_defs_pango.cc (main): Query the
+	defs for all not backend-specific GObject classes in Pango, just
+	in case.
+
+2009-08-11  Daniel Elstner  <danielk@openismus.com>
+
+	Rename scripts/ subdirectory to build/
+
+	* configure.ac (AC_CONFIG_AUX_DIR): Point to build/ directory.
+	(AC_CONFIG_MACRO_DIR): ditto.
+	* Makefile.am (ACLOCAL_AMFLAGS): Use -I build as M4 include path.
+	* docs/Makefile.am, pango/{src,pangomm}/Makefile.am: Include files
+	from $(top_srcdir)/build/ instead of $(top_srcdir)/scripts/.
+
+2009-08-11  Daniel Elstner  <danielk@openismus.com>
+
+	Delete obsolete Autoconf M4 files from scripts/
+
+	* scripts/*.m4: Delete all Autoconf M4 files from version control.
+	* scripts/README: Delete superfluous file.
+	* Makefile.am (text_files): Remove scripts/README.
+	(msvc_files): Use $(addprefix ...) for readability.
+
+2009-08-11  Daniel Elstner  <danielk@openismus.com>
+
+	Transition to mm-common documentation build
+
+	* configure.ac (AC_CONFIG_FILES): List docs/Makefile.am and
+	docs/reference/Doxyfile as output files.
+	* Makefile.am (SUBDIRS): Resurrect docs/ subdirectory.
+	* docs/Makefile.am: Rewrite based upon the new mm-common build
+	infrastructure for the reference documentation.
+	* docs/reference/Doxyfile.in: Heavily modernize and adapt to the
+	new documentation build organization.
+	* docs/Makefile_web.am_fragment: Delete obsolete file.
+	* docs/images/Makefile.am: ditto,
+	* docs/reference/Makefile.am: ditto,
+	* docs/reference/doxygen_to_devhelp.xsl: ditto,
+	* docs/reference/README: ditto.
+	* docs/reference/widget_hierarchy.{dia,html,png}: Delete files as
+	they belong to the documentation of the gtkmm module, not pangomm.
+
+2009-08-11  Daniel Elstner  <danielk@openismus.com>
+
+	Further reduce pointless make recursion
+
+	* scripts/Makefile.am: Delete file.
+	* MSVC_Net200[58]/**/Makefile.am: Delete files.
+	* MSVC_Net200[58]/filelist.am: New files, defining the files to
+	distribute from the MSVC subdirectories.
+	* Makefile.am: Include MSVC_Net200[58]/filelist.am and distribute
+	the files listed there.
+	(SUBDIRS): Remove scripts/ and MSVC_Net200[58]/.  Temporarily
+	remove docs/ subdirectory.
+	* configure.ac: Use mm-common Autoconf macros for setting up the
+	documentation build.
+	(AC_CONFIG_FILES): Remove deleted Makefiles from the list.
+	(AC_CONFIG_COMMANDS): Append commands to config.status to copy the
+	pangommconfig.h configuration header into the MSVC subdirectories.
+
+2009-08-11  Daniel Elstner  <danielk@openismus.com>
+
+	Convert tools/ and pango/ to new infrastructure
+
+	* Makefile.am (SUBDIRS): Skip the pango/ subdirectory and recurse
+	directly into pango/src/ and pango/pangomm/.
+	(EXTRA_DIST): Remove the old build_shared/ include files.
+	* configure.ac (AC_CONFIG_FILES): Remove files pango/Makefile.am,
+	pango/pangomm/private/Makefile.am and tools/m4/Makefile.am from
+	the list of output files.
+	* pango/src/filelist.am: Rename Makefile_list_of_hg.am_fragment
+	and adapt to new mm-common Automake include files.
+	* pango/pangomm/filelist.am: New file, defining the list of source
+	code files to compile.
+	* pango/pangomm/private/Makefile.am: Delete obsolete file.
+	* pango/src/Makefile.am: Rewrite to use new mm-common build
+	infrastructure.
+	* pango/pangomm/Makefile.am: ditto,
+	* tools/Makefile.am: ditto.
+	* tools/m4/filelist.am: Rename Makefile_list_of_sources.am_fragment
+	and adapt to new mm-common Automake include files.
+	* tools/m4/Makefile.am: Delete obsolete file.
+	* build_shared/*.am_fragment: Delete obsolete build support files.
+
+2009-08-11  Daniel Elstner  <danielk@openismus.com>
+
+	Begin transition to mm-common build system
+
+	* autogen.sh: Replace with minimal version using mm-common-prepare
+	and autoreconf.
+	* configure.ac: Rename file from configure.in.  Remove a lot of old
+	cruft and clean up the remaining bits.  Make use of mm-common macros.
+	Insert temporary dummy conditionals to keep the module buildable.
+	* config.h.in: Delete file, as it is now generated by autoheader.
+	* Makefile.am (ACLOCAL_AMFLAGS): Set to help autoreconf do its work.
+	* MSVC_Net200[58]/pangomm/Makefile.am: Change rule dependency
+	configure.in to configure.ac.
+
+2009-03-09  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	* docs/reference/Makefile.am: Split out devhelp installation rule, so
+	VPATH reference is possible for both tarball and VCS builds, fixing
+	distcheck correctly.
+
+2.24.0:
+
+2009-03-09  Murray Cumming  <murrayc@murrayc.com>
+
+	* docs/reference/Makefile.am: Added srcdir before the devhelp file, to
+	fix distcheck.
+
+2009-03-09  Murray Cumming  <murrayc@murrayc.com>
+
+	* pango/src/pango_docs.xml: Regenerated with doxextract_to_xml.py.
+
+2009-02-05  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	* docs/reference/Doxyfile.in:
+	* docs/reference/Makefile.am: Allow pangomm to build outside the source
+	tree. Bug #570322
+
+2009-01-20  Deng Xiyue  <manphiz@gmail.com>
+
+	* Change license header to mention Lesser General Public License
+	version 2.1 instead of Library General Public License, to be
+	consistent with COPYING.
+
+2008-11-13  Murray Cumming  <murrayc@murrayc.com>
+
+	* docs/reference/Doxyfile.in: Add some more newin2p* aliases.
+	* pango/src/layout.hg: Mark show_in_cairo_context as since 2.16.
+
+2008-11-12  Louis-Francis Ratté-Boulianne <louisfrancis.rb@gmail.com>
+
+	* pango/src/layout.cgg:
+	* pango/src/layout.hg: Added show_in_cairo_context().
+	Bug #560232,
+
+2.14.1:
+
+2008-11-08  Deng Xiyue  <manphiz@gmail.com>
+
+	* docs/reference/doxygen_to_devhelp.xsl: Fix references to gtkmm,
+	should be pangomm, and use reference index.html as start point.
+
+2008-10-23  Jonathon Jongsma  <jonathon@quotidian.org>
+
+	* configure.in:
+	* docs/reference/Makefile.am:
+	* docs/reference/images: Removed gtk stock image stuff that was accidentally
+	left over from splitting up pangomm from gtkmm.
+
+2008-10-09  Armin Burgmeier  <armin@openismus.com>
+
+	* MSVC_Net2005/pangomm/pangomm.vcproj: Changed the library DLL name to
+	match the new naming convention.
+
+	* MSVC_Net2008/: Added Visual Studio 2008 project files.
+
+	* Makefile.am:
+	* configure.in: Added the new files to the distribution.
+
+2.14.0 (wraps pango 1.22):
+
+2008-09-08  Deng Xiyue  <manphiz@gmail.com>
+
+	* Added COPYING.tools with the GPL because the tools/*.cc file is
+	GPL. Bug #550789.
+
+2008-09-08  Deng Xiyue  <manphiz@gmail.com>
+
+	* README: Mention pangomm instead of gtkmm. Bug #550789.
+
+2008-08-27  Armin Burgmeier  <armin@arbur.net>
+
+	* MSVC_Net2005/pangomm/pangomm.rc.in: Replaced #include "afxres.h" by
+	#include <windows.h> which does the job equally well, and allows
+	compilation with the freely available Visual Studio Express compiler.
+
+2008-08-20  Murray Cumming  <murrayc@murrayc.com>
+
+	* pango/src/language.ccg:
+	* pango/src/language.hg: Added get_scripts().
+
+2.13.8:
+
+2008-08-12  Murray Cumming  <murrayc@murrayc.com>
+
+	* pango/src/context.hg: Added set_font_map() because it is now public
+	(non backend-only) API.
+
+2008-08-12  Murray Cumming  <murrayc@murrayc.com>
+
+	* pango/src/layoutrun.ccg:
+	* pango/src/layoutrun.hg: Wrap this with CLASS_BOXEDTYPE() instead of
+	_CLASS_GENERIC(), because the PangoGlyphItem (of which PangoLayoutRun
+	is a typedef) is a boxed type. This reduces the amount of code in .hg,
+	while apparently not breaking API or ABI.
+	This should be renamed to GlyphItem when we can break ABI.
+
+2008-08-12  Murray Cumming  <murrayc@murrayc.com>
+
+	* pango/src/layoutrun.hg: Typedef this to GlyphItem, because
+	that is what it is (and is documented as) in Pango.
+	Added splt() and letter() space to LayoutRun, wrapping PangoGlyphItem
+	functions.
+	* tools/m4/convert_pango.m4:
+	* pango/src/renderer.hg: Added draw_glyph_item().
+
+	* pango/src/cairofontmap.hg: Added set_default().
+
+2008-08-09  Armin Burgmeier  <armin@arbur.net>
+
+	* MSVC_Net2005/gendef/gendef.cc:
+	* MSVC_Net2005/gendef/gendef.vcproj:
+	* MSVC_Net2005/gendef/Makefile.am:
+	* MSVC_Net2005/pangomm/pangomm.vcproj:
+	* MSVC_Net2005/pangomm/pangomm.rc.in:
+	* MSVC_Net2005/pangomm/Makefile.am:
+	* MSVC_Net2005/pangomm.sln:
+	* MSVC_Net2005/blank.cpp:
+	* MSVC_Net2005/Makefile.am: Added project files to build pangomm with
+	Visual Studio 2005.
+
+	* configure.in:
+	* Makefile.am: Adapt build files.
+
+2.13.7:
+
+2008-08-02  Murray Cumming  <murrayc@murrayc.com>
+
+	* docs/Makefile.am: Do not try to upload a non-existant index.html
+	* docs/images/Makefile.am: Correct the filenames.
+	* docs/reference/pangomm_header.html_fragment: Change the links as
+	in glibmm.
+
+2008-08-01  Deng Xiyue <manphiz@gmail.com>
+
+	* docs/Makefile_web.am_fragment:
+	* docs/reference/Makefile.am:
+	* tools/m4/Makefile.am:
+	* Makefile.am: Fix all references of ABI version 2.4 to version 1.4,
+	though the tarball version (as reported by pkgconfig --modversion)
+	must stay as 2.x.
+	Bug #545537.
+
+2008-08-01  Murray Cumming  <murrayc@murrayc.com>
+
+	* docs/Makefile.am:
+	* docs/index.html: Removed index.html. It was just a copy from
+	gtkmm (from where I will also be removing it.) The true copy is in
+	gnomemm-website (uploaded to gtkmm.org).
+
+2008-07-30  Sebastien Bacher  <seb128@ubuntu.com>
+
+	* configure.in: require a correct pango version (bug #545378)
+
+2008-07-27  Murray Cumming  <murrayc@murrayc.com>
+
+	* docs/Makefile_web.am_fragment: Corrected the upload location.
+	* docs/reference/Doxyfile.in: Corrected a variable so we really
+	generate documentation.
+
+2.13.6:
+
+2008-07-27  Murray Cumming  <murrayc@murrayc.com>
+
+	* pango/src/pango_docs.xml:
+	* pango/src/pango_enums.defs:
+	* pango/src/pango_methods.defs: Regenerated.
+
+	* pango/src/layout.hg: Added get_height(), set_height(),
+	get_baseline().
+	* pango/src/layoutiter.ccg:
+	* pango/src/layoutiter.hg: Added get_layout().
+	* pango/src/renderer.hg: Added get_layout() and get_layout_line().
+
+2.13.5:
+
+Created a standalone pangomm module from gtkmm in svn trunk,
+so that things can depend on pangomm without needing gtkmm at
+build time.
