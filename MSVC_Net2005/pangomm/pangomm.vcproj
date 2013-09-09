@@ -27,26 +27,11 @@
 			CharacterSet="2"
 			>
 			<Tool
-				Name="VCPreBuildEventTool"
-			/>
-			<Tool
-				Name="VCCustomBuildTool"
-			/>
-			<Tool
-				Name="VCXMLDataGeneratorTool"
-			/>
-			<Tool
-				Name="VCWebServiceProxyGeneratorTool"
-			/>
-			<Tool
-				Name="VCMIDLTool"
-			/>
-			<Tool
 				Name="VCCLCompilerTool"
 				AdditionalOptions="/vd2"
 				Optimization="0"
-				AdditionalIncludeDirectories=".;../..;../../pango"
-				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_USRDLL;PANGOMM_BUILD"
+				AdditionalIncludeDirectories=".;../..;../../pango;$(SolutionDir)\..\..\vs8\win32\include\glibmm-2.4;$(SolutionDir)\..\..\vs8\win32\lib\glibmm-2.4\include;$(SolutionDir)\..\..\vs8\win32\include\cairomm-1.0;$(SolutionDir)\..\..\vs8\win32\lib\cairomm-1.0\include;$(SolutionDir)\..\..\vs8\win32\include\sigc++-2.0;$(SolutionDir)\..\..\vs8\win32\lib\sigc++-2.0\include"
+				PreprocessorDefinitions="_DEBUG;PANGOMM_BUILD"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
@@ -57,12 +42,6 @@
 				DebugInformationFormat="4"
 			/>
 			<Tool
-				Name="VCManagedResourceCompilerTool"
-			/>
-			<Tool
-				Name="VCResourceCompilerTool"
-			/>
-			<Tool
 				Name="VCPreLinkEventTool"
 				Description="Generate glibmm def file"
 				CommandLine="$(SolutionDir)gendef\$(PlatformName)\$(ConfigurationName)\gendef $(PlatformName)\$(ConfigurationName)\$(InputName).def $(TargetFileName) $(IntDir)\*.obj"
@@ -71,34 +50,11 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="glib-2.0.lib gobject-2.0.lib gmodule-2.0.lib pango-1.0.lib pangocairo-1.0.lib sigc-vc80-d-2_0.lib glibmm-vc80-d-2_4.lib cairomm-vc80-d-1_0.lib"
+				AdditionalLibraryDirectories="$(SolutionDir)\..\..\vs8\win32\lib"
 				OutputFile="$(OutDir)/pangomm-vc80-d-1_4.dll"
 				GenerateManifest="true"
 				ModuleDefinitionFile="$(PlatformName)\$(ConfigurationName)\$(InputName).def"
 				GenerateDebugInformation="true"
-			/>
-			<Tool
-				Name="VCALinkTool"
-			/>
-			<Tool
-				Name="VCManifestTool"
-			/>
-			<Tool
-				Name="VCXDCMakeTool"
-			/>
-			<Tool
-				Name="VCBscMakeTool"
-			/>
-			<Tool
-				Name="VCFxCopTool"
-			/>
-			<Tool
-				Name="VCAppVerifierTool"
-			/>
-			<Tool
-				Name="VCWebDeploymentTool"
-			/>
-			<Tool
-				Name="VCPostBuildEventTool"
 			/>
 		</Configuration>
 		<Configuration
@@ -110,37 +66,16 @@
 			CharacterSet="2"
 			>
 			<Tool
-				Name="VCPreBuildEventTool"
-			/>
-			<Tool
-				Name="VCCustomBuildTool"
-			/>
-			<Tool
-				Name="VCXMLDataGeneratorTool"
-			/>
-			<Tool
-				Name="VCWebServiceProxyGeneratorTool"
-			/>
-			<Tool
-				Name="VCMIDLTool"
-			/>
-			<Tool
 				Name="VCCLCompilerTool"
 				AdditionalOptions="/vd2"
-				AdditionalIncludeDirectories=".;../..;../../pango"
-				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USRDLL;PANGOMM_BUILD"
+				AdditionalIncludeDirectories=".;../..;../../pango;$(SolutionDir)\..\..\vs8\win32\include\glibmm-2.4;$(SolutionDir)\..\..\vs8\win32\lib\glibmm-2.4\include;$(SolutionDir)\..\..\vs8\win32\include\cairomm-1.0;$(SolutionDir)\..\..\vs8\win32\lib\cairomm-1.0\include;$(SolutionDir)\..\..\vs8\win32\include\sigc++-2.0;$(SolutionDir)\..\..\vs8\win32\lib\sigc++-2.0\include"
+				PreprocessorDefinitions="PANGOMM_BUILD"
 				RuntimeLibrary="2"
 				RuntimeTypeInfo="true"
 				UsePrecompiledHeader="0"
 				WarningLevel="3"
 				Detect64BitPortabilityProblems="false"
 				DebugInformationFormat="3"
-			/>
-			<Tool
-				Name="VCManagedResourceCompilerTool"
-			/>
-			<Tool
-				Name="VCResourceCompilerTool"
 			/>
 			<Tool
 				Name="VCPreLinkEventTool"
@@ -151,33 +86,10 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="glib-2.0.lib gobject-2.0.lib gmodule-2.0.lib pango-1.0.lib pangocairo-1.0.lib sigc-vc80-2_0.lib glibmm-vc80-2_4.lib cairomm-vc80-1_0.lib"
+				AdditionalLibraryDirectories="$(SolutionDir)\..\..\vs8\win32\lib"
 				OutputFile="$(OutDir)\pangomm-vc80-1_4.dll"
 				GenerateManifest="true"
 				ModuleDefinitionFile="$(PlatformName)\$(ConfigurationName)\$(InputName).def"
-			/>
-			<Tool
-				Name="VCALinkTool"
-			/>
-			<Tool
-				Name="VCManifestTool"
-			/>
-			<Tool
-				Name="VCXDCMakeTool"
-			/>
-			<Tool
-				Name="VCBscMakeTool"
-			/>
-			<Tool
-				Name="VCFxCopTool"
-			/>
-			<Tool
-				Name="VCAppVerifierTool"
-			/>
-			<Tool
-				Name="VCWebDeploymentTool"
-			/>
-			<Tool
-				Name="VCPostBuildEventTool"
 			/>
 		</Configuration>
 		<Configuration
@@ -189,18 +101,6 @@
 			CharacterSet="2"
 			>
 			<Tool
-				Name="VCPreBuildEventTool"
-			/>
-			<Tool
-				Name="VCCustomBuildTool"
-			/>
-			<Tool
-				Name="VCXMLDataGeneratorTool"
-			/>
-			<Tool
-				Name="VCWebServiceProxyGeneratorTool"
-			/>
-			<Tool
 				Name="VCMIDLTool"
 				TargetEnvironment="3"
 			/>
@@ -208,8 +108,8 @@
 				Name="VCCLCompilerTool"
 				AdditionalOptions="/vd2"
 				Optimization="0"
-				AdditionalIncludeDirectories=".;../..;../../pango"
-				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_USRDLL;PANGOMM_BUILD"
+				AdditionalIncludeDirectories=".;../..;../../pango;$(SolutionDir)\..\..\vs8\x64\include\glibmm-2.4;$(SolutionDir)\..\..\vs8\x64\lib\glibmm-2.4\include;$(SolutionDir)\..\..\vs8\x64\include\cairomm-1.0;$(SolutionDir)\..\..\vs8\x64\lib\cairomm-1.0\include;$(SolutionDir)\..\..\vs8\x64\include\sigc++-2.0;$(SolutionDir)\..\..\vs8\x64\lib\sigc++-2.0\include"
+				PreprocessorDefinitions="_DEBUG;PANGOMM_BUILD"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
@@ -220,12 +120,6 @@
 				DebugInformationFormat="3"
 			/>
 			<Tool
-				Name="VCManagedResourceCompilerTool"
-			/>
-			<Tool
-				Name="VCResourceCompilerTool"
-			/>
-			<Tool
 				Name="VCPreLinkEventTool"
 				Description="Generate glibmm def file"
 				CommandLine="$(SolutionDir)gendef\$(PlatformName)\$(ConfigurationName)\gendef $(PlatformName)\$(ConfigurationName)\$(InputName).def $(TargetFileName) $(IntDir)\*.obj"
@@ -234,35 +128,12 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="glib-2.0.lib gobject-2.0.lib gmodule-2.0.lib pango-1.0.lib pangocairo-1.0.lib sigc-vc80-d-2_0.lib glibmm-vc80-d-2_4.lib cairomm-vc80-d-1_0.lib"
+				AdditionalLibraryDirectories="$(SolutionDir)\..\..\vs8\x64\lib"
 				OutputFile="$(OutDir)/pangomm-vc80-d-1_4.dll"
 				GenerateManifest="true"
 				ModuleDefinitionFile="$(PlatformName)\$(ConfigurationName)\$(InputName).def"
 				GenerateDebugInformation="true"
 				TargetMachine="17"
-			/>
-			<Tool
-				Name="VCALinkTool"
-			/>
-			<Tool
-				Name="VCManifestTool"
-			/>
-			<Tool
-				Name="VCXDCMakeTool"
-			/>
-			<Tool
-				Name="VCBscMakeTool"
-			/>
-			<Tool
-				Name="VCFxCopTool"
-			/>
-			<Tool
-				Name="VCAppVerifierTool"
-			/>
-			<Tool
-				Name="VCWebDeploymentTool"
-			/>
-			<Tool
-				Name="VCPostBuildEventTool"
 			/>
 		</Configuration>
 		<Configuration
@@ -274,38 +145,20 @@
 			CharacterSet="2"
 			>
 			<Tool
-				Name="VCPreBuildEventTool"
-			/>
-			<Tool
-				Name="VCCustomBuildTool"
-			/>
-			<Tool
-				Name="VCXMLDataGeneratorTool"
-			/>
-			<Tool
-				Name="VCWebServiceProxyGeneratorTool"
-			/>
-			<Tool
 				Name="VCMIDLTool"
 				TargetEnvironment="3"
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
 				AdditionalOptions="/vd2"
-				AdditionalIncludeDirectories=".;../..;../../pango"
-				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USRDLL;PANGOMM_BUILD"
+				AdditionalIncludeDirectories=".;../..;../../pango;$(SolutionDir)\..\..\vs8\x64\include\glibmm-2.4;$(SolutionDir)\..\..\vs8\x64\lib\glibmm-2.4\include;$(SolutionDir)\..\..\vs8\x64\include\cairomm-1.0;$(SolutionDir)\..\..\vs8\x64\lib\cairomm-1.0\include;$(SolutionDir)\..\..\vs8\x64\include\sigc++-2.0;$(SolutionDir)\..\..\vs8\x64\lib\sigc++-2.0\include"
+				PreprocessorDefinitions="PANGOMM_BUILD"
 				RuntimeLibrary="2"
 				RuntimeTypeInfo="true"
 				UsePrecompiledHeader="0"
 				WarningLevel="3"
 				Detect64BitPortabilityProblems="false"
 				DebugInformationFormat="3"
-			/>
-			<Tool
-				Name="VCManagedResourceCompilerTool"
-			/>
-			<Tool
-				Name="VCResourceCompilerTool"
 			/>
 			<Tool
 				Name="VCPreLinkEventTool"
@@ -316,34 +169,11 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="glib-2.0.lib gobject-2.0.lib gmodule-2.0.lib pango-1.0.lib pangocairo-1.0.lib sigc-vc80-2_0.lib glibmm-vc80-2_4.lib cairomm-vc80-1_0.lib"
+				AdditionalLibraryDirectories="$(SolutionDir)\..\..\vs8\x64\lib"
 				OutputFile="$(OutDir)\pangomm-vc80-1_4.dll"
 				GenerateManifest="true"
 				ModuleDefinitionFile="$(PlatformName)\$(ConfigurationName)\$(InputName).def"
 				TargetMachine="17"
-			/>
-			<Tool
-				Name="VCALinkTool"
-			/>
-			<Tool
-				Name="VCManifestTool"
-			/>
-			<Tool
-				Name="VCXDCMakeTool"
-			/>
-			<Tool
-				Name="VCBscMakeTool"
-			/>
-			<Tool
-				Name="VCFxCopTool"
-			/>
-			<Tool
-				Name="VCAppVerifierTool"
-			/>
-			<Tool
-				Name="VCWebDeploymentTool"
-			/>
-			<Tool
-				Name="VCPostBuildEventTool"
 			/>
 		</Configuration>
 	</Configurations>
@@ -355,246 +185,75 @@
 			Filter="cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx"
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
-			<File
-				RelativePath="..\..\pango\pangomm\attributes.cc"
-				>
-			</File>
-			<File
-				RelativePath="..\..\pango\pangomm\attriter.cc"
-				>
-			</File>
-			<File
-				RelativePath="..\..\pango\pangomm\attrlist.cc"
-				>
-			</File>
-			<File
-				RelativePath="..\blank.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\pango\pangomm\cairofontmap.cc"
-				>
-			</File>
-			<File
-				RelativePath="..\..\pango\pangomm\color.cc"
-				>
-			</File>
-			<File
-				RelativePath="..\..\pango\pangomm\context.cc"
-				>
-			</File>
-			<File
-				RelativePath="..\..\pango\pangomm\coverage.cc"
-				>
-			</File>
-			<File
-				RelativePath="..\..\pango\pangomm\font.cc"
-				>
-			</File>
-			<File
-				RelativePath="..\..\pango\pangomm\fontdescription.cc"
-				>
-			</File>
-			<File
-				RelativePath="..\..\pango\pangomm\fontface.cc"
-				>
-			</File>
-			<File
-				RelativePath="..\..\pango\pangomm\fontfamily.cc"
-				>
-			</File>
-			<File
-				RelativePath="..\..\pango\pangomm\fontmap.cc"
-				>
-			</File>
-			<File
-				RelativePath="..\..\pango\pangomm\fontmetrics.cc"
-				>
-			</File>
-			<File
-				RelativePath="..\..\pango\pangomm\fontset.cc"
-				>
-			</File>
-			<File
-				RelativePath="..\..\pango\pangomm\glyph.cc"
-				>
-			</File>
-			<File
-				RelativePath="..\..\pango\pangomm\glyphstring.cc"
-				>
-			</File>
-			<File
-				RelativePath="..\..\pango\pangomm\init.cc"
-				>
-			</File>
-			<File
-				RelativePath="..\..\pango\pangomm\item.cc"
-				>
-			</File>
-			<File
-				RelativePath="..\..\pango\pangomm\language.cc"
-				>
-			</File>
-			<File
-				RelativePath="..\..\pango\pangomm\layout.cc"
-				>
-			</File>
-			<File
-				RelativePath="..\..\pango\pangomm\layoutiter.cc"
-				>
-			</File>
-			<File
-				RelativePath="..\..\pango\pangomm\layoutline.cc"
-				>
-			</File>
-			<File
-				RelativePath="..\..\pango\pangomm\layoutrun.cc"
-				>
-			</File>
-			<File
-				RelativePath="..\..\pango\pangomm\rectangle.cc"
-				>
-			</File>
-			<File
-				RelativePath="..\..\pango\pangomm\renderer.cc"
-				>
-			</File>
-			<File
-				RelativePath="..\..\pango\pangomm\tabarray.cc"
-				>
-			</File>
-			<File
-				RelativePath="..\..\pango\pangomm\wrap_init.cc"
-				>
-			</File>
+			<File RelativePath="..\..\pango\pangomm\attributes.cc" />
+			<File RelativePath="..\..\pango\pangomm\attriter.cc" />
+			<File RelativePath="..\..\pango\pangomm\attrlist.cc" />
+			<File RelativePath="..\blank.cpp" />
+			<File RelativePath="..\..\pango\pangomm\cairofontmap.cc" />
+			<File RelativePath="..\..\pango\pangomm\color.cc" />
+			<File RelativePath="..\..\pango\pangomm\context.cc" />
+			<File RelativePath="..\..\pango\pangomm\coverage.cc" />
+			<File RelativePath="..\..\pango\pangomm\font.cc" />
+			<File RelativePath="..\..\pango\pangomm\fontdescription.cc" />
+			<File RelativePath="..\..\pango\pangomm\fontface.cc" />
+			<File RelativePath="..\..\pango\pangomm\fontfamily.cc" />
+			<File RelativePath="..\..\pango\pangomm\fontmap.cc" />
+			<File RelativePath="..\..\pango\pangomm\fontmetrics.cc" />
+			<File RelativePath="..\..\pango\pangomm\fontset.cc" />
+			<File RelativePath="..\..\pango\pangomm\glyph.cc" />
+			<File RelativePath="..\..\pango\pangomm\glyphstring.cc" />
+			<File RelativePath="..\..\pango\pangomm\init.cc" />
+			<File RelativePath="..\..\pango\pangomm\item.cc" />
+			<File RelativePath="..\..\pango\pangomm\language.cc" />
+			<File RelativePath="..\..\pango\pangomm\layout.cc" />
+			<File RelativePath="..\..\pango\pangomm\layoutiter.cc" />
+			<File RelativePath="..\..\pango\pangomm\layoutline.cc" />
+			<File RelativePath="..\..\pango\pangomm\layoutrun.cc" />
+			<File RelativePath="..\..\pango\pangomm\rectangle.cc" />
+			<File RelativePath="..\..\pango\pangomm\renderer.cc" />
+			<File RelativePath="..\..\pango\pangomm\tabarray.cc" />
+			<File RelativePath="..\..\pango\pangomm\wrap_init.cc" />
 		</Filter>
 		<Filter
 			Name="Header Files"
 			Filter="h;hpp;hxx;hm;inl;inc;xsd"
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
-			<File
-				RelativePath="..\..\pango\pangomm\attributes.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\pango\pangomm\attriter.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\pango\pangomm\attrlist.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\pango\pangomm\cairofontmap.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\pango\pangomm\color.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\pango\pangomm\context.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\pango\pangomm\coverage.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\pango\pangomm\font.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\pango\pangomm\fontdescription.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\pango\pangomm\fontface.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\pango\pangomm\fontfamily.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\pango\pangomm\fontmap.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\pango\pangomm\fontmetrics.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\pango\pangomm\fontset.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\pango\pangomm\glyph.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\pango\pangomm\glyphstring.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\pango\pangomm\init.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\pango\pangomm\item.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\pango\pangomm\language.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\pango\pangomm\layout.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\pango\pangomm\layoutiter.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\pango\pangomm\layoutline.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\pango\pangomm\layoutrun.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\pango\pangomm\rectangle.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\pango\pangomm\renderer.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\pango\pangomm\tabarray.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\pango\pangomm\types.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\pango\pangomm\wrap_init.h"
-				>
-			</File>
+			<File RelativePath="..\..\pango\pangomm\attributes.h" />
+			<File RelativePath="..\..\pango\pangomm\attriter.h" />
+			<File RelativePath="..\..\pango\pangomm\attrlist.h" />
+			<File RelativePath="..\..\pango\pangomm\cairofontmap.h" />
+			<File RelativePath="..\..\pango\pangomm\color.h" />
+			<File RelativePath="..\..\pango\pangomm\context.h" />
+			<File RelativePath="..\..\pango\pangomm\coverage.h" />
+			<File RelativePath="..\..\pango\pangomm\font.h" />
+			<File RelativePath="..\..\pango\pangomm\fontdescription.h" />
+			<File RelativePath="..\..\pango\pangomm\fontface.h" />
+			<File RelativePath="..\..\pango\pangomm\fontfamily.h" />
+			<File RelativePath="..\..\pango\pangomm\fontmap.h" />
+			<File RelativePath="..\..\pango\pangomm\fontmetrics.h" />
+			<File RelativePath="..\..\pango\pangomm\fontset.h" />
+			<File RelativePath="..\..\pango\pangomm\glyph.h" />
+			<File RelativePath="..\..\pango\pangomm\glyphstring.h" />
+			<File RelativePath="..\..\pango\pangomm\init.h" />
+			<File RelativePath="..\..\pango\pangomm\item.h" />
+			<File RelativePath="..\..\pango\pangomm\language.h" />
+			<File RelativePath="..\..\pango\pangomm\layout.h" />
+			<File RelativePath="..\..\pango\pangomm\layoutiter.h" />
+			<File RelativePath="..\..\pango\pangomm\layoutline.h" />
+			<File RelativePath="..\..\pango\pangomm\layoutrun.h" />
+			<File RelativePath="..\..\pango\pangomm\rectangle.h" />
+			<File RelativePath="..\..\pango\pangomm\renderer.h" />
+			<File RelativePath="..\..\pango\pangomm\tabarray.h" />
+			<File RelativePath="..\..\pango\pangomm\types.h" />
+			<File RelativePath="..\..\pango\pangomm\wrap_init.h" />
 		</Filter>
 		<Filter
 			Name="Resource Files"
 			Filter="rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx"
 			UniqueIdentifier="{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}"
 			>
-			<File
-				RelativePath=".\pangomm.rc"
-				>
-			</File>
+			<File RelativePath=".\pangomm.rc" />
 		</Filter>
 	</Files>
 	<Globals>
