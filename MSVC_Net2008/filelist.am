@@ -3,8 +3,10 @@
 msvc_net2008_data =				\
 	blank.cpp				\
 	pangomm.sln				\
-	gendef/gendef.vcproj			\
+	pangomm-build-defines.vsprops		\
+	pangomm-version-paths.vsprops		\
+	gendef.vcproj				\
 	gendef/gendef.cc			\
 	pangomm/pangomm.rc			\
-	pangomm/pangomm.vcproj			\
+	pangomm.vcproj				\
 	pangomm/pangommconfig.h
