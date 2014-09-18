@@ -2,10 +2,12 @@
 
 msvc_net2010_data =				\
 	pangomm.sln				\
-	gendef/gendef.vcxproj			\
-	gendef/gendef.vcxproj.filters		\
+	pangomm-build-defines.props		\
+	pangomm-version-paths.props		\
+	gendef.vcxproj				\
+	gendef.vcxproj.filters			\
 	gendef/gendef.cc			\
 	pangomm/pangomm.rc			\
-	pangomm/pangomm.vcxproj			\
-	pangomm/pangomm.vcxproj.filters		\
+	pangomm.vcxproj				\
+	pangomm.vcxproj.filters			\
 	pangomm/pangommconfig.h
