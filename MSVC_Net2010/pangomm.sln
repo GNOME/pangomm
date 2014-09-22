@@ -4,6 +4,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "gendef", "gendef.vcxproj", 
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "pangomm", "pangomm.vcxproj", "{A93D607A-5C37-4AEC-BA08-6A655F6DC834}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "install", "install.vcxproj", "{2093D218-190E-4194-9421-3BA7CBF33B10}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -28,6 +30,14 @@ Global
 		{A93D607A-5C37-4AEC-BA08-6A655F6DC834}.Release|Win32.Build.0 = Release|Win32
 		{A93D607A-5C37-4AEC-BA08-6A655F6DC834}.Release|x64.ActiveCfg = Release|x64
 		{A93D607A-5C37-4AEC-BA08-6A655F6DC834}.Release|x64.Build.0 = Release|x64
+		{2093D218-190E-4194-9421-3BA7CBF33B10}.Debug|Win32.ActiveCfg = Debug|Win32
+		{2093D218-190E-4194-9421-3BA7CBF33B10}.Debug|Win32.Build.0 = Debug|Win32
+		{2093D218-190E-4194-9421-3BA7CBF33B10}.Debug|x64.ActiveCfg = Debug|x64
+		{2093D218-190E-4194-9421-3BA7CBF33B10}.Debug|x64.Build.0 = Debug|x64
+		{2093D218-190E-4194-9421-3BA7CBF33B10}.Release|Win32.ActiveCfg = Release|Win32
+		{2093D218-190E-4194-9421-3BA7CBF33B10}.Release|Win32.Build.0 = Release|Win32
+		{2093D218-190E-4194-9421-3BA7CBF33B10}.Release|x64.ActiveCfg = Release|x64
+		{2093D218-190E-4194-9421-3BA7CBF33B10}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

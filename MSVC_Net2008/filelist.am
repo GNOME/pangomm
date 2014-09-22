@@ -5,8 +5,10 @@ msvc_net2008_data =				\
 	pangomm.sln				\
 	pangomm-build-defines.vsprops		\
 	pangomm-version-paths.vsprops		\
+	pangomm-install.vsprops			\
 	gendef.vcproj				\
 	gendef/gendef.cc			\
 	pangomm/pangomm.rc			\
 	pangomm.vcproj				\
-	pangomm/pangommconfig.h
+	pangomm/pangommconfig.h			\
+	install.vcproj
