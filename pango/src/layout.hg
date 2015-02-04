@@ -97,6 +97,8 @@ public:
 
   _WRAP_METHOD(Glib::ustring get_text() const, pango_layout_get_text)
 
+  _WRAP_METHOD(int get_character_count() const, pango_layout_get_character_count)
+
   /** Sets the layout text and attribute list from marked-up text (see markup format).
    * Replaces the current text and attribute list.
    * @param markup Some marked-up text.
@@ -156,6 +158,8 @@ public:
   _WRAP_METHOD(int get_unknown_glyphs_count() const, pango_layout_get_unknown_glyphs_count)
 
   _WRAP_METHOD(void context_changed(), pango_layout_context_changed)
+
+  _WRAP_METHOD(guint get_serial() const, pango_layout_get_serial)
 
   /** Retrieve an array of logical attributes for each character in the layout.
    * @return An array of logical attributes.
