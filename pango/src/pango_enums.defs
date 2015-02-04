@@ -1,4 +1,32 @@
-;; From /home/murrayc/svn/gnome220/pango/pango/pango-attributes.h
+;; From pango-attributes.h
+
+;; Original typedef:
+;; typedef enum
+;; {
+;;   PANGO_ATTR_INVALID,           /* 0 is an invalid attribute type */
+;;   PANGO_ATTR_LANGUAGE,		/* PangoAttrLanguage */
+;;   PANGO_ATTR_FAMILY,		/* PangoAttrString */
+;;   PANGO_ATTR_STYLE,		/* PangoAttrInt */
+;;   PANGO_ATTR_WEIGHT,		/* PangoAttrInt */
+;;   PANGO_ATTR_VARIANT,		/* PangoAttrInt */
+;;   PANGO_ATTR_STRETCH,		/* PangoAttrInt */
+;;   PANGO_ATTR_SIZE,		/* PangoAttrSize */
+;;   PANGO_ATTR_FONT_DESC,		/* PangoAttrFontDesc */
+;;   PANGO_ATTR_FOREGROUND,	/* PangoAttrColor */
+;;   PANGO_ATTR_BACKGROUND,	/* PangoAttrColor */
+;;   PANGO_ATTR_UNDERLINE,		/* PangoAttrInt */
+;;   PANGO_ATTR_STRIKETHROUGH,	/* PangoAttrInt */
+;;   PANGO_ATTR_RISE,		/* PangoAttrInt */
+;;   PANGO_ATTR_SHAPE,		/* PangoAttrShape */
+;;   PANGO_ATTR_SCALE,             /* PangoAttrFloat */
+;;   PANGO_ATTR_FALLBACK,          /* PangoAttrInt */
+;;   PANGO_ATTR_LETTER_SPACING,    /* PangoAttrInt */
+;;   PANGO_ATTR_UNDERLINE_COLOR,	/* PangoAttrColor */
+;;   PANGO_ATTR_STRIKETHROUGH_COLOR,/* PangoAttrColor */
+;;   PANGO_ATTR_ABSOLUTE_SIZE,	/* PangoAttrSize */
+;;   PANGO_ATTR_GRAVITY,		/* PangoAttrInt */
+;;   PANGO_ATTR_GRAVITY_HINT	/* PangoAttrInt */
+;; } PangoAttrType;
 
 (define-enum-extended AttrType
   (in-module "Pango")
@@ -30,6 +58,15 @@
   )
 )
 
+;; Original typedef:
+;; typedef enum {
+;;   PANGO_UNDERLINE_NONE,
+;;   PANGO_UNDERLINE_SINGLE,
+;;   PANGO_UNDERLINE_DOUBLE,
+;;   PANGO_UNDERLINE_LOW,
+;;   PANGO_UNDERLINE_ERROR
+;; } PangoUnderline;
+
 (define-enum-extended Underline
   (in-module "Pango")
   (c-name "PangoUnderline")
@@ -42,7 +79,35 @@
   )
 )
 
-;; From /home/murrayc/svn/gnome220/pango/pango/pango-bidi-type.h
+;; From pango-bidi-type.h
+
+;; Original typedef:
+;; typedef enum {
+;;   /* Strong types */
+;;   PANGO_BIDI_TYPE_L,
+;;   PANGO_BIDI_TYPE_LRE,
+;;   PANGO_BIDI_TYPE_LRO,
+;;   PANGO_BIDI_TYPE_R,
+;;   PANGO_BIDI_TYPE_AL,
+;;   PANGO_BIDI_TYPE_RLE,
+;;   PANGO_BIDI_TYPE_RLO,
+;; 
+;;   /* Weak types */
+;;   PANGO_BIDI_TYPE_PDF,
+;;   PANGO_BIDI_TYPE_EN,
+;;   PANGO_BIDI_TYPE_ES,
+;;   PANGO_BIDI_TYPE_ET,
+;;   PANGO_BIDI_TYPE_AN,
+;;   PANGO_BIDI_TYPE_CS,
+;;   PANGO_BIDI_TYPE_NSM,
+;;   PANGO_BIDI_TYPE_BN,
+;; 
+;;   /* Neutral types */
+;;   PANGO_BIDI_TYPE_B,
+;;   PANGO_BIDI_TYPE_S,
+;;   PANGO_BIDI_TYPE_WS,
+;;   PANGO_BIDI_TYPE_ON
+;; } PangoBidiType;
 
 (define-enum-extended BidiType
   (in-module "Pango")
@@ -70,6 +135,17 @@
   )
 )
 
+;; Original typedef:
+;; typedef enum {
+;;   PANGO_DIRECTION_LTR,
+;;   PANGO_DIRECTION_RTL,
+;;   PANGO_DIRECTION_TTB_LTR,
+;;   PANGO_DIRECTION_TTB_RTL,
+;;   PANGO_DIRECTION_WEAK_LTR,
+;;   PANGO_DIRECTION_WEAK_RTL,
+;;   PANGO_DIRECTION_NEUTRAL
+;; } PangoDirection;
+
 (define-enum-extended Direction
   (in-module "Pango")
   (c-name "PangoDirection")
@@ -84,7 +160,15 @@
   )
 )
 
-;; From /home/murrayc/svn/gnome220/pango/pango/pango-coverage.h
+;; From pango-coverage.h
+
+;; Original typedef:
+;; typedef enum {
+;;   PANGO_COVERAGE_NONE,
+;;   PANGO_COVERAGE_FALLBACK,
+;;   PANGO_COVERAGE_APPROXIMATE,
+;;   PANGO_COVERAGE_EXACT
+;; } PangoCoverageLevel;
 
 (define-enum-extended CoverageLevel
   (in-module "Pango")
@@ -97,7 +181,14 @@
   )
 )
 
-;; From /home/murrayc/svn/gnome220/pango/pango/pango-font.h
+;; From pango-font.h
+
+;; Original typedef:
+;; typedef enum {
+;;   PANGO_STYLE_NORMAL,
+;;   PANGO_STYLE_OBLIQUE,
+;;   PANGO_STYLE_ITALIC
+;; } PangoStyle;
 
 (define-enum-extended Style
   (in-module "Pango")
@@ -109,6 +200,12 @@
   )
 )
 
+;; Original typedef:
+;; typedef enum {
+;;   PANGO_VARIANT_NORMAL,
+;;   PANGO_VARIANT_SMALL_CAPS
+;; } PangoVariant;
+
 (define-enum-extended Variant
   (in-module "Pango")
   (c-name "PangoVariant")
@@ -118,19 +215,53 @@
   )
 )
 
+;; Original typedef:
+;; typedef enum {
+;;   PANGO_WEIGHT_THIN = 100,
+;;   PANGO_WEIGHT_ULTRALIGHT = 200,
+;;   PANGO_WEIGHT_LIGHT = 300,
+;;   PANGO_WEIGHT_SEMILIGHT = 350,
+;;   PANGO_WEIGHT_BOOK = 380,
+;;   PANGO_WEIGHT_NORMAL = 400,
+;;   PANGO_WEIGHT_MEDIUM = 500,
+;;   PANGO_WEIGHT_SEMIBOLD = 600,
+;;   PANGO_WEIGHT_BOLD = 700,
+;;   PANGO_WEIGHT_ULTRABOLD = 800,
+;;   PANGO_WEIGHT_HEAVY = 900,
+;;   PANGO_WEIGHT_ULTRAHEAVY = 1000
+;; } PangoWeight;
+
 (define-enum-extended Weight
   (in-module "Pango")
   (c-name "PangoWeight")
   (values
+    '("thin" "PANGO_WEIGHT_THIN" "100")
     '("ultralight" "PANGO_WEIGHT_ULTRALIGHT" "200")
     '("light" "PANGO_WEIGHT_LIGHT" "300")
+    '("semilight" "PANGO_WEIGHT_SEMILIGHT" "350")
+    '("book" "PANGO_WEIGHT_BOOK" "380")
     '("normal" "PANGO_WEIGHT_NORMAL" "400")
+    '("medium" "PANGO_WEIGHT_MEDIUM" "500")
     '("semibold" "PANGO_WEIGHT_SEMIBOLD" "600")
     '("bold" "PANGO_WEIGHT_BOLD" "700")
     '("ultrabold" "PANGO_WEIGHT_ULTRABOLD" "800")
     '("heavy" "PANGO_WEIGHT_HEAVY" "900")
+    '("ultraheavy" "PANGO_WEIGHT_ULTRAHEAVY" "1000")
   )
 )
+
+;; Original typedef:
+;; typedef enum {
+;;   PANGO_STRETCH_ULTRA_CONDENSED,
+;;   PANGO_STRETCH_EXTRA_CONDENSED,
+;;   PANGO_STRETCH_CONDENSED,
+;;   PANGO_STRETCH_SEMI_CONDENSED,
+;;   PANGO_STRETCH_NORMAL,
+;;   PANGO_STRETCH_SEMI_EXPANDED,
+;;   PANGO_STRETCH_EXPANDED,
+;;   PANGO_STRETCH_EXTRA_EXPANDED,
+;;   PANGO_STRETCH_ULTRA_EXPANDED
+;; } PangoStretch;
 
 (define-enum-extended Stretch
   (in-module "Pango")
@@ -148,6 +279,17 @@
   )
 )
 
+;; Original typedef:
+;; typedef enum {
+;;   PANGO_FONT_MASK_FAMILY  = 1 << 0,
+;;   PANGO_FONT_MASK_STYLE   = 1 << 1,
+;;   PANGO_FONT_MASK_VARIANT = 1 << 2,
+;;   PANGO_FONT_MASK_WEIGHT  = 1 << 3,
+;;   PANGO_FONT_MASK_STRETCH = 1 << 4,
+;;   PANGO_FONT_MASK_SIZE    = 1 << 5,
+;;   PANGO_FONT_MASK_GRAVITY = 1 << 6
+;; } PangoFontMask;
+
 (define-flags-extended FontMask
   (in-module "Pango")
   (c-name "PangoFontMask")
@@ -162,7 +304,16 @@
   )
 )
 
-;; From /home/murrayc/svn/gnome220/pango/pango/pango-gravity.h
+;; From pango-gravity.h
+
+;; Original typedef:
+;; typedef enum {
+;;   PANGO_GRAVITY_SOUTH,
+;;   PANGO_GRAVITY_EAST,
+;;   PANGO_GRAVITY_NORTH,
+;;   PANGO_GRAVITY_WEST,
+;;   PANGO_GRAVITY_AUTO
+;; } PangoGravity;
 
 (define-enum-extended Gravity
   (in-module "Pango")
@@ -176,6 +327,13 @@
   )
 )
 
+;; Original typedef:
+;; typedef enum {
+;;   PANGO_GRAVITY_HINT_NATURAL,
+;;   PANGO_GRAVITY_HINT_STRONG,
+;;   PANGO_GRAVITY_HINT_LINE
+;; } PangoGravityHint;
+
 (define-enum-extended GravityHint
   (in-module "Pango")
   (c-name "PangoGravityHint")
@@ -186,7 +344,14 @@
   )
 )
 
-;; From /home/murrayc/svn/gnome220/pango/pango/pango-layout.h
+;; From pango-layout.h
+
+;; Original typedef:
+;; typedef enum {
+;;   PANGO_ALIGN_LEFT,
+;;   PANGO_ALIGN_CENTER,
+;;   PANGO_ALIGN_RIGHT
+;; } PangoAlignment;
 
 (define-enum-extended Alignment
   (in-module "Pango")
@@ -198,6 +363,13 @@
   )
 )
 
+;; Original typedef:
+;; typedef enum {
+;;   PANGO_WRAP_WORD,
+;;   PANGO_WRAP_CHAR,
+;;   PANGO_WRAP_WORD_CHAR
+;; } PangoWrapMode;
+
 (define-enum-extended WrapMode
   (in-module "Pango")
   (c-name "PangoWrapMode")
@@ -207,6 +379,14 @@
     '("word-char" "PANGO_WRAP_WORD_CHAR" "2")
   )
 )
+
+;; Original typedef:
+;; typedef enum {
+;;   PANGO_ELLIPSIZE_NONE,
+;;   PANGO_ELLIPSIZE_START,
+;;   PANGO_ELLIPSIZE_MIDDLE,
+;;   PANGO_ELLIPSIZE_END
+;; } PangoEllipsizeMode;
 
 (define-enum-extended EllipsizeMode
   (in-module "Pango")
@@ -219,7 +399,14 @@
   )
 )
 
-;; From /home/murrayc/svn/gnome220/pango/pango/pango-ot.h
+;; From pango-ot.h
+
+;; Original typedef:
+;; typedef enum
+;; {
+;;   PANGO_OT_TABLE_GSUB,
+;;   PANGO_OT_TABLE_GPOS
+;; } PangoOTTableType;
 
 (define-enum-extended OTTableType
   (in-module "Pango")
@@ -230,7 +417,16 @@
   )
 )
 
-;; From /home/murrayc/svn/gnome220/pango/pango/pango-renderer.h
+;; From pango-renderer.h
+
+;; Original typedef:
+;; typedef enum
+;; {
+;;   PANGO_RENDER_PART_FOREGROUND,
+;;   PANGO_RENDER_PART_BACKGROUND,
+;;   PANGO_RENDER_PART_UNDERLINE,
+;;   PANGO_RENDER_PART_STRIKETHROUGH
+;; } PangoRenderPart;
 
 (define-enum-extended RenderPart
   (in-module "Pango")
@@ -243,7 +439,112 @@
   )
 )
 
-;; From /home/murrayc/svn/gnome220/pango/pango/pango-script.h
+;; From pango-script.h
+
+;; Original typedef:
+;; typedef enum {                         /* ISO 15924 code */
+;;       PANGO_SCRIPT_INVALID_CODE = -1,
+;;       PANGO_SCRIPT_COMMON       = 0,   /* Zyyy */
+;;       PANGO_SCRIPT_INHERITED,          /* Qaai */
+;;       PANGO_SCRIPT_ARABIC,             /* Arab */
+;;       PANGO_SCRIPT_ARMENIAN,           /* Armn */
+;;       PANGO_SCRIPT_BENGALI,            /* Beng */
+;;       PANGO_SCRIPT_BOPOMOFO,           /* Bopo */
+;;       PANGO_SCRIPT_CHEROKEE,           /* Cher */
+;;       PANGO_SCRIPT_COPTIC,             /* Qaac */
+;;       PANGO_SCRIPT_CYRILLIC,           /* Cyrl (Cyrs) */
+;;       PANGO_SCRIPT_DESERET,            /* Dsrt */
+;;       PANGO_SCRIPT_DEVANAGARI,         /* Deva */
+;;       PANGO_SCRIPT_ETHIOPIC,           /* Ethi */
+;;       PANGO_SCRIPT_GEORGIAN,           /* Geor (Geon, Geoa) */
+;;       PANGO_SCRIPT_GOTHIC,             /* Goth */
+;;       PANGO_SCRIPT_GREEK,              /* Grek */
+;;       PANGO_SCRIPT_GUJARATI,           /* Gujr */
+;;       PANGO_SCRIPT_GURMUKHI,           /* Guru */
+;;       PANGO_SCRIPT_HAN,                /* Hani */
+;;       PANGO_SCRIPT_HANGUL,             /* Hang */
+;;       PANGO_SCRIPT_HEBREW,             /* Hebr */
+;;       PANGO_SCRIPT_HIRAGANA,           /* Hira */
+;;       PANGO_SCRIPT_KANNADA,            /* Knda */
+;;       PANGO_SCRIPT_KATAKANA,           /* Kana */
+;;       PANGO_SCRIPT_KHMER,              /* Khmr */
+;;       PANGO_SCRIPT_LAO,                /* Laoo */
+;;       PANGO_SCRIPT_LATIN,              /* Latn (Latf, Latg) */
+;;       PANGO_SCRIPT_MALAYALAM,          /* Mlym */
+;;       PANGO_SCRIPT_MONGOLIAN,          /* Mong */
+;;       PANGO_SCRIPT_MYANMAR,            /* Mymr */
+;;       PANGO_SCRIPT_OGHAM,              /* Ogam */
+;;       PANGO_SCRIPT_OLD_ITALIC,         /* Ital */
+;;       PANGO_SCRIPT_ORIYA,              /* Orya */
+;;       PANGO_SCRIPT_RUNIC,              /* Runr */
+;;       PANGO_SCRIPT_SINHALA,            /* Sinh */
+;;       PANGO_SCRIPT_SYRIAC,             /* Syrc (Syrj, Syrn, Syre) */
+;;       PANGO_SCRIPT_TAMIL,              /* Taml */
+;;       PANGO_SCRIPT_TELUGU,             /* Telu */
+;;       PANGO_SCRIPT_THAANA,             /* Thaa */
+;;       PANGO_SCRIPT_THAI,               /* Thai */
+;;       PANGO_SCRIPT_TIBETAN,            /* Tibt */
+;;       PANGO_SCRIPT_CANADIAN_ABORIGINAL, /* Cans */
+;;       PANGO_SCRIPT_YI,                 /* Yiii */
+;;       PANGO_SCRIPT_TAGALOG,            /* Tglg */
+;;       PANGO_SCRIPT_HANUNOO,            /* Hano */
+;;       PANGO_SCRIPT_BUHID,              /* Buhd */
+;;       PANGO_SCRIPT_TAGBANWA,           /* Tagb */
+;; 
+;;       /* Unicode-4.0 additions */
+;;       PANGO_SCRIPT_BRAILLE,            /* Brai */
+;;       PANGO_SCRIPT_CYPRIOT,            /* Cprt */
+;;       PANGO_SCRIPT_LIMBU,              /* Limb */
+;;       PANGO_SCRIPT_OSMANYA,            /* Osma */
+;;       PANGO_SCRIPT_SHAVIAN,            /* Shaw */
+;;       PANGO_SCRIPT_LINEAR_B,           /* Linb */
+;;       PANGO_SCRIPT_TAI_LE,             /* Tale */
+;;       PANGO_SCRIPT_UGARITIC,           /* Ugar */
+;; 
+;;       /* Unicode-4.1 additions */
+;;       PANGO_SCRIPT_NEW_TAI_LUE,        /* Talu */
+;;       PANGO_SCRIPT_BUGINESE,           /* Bugi */
+;;       PANGO_SCRIPT_GLAGOLITIC,         /* Glag */
+;;       PANGO_SCRIPT_TIFINAGH,           /* Tfng */
+;;       PANGO_SCRIPT_SYLOTI_NAGRI,       /* Sylo */
+;;       PANGO_SCRIPT_OLD_PERSIAN,        /* Xpeo */
+;;       PANGO_SCRIPT_KHAROSHTHI,         /* Khar */
+;; 
+;;       /* Unicode-5.0 additions */
+;;       PANGO_SCRIPT_UNKNOWN,            /* Zzzz */
+;;       PANGO_SCRIPT_BALINESE,           /* Bali */
+;;       PANGO_SCRIPT_CUNEIFORM,          /* Xsux */
+;;       PANGO_SCRIPT_PHOENICIAN,         /* Phnx */
+;;       PANGO_SCRIPT_PHAGS_PA,           /* Phag */
+;;       PANGO_SCRIPT_NKO,                /* Nkoo */
+;; 
+;;       /* Unicode-5.1 additions */
+;;       PANGO_SCRIPT_KAYAH_LI,           /* Kali */
+;;       PANGO_SCRIPT_LEPCHA,             /* Lepc */
+;;       PANGO_SCRIPT_REJANG,             /* Rjng */
+;;       PANGO_SCRIPT_SUNDANESE,          /* Sund */
+;;       PANGO_SCRIPT_SAURASHTRA,         /* Saur */
+;;       PANGO_SCRIPT_CHAM,               /* Cham */
+;;       PANGO_SCRIPT_OL_CHIKI,           /* Olck */
+;;       PANGO_SCRIPT_VAI,                /* Vaii */
+;;       PANGO_SCRIPT_CARIAN,             /* Cari */
+;;       PANGO_SCRIPT_LYCIAN,             /* Lyci */
+;;       PANGO_SCRIPT_LYDIAN,             /* Lydi */
+;; 
+;;       /* Unicode-6.0 additions */
+;;       PANGO_SCRIPT_BATAK,              /* Batk */
+;;       PANGO_SCRIPT_BRAHMI,             /* Brah */
+;;       PANGO_SCRIPT_MANDAIC,            /* Mand */
+;; 
+;;       /* Unicode-6.1 additions */
+;;       PANGO_SCRIPT_CHAKMA,             /* Cakm */
+;;       PANGO_SCRIPT_MEROITIC_CURSIVE,   /* Merc */
+;;       PANGO_SCRIPT_MEROITIC_HIEROGLYPHS,/* Mero */
+;;       PANGO_SCRIPT_MIAO,               /* Plrd */
+;;       PANGO_SCRIPT_SHARADA,            /* Shrd */
+;;       PANGO_SCRIPT_SORA_SOMPENG,       /* Sora */
+;;       PANGO_SCRIPT_TAKRI               /* Takr */
+;; } PangoScript;
 
 (define-enum-extended Script
   (in-module "Pango")
@@ -328,20 +629,56 @@
     '("carian" "PANGO_SCRIPT_CARIAN" "75")
     '("lycian" "PANGO_SCRIPT_LYCIAN" "76")
     '("lydian" "PANGO_SCRIPT_LYDIAN" "77")
+    '("batak" "PANGO_SCRIPT_BATAK" "78")
+    '("brahmi" "PANGO_SCRIPT_BRAHMI" "79")
+    '("mandaic" "PANGO_SCRIPT_MANDAIC" "80")
+    '("chakma" "PANGO_SCRIPT_CHAKMA" "81")
+    '("meroitic-cursive" "PANGO_SCRIPT_MEROITIC_CURSIVE" "82")
+    '("meroitic-hieroglyphs" "PANGO_SCRIPT_MEROITIC_HIEROGLYPHS" "83")
+    '("miao" "PANGO_SCRIPT_MIAO" "84")
+    '("sharada" "PANGO_SCRIPT_SHARADA" "85")
+    '("sora-sompeng" "PANGO_SCRIPT_SORA_SOMPENG" "86")
+    '("takri" "PANGO_SCRIPT_TAKRI" "87")
   )
 )
 
-;; From /home/murrayc/svn/gnome220/pango/pango/pango-tabs.h
+;; From pango-tabs.h
+
+;; Original typedef:
+;; typedef enum
+;; {
+;;   PANGO_TAB_LEFT
+;; 
+;;   /* These are not supported now, but may be in the
+;;    * future.
+;;    *
+;;    *  PANGO_TAB_RIGHT,
+;;    *  PANGO_TAB_CENTER,
+;;    *  PANGO_TAB_NUMERIC
+;;    */
+;; } PangoTabAlign;
 
 (define-enum-extended TabAlign
   (in-module "Pango")
   (c-name "PangoTabAlign")
   (values
-    '("t" "PANGO_TAB_LEFT" "0")
+    '("left" "PANGO_TAB_LEFT" "0")
   )
 )
 
-;; From /home/murrayc/svn/gnome220/pango/pango/pangowin32-private.h
+;; From pangowin32-private.h
+
+;; Original typedef:
+;; typedef enum
+;;   {
+;;     PANGO_WIN32_COVERAGE_UNSPEC,
+;;     PANGO_WIN32_COVERAGE_ZH_TW,
+;;     PANGO_WIN32_COVERAGE_ZH_CN,
+;;     PANGO_WIN32_COVERAGE_JA,
+;;     PANGO_WIN32_COVERAGE_KO,
+;;     PANGO_WIN32_COVERAGE_VI,
+;;     PANGO_WIN32_N_COVERAGES
+;;   } PangoWin32CoverageLanguageClass;
 
 (define-enum-extended Win32CoverageLanguageClass
   (in-module "Pango")
