@@ -1,3 +1,15 @@
+2.35.1 (unstable):
+
+* Context: Add get_serial().
+  (Murray Cumming)
+* FontMap: Add get_serial().
+  (Murray Cumming)
+* Layout: Add get_character_count() and get_serial().
+  (Murray Cumming)
+* Documentatoin: Update appearance to match recent glibmm and gtkmm.
+* Win32 MSVC 2008/2010 Build: Many updates and corrections.
+  (Chun-wei Fan)
+
 2.34.0 (stable):
 
 * Remove the use of g_type_init() because it has been deprecated.
