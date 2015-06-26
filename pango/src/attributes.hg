@@ -230,7 +230,7 @@ inline bool operator==(const Attribute& lhs, const Attribute& rhs)
 /** @relates Pango::Attribute */
 inline bool operator!=(const Attribute& lhs, const Attribute& rhs)
 {
-  return lhs.equal(rhs);
+  return !lhs.equal(rhs);
 }
 
 
