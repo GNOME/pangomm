@@ -1164,6 +1164,25 @@ which should be freed with pango_attribute_destroy().
 </return>
 </function>
 
+<function name="pango_attr_font_features_new">
+<description>
+Create a new font features tag attribute.
+
+Since: 1.38
+
+</description>
+<parameters>
+<parameter name="features">
+<parameter_description> a string with OpenType font features, in CSS syntax
+</parameter_description>
+</parameter>
+</parameters>
+<return> the newly allocated #PangoAttribute,
+which should be freed with pango_attribute_destroy().
+
+</return>
+</function>
+
 <function name="pango_attr_foreground_new">
 <description>
 Create a new foreground color attribute.
@@ -1451,13 +1470,15 @@ value is assumed by the list.
 
 <function name="pango_attr_list_copy">
 <description>
-@list (nullable): a #PangoAttrList, may be %NULL
-
 Copy @list and return an identical new list.
 
 
 </description>
 <parameters>
+<parameter name="list">
+<parameter_description> a #PangoAttrList, may be %NULL
+</parameter_description>
+</parameter>
 </parameters>
 <return> the newly allocated #PangoAttrList, with a
 reference count of one, which should
@@ -2910,10 +2931,9 @@ Since: 1.16
 
 <function name="pango_config_key_get">
 <description>
-Looks up a key in the Pango config database
-(pseudo-win.ini style, read from $sysconfdir/pango/pangorc,
-$XDG_CONFIG_HOME/pango/pangorc, and getenv (PANGO_RC_FILE).)
+Do not use.  Does not do anything.
 
+Deprecated: 1.38
 
 </description>
 <parameters>
@@ -2922,16 +2942,16 @@ $XDG_CONFIG_HOME/pango/pangorc, and getenv (PANGO_RC_FILE).)
 </parameter_description>
 </parameter>
 </parameters>
-<return> the value, if found, otherwise %NULL. The
-value is a newly-allocated string and must be freed with g_free().
+<return> %NULL
+
 </return>
 </function>
 
 <function name="pango_config_key_get_system">
 <description>
-Looks up a key, consulting only the Pango system config database
-in $sysconfdir/pango/pangorc.
+Do not use.  Does not do anything.
 
+Deprecated: 1.38
 
 </description>
 <parameters>
@@ -2940,8 +2960,8 @@ in $sysconfdir/pango/pangorc.
 </parameter_description>
 </parameter>
 </parameters>
-<return> the value, if found, otherwise %NULL. The
-value is a newly-allocated string and must be freed with g_free().
+<return> %NULL
+
 </return>
 </function>
 
@@ -4045,6 +4065,25 @@ Since: 1.4
 <return></return>
 </function>
 
+<function name="pango_fc_font_map_config_changed">
+<description>
+Informs font map that the fontconfig configuration (ie, FcConfig object)
+used by this font map has changed.  This currently calls
+pango_fc_font_map_cache_clear() which ensures that list of fonts, etc
+will be regenerated using the updated configuration.
+
+Since: 1.38
+
+</description>
+<parameters>
+<parameter name="fcfontmap">
+<parameter_description> a #PangoFcFontMap
+</parameter_description>
+</parameter>
+</parameters>
+<return></return>
+</function>
+
 <function name="pango_fc_font_map_create_context">
 <description>
 Creates a new context for this fontmap. This function is intended
@@ -4091,6 +4130,58 @@ Since: 1.26
 %NULL if no decoder is set for @pattern.
 
 </return>
+</function>
+
+<function name="pango_fc_font_map_get_config">
+<description>
+Fetches FcConfig attached to a font map.  See pango_fc_font_map_set_config().
+
+Since: 1.38
+
+</description>
+<parameters>
+<parameter name="fcfontmap">
+<parameter_description> a #PangoFcFontMap
+</parameter_description>
+</parameter>
+</parameters>
+<return> the #FcConfig object attached to @fcfontmap, which
+might be %NULL.
+
+</return>
+</function>
+
+<function name="pango_fc_font_map_set_config">
+<description>
+Set the FcConfig for this font map to use.  The default value
+is %NULL, which causes Fontconfig to use its global &quot;current config&quot;.
+You can create a new FcConfig object and use this API to attach it
+to a font map.
+
+This is particularly useful for example, if you want to use application
+fonts with Pango.  For that, you would create a fresh FcConfig, add your
+app fonts to it, and attach it to a new Pango font map.
+
+If @fcconfig is different from the previous config attached to the font map,
+pango_fc_font_map_config_changed() is called.
+
+This function acquires a reference to the FcConfig object; the caller
+does NOT need to retain a reference.
+
+Since: 1.38
+
+</description>
+<parameters>
+<parameter name="fcfontmap">
+<parameter_description> a #PangoFcFontMap
+</parameter_description>
+</parameter>
+<parameter name="fcconfig">
+<parameter_description> (nullable) a #FcConfig, or %NULL
+</parameter_description>
+</parameter>
+</parameters>
+<return></return>
 </function>
 
 <function name="pango_fc_font_map_shutdown">
@@ -4266,10 +4357,9 @@ If no such character is found, then %PANGO_DIRECTION_NEUTRAL is returned.
 
 <function name="pango_find_map">
 <description>
-Locate a #PangoMap for a particular engine type and render
-type. The resulting map can be used to determine the engine
-for each character.
+Do not use.  Does not do anything.
 
+Deprecated: 1.38
 
 </description>
 <parameters>
@@ -4286,7 +4376,8 @@ for each character.
 </parameter_description>
 </parameter>
 </parameters>
-<return> the suitable #PangoMap.
+<return> %NULL.
+
 </return>
 </function>
 
@@ -4484,7 +4575,7 @@ Frees a font description.
 Creates a new font description from a string representation in the
 form &quot;[FAMILY-LIST] [STYLE-OPTIONS] [SIZE]&quot;, where FAMILY-LIST is a
 comma separated list of families optionally terminated by a comma,
-STYLE_OPTIONS is a whitespace separated list of words where each WORD
+STYLE_OPTIONS is a whitespace separated list of words where each word
 describes one of style, variant, weight, stretch, or gravity, and SIZE
 is a decimal number (size in points) or optionally followed by the
 unit modifier &quot;px&quot; for absolute size. Any one of the options may
@@ -5436,6 +5527,7 @@ See the &lt;structfield&gt;render_type&lt;/structfield&gt; field of
 #PangoEngineInfo.
 
 Since: 1.4
+Deprecated: 1.38
 
 </description>
 <parameters>
@@ -6299,17 +6391,17 @@ Use of the global PangoFT2 fontmap is deprecated.
 
 <function name="pango_get_lib_subdirectory">
 <description>
-On Unix, returns the name of the &quot;pango&quot; subdirectory of LIBDIR
-(which is set at compile time). On Windows, returns the lib\pango
-subdirectory of the Pango installation directory (which is deduced
-at run time from the DLL's location).
+Returns the name of the &quot;pango&quot; subdirectory of LIBDIR
+(which is set at compile time).
 
+Deprecated: 1.38
 
 </description>
 <parameters>
 </parameters>
 <return> the Pango lib directory. The returned string should
 not be freed.
+
 </return>
 </function>
 
@@ -6382,17 +6474,17 @@ filled in, %FALSE otherwise
 
 <function name="pango_get_sysconf_subdirectory">
 <description>
-On Unix, returns the name of the &quot;pango&quot; subdirectory of SYSCONFDIR
-(which is set at compile time). On Windows, returns the etc\pango
-subdirectory of the Pango installation directory (which is deduced
-at run time from the DLL's location).
+Returns the name of the &quot;pango&quot; subdirectory of SYSCONFDIR
+(which is set at compile time).
 
+Deprecated: 1.38
 
 </description>
 <parameters>
 </parameters>
 <return> the Pango sysconf directory. The returned string should
 not be freed.
+
 </return>
 </function>
 
@@ -8309,7 +8401,7 @@ Converts from byte @index_ within the @layout to line and X position.
 </parameter>
 <parameter name="trailing">
 <parameter_description>  an integer indicating the edge of the grapheme to retrieve the
-position of. If 0, the trailing edge of the grapheme, if &gt; 0,
+position of. If &gt; 0, the trailing edge of the grapheme, if 0,
 the leading of the grapheme.
 </parameter_description>
 </parameter>
@@ -9062,9 +9154,9 @@ to text insertion in the base direction for the layout.
 </parameter_description>
 </parameter>
 <parameter name="old_trailing">
-<parameter_description> if 0, the cursor was at the trailing edge of the
+<parameter_description> if 0, the cursor was at the leading edge of the
 grapheme indicated by @old_index, if &gt; 0, the cursor
-was at the leading edge.
+was at the trailing edge.
 </parameter_description>
 </parameter>
 <parameter name="direction">
@@ -9567,7 +9659,7 @@ from the top edge of the layout
 <parameter_description> location to store a integer indicating where
 in the grapheme the user clicked. It will either
 be zero, or the number of characters in the
-grapheme. 0 represents the trailing edge of the grapheme.
+grapheme. 0 represents the leading edge of the grapheme.
 </parameter_description>
 </parameter>
 </parameters>
@@ -9638,8 +9730,9 @@ this array is owned by pango and should not be freed.
 
 <function name="pango_map_get_engine">
 <description>
-Returns the best engine listed in the map for a given script
+Do not use.  Does not do anything.
 
+Deprecated: 1.38
 
 </description>
 <parameters>
@@ -9652,22 +9745,17 @@ Returns the best engine listed in the map for a given script
 </parameter_description>
 </parameter>
 </parameters>
-<return> the best engine, if one is listed for the
-script, or %NULL. The lookup may cause the engine to be loaded;
-once an engine is loaded, it won't be unloaded. If multiple
-engines are exact for the script, the choice of which is
-returned is arbitrary.
+<return> %NULL.
+
 </return>
 </function>
 
 <function name="pango_map_get_engines">
 <description>
-Finds engines in the map that handle the given script. The returned
-lists should be freed with g_slist_free, but the engines in the
-lists are owned by GLib and will be kept around permanently, so
-they should not be unref'ed.
+Do not use.  Does not do anything.
 
 Since: 1.4
+Deprecated: 1.38
 
 </description>
 <parameters>
@@ -9830,7 +9918,8 @@ Since: 1.6
 <description>
 Returns the scale factor of a matrix on the height of the font.
 That is, the scale factor in the direction perpendicular to the
-vector that the X coordinate is mapped to.
+vector that the X coordinate is mapped to.  If the scale in the X
+coordinate is needed as well, use pango_matrix_get_font_scale_factors().
 
 Since: 1.12
 
@@ -9845,6 +9934,35 @@ Since: 1.12
 or 1.0 if @matrix is %NULL.
 
 </return>
+</function>
+
+<function name="pango_matrix_get_font_scale_factors">
+<description>
+Calculates the scale factor of a matrix on the width and height of the font.
+That is, @xscale is the scale factor in the direction of the X coordinate,
+and @yscale is the scale factor in the direction perpendicular to the
+vector that the X coordinate is mapped to.
+
+Note that output numbers will always be non-negative.
+
+Since: 1.38
+
+</description>
+<parameters>
+<parameter name="matrix">
+<parameter_description> a #PangoMatrix, or %NULL
+</parameter_description>
+</parameter>
+<parameter name="xscale">
+<parameter_description> output scale factor in the x direction, or %NULL
+</parameter_description>
+</parameter>
+<parameter name="yscale">
+<parameter_description> output scale factor perpendicular to the x direction, or %NULL
+</parameter_description>
+</parameter>
+</parameters>
+<return></return>
 </function>
 
 <function name="pango_matrix_rotate">
@@ -10052,10 +10170,9 @@ Since: 1.6
 
 <function name="pango_module_register">
 <description>
-Registers a statically linked module with Pango. The
-#PangoIncludedModule structure that is passed in contains the
-functions that would otherwise be loaded from a dynamically loaded
-module.
+Do not use.  Does not do anything.
+
+Deprecated: 1.38
 
 </description>
 <parameters>
@@ -10602,7 +10719,7 @@ Since: 1.18
 <parameter_description> a #PangoOTRuleset.
 </parameter_description>
 </parameter>
-<parameter name="n_gsub_featuresL">
+<parameter name="n_gsub_features">
 <parameter_description> location to store number of
 GSUB features, or %NULL.
 </parameter_description>
@@ -10982,6 +11099,8 @@ string representing the list of possible values is stored in
 &quot;none/start/middle/end&quot;.  If failed and @possible_values is not %NULL,
 returned string should be freed using g_free().
 
+Deprecated: 1.38
+
 Since: 1.16
 
 </description>
@@ -11214,6 +11333,7 @@ a comment and skipped. '\' can be used to escape a # character.
 any other character is ignored and written into the output buffer
 unmodified.
 
+Deprecated: 1.38
 
 </description>
 <parameters>
@@ -11229,6 +11349,7 @@ unmodified.
 <return> 0 if the stream was already at an %EOF character, otherwise
 the number of lines read (this is useful for maintaining
 a line number counter which doesn't combine lines with '\')
+
 </return>
 </function>
 
@@ -11783,6 +11904,7 @@ is duplicated elsewhere in Pango for that reason.)
 Scans an integer.
 Leading white space is skipped.
 
+Deprecated: 1.38
 
 </description>
 <parameters>
@@ -11796,6 +11918,7 @@ Leading white space is skipped.
 </parameter>
 </parameters>
 <return> %FALSE if a parse error occurred.
+
 </return>
 </function>
 
@@ -11806,6 +11929,7 @@ be a sequence of non-white-space characters, or a quoted
 string with '&quot;'. Instead a quoted string, '\&quot;' represents
 a literal quote. Leading white space outside of quotes is skipped.
 
+Deprecated: 1.38
 
 </description>
 <parameters>
@@ -11819,6 +11943,7 @@ a literal quote. Leading white space outside of quotes is skipped.
 </parameter>
 </parameters>
 <return> %FALSE if a parse error occurred.
+
 </return>
 </function>
 
@@ -11828,6 +11953,7 @@ Scans a word into a #GString buffer. A word consists
 of [A-Za-z_] followed by zero or more [A-Za-z_0-9]
 Leading white space is skipped.
 
+Deprecated: 1.38
 
 </description>
 <parameters>
@@ -11841,6 +11967,7 @@ Leading white space is skipped.
 </parameter>
 </parameters>
 <return> %FALSE if a parse error occurred.
+
 </return>
 </function>
 
@@ -11965,8 +12092,8 @@ Since: 1.4
 <function name="pango_script_iter_new">
 <description>
 Create a new #PangoScriptIter, used to break a string of
-Unicode into runs by text. No copy is made of @text, so
-the caller needs to make sure it remains valid until
+Unicode text into runs by Unicode script. No copy is made of
+@text, so the caller needs to make sure it remains valid until
 the iterator is freed with pango_script_iter_free().
 
 Since: 1.4
@@ -12092,6 +12219,7 @@ Since: 1.32
 <description>
 Skips 0 or more characters of white space.
 
+Deprecated: 1.38
 
 </description>
 <parameters>
@@ -12102,6 +12230,7 @@ Skips 0 or more characters of white space.
 </parameters>
 <return> %FALSE if skipping the white space leaves
 the position at a '\0' character.
+
 </return>
 </function>
 
@@ -12110,6 +12239,7 @@ the position at a '\0' character.
 Splits a %G_SEARCHPATH_SEPARATOR-separated list of files, stripping
 white space and substituting ~/ with $HOME/.
 
+Deprecated: 1.38
 
 </description>
 <parameters>
@@ -12120,6 +12250,7 @@ white space and substituting ~/ with $HOME/.
 </parameters>
 <return> a list of
 strings to be freed with g_strfreev()
+
 </return>
 </function>
 
@@ -12354,6 +12485,7 @@ implementation.
 <description>
 Trims leading and trailing whitespace from a string.
 
+Deprecated: 1.38
 
 </description>
 <parameters>
@@ -12363,6 +12495,7 @@ Trims leading and trailing whitespace from a string.
 </parameter>
 </parameters>
 <return> A newly-allocated string that must be freed with g_free()
+
 </return>
 </function>
 
@@ -13546,9 +13679,9 @@ Since: 1.2
 
 <function name="script_engine_create">
 <description>
-Function to be provided by the module to create an instance
-of one of the engines implemented by the module.
+Do not use.
 
+Deprecated: 1.38
 
 </description>
 <parameters>
@@ -13557,18 +13690,14 @@ of one of the engines implemented by the module.
 </parameter_description>
 </parameter>
 </parameters>
-<return> a newly created #PangoEngine of the specified
-type, or %NULL if an error occurred. (In normal operation,
-a module should not return %NULL. A %NULL return is only
-acceptable in the case where system misconfiguration or
-bugs in the driver routine are encountered.)
-</return>
+<return></return>
 </function>
 
 <function name="script_engine_exit">
 <description>
-Function to be provided by the module that is called
-when the module is unloading. Frequently does nothing.
+Do not use.
+
+Deprecated: 1.38
 
 </description>
 <parameters>
@@ -13578,8 +13707,9 @@ when the module is unloading. Frequently does nothing.
 
 <function name="script_engine_init">
 <description>
-Function to be provided by a module to register any
-GObject types in the module.
+Do not use.
+
+Deprecated: 1.38
 
 </description>
 <parameters>
@@ -13594,13 +13724,9 @@ GObject types created in this module with the module.
 
 <function name="script_engine_list">
 <description>
-Function to be provided by a module to list the engines that the
-module supplies. The function stores a pointer to an array
-of #PangoEngineInfo structures and the length of that array in
-the given location.
+Do not use.
 
-Note that script_engine_init() will not be called before this
-function.
+Deprecated: 1.38
 
 </description>
 <parameters>
