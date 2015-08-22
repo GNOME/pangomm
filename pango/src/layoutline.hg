@@ -37,7 +37,7 @@ class Layout;
  * and are only valid until the text, attributes, or settings of the parent Pango::Layout are modified.
  * Routines for rendering Pango::Layout objects are provided in code specific to each rendering system.
  */
-class LayoutLine
+class LayoutLine final
 {
   _CLASS_OPAQUE_REFCOUNTED(LayoutLine, PangoLayoutLine, NONE, pango_layout_line_ref, pango_layout_line_unref)
   _IGNORE(pango_layout_line_ref, pango_layout_line_unref)

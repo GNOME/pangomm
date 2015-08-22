@@ -35,7 +35,7 @@ _WRAP_ENUM(CoverageLevel, PangoCoverageLevel)
  * It is often necessary in pango to determine if a particular font can represent a particular character,
  * and also how well it can represent that character. Pango::Coverage holds this information.
  */
-class Coverage
+class Coverage final
 {
   _CLASS_OPAQUE_REFCOUNTED(Coverage, PangoCoverage, pango_coverage_new, pango_coverage_ref, pango_coverage_unref)
   _IGNORE(pango_coverage_ref, pango_coverage_unref)
