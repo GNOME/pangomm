@@ -15,7 +15,7 @@
 ## You should have received a copy of the GNU Lesser General Public License
 ## along with this library.  If not, see <http://www.gnu.org/licenses/>.
 
-AC_INIT([pangomm], [2.37.1],
+AC_INIT([pangomm], [2.37.2],
         [http://bugzilla.gnome.org/enter_bug.cgi?product=pangomm],
         [pangomm], [http://www.gtkmm.org/])
 AC_PREREQ([2.59])
@@ -47,7 +47,7 @@ MM_AX_CXX_COMPILE_STDCXX_11([noext],[mandatory])
 AC_DISABLE_STATIC
 LT_INIT([win32-dll])
 
-AC_SUBST([PANGOMM_MODULES], ['glibmm-2.4 >= 2.45.52 cairomm-1.0 >= 1.2.2 pangocairo >= 1.36.0'])
+AC_SUBST([PANGOMM_MODULES], ['glibmm-2.4 >= 2.45.70 cairomm-1.0 >= 1.2.2 pangocairo >= 1.36.0'])
 PKG_CHECK_MODULES([PANGOMM], [$PANGOMM_MODULES])
 
 MM_PKG_CONFIG_SUBST([GTHREAD_CFLAGS], [--cflags-only-other gthread-2.0])

@@ -1,3 +1,11 @@
+2.37.2 (unstable):
+
+* Rebuilt with latest glibmm,
+  whose gmmproc generates C++ move operations.
+  (Murray Cumming)
+* C++11: Mark all _CLASS_OPAQUE_REFCOUNTED classes as final.
+  (Murray Cumming)
+
 2.37.1 (unstable):
 
 * Use (and require) C++11.
