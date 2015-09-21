@@ -1,3 +1,8 @@
+2.38.0 (stable):
+
+* MSVC build fixes.
+  (Chun-wei Fan)
+
 2.37.2 (unstable):
 
 * Rebuilt with latest glibmm,
