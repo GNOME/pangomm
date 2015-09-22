@@ -1,3 +1,7 @@
+2.38.1 (stable):
+
+* Regenerate with the latest glibmm.
+
 2.38.0 (stable):
 
 * MSVC build fixes.
