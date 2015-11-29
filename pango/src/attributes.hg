@@ -146,6 +146,16 @@ public:
    */
   static AttrColor create_attr_background(guint16 red, guint16 green, guint16 blue);
 
+  /** Create a new foreground alpha attribute.
+   * @param alpha The alpha value, between 1 and 65536.
+   */
+  static AttrInt create_attr_foreground_alpha(guint16 alpha);
+
+  /** Create a new background alpha attribute.
+   * @param alpha The alpha value, between 1 and 65536.
+   */
+  static AttrInt create_attr_background_alpha(guint16 alpha);
+
   /** Create a new font-size attribute.
    * @param size The font size, in 1000ths of a point.
    * @return An attribute of type AttrInt.

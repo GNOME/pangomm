@@ -94,6 +94,16 @@ AttrColor Attribute::create_attr_background(guint16 red, guint16 green, guint16 
   return Glib::wrap((PangoAttrColor*)pango_attr_background_new(red, green, blue));
 }
 
+AttrInt Attribute::create_attr_foreground_alpha(guint16 alpha)
+{
+  return Glib::wrap((PangoAttrInt*)pango_attr_foreground_alpha_new(alpha));
+}
+
+AttrInt Attribute::create_attr_background_alpha(guint16 alpha)
+{
+  return Glib::wrap((PangoAttrInt*)pango_attr_background_alpha_new(alpha));
+}
+
 AttrInt Attribute::create_attr_size(int size)
 {
   return Glib::wrap((PangoAttrInt*)pango_attr_size_new(size));
