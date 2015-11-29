@@ -125,6 +125,18 @@ attribute is listed in parentheses after the description.
 <parameter_description> gravity hint (#PangoAttrInt)
 </parameter_description>
 </parameter>
+<parameter name="PANGO_ATTR_FONT_FEATURES">
+<parameter_description> OpenType font features (#PangoAttrString). Since 1.38
+</parameter_description>
+</parameter>
+<parameter name="PANGO_ATTR_FOREGROUND_ALPHA">
+<parameter_description> foreground alpha (#PangoAttrInt). Since 1.38
+</parameter_description>
+</parameter>
+<parameter name="PANGO_ATTR_BACKGROUND_ALPHA">
+<parameter_description> background alpha (#PangoAttrInt). Since 1.38
+</parameter_description>
+</parameter>
 </parameters>
 </enum>
 
@@ -1078,6 +1090,25 @@ enough space for a full word.
 </parameters>
 </enum>
 
+<function name="pango_attr_background_alpha_new">
+<description>
+Create a new background alpha attribute.
+
+Since: 1.38
+
+</description>
+<parameters>
+<parameter name="alpha">
+<parameter_description> the alpha value, between 1 and 65536
+</parameter_description>
+</parameter>
+</parameters>
+<return> the new allocated #PangoAttribute,
+which should be freed with pango_attribute_destroy().
+
+</return>
+</function>
+
 <function name="pango_attr_background_new">
 <description>
 Create a new background color attribute.
@@ -1178,6 +1209,25 @@ Since: 1.38
 </parameter>
 </parameters>
 <return> the newly allocated #PangoAttribute,
+which should be freed with pango_attribute_destroy().
+
+</return>
+</function>
+
+<function name="pango_attr_foreground_alpha_new">
+<description>
+Create a new foreground alpha attribute.
+
+Since: 1.38
+
+</description>
+<parameters>
+<parameter name="alpha">
+<parameter_description> the alpha value, between 1 and 65536
+</parameter_description>
+</parameter>
+</parameters>
+<return> the new allocated #PangoAttribute,
 which should be freed with pango_attribute_destroy().
 
 </return>
@@ -11686,6 +11736,30 @@ Since: 1.8
 <return></return>
 </function>
 
+<function name="pango_renderer_get_alpha">
+<description>
+Gets the current alpha for the specified part.
+
+Since: 1.38
+
+</description>
+<parameters>
+<parameter name="renderer">
+<parameter_description> a #PangoRenderer
+</parameter_description>
+</parameter>
+<parameter name="part">
+<parameter_description> the part to get the alpha for
+</parameter_description>
+</parameter>
+</parameters>
+<return> the alpha for the specified part,
+or 0 if it hasn't been set and should be
+inherited from the environment.
+
+</return>
+</function>
+
 <function name="pango_renderer_get_color">
 <description>
 Gets the current rendering color for the specified part.
@@ -11831,9 +11905,36 @@ Since: 1.8
 <return></return>
 </function>
 
+<function name="pango_renderer_set_alpha">
+<description>
+Sets the alpha for part of the rendering.
+Note that the alpha may only be used if a color is
+specified for @part as well.
+
+Since: 1.38
+
+</description>
+<parameters>
+<parameter name="renderer">
+<parameter_description> a #PangoRenderer
+</parameter_description>
+</parameter>
+<parameter name="part">
+<parameter_description> the part to set the alpha for
+</parameter_description>
+</parameter>
+<parameter name="alpha">
+<parameter_description> an alpha value between 1 and 65536, or 0 to unset the alpha
+</parameter_description>
+</parameter>
+</parameters>
+<return></return>
+</function>
+
 <function name="pango_renderer_set_color">
 <description>
 Sets the color for part of the rendering.
+Also see pango_renderer_set_alpha().
 
 Since: 1.8
 
