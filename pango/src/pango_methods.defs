@@ -176,6 +176,8 @@
     '("gravity" "PANGO_ATTR_GRAVITY")
     '("gravity-hint" "PANGO_ATTR_GRAVITY_HINT")
     '("font-features" "PANGO_ATTR_FONT_FEATURES")
+    '("foreground-alpha" "PANGO_ATTR_FOREGROUND_ALPHA")
+    '("background-alpha" "PANGO_ATTR_BACKGROUND_ALPHA")
   )
 )
 
@@ -812,6 +814,24 @@
   (return-type "PangoAttribute*")
   (parameters
     '("const-gchar*" "features")
+  )
+)
+
+(define-function pango_attr_foreground_alpha_new
+  (c-name "pango_attr_foreground_alpha_new")
+  (is-constructor-of "PangoAttrForegroundAlpha")
+  (return-type "PangoAttribute*")
+  (parameters
+    '("guint16" "alpha")
+  )
+)
+
+(define-function pango_attr_background_alpha_new
+  (c-name "pango_attr_background_alpha_new")
+  (is-constructor-of "PangoAttrBackgroundAlpha")
+  (return-type "PangoAttribute*")
+  (parameters
+    '("guint16" "alpha")
   )
 )
 
@@ -4569,6 +4589,25 @@
   (of-object "PangoRenderer")
   (c-name "pango_renderer_get_color")
   (return-type "PangoColor*")
+  (parameters
+    '("PangoRenderPart" "part")
+  )
+)
+
+(define-method set_alpha
+  (of-object "PangoRenderer")
+  (c-name "pango_renderer_set_alpha")
+  (return-type "none")
+  (parameters
+    '("PangoRenderPart" "part")
+    '("guint16" "alpha")
+  )
+)
+
+(define-method get_alpha
+  (of-object "PangoRenderer")
+  (c-name "pango_renderer_get_alpha")
+  (return-type "guint16")
   (parameters
     '("PangoRenderPart" "part")
   )

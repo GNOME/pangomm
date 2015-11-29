@@ -26,7 +26,9 @@
 ;;   PANGO_ATTR_ABSOLUTE_SIZE,	/* PangoAttrSize */
 ;;   PANGO_ATTR_GRAVITY,		/* PangoAttrInt */
 ;;   PANGO_ATTR_GRAVITY_HINT,	/* PangoAttrInt */
-;;   PANGO_ATTR_FONT_FEATURES	/* PangoAttrString */
+;;   PANGO_ATTR_FONT_FEATURES,	/* PangoAttrString */
+;;   PANGO_ATTR_FOREGROUND_ALPHA,	/* PangoAttrInt */
+;;   PANGO_ATTR_BACKGROUND_ALPHA	/* PangoAttrInt */
 ;; } PangoAttrType;
 
 (define-enum-extended AttrType
@@ -57,6 +59,8 @@
     '("gravity" "PANGO_ATTR_GRAVITY" "21")
     '("gravity-hint" "PANGO_ATTR_GRAVITY_HINT" "22")
     '("font-features" "PANGO_ATTR_FONT_FEATURES" "23")
+    '("foreground-alpha" "PANGO_ATTR_FOREGROUND_ALPHA" "24")
+    '("background-alpha" "PANGO_ATTR_BACKGROUND_ALPHA" "25")
   )
 )
 
