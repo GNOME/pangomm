@@ -869,6 +869,122 @@ base glyph to which it is attached
 <parameter_description>                Takri. Since: 1.32
 </parameter_description>
 </parameter>
+<parameter name="PANGO_SCRIPT_BASSA_VAH">
+<parameter_description>            Bassa. Since: 1.40
+</parameter_description>
+</parameter>
+<parameter name="PANGO_SCRIPT_CAUCASIAN_ALBANIAN">
+<parameter_description>   Caucasian Albanian. Since: 1.40
+</parameter_description>
+</parameter>
+<parameter name="PANGO_SCRIPT_DUPLOYAN">
+<parameter_description>             Duployan. Since: 1.40
+</parameter_description>
+</parameter>
+<parameter name="PANGO_SCRIPT_ELBASAN">
+<parameter_description>              Elbasan. Since: 1.40
+</parameter_description>
+</parameter>
+<parameter name="PANGO_SCRIPT_GRANTHA">
+<parameter_description>              Grantha. Since: 1.40
+</parameter_description>
+</parameter>
+<parameter name="PANGO_SCRIPT_KHOJKI">
+<parameter_description>               Kjohki. Since: 1.40
+</parameter_description>
+</parameter>
+<parameter name="PANGO_SCRIPT_KHUDAWADI">
+<parameter_description>            Khudawadi, Sindhi. Since: 1.40
+</parameter_description>
+</parameter>
+<parameter name="PANGO_SCRIPT_LINEAR_A">
+<parameter_description>             Linear A. Since: 1.40
+</parameter_description>
+</parameter>
+<parameter name="PANGO_SCRIPT_MAHAJANI">
+<parameter_description>             Mahajani. Since: 1.40
+</parameter_description>
+</parameter>
+<parameter name="PANGO_SCRIPT_MANICHAEAN">
+<parameter_description>           Manichaean. Since: 1.40
+</parameter_description>
+</parameter>
+<parameter name="PANGO_SCRIPT_MENDE_KIKAKUI">
+<parameter_description>        Mende Kikakui. Since: 1.40
+</parameter_description>
+</parameter>
+<parameter name="PANGO_SCRIPT_MODI">
+<parameter_description>                 Modi. Since: 1.40
+</parameter_description>
+</parameter>
+<parameter name="PANGO_SCRIPT_MRO">
+<parameter_description>                  Mro. Since: 1.40
+</parameter_description>
+</parameter>
+<parameter name="PANGO_SCRIPT_NABATAEAN">
+<parameter_description>            Nabataean. Since: 1.40
+</parameter_description>
+</parameter>
+<parameter name="PANGO_SCRIPT_OLD_NORTH_ARABIAN">
+<parameter_description>    Old North Arabian. Since: 1.40
+</parameter_description>
+</parameter>
+<parameter name="PANGO_SCRIPT_OLD_PERMIC">
+<parameter_description>           Old Permic. Since: 1.40
+</parameter_description>
+</parameter>
+<parameter name="PANGO_SCRIPT_PAHAWH_HMONG">
+<parameter_description>         Pahawh Hmong. Since: 1.40
+</parameter_description>
+</parameter>
+<parameter name="PANGO_SCRIPT_PALMYRENE">
+<parameter_description>            Palmyrene. Since: 1.40
+</parameter_description>
+</parameter>
+<parameter name="PANGO_SCRIPT_PAU_CIN_HAU">
+<parameter_description>          Pau Cin Hau. Since: 1.40
+</parameter_description>
+</parameter>
+<parameter name="PANGO_SCRIPT_PSALTER_PAHLAVI">
+<parameter_description>      Psalter Pahlavi. Since: 1.40
+</parameter_description>
+</parameter>
+<parameter name="PANGO_SCRIPT_SIDDHAM">
+<parameter_description>              Siddham. Since: 1.40
+</parameter_description>
+</parameter>
+<parameter name="PANGO_SCRIPT_TIRHUTA">
+<parameter_description>              Tirhuta. Since: 1.40
+</parameter_description>
+</parameter>
+<parameter name="PANGO_SCRIPT_WARANG_CITI">
+<parameter_description>          Warang Citi. Since: 1.40
+</parameter_description>
+</parameter>
+<parameter name="PANGO_SCRIPT_AHOM">
+<parameter_description>                 Ahom. Since: 1.40
+</parameter_description>
+</parameter>
+<parameter name="PANGO_SCRIPT_ANATOLIAN_HIEROGLYPHS">
+<parameter_description> Anatolian Hieroglyphs. Since: 1.40
+</parameter_description>
+</parameter>
+<parameter name="PANGO_SCRIPT_HATRAN">
+<parameter_description>               Hatran. Since: 1.40
+</parameter_description>
+</parameter>
+<parameter name="PANGO_SCRIPT_MULTANI">
+<parameter_description>              Multani. Since: 1.40
+</parameter_description>
+</parameter>
+<parameter name="PANGO_SCRIPT_OLD_HUNGARIAN">
+<parameter_description>        Old Hungarian. Since: 1.40
+</parameter_description>
+</parameter>
+<parameter name="PANGO_SCRIPT_SIGNWRITING">
+<parameter_description>          Signwriting. Since: 1.40
+</parameter_description>
+</parameter>
 </parameters>
 </enum>
 
@@ -9680,7 +9796,7 @@ index to the character at that logical position. If the
 Y position is not inside the layout, the closest position is chosen
 (the position will be clamped inside the layout). If the
 X position is not within the layout, then the start or the
-end of the line is chosen as  described for pango_layout_xy_to_index().
+end of the line is chosen as described for pango_layout_line_x_to_index().
 If either the X or Y positions were not inside the layout, then the
 function returns %FALSE; on an exact hit, it returns %TRUE.
 
