@@ -1,3 +1,7 @@
+2.40.0 (stable):
+
+* No major changes compared to 2.39.1.
+
 2.39.1 (unstable):
 
 * Renderer: Added get/set_alpha().
