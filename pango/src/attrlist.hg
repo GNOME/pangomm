@@ -72,11 +72,11 @@ public:
 
   _DEPRECATE_IFDEF_START
   ///@deprecated Use the const version
-  operator bool();
+  explicit operator bool();
   _DEPRECATE_IFDEF_END
 
   ///Tests whether the AttrList is valid.
-  operator bool() const;
+  explicit operator bool() const;
 
   void insert(Attribute& attr);
   _IGNORE(pango_attr_list_insert) // hand code because we need to pass a copy of the attribute

@@ -60,7 +60,7 @@ public:
   /** Check whether the iterator is valid.
    * @return <tt>true</tt> if the iterator is valid.
    */
-  operator bool() const;
+  explicit operator bool() const;
 
   /** The same as operator++().
    * @return <tt>false</tt> if the end of the list is reached.

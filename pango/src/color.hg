@@ -35,11 +35,11 @@ public:
 
   _DEPRECATE_IFDEF_START
   /// @deprecated Use the const version.
-  operator bool();
+  explicit operator bool();
   _DEPRECATE_IFDEF_END
 
   /// Tests whether the Color is valid.
-  operator bool() const;
+  explicit operator bool() const;
   
   /** Gets the red component of the color.
    * @return The red component of the color. This is a value between 0 and 65535, with 65535 indicating full intensity.
