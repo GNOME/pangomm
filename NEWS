@@ -1,3 +1,11 @@
+2.40.1 (stable):
+
+
+* C++11: Make all operator bool()s explicit.
+  (Murray Cumming)
+* Build: Fix silent builds.
+  (Kjell Ahlstedt) Bug #768797
+
 2.40.0 (stable):
 
 * No major changes compared to 2.39.1.
