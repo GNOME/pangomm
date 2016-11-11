@@ -33,7 +33,7 @@ AM_MAINTAINER_MODE
 AC_ARG_VAR([ACLOCAL_FLAGS], [aclocal flags, e.g. -I <macro dir>])
 
 MM_PREREQ([0.9.10])
-MM_INIT_MODULE([pangomm-1.4])
+MM_INIT_MODULE([pangomm-2.42])
 
 # Copy the mm-common .pl scripts into docs/,
 # and use them from there,
