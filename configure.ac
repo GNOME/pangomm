@@ -49,17 +49,17 @@ MM_AX_CXX_COMPILE_STDCXX([11], [noext], [mandatory])
 AC_DISABLE_STATIC
 LT_INIT([win32-dll])
 
-AC_SUBST([PANGOMM_MODULES], ['glibmm-2.4 >= 2.48.0 cairomm-1.0 >= 1.2.2 pangocairo >= 1.38.0'])
+AC_SUBST([PANGOMM_MODULES], ['glibmm-2.52 >= 2.48.0 cairomm-1.0 >= 1.2.2 pangocairo >= 1.38.0'])
 PKG_CHECK_MODULES([PANGOMM], [$PANGOMM_MODULES])
 
 MM_PKG_CONFIG_SUBST([GTHREAD_CFLAGS], [--cflags-only-other gthread-2.0])
-MM_PKG_CONFIG_SUBST([GMMPROC_DIR], [--variable=gmmprocdir glibmm-2.4])
+MM_PKG_CONFIG_SUBST([GMMPROC_DIR], [--variable=gmmprocdir glibmm-2.52])
 
 MM_ARG_DISABLE_DEPRECATED_API
 MM_ARG_ENABLE_DOCUMENTATION
 MM_ARG_WITH_TAGFILE_DOC([libstdc++.tag], [mm-common-libstdc++])
-MM_ARG_WITH_TAGFILE_DOC([libsigc++-2.0.tag], [sigc++-2.0])
-MM_ARG_WITH_TAGFILE_DOC([glibmm-2.4.tag], [glibmm-2.4])
+MM_ARG_WITH_TAGFILE_DOC([libsigc++-3.0.tag], [sigc++-3.0])
+MM_ARG_WITH_TAGFILE_DOC([glibmm-2.52.tag], [glibmm-2.52])
 MM_ARG_WITH_TAGFILE_DOC([cairomm-1.0.tag], [cairomm-1.0])
 
 AC_LANG([C++])

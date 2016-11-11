@@ -44,7 +44,7 @@ public:
   /** For instance,
    * bool on_foreach(const Glib::RefPtr<Pango::Font>& font);
    */
-  typedef sigc::slot< bool, const Glib::RefPtr<Font>& > ForeachSlot;
+  typedef sigc::slot<bool(const Glib::RefPtr<Font>&)> ForeachSlot;
 
   /** Iterates through all the fonts in a fontset, calling @a slot for
    * each one. If @a slot returns true, that stops the iteration.
