@@ -28,7 +28,7 @@ namespace Pango
 
 Matrix Renderer::get_matrix() const
 {
-  const PangoMatrix* matrix = pango_renderer_get_matrix(const_cast<PangoRenderer*>(gobj()));
+  const auto* matrix = pango_renderer_get_matrix(const_cast<PangoRenderer*>(gobj()));
   if(matrix)
     return *matrix;
   else

@@ -116,14 +116,14 @@ Rectangle Layout::get_pixel_logical_extents() const
 
 void Layout::get_iter(LayoutIter& iter)
 {
-  PangoLayoutIter* cobject = pango_layout_get_iter(gobj());
+  auto* cobject = pango_layout_get_iter(gobj());
   iter = Glib::wrap(cobject, false /* don't take_copy */);
 }
 
 _DEPRECATE_IFDEF_START
 LayoutIter Layout::get_iter()
 {
-  PangoLayoutIter* cobject = pango_layout_get_iter(gobj());
+  auto* cobject = pango_layout_get_iter(gobj());
   return Glib::wrap(cobject, false /* don't take_copy */);
 }
 _DEPRECATE_IFDEF_END

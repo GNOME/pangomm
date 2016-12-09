@@ -65,7 +65,7 @@ Glib::ustring Language::get_string() const
 Glib::ArrayHandle<Script> Language::get_scripts() const
 {
   int num_scripts = 0;
-  const PangoScript* carray = pango_language_get_scripts(const_cast<PangoLanguage*>(gobj()), &num_scripts);
+  const auto* carray = pango_language_get_scripts(const_cast<PangoLanguage*>(gobj()), &num_scripts);
   return Glib::ArrayHandle<Script>((const Script*)carray, num_scripts, Glib::OWNERSHIP_NONE);
 }
 

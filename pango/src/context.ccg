@@ -69,7 +69,7 @@ void Context::update_from_cairo_context(const Cairo::RefPtr<Cairo::Context>& con
 
 Matrix Context::get_matrix() const
 {
-  const PangoMatrix* matrix = pango_context_get_matrix(const_cast<PangoContext*>(gobj()));
+  const auto* matrix = pango_context_get_matrix(const_cast<PangoContext*>(gobj()));
   if(matrix)
     return *matrix;
   else

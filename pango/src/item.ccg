@@ -63,7 +63,7 @@ Item::Item(PangoItem* castitem, bool make_a_copy)
 
 Item& Item::operator=(const Item& src)
 {
-  PangoItem *const new_gobject = (src.gobject_) ? pango_item_copy(src.gobject_) : nullptr;
+  auto* const new_gobject = (src.gobject_) ? pango_item_copy(src.gobject_) : nullptr;
 
   if(gobject_)
     pango_item_free(gobject_);

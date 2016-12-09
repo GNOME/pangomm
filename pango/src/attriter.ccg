@@ -54,7 +54,7 @@ AttrIter::~AttrIter()
 
 AttrIter& AttrIter::operator=(const AttrIter& src)
 {
-  PangoAttrIterator *const new_gobject = (src.gobject_ ? pango_attr_iterator_copy(src.gobject_) : nullptr);
+  auto* const new_gobject = (src.gobject_ ? pango_attr_iterator_copy(src.gobject_) : nullptr);
 
   if(gobject_)
      pango_attr_iterator_destroy(gobject_);
@@ -131,7 +131,7 @@ SListHandle_Attribute AttrIter::get_extra_attrs() const
 
 SListHandle_Attribute AttrIter::get_attrs() const
 {
-  GSList* attrs = pango_attr_iterator_get_attrs( const_cast<PangoAttrIterator*>(gobj()) );
+  auto attrs = pango_attr_iterator_get_attrs( const_cast<PangoAttrIterator*>(gobj()) );
   return SListHandle_Attribute(attrs, Glib::OWNERSHIP_DEEP);
 }
    

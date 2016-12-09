@@ -55,7 +55,7 @@ Attribute::~Attribute()
 
 Attribute& Attribute::operator=(const Attribute& src)
 {
-  PangoAttribute *const new_gobject = (src.gobject_ ? pango_attribute_copy(src.gobject_) : nullptr);
+  auto* const new_gobject = (src.gobject_ ? pango_attribute_copy(src.gobject_) : nullptr);
 
   if(gobject_)
     pango_attribute_destroy(gobject_);
