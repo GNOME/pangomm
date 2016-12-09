@@ -42,14 +42,14 @@ Glib::ArrayHandle< std::pair<TabAlign,int> > TabArray::get_tabs() const
 {
   typedef std::pair<TabAlign,int> PairType;
 
-  PairType* pair_buffer = 0;
+  PairType* pair_buffer = nullptr;
   const int size = pango_tab_array_get_size(const_cast<PangoTabArray*>(gobj()));
 
   if(size > 0)
   {
     // Get arrays
-    PangoTabAlign* pAlignments = 0;
-    int*           pLocations  = 0;
+    PangoTabAlign* pAlignments = nullptr;
+    int*           pLocations  = nullptr;
     pango_tab_array_get_tabs(const_cast<PangoTabArray*>(gobj()), &pAlignments, &pLocations);
 
     if(pAlignments && pLocations)

@@ -62,7 +62,7 @@ int LayoutLine::index_to_x(int index, bool trailing) const
 
 Glib::ArrayHandle<std::pair<int,int> > LayoutLine::get_x_ranges(int start_index, int end_index) const
 {
-  int* ranges = 0;
+  int* ranges = nullptr;
   int n_ranges = 0;
   pango_layout_line_get_x_ranges(const_cast<PangoLayoutLine*>(gobj()), start_index, end_index, &ranges, &n_ranges);
   return Glib::ArrayHandle<std::pair<int,int> >(reinterpret_cast<std::pair<int,int>*>(ranges), n_ranges, Glib::OWNERSHIP_SHALLOW);

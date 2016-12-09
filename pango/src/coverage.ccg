@@ -26,7 +26,7 @@ namespace Pango
 
 Glib::ArrayHandle<unsigned char> Coverage::to_bytes() const
 {
-  guchar* bytes = 0;
+  guchar* bytes = nullptr;
   int n_bytes = 0;
   pango_coverage_to_bytes(const_cast<PangoCoverage*>(gobj()), &bytes, &n_bytes);
   return Glib::ArrayHandle<unsigned char>(bytes, n_bytes, Glib::OWNERSHIP_SHALLOW);

@@ -29,33 +29,33 @@ AttrList::AttrList(const Glib::ustring& markup_text, gunichar accel_marker)
   gboolean bTest = pango_parse_markup(markup_text.c_str(), -1 /* means null-terminated */, accel_marker,
                    	                  &gobject_, 0, 0, 0);
   if(bTest == FALSE)
-    gobject_ = 0;
+    gobject_ = nullptr;
 }
 
 _DEPRECATE_IFDEF_START
 AttrList::operator bool()
 {
-  return gobj() != 0;
+  return gobj() != nullptr;
 }
 _DEPRECATE_IFDEF_END
 
 AttrList::operator bool() const
 {
-  return gobj() != 0;
+  return gobj() != nullptr;
 }
 
 AttrList::AttrList(const Glib::ustring& markup_text, gunichar accel_marker, Glib::ustring& text, gunichar& accel_char)
 {
   //initialize output parameters:
   text.erase();
-  accel_char = 0;
+  accel_char = nullptr;
 
-  gchar* pchText = 0;
+  gchar* pchText = nullptr;
   gboolean bTest = pango_parse_markup(markup_text.c_str(), -1 /* means null-terminated */, accel_marker,
                    	                  &gobject_, &pchText, &accel_char, 0);
   if(bTest == FALSE)
   {
-    gobject_ = 0;
+    gobject_ = nullptr;
   }
   else
   {

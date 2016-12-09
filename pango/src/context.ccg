@@ -30,7 +30,7 @@ namespace Pango
 Glib::ArrayHandle< Glib::RefPtr<FontFamily> > Context::list_families() const
 {
   //Get array:
-  PangoFontFamily** pFamilies = 0;
+  PangoFontFamily** pFamilies = nullptr;
   int n_families = 0;
   pango_context_list_families(const_cast<PangoContext*>(gobj()), &pFamilies, &n_families);
   

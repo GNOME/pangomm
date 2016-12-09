@@ -27,7 +27,7 @@ Attribute::Attribute()
 
 Attribute::Attribute(const Attribute& src)
 :
-  gobject_(src.gobject_ ? pango_attribute_copy(src.gobject_) : 0)
+  gobject_(src.gobject_ ? pango_attribute_copy(src.gobject_) : nullptr)
 {}
 
 Attribute::Attribute(PangoAttribute* castitem, bool take_copy)
@@ -37,7 +37,7 @@ Attribute::Attribute(PangoAttribute* castitem, bool take_copy)
     if(castitem)
       gobject_ = pango_attribute_copy(castitem);
     else
-      gobject_ = 0;
+      gobject_ = nullptr;
   }
   else
   {
@@ -50,12 +50,12 @@ Attribute::~Attribute()
 {
   if(gobject_)
     pango_attribute_destroy(gobject_);
-  gobject_ = 0;
+  gobject_ = nullptr;
 }
 
 Attribute& Attribute::operator=(const Attribute& src)
 {
-  PangoAttribute *const new_gobject = (src.gobject_ ? pango_attribute_copy(src.gobject_) : 0);
+  PangoAttribute *const new_gobject = (src.gobject_ ? pango_attribute_copy(src.gobject_) : nullptr);
 
   if(gobject_)
     pango_attribute_destroy(gobject_);

@@ -28,13 +28,13 @@ PangoColor* _pango_color_new()
  _DEPRECATE_IFDEF_START
 Color::operator bool()
 {
-  return gobj() != 0;
+  return gobj() != nullptr;
 }
  _DEPRECATE_IFDEF_END
 
 Color::operator bool() const
 {
-  return gobj() != 0;
+  return gobj() != nullptr;
 }
 
 } /* namespace Pango */

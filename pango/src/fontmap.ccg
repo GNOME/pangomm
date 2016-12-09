@@ -29,7 +29,7 @@ namespace Pango
 Glib::ArrayHandle< Glib::RefPtr<FontFamily> > FontMap::list_families() const
 {
   //Get the array:
-  PangoFontFamily** pFamilies = 0;
+  PangoFontFamily** pFamilies = nullptr;
   int n_families = 0;
   pango_font_map_list_families(const_cast<PangoFontMap*>(gobj()), &pFamilies, &n_families);
 

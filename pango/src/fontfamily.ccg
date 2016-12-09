@@ -26,7 +26,7 @@ namespace Pango
 Glib::ArrayHandle< Glib::RefPtr<FontFace> > FontFamily::list_faces() const
 {
   //Get the array:
-  PangoFontFace** pFontFaces = 0;
+  PangoFontFace** pFontFaces = nullptr;
   int n_fonts = 0;
   pango_font_family_list_faces(const_cast<PangoFontFamily*>(gobj()), &pFontFaces, &n_fonts);
 
