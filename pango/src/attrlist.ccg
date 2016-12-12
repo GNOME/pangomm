@@ -48,7 +48,7 @@ AttrList::AttrList(const Glib::ustring& markup_text, gunichar accel_marker, Glib
 {
   //initialize output parameters:
   text.erase();
-  accel_char = nullptr;
+  accel_char = 0;
 
   gchar* pchText = nullptr;
   gboolean bTest = pango_parse_markup(markup_text.c_str(), -1 /* means null-terminated */, accel_marker,
