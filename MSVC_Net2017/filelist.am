@@ -1,6 +1,6 @@
 ## This file is part of pangomm.
 
-msvc_net2013_data =				\
+msvc_net2017_data =				\
 	pangomm.sln				\
 	pangomm-build-defines.props		\
 	pangomm-version-paths.props		\

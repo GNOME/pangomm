@@ -1,5 +1,5 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
+# Visual Studio 15
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "gendef", "gendef.vcxproj", "{07324745-C9BE-4D65-B08A-9C88188C0C28}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "pangomm", "pangomm.vcxproj", "{A93D607A-5C37-4AEC-BA08-6A655F6DC834}"
