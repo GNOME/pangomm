@@ -133,7 +133,7 @@ public:
    * @param attrs The set of attributes that apply.
    * @return A list of Pango::Item objects.
    */
-  ListHandle_Item itemize(const Glib::ustring& text, const AttrList& attrs) const;
+  std::vector<Item> itemize(const Glib::ustring& text, const AttrList& attrs) const;
 
   /** Breaks a piece of text into segments with consistent directional level and shaping engine.
    * Each byte of @a text will be contained in exactly one of the items in the returned list. 
@@ -152,7 +152,7 @@ public:
    * @param cached_iter Cached attribute iterator.
    * @return A list of Pango::Item structures.
    */
-  ListHandle_Item itemize(const Glib::ustring& text, int start_index, int length,
+  std::vector<Item> itemize(const Glib::ustring& text, int start_index, int length,
                           const AttrList& attrs, AttrIter& cached_iter) const;
 
   /** Updates a Pango Context previously created for use with Cairo to

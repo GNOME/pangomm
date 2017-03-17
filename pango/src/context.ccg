@@ -43,19 +43,33 @@ Pango::FontMetrics Context::get_metrics(const FontDescription& desc) const
   return FontMetrics(pango_context_get_metrics(const_cast<PangoContext*>(gobj()), desc.gobj(), 0));
 }
 
-ListHandle_Item Context::itemize(const Glib::ustring& text, const AttrList& attrs) const
+struct ItemTraits
 {
-  return ListHandle_Item(
+  typedef Pango::Item       CppType;
+  typedef const PangoItem*  CType;
+  typedef PangoItem*        CTypeNonConst;
+
+  static CType   to_c_type      (const CppType& obj) { return obj.gobj(); }
+  static CType   to_c_type      (CType ptr) { return ptr; }
+  static CppType to_cpp_type    (CType ptr) { return CppType(const_cast<CTypeNonConst>(ptr), true); }
+  static void    release_c_type (CType ptr) { pango_item_free(const_cast<CTypeNonConst>(ptr)); }
+};
+
+using ListHandler_Item = Glib::ListHandler<Item, ItemTraits>;
+
+std::vector<Item> Context::itemize(const Glib::ustring& text, const AttrList& attrs) const
+{
+  return ListHandler_Item::list_to_vector(
       pango_itemize(const_cast<PangoContext*>(gobj()),
                     text.c_str(), 0, text.bytes(),
                     const_cast<PangoAttrList*>(attrs.gobj()), 0),
       Glib::OWNERSHIP_DEEP);
 }
 
-ListHandle_Item Context::itemize(const Glib::ustring& text, int start_index, int length,
+std::vector<Item> Context::itemize(const Glib::ustring& text, int start_index, int length,
                                  const AttrList& attrs, AttrIter& cached_iter) const
 {
-  return ListHandle_Item(
+  return ListHandler_Item::list_to_vector(
       pango_itemize(const_cast<PangoContext*>(gobj()),
                     text.c_str(), start_index, length,
                     const_cast<PangoAttrList*>(attrs.gobj()), cached_iter.gobj()),
