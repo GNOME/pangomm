@@ -21,8 +21,6 @@
 
 
 #include <glibmm/object.h>
-#include <glibmm/arrayhandle.h>
-#include <glibmm/listhandle.h>
 #include <pangomm/fontdescription.h>
 #include <pangomm/fontmetrics.h>
 #include <pangomm/fontset.h>
@@ -85,7 +83,7 @@ public:
    * objects you use, e.g. in the default font description of the context.
    * @return An array of Pango::FontFamily objects.
    */
-  Glib::ArrayHandle< Glib::RefPtr<FontFamily> > list_families() const;
+  std::vector<Glib::RefPtr<FontFamily>> list_families() const;
   
   _IGNORE(pango_context_changed)
 

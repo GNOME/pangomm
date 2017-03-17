@@ -16,7 +16,6 @@
  */
 
 #include <glibmm/value.h>
-#include <glibmm/arrayhandle.h>
 #include <pango/pango-attributes.h>
 
 _DEFS(pangomm,pango)
@@ -70,7 +69,7 @@ public:
    *
    * @newin{2,14}
    */
-  Glib::ArrayHandle<Script> get_scripts() const;
+  std::vector<Script> get_scripts() const;
   _IGNORE(pango_language_get_scripts)
 };
 

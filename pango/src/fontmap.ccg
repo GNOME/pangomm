@@ -26,14 +26,14 @@
 namespace Pango
 {
 
-Glib::ArrayHandle< Glib::RefPtr<FontFamily> > FontMap::list_families() const
+std::vector<Glib::RefPtr<FontFamily>> FontMap::list_families() const
 {
   //Get the array:
   PangoFontFamily** pFamilies = nullptr;
   int n_families = 0;
   pango_font_map_list_families(const_cast<PangoFontMap*>(gobj()), &pFamilies, &n_families);
 
-  return Glib::ArrayHandle< Glib::RefPtr<FontFamily> >
+  return Glib::ArrayHandler<Glib::RefPtr<FontFamily>>::array_to_vector
       (pFamilies, n_families, Glib::OWNERSHIP_SHALLOW);
 }
 

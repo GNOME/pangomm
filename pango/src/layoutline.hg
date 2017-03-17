@@ -21,7 +21,6 @@
 
 #include <pangomm/rectangle.h>
 #include <cairomm/context.h>
-#include <glibmm/arrayhandle.h>
 #include <pango/pango-layout.h>
 
 _DEFS(pangomm,pango)
@@ -67,7 +66,7 @@ public:
    * Otherwise, it will end at the trailing edge of the last character.
    * @return An array of ranges represented by pairs of integers marking the start and end pixel coordinates of the ranges.
    */
-  Glib::ArrayHandle<std::pair<int,int> > get_x_ranges(int start_index, int end_index) const;
+  std::vector<std::pair<int,int> > get_x_ranges(int start_index, int end_index) const;
 
   _WRAP_METHOD(void get_extents(Rectangle& ink_rect, Rectangle& logical_rect) const, pango_layout_line_get_extents)
 

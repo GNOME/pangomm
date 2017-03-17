@@ -21,7 +21,6 @@
 
 
 #include <glibmm/object.h>
-#include <glibmm/arrayhandle.h>
 #include <pangomm/font.h>
 #include <pangomm/fontset.h>
 #include <pangomm/fontfamily.h>
@@ -51,7 +50,7 @@ public:
   /** List all families for the fontmap.
    * @return an array of pointers to Pango::FontFamily objects.
    */
-  Glib::ArrayHandle< Glib::RefPtr<FontFamily> > list_families() const;
+  std::vector<Glib::RefPtr<FontFamily>> list_families() const;
 
   _WRAP_METHOD(guint get_serial() const, pango_font_map_get_serial)
 

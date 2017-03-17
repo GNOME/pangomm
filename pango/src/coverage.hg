@@ -19,7 +19,6 @@
  * Software Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
-#include <glibmm/arrayhandle.h>
 #include <pango/pango-font.h>
 
 _DEFS(pangomm,pango)
@@ -54,7 +53,7 @@ public:
   /** Convert the coverage map into a flat binary format.
    * @return An array of bytes representing the coverage map.
    */
-  Glib::ArrayHandle<unsigned char> to_bytes() const;
+  std::vector<unsigned char> to_bytes() const;
 };
 
 } // namespace Pango

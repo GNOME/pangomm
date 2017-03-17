@@ -92,7 +92,7 @@ public:
    * @param embedding_level The embedding level of the string.
    * @return An array of integers representing the resulting character widths.
    */
-  Glib::ArrayHandle<int> get_logical_widths(const Glib::ustring& text, int embedding_level) const;
+  std::vector<int> get_logical_widths(const Glib::ustring& text, int embedding_level) const;
 
   /** Converts from character position to x position.
    * (X position is measured from the left edge of the run). Character positions are computed by dividing up each cluster into equal portions.
@@ -120,7 +120,7 @@ public:
   /** Gharacter positions are computed by dividing up each cluster into equal portions.
    * @return An array of Pango::GlyphInfo objects.
    */
-  Glib::ArrayHandle<GlyphInfo> get_glyphs() const;
+  std::vector<GlyphInfo> get_glyphs() const;
 
   //TODO: 
   //void        pango_cairo_glyph_string_path   (cairo_t *cr,

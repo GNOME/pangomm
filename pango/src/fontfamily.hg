@@ -21,7 +21,6 @@
 
 
 #include <glibmm/object.h>
-#include <glibmm/arrayhandle.h>
 #include <pangomm/fontface.h>
 #include <pango/pango-font.h>
 
@@ -44,7 +43,7 @@ public:
    * The faces in a family share a common design, but differ in slant, weight, width and other aspects.
    * @return an array of pointers to Pango::FontFace objects.
    */
-  Glib::ArrayHandle< Glib::RefPtr<FontFace> > list_faces() const;
+  std::vector<Glib::RefPtr<FontFace>> list_faces() const;
 
   _WRAP_METHOD(Glib::ustring get_name() const, pango_font_family_get_name)
   _WRAP_METHOD(bool is_monospace() const, pango_font_family_is_monospace)

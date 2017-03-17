@@ -47,12 +47,12 @@ public:
   /** Gets the alignment and position of a tab stop.
    * @return An std::pair<TabAlign, int>. The first element represents the tab stop alignment, the second one is the tab position.
    */
-  std::pair<TabAlign,int> get_tab(int tab_index) const;
+  std::pair<TabAlign, int> get_tab(int tab_index) const;
 
   /** Gets an array of std::pairs containing the tab stop alignments and tab positions.
    * @return An array of std::pair<TabAlign, int>. The first element in each pair represents the tab stop alignment, the second one is the tab position.
    */
-  Glib::ArrayHandle< std::pair<TabAlign,int> > get_tabs() const;
+  std::vector<std::pair<TabAlign, int>> get_tabs() const;
 
   _WRAP_METHOD(bool get_positions_in_pixels() const, pango_tab_array_get_positions_in_pixels)
 };

@@ -38,7 +38,7 @@ std::pair<TabAlign,int> TabArray::get_tab(int tab_index) const
   return std::pair<TabAlign,int>(alignment, location);
 }
 
-Glib::ArrayHandle< std::pair<TabAlign,int> > TabArray::get_tabs() const
+std::vector<std::pair<TabAlign,int>> TabArray::get_tabs() const
 {
   typedef std::pair<TabAlign,int> PairType;
 
@@ -69,7 +69,7 @@ Glib::ArrayHandle< std::pair<TabAlign,int> > TabArray::get_tabs() const
     g_free(pLocations);
   }
 
-  return Glib::ArrayHandle<PairType>(pair_buffer, size, Glib::OWNERSHIP_SHALLOW);
+  return Glib::ArrayHandler<PairType>::array_to_vector(pair_buffer, size, Glib::OWNERSHIP_SHALLOW);
 }
 
 } /* namespace Pango */
