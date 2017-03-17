@@ -21,7 +21,6 @@
 
 
 #include <glibmm/object.h>
-#include <glibmm/slisthandle.h>
 #include <pangomm/font.h>
 #include <pangomm/fontdescription.h>
 #include <pangomm/context.h>

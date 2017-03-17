@@ -17,7 +17,6 @@
  * Software Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
-#include <glibmm/slisthandle.h>
 #include <pangomm/attributes.h>
 
 _DEFS(pangomm,pango)
@@ -84,14 +83,14 @@ public:
    * Only the highest priority value of each attribute will be added to this list.
    * @return The list of non-font attributes at the current iterator position.
    */
-  SListHandle_Attribute get_extra_attrs() const;
+  std::vector<Attribute> get_extra_attrs() const;
 
   /** Gets a list all attributes a the current position of the
    * iterator.
    *
    * @result A list of all attributes for the current range.
    */
-  SListHandle_Attribute get_attrs() const;
+  std::vector<Attribute> get_attrs() const;
   _IGNORE(pango_attr_iterator_get_attrs)
 
   PangoAttrIterator*       gobj()       { return gobject_; }

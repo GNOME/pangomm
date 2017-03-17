@@ -67,7 +67,7 @@ public:
   /** Gets a list of non-font attributes for this segment.
    * @return A list of non-font attributes for this segment.
    */
-  SListHandle_Attribute get_extra_attrs() const;
+  std::vector<Attribute> get_extra_attrs() const;
 
   /// Provides access to the underlying C GObject.
   PangoAnalysis*       gobj()       { return &gobject_; }

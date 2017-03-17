@@ -30,9 +30,10 @@ Analysis::Analysis(const PangoAnalysis* src)
   gobject_ (*src)
 {}
 
-SListHandle_Attribute Analysis::get_extra_attrs() const
+std::vector<Attribute> Analysis::get_extra_attrs() const
 {
-  return SListHandle_Attribute(gobj()->extra_attrs, Glib::OWNERSHIP_NONE);
+  using SListHandler_Attribute = Glib::SListHandler<Attribute, AttributeTraits>;
+  return SListHandler_Attribute::slist_to_vector(gobj()->extra_attrs, Glib::OWNERSHIP_NONE);
 }
 
 
