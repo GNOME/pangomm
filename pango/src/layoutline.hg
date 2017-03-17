@@ -128,24 +128,3 @@ Glib::RefPtr<Pango::LayoutLine> wrap(PangoLayoutLine* object, bool take_copy /* 
 } // namespace Glib
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */
 
-
-namespace Pango
-{
-
-struct LayoutLineTraits
-{
-  typedef Glib::RefPtr<LayoutLine>  CppType;
-  typedef PangoLayoutLine *         CType;
-  typedef PangoLayoutLine *         CTypeNonConst;
-
-  static CType   to_c_type      (const CppType& ptr) { return Glib::unwrap(ptr);     }
-  static CType   to_c_type      (CType          ptr) { return ptr;                   }
-  static CppType to_cpp_type    (CType          ptr) { return Glib::wrap(ptr, true); }
-  static void    release_c_type (CType          ptr) { pango_layout_line_unref(ptr); }
-};
-
-typedef Glib::SListHandle< Glib::RefPtr<LayoutLine>, LayoutLineTraits > SListHandle_LayoutLine;
-typedef Glib::SListHandle< Glib::RefPtr<const LayoutLine>, LayoutLineTraits > SListHandle_ConstLayoutLine;
-
-} // namespace Pango
-

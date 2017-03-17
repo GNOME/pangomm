@@ -25,6 +25,25 @@
 namespace Pango
 {
 
+namespace {
+
+struct LayoutLineTraits
+{
+  typedef Glib::RefPtr<LayoutLine>  CppType;
+  typedef PangoLayoutLine *         CType;
+  typedef PangoLayoutLine *         CTypeNonConst;
+
+  static CType   to_c_type      (const CppType& ptr) { return Glib::unwrap(ptr);     }
+  static CType   to_c_type      (CType          ptr) { return ptr;                   }
+  static CppType to_cpp_type    (CType          ptr) { return Glib::wrap(ptr, true); }
+  static void    release_c_type (CType          ptr) { pango_layout_line_unref(ptr); }
+};
+
+using SListHandler_LayoutLine = Glib::SListHandler<Glib::RefPtr<LayoutLine>, LayoutLineTraits>;
+using SListHandler_ConstLayoutLine = Glib::SListHandler<Glib::RefPtr<const LayoutLine>, LayoutLineTraits>;
+
+} // anonymous namespace
+
 Layout::Layout(const Glib::RefPtr<Context>& context)
 :
   Glib::Object(G_OBJECT(pango_layout_new(context->gobj())))

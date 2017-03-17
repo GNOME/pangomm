@@ -227,15 +227,18 @@ public:
   _WRAP_METHOD(int get_baseline() const, pango_layout_get_baseline)
 
   _WRAP_METHOD(int get_line_count() const, pango_layout_get_line_count)
-  
-  //Note that the const version uses a different (faster) C function:
-  _WRAP_METHOD(Glib::RefPtr<LayoutLine> get_line(int line), pango_layout_get_line, refreturn)
-  _WRAP_METHOD(Glib::RefPtr<const LayoutLine> get_line(int line) const, pango_layout_get_line_readonly, refreturn) 
 
   //Note that the const version uses a different (faster) C function:
-  _WRAP_METHOD(SListHandle_LayoutLine get_lines(), pango_layout_get_lines)
-  _WRAP_METHOD(SListHandle_ConstLayoutLine get_lines() const, pango_layout_get_lines_readonly)
-  
+  _WRAP_METHOD(Glib::RefPtr<LayoutLine> get_line(int line), pango_layout_get_line, refreturn)
+  _WRAP_METHOD(Glib::RefPtr<const LayoutLine> get_line(int line) const, pango_layout_get_line_readonly, refreturn)
+
+#m4 _CONVERSION(`GSList*',`std::vector<Glib::RefPtr<LayoutLine>>',`SListHandler_LayoutLine::slist_to_vector($3, Glib::OWNERSHIP_SHALLOW)',)
+#m4 _CONVERSION(`GSList*',`std::vector<Glib::RefPtr<const LayoutLine>>',`SListHandler_ConstLayoutLine::slist_to_vector($3, Glib::OWNERSHIP_SHALLOW)')
+
+  //Note that the const version uses a different (faster) C function:
+  _WRAP_METHOD(std::vector<Glib::RefPtr<LayoutLine>> get_lines(), pango_layout_get_lines)
+  _WRAP_METHOD(std::vector<Glib::RefPtr<const LayoutLine>> get_lines() const, pango_layout_get_lines_readonly)
+
 _DEPRECATE_IFDEF_START
   /** Gets an iterator to iterate over the visual extents of the layout.
    * @param iter Location to store the iterator.

@@ -161,10 +161,6 @@ _CONVERSION(`const Matrix&',`const PangoMatrix*',`&($3)')
 #_CONVERSION(`const PangoMatrix*',`Matrix',`($3) ? *($3) : PANGO_MATRIX_INIT')
 #_CONVERSION(`const Matrix&',`PangoMatrix*',`const_cast<PangoMatrix*>(&($3))')
 
-define(`__FL2H_SHALLOW',`$`'2($`'3, Glib::OWNERSHIP_SHALLOW)')
-_CONVERSION(`GSList*',`SListHandle_LayoutLine',__FL2H_SHALLOW)
-_CONVERSION(`GSList*',`SListHandle_ConstLayoutLine',__FL2H_SHALLOW)
-
 _CONVERSION(`PangoFontMap*',`Glib::RefPtr<Pango::FontMap>',`Glib::wrap($3)')
 
 _CONVERSION(`const Cairo::FontOptions&',`const cairo_font_options_t*',`($3).cobj()')
