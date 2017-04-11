@@ -1,4 +1,18 @@
 <root>
+<substitute_enumerator_name from_prefix="PANGO_UNDERLINE_" to_prefix="Pango::Underline::" />
+<substitute_enumerator_name from_prefix="PANGO_DIRECTION_" to_prefix="Pango::Direction::" />
+<substitute_enumerator_name from_prefix="PANGO_GRAVITY_" to_prefix="Pango::Gravity::" />
+<substitute_enumerator_name from_prefix="PANGO_GRAVITY_HINT_" to_prefix="Pango::GravityHint::" />
+<substitute_enumerator_name from_prefix="PANGO_STYLE_" to_prefix="Pango::Style::" />
+<substitute_enumerator_name from_prefix="PANGO_VARIANT_" to_prefix="Pango::Variant::" />
+<substitute_enumerator_name from_prefix="PANGO_ELLIPSIZE_" to_prefix="Pango::EllipsizeMode::" />
+<substitute_enumerator_name from_prefix="PANGO_ALIGN_" to_prefix="Pango::Alignment::" />
+<substitute_enumerator_name from_prefix="PANGO_ATTR_" to_prefix="Pango::AttrType::" />
+<substitute_enumerator_name from_prefix="PANGO_TAB_" to_prefix="Pango::TabAlign::" />
+<!-- These are preprocessor defines. Don't substitute. -->
+<substitute_enumerator_name from="G_MAXINT" to="G_MAXINT" />
+<!-- This is the default substitution. Included here to avoid warnings from DocsParser.pm. -->
+<substitute_enumerator_name from="PANGO_SCALE" to="Pango::SCALE" />
 
 
 <function name="pango_font_face_describe">
