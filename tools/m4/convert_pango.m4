@@ -14,7 +14,7 @@ _CONV_ENUM(Pango,WrapMode)
 _CONV_ENUM(Pango,TabAlign)
 _CONV_ENUM(Pango,Script)
 _CONV_ENUM(Pango,EllipsizeMode)
-_CONV_ENUM(Pango,RenderPart)
+_CONV_INCLASS_ENUM(Pango,Render,Part)
 _CONV_ENUM(Pango,Gravity)
 _CONV_ENUM(Pango,GravityHint)
 
