@@ -3,7 +3,7 @@
 _CONV_ENUM(Pango,AttrType)
 _CONV_ENUM(Pango,Underline)
 _CONV_ENUM(Pango,Direction)
-_CONV_ENUM(Pango,CoverageLevel)
+_CONV_INCLASS_ENUM(Pango,Coverage,Level)
 _CONV_ENUM(Pango,Style)
 _CONV_ENUM(Pango,Variant)
 _CONV_ENUM(Pango,Stretch)

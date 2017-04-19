@@ -21,6 +21,8 @@
  * Software Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
+using Level = Pango::Coverage::Level;
+
 namespace Pango
 {
 

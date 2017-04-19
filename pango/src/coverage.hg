@@ -27,10 +27,9 @@ namespace Pango
 {
 
 _CC_INCLUDE(pango/pango-enum-types.h)
-_WRAP_ENUM(CoverageLevel, PangoCoverageLevel)
 
 
-/** A Pango::Coverage represents a map from ISO-10646 character point to Pango::CoverageLevel.
+/** A Pango::Coverage represents a map from ISO-10646 character point to Pango::Level.
  * It is often necessary in pango to determine if a particular font can represent a particular character,
  * and also how well it can represent that character. Pango::Coverage holds this information.
  */
@@ -42,12 +41,14 @@ class Coverage final
   _IGNORE(pango_coverage_to_bytes)
 
 public:
+  _WRAP_ENUM(Level, PangoCoverageLevel)
+
   _WRAP_METHOD(static Glib::RefPtr<Coverage> create(const guchar* bytes, int n_bytes), pango_coverage_from_bytes)
 
   //_WRAP_METHOD(Glib::RefPtr<Coverage> copy() const, pango_coverage_copy) //see above
 
-  _WRAP_METHOD(CoverageLevel get(int index) const, pango_coverage_get)
-  _WRAP_METHOD(void set(int index, CoverageLevel level), pango_coverage_set)
+  _WRAP_METHOD(Level get(int index) const, pango_coverage_get)
+  _WRAP_METHOD(void set(int index, Level level), pango_coverage_set)
   _WRAP_METHOD(void max(const Glib::RefPtr<Coverage>& other) const, pango_coverage_max)
 
   /** Convert the coverage map into a flat binary format.
