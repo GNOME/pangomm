@@ -1,5 +1,3 @@
-/* $Id: fontdescription.hg,v 1.2 2006/06/08 20:39:39 murrayc Exp $ */
-
 /* fontdescription.h
  *
  * Copyright (C) 1998-2002 The gtkmm Development Team
@@ -31,7 +29,7 @@ _CC_INCLUDE(pango/pango-enum-types.h)
 _WRAP_ENUM(Style, PangoStyle)
 _WRAP_ENUM(Variant, PangoVariant)
 _WRAP_ENUM(Stretch, PangoStretch)
-_WRAP_ENUM(Weight, PangoWeight)
+_WRAP_ENUM(Weight, PangoWeight, CONV_TO_INT)
 _WRAP_ENUM(FontMask, PangoFontMask)
 _WRAP_ENUM(Gravity, PangoGravity)
 
