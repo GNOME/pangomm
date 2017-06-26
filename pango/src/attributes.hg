@@ -261,7 +261,7 @@ public:
   /** Gets the string which is the value of the attribute.
    * @return The string value of the attribute.
    */
-  _MEMBER_GET(string, value, Glib::ustring, char*)
+  _MEMBER_GET(string, value, Glib::ustring, const char*)
 
   /** Sets the string which is the value of the attribute.
    * @param string The new string value for the attribute.
