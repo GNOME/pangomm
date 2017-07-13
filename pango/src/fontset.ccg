@@ -1,8 +1,4 @@
-// -*- c++ -*-
-/* $Id: fontset.ccg,v 1.5 2006/05/11 11:40:24 murrayc Exp $ */
-
 /* 
- *
  * Copyright 2001      The gtkmm Development Team
  *
  * This library is free software; you can redistribute it and/or
@@ -22,15 +18,12 @@
 
 static gboolean fontset_foreach_callback(PangoFontset* /* fontset */, PangoFont* font, gpointer data)
 {
-  #ifdef GLIBMM_EXCEPTIONS_ENABLED
   try
   {
-  #endif //GLIBMM_EXCEPTIONS_ENABLED
     auto& slot = *static_cast<Pango::Fontset::ForeachSlot*>(data);
     auto cppFont = Glib::wrap(font, true /* take_copy */);
 
     return slot(cppFont);
-  #ifdef GLIBMM_EXCEPTIONS_ENABLED
   }
   catch(...)
   {
@@ -38,7 +31,6 @@ static gboolean fontset_foreach_callback(PangoFontset* /* fontset */, PangoFont*
   }
 
   return false; //arbitrary default
-  #endif //GLIBMM_EXCEPTIONS_ENABLED
 }
 
 
