@@ -1,3 +1,16 @@
+2.41.4 (unstable):
+Distro packagers should probably not package this yet.
+
+* Build: Use glibmm-2.56 instead of glibmm-2.54.
+  We have changed the ABI name in glibmm.
+  (Murray Cumming)
+* Build: Fontset: Remove GLIBMM_EXCEPTIONS_ENABLED
+  (Kjell Ahlstedt)
+* AttrString: Let _MEMBER_GET convert from const char*.
+  (Kjell Ahlstedt)  Bug #783360
+* Weight enum: Make this implicitly convertible to int.
+  (Kjell Ahlstedt) Bug #86864
+
 2.41.3 (unstable):
 
 * Use C++11 enum classes instead of old-style enums, and put many enums
