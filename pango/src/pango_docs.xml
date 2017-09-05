@@ -4343,7 +4343,7 @@ Since: 1.38
 </parameter_description>
 </parameter>
 <parameter name="fcconfig">
-<parameter_description> (nullable) a #FcConfig, or %NULL
+<parameter_description> a #FcConfig, or %NULL
 </parameter_description>
 </parameter>
 </parameters>
@@ -6193,7 +6193,8 @@ Deprecated: 1.22: Use pango_font_map_create_context() instead.
 </parameter_description>
 </parameter>
 </parameters>
-<return> the newly created context; free with g_object_unref().
+<return> the newly created context; free with
+g_object_unref().
 
 </return>
 </function>
@@ -13264,7 +13265,7 @@ Render a #PangoLayoutLine onto an X drawable
 </description>
 <parameters>
 <parameter name="hdc">
-<parameter_description>       HDC to use for uncolored drawing
+<parameter_description>       HDC to use for drawing
 </parameter_description>
 </parameter>
 <parameter name="layout">
@@ -13292,7 +13293,7 @@ and TA_LEFT.
 </description>
 <parameters>
 <parameter name="hdc">
-<parameter_description>       DC to use for uncolored drawing
+<parameter_description>       DC to use for drawing
 </parameter_description>
 </parameter>
 <parameter name="line">

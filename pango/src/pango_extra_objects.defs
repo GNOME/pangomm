@@ -30,6 +30,12 @@
   (gtype-id "PANGO_TYPE_CONTEXT")
 )
 
+(define-object Coverage
+  (in-module "Pango")
+  (c-name "PangoCoverage")
+  (gtype-id "PANGO_TYPE_COVERAGE")
+)
+
 (define-object FontMetrics
   (in-module "Pango")
   (c-name "PangoFontMetrics")

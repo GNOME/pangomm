@@ -734,31 +734,3 @@
   )
 )
 
-;; From pangowin32-private.h
-
-;; Original typedef:
-;; typedef enum
-;;   {
-;;     PANGO_WIN32_COVERAGE_UNSPEC,
-;;     PANGO_WIN32_COVERAGE_ZH_TW,
-;;     PANGO_WIN32_COVERAGE_ZH_CN,
-;;     PANGO_WIN32_COVERAGE_JA,
-;;     PANGO_WIN32_COVERAGE_KO,
-;;     PANGO_WIN32_COVERAGE_VI,
-;;     PANGO_WIN32_N_COVERAGES
-;;   } PangoWin32CoverageLanguageClass;
-
-(define-enum-extended Win32CoverageLanguageClass
-  (in-module "Pango")
-  (c-name "PangoWin32CoverageLanguageClass")
-  (values
-    '("coverage-unspec" "PANGO_WIN32_COVERAGE_UNSPEC" "0")
-    '("coverage-zh-tw" "PANGO_WIN32_COVERAGE_ZH_TW" "1")
-    '("coverage-zh-cn" "PANGO_WIN32_COVERAGE_ZH_CN" "2")
-    '("coverage-ja" "PANGO_WIN32_COVERAGE_JA" "3")
-    '("coverage-ko" "PANGO_WIN32_COVERAGE_KO" "4")
-    '("coverage-vi" "PANGO_WIN32_COVERAGE_VI" "5")
-    '("n-coverages" "PANGO_WIN32_N_COVERAGES" "6")
-  )
-)
-
