@@ -12,6 +12,11 @@ stamp-h?
 /config.*
 /configure
 /configure.lineno
+/docs/doc-install.pl
+/docs/doc-postprocess.pl
+/docs/doxygen.css
+/docs/doxygen-extra.css
+/docs/tagfile-to-devhelp2.xsl
 /libtool
 /pangomm-*.tar.*
 /pango/pangomm-*.pc
