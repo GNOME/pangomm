@@ -30,7 +30,7 @@ then
   # patch $PATCH_OPTIONS "$OUT_DEFS_FILE" "$OUT_DEFS_FILE".patch
 elif [ "$1" = "--make-patch" ]
 then
-  diff --unified=10 "$OUT_DEFS_FILE".orig "$OUT_DEFS_FILE" > "$OUT_DEFS_FILE".patch
+  diff --unified=5 "$OUT_DEFS_FILE".orig "$OUT_DEFS_FILE" > "$OUT_DEFS_FILE".patch
 else
   echo "Usage: $0 [--make-patch]"
   exit 1

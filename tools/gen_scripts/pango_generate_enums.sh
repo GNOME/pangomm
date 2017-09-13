@@ -13,5 +13,8 @@ PREFIX="$JHBUILD_SOURCES/pango"
 ROOT_DIR="$(dirname "$0")/../.."
 OUT_DIR="$ROOT_DIR/pango/src"
 
+shopt -s extglob # Enable extended pattern matching
+shopt -s nullglob # Skip a filename pattern that matches no file
 ENUM_PL="$JHBUILD_SOURCES/glibmm/tools/enum.pl"
-$ENUM_PL "$PREFIX"/pango/*.h > "$OUT_DIR"/pango_enums.defs
+# Process files whose names end with .h, but not with private.h or internal.h.
+$ENUM_PL "$PREFIX"/pango/!(*private|*internal).h "$PREFIX"/build/pango/!(*private).h > "$OUT_DIR"/pango_enums.defs

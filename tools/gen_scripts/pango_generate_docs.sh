@@ -13,8 +13,11 @@ PREFIX="$JHBUILD_SOURCES"
 ROOT_DIR="$(dirname "$0")/../.."
 OUT_DIR="$ROOT_DIR/pango/src"
 
-for dir in "$PREFIX"/pango/pango; do
-  PARAMS="$PARAMS -s $dir"
+PARAMS="--with-properties --no-recursion"
+for dir in "$PREFIX"/pango/pango "$PREFIX"/pango/build/pango; do
+  if [ -d "$dir" ]; then
+    PARAMS="$PARAMS -s $dir"
+  fi
 done
 
 DOCEXTRACT_TO_XML_PY="$JHBUILD_SOURCES/glibmm/tools/defs_gen/docextract_to_xml.py"
