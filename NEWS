@@ -1,3 +1,9 @@
+2.41.5 (unstable):
+Distro packagers should probably not package this yet.
+
+* Only build changes.
+  (Kjell Ahlstedt)
+
 2.41.4 (unstable):
 Distro packagers should probably not package this yet.
 
