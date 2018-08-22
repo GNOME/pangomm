@@ -1,15 +1,16 @@
 ## This file is part of pangomm.
 
-msvc_net2017_data =				\
-	pangomm.sln				\
-	pangomm-build-defines.props		\
-	pangomm-version-paths.props		\
-	pangomm-install.props			\
-	gendef.vcxproj				\
-	gendef.vcxproj.filters			\
-	gendef/gendef.cc			\
-	pangomm/pangomm.rc			\
-	pangomm.vcxproj				\
-	pangomm.vcxproj.filters			\
-	pangomm/pangommconfig.h			\
-	install.vcxproj
+msvc_nmake_data =		\
+	build-rules-msvc.mak	\
+	config-msvc.mak		\
+	create-lists-msvc.mak	\
+	create-lists.bat	\
+	detectenv-msvc.mak	\
+	gendef/gendef.cc	\
+	generate-msvc.mak	\
+	info-msvc.mak		\
+	install.mak		\
+	install.vcxproj		\
+	Makefile.vc		\
+	pangomm/pangomm.rc	\
+	pangomm/pangommconfig.h

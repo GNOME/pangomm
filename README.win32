@@ -18,7 +18,7 @@ following :
 * MinGW-4.1 as the base distribution.
 
 The bare mingw distribution does not provide the necessary tools (sh, perl, m4
-, autoconf, automake, ..) to run the provided configure script "as is". One 
+, autoconf, automake, ..) to run the provided configure script "as is". One
 (currently non supported) solution is to use mingw in conjunction with msys,
 which is readily available on the mingw website (http://www.mingw.org/).
 
@@ -44,15 +44,20 @@ make
 make check
 make install
 
-2. MS Visual Studio 2017
+2. MS Visual Studio 2017 or later
 
-Open the pangomm.sln solution file in the MSVC_NMake directory. In
-the Tools/Options panel, add the appropriate GTK+ and glibmm include
-and lib directories to the Projects and Solutions/VC++ directories,
-if they are not in the locations specified by the property sheets,
-i.e. $(srcroot)\..\vs15\$(Platform). Build the solution.  The option
-/vd2 should not be used in these builds, unlike previous builds, as
-that would cause broken binaries to be built, causing crashes.
+Open a Visual Studio command prompt suitable for your intended build
+configuration, and change to the MSVC_NMake directory.  Ensure that
+all the depedent libraries could be found in $(PREFIX), which is at
+$(srcroot)\..\vs15\$(Platform) by default.  Run
+'nmake /f Makefile.vc CFG=[release|debug]' to build pangomm.  If a
+different $(PREFIX) is desired rather than the aforementioned default,
+pass in PREFIX=$(PATH) into your command line.
+
+A 'clean' target is supported to remove all the built object files and
+intermediate files that are generated during the build, while an
+'install' target is supported to copy the built DLL and PDB, .lib and
+headers to their appropriate locations under $(PREFIX).
 
 3. Gtkmm methods and signals not available on win32
 
