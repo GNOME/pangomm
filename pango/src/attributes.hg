@@ -57,6 +57,8 @@ class AttrFloat;
 class AttrFontDesc;
 class AttrShape;
 
+enum class GravityHint;
+
 /** The Pango::Attribute structure represents the common portions of all attributes.
  * Particular types of attributes derive this class. It holds the range in which the
  * value in the type-specific part of the attribute applies.
@@ -157,10 +159,19 @@ public:
   static AttrInt create_attr_background_alpha(guint16 alpha);
 
   /** Create a new font-size attribute.
-   * @param size The font size, in 1000ths of a point.
+   * @param size The font size, in 1024ths of a point.
    * @return An attribute of type AttrInt.
    */
   static AttrInt create_attr_size(int size);
+
+  /** Create a new font-size attribute.
+   *
+   * @newin{2,42}
+   *
+   * @param size The font size, in 1024ths of a device unit.
+   * @return An attribute of type AttrInt.
+   */
+  static AttrInt create_attr_size_absolute(int size);
 
   /** Create a new font slant style attribute.
    * @param style The slant style.
@@ -199,11 +210,37 @@ public:
    */
   static AttrInt create_attr_underline(Underline underline);
 
+  /** Create a new underline color attribute.
+   * This attribute modifies the color of underlines. If not set,
+   * underlines will use the foreground color.
+   *
+   * @newin{2,42}
+   *
+   * @param red The red value (ranging from 0 to 65535).
+   * @param green The green value (ranging from 0 to 65535).
+   * @param blue The blue value (ranging from 0 to 65535).
+   * @return An attribute of type AttrColor.
+   */
+  static AttrColor create_attr_underline_color(guint16 red, guint16 green, guint16 blue);
+
   /** Create a new font strike-through attribute.
    * @param strikethrough True indicates the text should be struck-through.
    * @return An attribute of type AttrInt.
    */
   static AttrInt create_attr_strikethrough(bool strikethrough);
+
+  /** Create a new strikethrough color attribute.
+   * This attribute modifies the color of strikethrough lines. If not set,
+   * strikethrough lines will use the foreground color.
+   *
+   * @newin{2,42}
+   *
+   * @param red The red value (ranging from 0 to 65535).
+   * @param green The green value (ranging from 0 to 65535).
+   * @param blue The blue value (ranging from 0 to 65535).
+   * @return An attribute of type AttrColor.
+   */
+  static AttrColor create_attr_strikethrough_color(guint16 red, guint16 green, guint16 blue);
 
   /** Create a new baseline displacement attribute.
    * @param rise The amount that the text should be displaced vertically, in 10'000ths of an em. Positive values displace the text upwards.
@@ -218,6 +255,29 @@ public:
    */
   static AttrFloat create_attr_scale(double scale_factor);
 
+  /** Create a new font fallback attribute.
+   * If fallback is disabled, characters will only be used from the
+   * closest matching font on the system. No fallback will be done to
+   * other fonts on the system that might contain the characters in the text.
+   *
+   * @newin{2,42}
+   *
+   * @param enable_fallback <tt>true</tt> if we should fall back on other fonts
+   *                        for characters the active font is missing.
+   * @return An attribute of type AttrInt.
+   */
+  static AttrInt create_attr_fallback(bool enable_fallback);
+
+  /** Create a new letter-spacing attribute.
+   *
+   * @newin{2,42}
+   *
+   * @param letter_spacing Amount of extra space to add between graphemes
+   *                       of the text, in Pango units.
+   * @return An attribute of type AttrInt.
+   */
+  static AttrInt create_attr_letter_spacing(int letter_spacing);
+
   /** Create a new shape attribute.
    * A shape is used to impose a particular ink and logical rect on the result of shaping a particular glyph.
    * This might be used, for instance, for embedding a picture or a widget inside a PangoLayout.
@@ -226,6 +286,33 @@ public:
    * @return An attribute of type AttrShape.
    */
   static AttrShape create_attr_shape(const Rectangle& ink_rect, const Rectangle& logical_rect);
+
+  /** Create a new gravity attribute.
+   *
+   * @newin{2,42}
+   *
+   * @param gravity The gravity value; should not be Pango::Gravity::AUTO.
+   * @return An attribute of type AttrInt.
+   */
+  static AttrInt create_attr_gravity(Gravity gravity);
+
+  /** Create a new gravity hint attribute.
+   *
+   * @newin{2,42}
+   *
+   * @param hint The gravity hint value.
+   * @return An attribute of type AttrInt.
+   */
+  static AttrInt create_attr_gravity_hint(GravityHint hint);
+
+  /** Create a new font features tag attribute.
+   *
+   * @newin{2,42}
+   *
+   * @param features A string with OpenType font features, in CSS syntax.
+   * @return An attribute of type AttrString.
+   */
+  static AttrString create_attr_font_features(const Glib::ustring& features);
 
 protected:
   PangoAttribute* gobject_;
