@@ -16,7 +16,7 @@
 ## along with this library.  If not, see <http://www.gnu.org/licenses/>.
 
 include $(top_srcdir)/pango/src/filelist.am
-include $(top_srcdir)/pango/pangomm/filelist.am
+include $(top_srcdir)/pango/pangomm/filelist.gmake.am
 
 pangomm_files_h = $(files_built_h) $(filter-out wrap_init.h,$(files_extra_h))
 

@@ -1,0 +1,6 @@
+## This file is part of pangomm.
+
+include $(top_srcdir)/pango/pangomm/filelist.am
+
+# Split out from $(top_srcdir)/pango/pangomm/filelist.am
+files_built_ph	= $(patsubst %.hg,private/%_p.h,$(files_hg))
