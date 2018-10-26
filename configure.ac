@@ -16,7 +16,7 @@
 ## along with this library.  If not, see <http://www.gnu.org/licenses/>.
 
 AC_INIT([pangomm], [2.40.1],
-        [http://bugzilla.gnome.org/enter_bug.cgi?product=pangomm],
+        [https://gitlab.gnome.org/GNOME/pangomm/issues/],
         [pangomm], [http://www.gtkmm.org/])
 AC_PREREQ([2.59])
 
