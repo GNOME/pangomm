@@ -18,7 +18,7 @@
 lib_LTLIBRARIES = libpangomm-@PANGOMM_API_VERSION@.la
 
 include $(srcdir)/../src/filelist.am
-include $(srcdir)/filelist.am
+include $(srcdir)/filelist.gmake.am
 include $(top_srcdir)/build/compile-binding.am
 
 local_cppflags = $(binding_includes) $(binding_cppflags) -DPANGOMM_BUILD=1
