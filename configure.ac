@@ -15,7 +15,7 @@
 ## You should have received a copy of the GNU Lesser General Public License
 ## along with this library.  If not, see <http://www.gnu.org/licenses/>.
 
-AC_INIT([pangomm], [2.41.5],
+AC_INIT([pangomm], [2.43.1],
         [https://gitlab.gnome.org/GNOME/pangomm/issues/],
         [pangomm], [http://www.gtkmm.org/])
 AC_PREREQ([2.59])
@@ -33,7 +33,7 @@ AM_MAINTAINER_MODE
 AC_ARG_VAR([ACLOCAL_FLAGS], [aclocal flags, e.g. -I <macro dir>])
 
 MM_PREREQ([0.9.12])
-MM_INIT_MODULE([pangomm-2.42])
+MM_INIT_MODULE([pangomm-2.44])
 
 # Copy the mm-common .pl scripts into docs/,
 # and use them from there,
@@ -49,7 +49,7 @@ MM_AX_CXX_COMPILE_STDCXX([17], [noext], [mandatory])
 AC_DISABLE_STATIC
 LT_INIT([win32-dll])
 
-AC_SUBST([PANGOMM_MODULES], ['glibmm-2.60 >= 2.59.1 cairomm-1.16 >= 1.15.1 pangocairo >= 1.38.0'])
+AC_SUBST([PANGOMM_MODULES], ['glibmm-2.60 >= 2.59.1 cairomm-1.16 >= 1.15.1 pangocairo >= 1.41.0'])
 PKG_CHECK_MODULES([PANGOMM], [$PANGOMM_MODULES])
 
 MM_PKG_CONFIG_SUBST([GTHREAD_CFLAGS], [--cflags-only-other gthread-2.0])

@@ -6,7 +6,7 @@ BASE_INCLUDES =	/I$(PREFIX)\include
 # Please do not change anything beneath this line unless maintaining the NMake Makefiles
 PANGO_API_VERSION = 1.0
 PANGOMM_MAJOR_VERSION = 2
-PANGOMM_MINOR_VERSION = 42
+PANGOMM_MINOR_VERSION = 44
 
 GLIB_API_VERSION = 2.0
 

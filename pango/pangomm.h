@@ -37,11 +37,11 @@
  * compilation, but suffices for this simple example. Assuming that your
  * program source file is @c program.cc, compile it with:
  * @code
- * g++ program.cc -o program  `pkg-config --cflags --libs pangomm-2.42`
+ * g++ program.cc -o program  `pkg-config --cflags --libs pangomm-2.44`
  * @endcode
  * Alternatively, if using autoconf, use the following in @c configure.ac:
  * @code
- * PKG_CHECK_MODULES([PANGOMM], [pangomm-2.42])
+ * PKG_CHECK_MODULES([PANGOMM], [pangomm-2.44])
  * @endcode
  * Then use the generated @c PANGOMM_CFLAGS and @c PANGOMM_LIBS variables in
  * the project @c Makefile.am files. For example:
