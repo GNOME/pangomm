@@ -1,3 +1,24 @@
+2.43.1 (unstable):
+Distro packagers should probably not package this yet.
+
+* Attribute: Add several create_attr_*() methods
+  (Kjell Ahlstedt) Bug #781059 = Issue #2 (Tony Houghton)
+* FontDescription: Add set/get_variations()
+  (Kjell Ahlstedt)
+
+Build:
+* Require C++17.
+  (Murray Cumming)
+* Replace the Visual Studio project files with MSVC NMake project files
+  (Chun-wei Fan) Merge request !1
+* Use glibmm-2.60 instead of glibmm-2.56
+  (Kjell Ahlstedt)
+* Requires pango >= 1.41.0
+  because of FontDescription::set/get_variations()
+  (Kjell Ahlstedt)
+* Change the ABI to pangomm-2.44
+  (Kjell Ahlstedt)
+
 2.41.5 (unstable):
 Distro packagers should probably not package this yet.
 
