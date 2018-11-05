@@ -293,7 +293,8 @@
 ;;   PANGO_FONT_MASK_WEIGHT  = 1 << 3,
 ;;   PANGO_FONT_MASK_STRETCH = 1 << 4,
 ;;   PANGO_FONT_MASK_SIZE    = 1 << 5,
-;;   PANGO_FONT_MASK_GRAVITY = 1 << 6
+;;   PANGO_FONT_MASK_GRAVITY = 1 << 6,
+;;   PANGO_FONT_MASK_VARIATIONS = 1 << 7,
 ;; } PangoFontMask;
 
 (define-flags-extended FontMask
@@ -307,6 +308,7 @@
     '("stretch" "PANGO_FONT_MASK_STRETCH" "1 << 4")
     '("size" "PANGO_FONT_MASK_SIZE" "1 << 5")
     '("gravity" "PANGO_FONT_MASK_GRAVITY" "1 << 6")
+    '("variations" "PANGO_FONT_MASK_VARIATIONS" "1 << 7")
   )
 )
 
@@ -731,34 +733,6 @@
   (c-name "PangoTabAlign")
   (values
     '("left" "PANGO_TAB_LEFT" "0")
-  )
-)
-
-;; From pangowin32-private.h
-
-;; Original typedef:
-;; typedef enum
-;;   {
-;;     PANGO_WIN32_COVERAGE_UNSPEC,
-;;     PANGO_WIN32_COVERAGE_ZH_TW,
-;;     PANGO_WIN32_COVERAGE_ZH_CN,
-;;     PANGO_WIN32_COVERAGE_JA,
-;;     PANGO_WIN32_COVERAGE_KO,
-;;     PANGO_WIN32_COVERAGE_VI,
-;;     PANGO_WIN32_N_COVERAGES
-;;   } PangoWin32CoverageLanguageClass;
-
-(define-enum-extended Win32CoverageLanguageClass
-  (in-module "Pango")
-  (c-name "PangoWin32CoverageLanguageClass")
-  (values
-    '("coverage-unspec" "PANGO_WIN32_COVERAGE_UNSPEC" "0")
-    '("coverage-zh-tw" "PANGO_WIN32_COVERAGE_ZH_TW" "1")
-    '("coverage-zh-cn" "PANGO_WIN32_COVERAGE_ZH_CN" "2")
-    '("coverage-ja" "PANGO_WIN32_COVERAGE_JA" "3")
-    '("coverage-ko" "PANGO_WIN32_COVERAGE_KO" "4")
-    '("coverage-vi" "PANGO_WIN32_COVERAGE_VI" "5")
-    '("n-coverages" "PANGO_WIN32_N_COVERAGES" "6")
   )
 )
 

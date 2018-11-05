@@ -1,17 +1,5 @@
 ;; -*- scheme -*-
 ; object definitions ...
-(define-object CairoFont
-  (in-module "Pango")
-  (c-name "PangoCairoFont")
-  (gtype-id "PANGO_TYPE_CAIRO_FONT")
-)
-
-(define-object CairoFontMap
-  (in-module "Pango")
-  (c-name "PangoCairoFontMap")
-  (gtype-id "PANGO_TYPE_CAIRO_FONT_MAP")
-)
-
 (define-object Engine
   (in-module "Pango")
   (parent "GObject")
@@ -89,13 +77,6 @@
   (gtype-id "PANGO_TYPE_FC_FONT_MAP")
 )
 
-(define-object CoreTextFontMap
-  (in-module "Pango")
-  (parent "PangoFontMap")
-  (c-name "PangoCoreTextFontMap")
-  (gtype-id "PANGO_TYPE_CORE_TEXT_FONT_MAP")
-)
-
 (define-object Fontset
   (in-module "Pango")
   (parent "GObject")
@@ -103,39 +84,11 @@
   (gtype-id "PANGO_TYPE_FONTSET")
 )
 
-(define-object OTInfo
-  (in-module "Pango")
-  (parent "GObject")
-  (c-name "PangoOTInfo")
-  (gtype-id "PANGO_TYPE_OT_INFO")
-)
-
-(define-object OTRuleset
-  (in-module "Pango")
-  (parent "GObject")
-  (c-name "PangoOTRuleset")
-  (gtype-id "PANGO_TYPE_OT_RULESET")
-)
-
 (define-object Renderer
   (in-module "Pango")
   (parent "GObject")
   (c-name "PangoRenderer")
   (gtype-id "PANGO_TYPE_RENDERER")
-)
-
-(define-object Win32Font
-  (in-module "Pango")
-  (parent "PangoFont")
-  (c-name "PangoWin32Font")
-  (gtype-id "PANGO_TYPE_WIN32_FONT")
-)
-
-(define-object Win32FontMap
-  (in-module "Pango")
-  (parent "PangoFontMap")
-  (c-name "PangoWin32FontMap")
-  (gtype-id "PANGO_TYPE_WIN32_FONT_MAP")
 )
 
 (define-object XftRenderer
@@ -318,6 +271,7 @@
     '("stretch" "PANGO_FONT_MASK_STRETCH")
     '("size" "PANGO_FONT_MASK_SIZE")
     '("gravity" "PANGO_FONT_MASK_GRAVITY")
+    '("variations" "PANGO_FONT_MASK_VARIATIONS")
   )
 )
 
@@ -535,10 +489,6 @@
     '("left" "PANGO_TAB_LEFT")
   )
 )
-
-
-;; From module-defs.h
-
 
 
 ;; From pango-attributes.h
@@ -1130,19 +1080,9 @@
 
 ;; From pangocairo-coretextfont.h
 
-(define-function pango_cairo_core_text_font_get_type
-  (c-name "pango_cairo_core_text_font_get_type")
-  (return-type "GType")
-)
-
 
 
 ;; From pangocairo-coretext.h
-
-(define-function pango_cairo_core_text_font_map_get_type
-  (c-name "pango_cairo_core_text_font_map_get_type")
-  (return-type "GType")
-)
 
 
 
@@ -1405,15 +1345,6 @@
 
 
 
-;; From pangocairo-private.h
-
-(define-function pango_cairo_renderer_get_type
-  (c-name "pango_cairo_renderer_get_type")
-  (return-type "GType")
-)
-
-
-
 ;; From pangocairo-win32.h
 
 (define-function pango_cairo_win32_font_map_get_type
@@ -1646,57 +1577,6 @@
 
 
 
-;; From pangocoretext-private.h
-
-(define-function pango_core_text_font_map_get_type
-  (c-name "pango_core_text_font_map_get_type")
-  (return-type "GType")
-)
-
-(define-method get_absolute_size
-  (of-object "PangoCoreTextFontKey")
-  (c-name "pango_core_text_font_key_get_absolute_size")
-  (return-type "int")
-)
-
-(define-method get_resolution
-  (of-object "PangoCoreTextFontKey")
-  (c-name "pango_core_text_font_key_get_resolution")
-  (return-type "double")
-)
-
-(define-method get_synthetic_italic
-  (of-object "PangoCoreTextFontKey")
-  (c-name "pango_core_text_font_key_get_synthetic_italic")
-  (return-type "gboolean")
-)
-
-(define-method get_context_key
-  (of-object "PangoCoreTextFontKey")
-  (c-name "pango_core_text_font_key_get_context_key")
-  (return-type "gpointer")
-)
-
-(define-method get_matrix
-  (of-object "PangoCoreTextFontKey")
-  (c-name "pango_core_text_font_key_get_matrix")
-  (return-type "const-PangoMatrix*")
-)
-
-(define-method get_gravity
-  (of-object "PangoCoreTextFontKey")
-  (c-name "pango_core_text_font_key_get_gravity")
-  (return-type "PangoGravity")
-)
-
-(define-method get_ctfontdescriptor
-  (of-object "PangoCoreTextFontKey")
-  (c-name "pango_core_text_font_key_get_ctfontdescriptor")
-  (return-type "CTFontDescriptorRef")
-)
-
-
-
 ;; From pango-coverage.h
 
 (define-function pango_coverage_new
@@ -1772,6 +1652,10 @@
 
 
 
+;; From pango-emoji-table.h
+
+
+
 ;; From pango-engine.h
 
 (define-function pango_engine_get_type
@@ -1817,104 +1701,6 @@
   (parameters
     '("const-char*" "id")
   )
-)
-
-
-
-;; From pango-engine-private.h
-
-
-
-;; From pango-enum-types.h
-
-(define-function pango_attr_type_get_type
-  (c-name "pango_attr_type_get_type")
-  (return-type "GType")
-)
-
-(define-function pango_underline_get_type
-  (c-name "pango_underline_get_type")
-  (return-type "GType")
-)
-
-(define-function pango_bidi_type_get_type
-  (c-name "pango_bidi_type_get_type")
-  (return-type "GType")
-)
-
-(define-function pango_direction_get_type
-  (c-name "pango_direction_get_type")
-  (return-type "GType")
-)
-
-(define-function pango_coverage_level_get_type
-  (c-name "pango_coverage_level_get_type")
-  (return-type "GType")
-)
-
-(define-function pango_style_get_type
-  (c-name "pango_style_get_type")
-  (return-type "GType")
-)
-
-(define-function pango_variant_get_type
-  (c-name "pango_variant_get_type")
-  (return-type "GType")
-)
-
-(define-function pango_weight_get_type
-  (c-name "pango_weight_get_type")
-  (return-type "GType")
-)
-
-(define-function pango_stretch_get_type
-  (c-name "pango_stretch_get_type")
-  (return-type "GType")
-)
-
-(define-function pango_font_mask_get_type
-  (c-name "pango_font_mask_get_type")
-  (return-type "GType")
-)
-
-(define-function pango_gravity_get_type
-  (c-name "pango_gravity_get_type")
-  (return-type "GType")
-)
-
-(define-function pango_gravity_hint_get_type
-  (c-name "pango_gravity_hint_get_type")
-  (return-type "GType")
-)
-
-(define-function pango_alignment_get_type
-  (c-name "pango_alignment_get_type")
-  (return-type "GType")
-)
-
-(define-function pango_wrap_mode_get_type
-  (c-name "pango_wrap_mode_get_type")
-  (return-type "GType")
-)
-
-(define-function pango_ellipsize_mode_get_type
-  (c-name "pango_ellipsize_mode_get_type")
-  (return-type "GType")
-)
-
-(define-function pango_render_part_get_type
-  (c-name "pango_render_part_get_type")
-  (return-type "GType")
-)
-
-(define-function pango_script_get_type
-  (c-name "pango_script_get_type")
-  (return-type "GType")
-)
-
-(define-function pango_tab_align_get_type
-  (c-name "pango_tab_align_get_type")
-  (return-type "GType")
 )
 
 
@@ -2060,6 +1846,12 @@
   (return-type "gpointer")
 )
 
+(define-method get_variations
+  (of-object "PangoFcFontKey")
+  (c-name "pango_fc_font_key_get_variations")
+  (return-type "const-char*")
+)
+
 (define-method create_context
   (of-object "PangoFcFontMap")
   (c-name "pango_fc_font_map_create_context")
@@ -2132,35 +1924,6 @@
     '("gboolean" "include_size")
   )
 )
-
-
-
-;; From pangofc-private.h
-
-(define-method get_raw_extents
-  (of-object "PangoFcFont")
-  (c-name "pango_fc_font_get_raw_extents")
-  (return-type "none")
-  (parameters
-    '("FT_Int32" "load_flags")
-    '("PangoGlyph" "glyph")
-    '("PangoRectangle*" "ink_rect")
-    '("PangoRectangle*" "logical_rect")
-  )
-)
-
-(define-method create_base_metrics_for_context
-  (of-object "PangoFcFont")
-  (c-name "pango_fc_font_create_base_metrics_for_context")
-  (return-type "PangoFontMetrics*")
-  (parameters
-    '("PangoContext*" "context")
-  )
-)
-
-
-
-;; From pango-features.h
 
 
 
@@ -2346,6 +2109,30 @@
   (of-object "PangoFontDescription")
   (c-name "pango_font_description_get_gravity")
   (return-type "PangoGravity")
+)
+
+(define-method set_variations_static
+  (of-object "PangoFontDescription")
+  (c-name "pango_font_description_set_variations_static")
+  (return-type "none")
+  (parameters
+    '("const-char*" "settings")
+  )
+)
+
+(define-method set_variations
+  (of-object "PangoFontDescription")
+  (c-name "pango_font_description_set_variations")
+  (return-type "none")
+  (parameters
+    '("const-char*" "settings")
+  )
+)
+
+(define-method get_variations
+  (of-object "PangoFontDescription")
+  (c-name "pango_font_description_get_variations")
+  (return-type "const-char*")
 )
 
 (define-method get_set_fields
@@ -2902,20 +2689,6 @@
     '("PangoFont*" "font")
     '("PangoLanguage*" "language")
   )
-)
-
-
-
-;; From pangoft2-private.h
-
-(define-function pango_ft2_font_get_type
-  (c-name "pango_ft2_font_get_type")
-  (return-type "GType")
-)
-
-(define-function pango_ft2_renderer_get_type
-  (c-name "pango_ft2_renderer_get_type")
-  (return-type "GType")
 )
 
 
@@ -4002,10 +3775,6 @@
 
 
 
-;; From pango-layout-private.h
-
-
-
 ;; From pango-matrix.h
 
 (define-function pango_matrix_get_type
@@ -4474,10 +4243,6 @@
 
 
 
-;; From pango-ot-private.h
-
-
-
 ;; From pango-renderer.h
 
 (define-function pango_renderer_get_type
@@ -4723,10 +4488,6 @@
 
 
 ;; From pango-script-lang-table.h
-
-
-
-;; From pango-script-private.h
 
 
 
@@ -5054,6 +4815,10 @@
 
 
 
+;; From pango-version-macros.h
+
+
+
 ;; From pangowin32.h
 
 (define-function pango_win32_get_context
@@ -5252,10 +5017,6 @@
 
 
 
-;; From pangowin32-private.h
-
-
-
 ;; From pangoxft.h
 
 (define-function pango_xft_get_font_map
@@ -5377,10 +5138,6 @@
 
 
 
-;; From pangoxft-private.h
-
-
-
 ;; From pangoxft-render.h
 
 (define-function pango_xft_renderer_get_type
@@ -5480,5 +5237,103 @@
     '("int" "y")
   )
 )
+
+
+
+;; From pango-enum-types.h
+
+(define-function pango_attr_type_get_type
+  (c-name "pango_attr_type_get_type")
+  (return-type "GType")
+)
+
+(define-function pango_underline_get_type
+  (c-name "pango_underline_get_type")
+  (return-type "GType")
+)
+
+(define-function pango_bidi_type_get_type
+  (c-name "pango_bidi_type_get_type")
+  (return-type "GType")
+)
+
+(define-function pango_direction_get_type
+  (c-name "pango_direction_get_type")
+  (return-type "GType")
+)
+
+(define-function pango_coverage_level_get_type
+  (c-name "pango_coverage_level_get_type")
+  (return-type "GType")
+)
+
+(define-function pango_style_get_type
+  (c-name "pango_style_get_type")
+  (return-type "GType")
+)
+
+(define-function pango_variant_get_type
+  (c-name "pango_variant_get_type")
+  (return-type "GType")
+)
+
+(define-function pango_weight_get_type
+  (c-name "pango_weight_get_type")
+  (return-type "GType")
+)
+
+(define-function pango_stretch_get_type
+  (c-name "pango_stretch_get_type")
+  (return-type "GType")
+)
+
+(define-function pango_font_mask_get_type
+  (c-name "pango_font_mask_get_type")
+  (return-type "GType")
+)
+
+(define-function pango_gravity_get_type
+  (c-name "pango_gravity_get_type")
+  (return-type "GType")
+)
+
+(define-function pango_gravity_hint_get_type
+  (c-name "pango_gravity_hint_get_type")
+  (return-type "GType")
+)
+
+(define-function pango_alignment_get_type
+  (c-name "pango_alignment_get_type")
+  (return-type "GType")
+)
+
+(define-function pango_wrap_mode_get_type
+  (c-name "pango_wrap_mode_get_type")
+  (return-type "GType")
+)
+
+(define-function pango_ellipsize_mode_get_type
+  (c-name "pango_ellipsize_mode_get_type")
+  (return-type "GType")
+)
+
+(define-function pango_render_part_get_type
+  (c-name "pango_render_part_get_type")
+  (return-type "GType")
+)
+
+(define-function pango_script_get_type
+  (c-name "pango_script_get_type")
+  (return-type "GType")
+)
+
+(define-function pango_tab_align_get_type
+  (c-name "pango_tab_align_get_type")
+  (return-type "GType")
+)
+
+
+
+;; From pango-features.h
 
 
