@@ -271,6 +271,7 @@
     '("stretch" "PANGO_FONT_MASK_STRETCH")
     '("size" "PANGO_FONT_MASK_SIZE")
     '("gravity" "PANGO_FONT_MASK_GRAVITY")
+    '("variations" "PANGO_FONT_MASK_VARIATIONS")
   )
 )
 
@@ -1845,6 +1846,12 @@
   (return-type "gpointer")
 )
 
+(define-method get_variations
+  (of-object "PangoFcFontKey")
+  (c-name "pango_fc_font_key_get_variations")
+  (return-type "const-char*")
+)
+
 (define-method create_context
   (of-object "PangoFcFontMap")
   (c-name "pango_fc_font_map_create_context")
@@ -2102,6 +2109,30 @@
   (of-object "PangoFontDescription")
   (c-name "pango_font_description_get_gravity")
   (return-type "PangoGravity")
+)
+
+(define-method set_variations_static
+  (of-object "PangoFontDescription")
+  (c-name "pango_font_description_set_variations_static")
+  (return-type "none")
+  (parameters
+    '("const-char*" "settings")
+  )
+)
+
+(define-method set_variations
+  (of-object "PangoFontDescription")
+  (c-name "pango_font_description_set_variations")
+  (return-type "none")
+  (parameters
+    '("const-char*" "settings")
+  )
+)
+
+(define-method get_variations
+  (of-object "PangoFontDescription")
+  (c-name "pango_font_description_get_variations")
+  (return-type "const-char*")
 )
 
 (define-method get_set_fields
