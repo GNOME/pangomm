@@ -23,5 +23,5 @@ stamp-h?
 /pango/pangommconfig.h
 /pango/src/.stamps/
 /tools/extra_defs_gen/generate_extra_defs
-/MSVC_Net201?/pangomm/pangomm.rc
-/MSVC_Net201?/pangomm/pangommconfig.h
+/MSVC_NMake/pangomm/pangomm.rc
+/MSVC_NMake/pangomm/pangommconfig.h

@@ -76,9 +76,9 @@ AC_CONFIG_FILES([Makefile
                  pango/pangomm/Makefile
                  docs/Makefile
                  docs/reference/Doxyfile
-                 MSVC_Net2013/pangomm/pangomm.rc])
+                 MSVC_NMake/pangomm/pangomm.rc])
 
 # Copy the generated configuration headers into the MSVC project directories.
-AC_CONFIG_COMMANDS([MSVC_Net2013/pangomm/pangommconfig.h],
-                   [cp -f pango/pangommconfig.h MSVC_Net2013/pangomm/pangommconfig.h])
+AC_CONFIG_COMMANDS([MSVC_NMake/pangomm/pangommconfig.h],
+                   [cp -f pango/pangommconfig.h MSVC_NMake/pangomm/pangommconfig.h])
 AC_OUTPUT
