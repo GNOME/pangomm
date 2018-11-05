@@ -1,5 +1,10 @@
-2.40.1 (stable):
+2.40.2 (stable):
 
+Build:
+* Replace the Visual Studio project files with MSVC NMake project files
+  (Chun-wei Fan) Merge request !3
+
+2.40.1 (stable):
 
 * C++11: Make all operator bool()s explicit.
   (Murray Cumming)
