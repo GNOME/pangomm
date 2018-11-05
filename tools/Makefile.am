@@ -30,7 +30,7 @@ dist_noinst_DATA = README
 noinst_PROGRAMS  = extra_defs_gen/generate_extra_defs
 
 extra_defs_gen_generate_extra_defs_SOURCES = extra_defs_gen/generate_defs_pango.cc
-extra_defs_gen_generate_extra_defs_LDADD   = $(PANGOMM_LIBS) -lglibmm_generate_extra_defs-2.58
+extra_defs_gen_generate_extra_defs_LDADD   = $(PANGOMM_LIBS) -lglibmm_generate_extra_defs-2.60
 extra_defs_gen_generate_extra_defs_LDFLAGS = -no-undefined -avoid-version
 
 AM_CPPFLAGS = -I$(top_builddir) $(GTHREAD_CFLAGS) $(PANGOMM_CFLAGS)
