@@ -1,3 +1,15 @@
+2.42.0 (stable):
+
+* Attribute: Add several create_attr_*() methods
+  (Kjell Ahlstedt) Bug #781059 = Issue #2 (Tony Houghton)
+* FontDescription: Add set/get_variations()
+  (Kjell Ahlstedt)
+
+Build:
+* Requires pango >= 1.41.0
+  because of FontDescription::set/get_variations()
+  (Kjell Ahlstedt)
+
 2.40.2 (stable):
 
 Build:
