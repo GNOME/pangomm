@@ -287,11 +287,7 @@ PREDEFINED             = __cplusplus \
                          "G_GNUC_NORETURN=" \
                          "G_GNUC_NULL_TERMINATED=" \
                          "G_GNUC_PURE=" \
-                         GLIBMM_DEFAULT_SIGNAL_HANDLERS_ENABLED \
-                         GLIBMM_EXCEPTIONS_ENABLED \
                          GLIBMM_HAVE_WIDE_STREAM \
-                         GLIBMM_PROPERTIES_ENABLED \
-                         GLIBMM_VFUNCS_ENABLED \
                          "PANGOMM_API="
 EXPAND_AS_DEFINED      = PANGOMM_MAJOR_VERSION \
                          PANGOMM_MINOR_VERSION \
