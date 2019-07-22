@@ -147,6 +147,7 @@ type of a Unicode character as specified by the
 &lt;ulink url=&quot;http://www.unicode.org/reports/tr9/&quot;&gt;Unicode bidirectional algorithm&lt;/ulink&gt;.
 
 Since: 1.22
+Deprecated: 1.44: Use fribidi for this information
 
 </description>
 <parameters>
@@ -234,6 +235,9 @@ Since: 1.22
 Used to indicate how well a font can represent a particular Unicode
 character point for a particular script.
 
+Since 1.44, only %PANGO_COVERAGE_NONE and %PANGO_COVERAGE_EXACT
+will be returned.
+
 </description>
 <parameters>
 <parameter name="PANGO_COVERAGE_NONE">
@@ -277,6 +281,10 @@ values come from an earlier interpretation of this
 enumeration as the writing direction of a block of
 text and are no longer used; See #PangoGravity for how
 vertical text is handled in Pango.
+
+If you are interested in text direction, you should
+really use fribidi directly. PangoDirection is only
+retained because it is used in some public apis.
 
 </description>
 <parameters>
@@ -507,12 +515,14 @@ Since: 1.8
 <description>
 The #PangoScript enumeration identifies different writing
 systems. The values correspond to the names as defined in the
-Unicode standard.
-Note that new types may be added in the future. Applications should be ready
-to handle unknown values.  This enumeration is interchangeable with
-#GUnicodeScript.  See &lt;ulink
+Unicode standard. See &lt;ulink
 url=&quot;http://www.unicode.org/reports/tr24/&quot;&gt;Unicode Standard Annex
 #24: Script names&lt;/ulink&gt;.
+
+Note that this enumeration is deprecated and will not be updated
+to include values in newer versions of the Unicode standard.
+Applications should use the GUnicodeScript enumeration instead,
+whose values are interchangeable with PangoScript.
 
 </description>
 <parameters>
@@ -1687,6 +1697,27 @@ if an attribute should be filtered out.
 </return>
 </function>
 
+<function name="pango_attr_list_get_attributes">
+<description>
+Gets a list of all attributes in @list.
+
+Since: 1.44
+
+</description>
+<parameters>
+<parameter name="list">
+<parameter_description> a #PangoAttrList
+</parameter_description>
+</parameter>
+</parameters>
+<return>
+a list of all attributes in @list. To free this value, call
+pango_attribute_destroy() on each value and g_slist_free()
+on the list.
+
+</return>
+</function>
+
 <function name="pango_attr_list_get_iterator">
 <description>
 Create a iterator initialized to the beginning of the list.
@@ -1825,6 +1856,49 @@ it contains.
 <parameters>
 <parameter name="list">
 <parameter_description> a #PangoAttrList, may be %NULL
+</parameter_description>
+</parameter>
+</parameters>
+<return></return>
+</function>
+
+<function name="pango_attr_list_update">
+<description>
+Update indices of attributes in @list for
+a change in the text they refer to.
+
+The change that this function applies is
+removing @remove bytes at position @pos
+and inserting @add bytes instead.
+
+Attributes that fall entirely in the
+(@pos, @pos + @remove) range are removed.
+
+Attributes that start or end inside the
+(@pos, @pos + @remove) range are shortened to
+reflect the removal.
+
+Attributes start and end positions are updated
+if they are behind @pos + @remove.
+
+Since: 1.44
+
+</description>
+<parameters>
+<parameter name="list">
+<parameter_description> a #PangoAttrList
+</parameter_description>
+</parameter>
+<parameter name="pos">
+<parameter_description> the position of the change
+</parameter_description>
+</parameter>
+<parameter name="remove">
+<parameter_description> the number of removed bytes
+</parameter_description>
+</parameter>
+<parameter name="add">
+<parameter_description> the number of added bytes
 </parameter_description>
 </parameter>
 </parameters>
@@ -2270,13 +2344,15 @@ Unicode bidirectional algorithm.
 <function name="pango_break">
 <description>
 Determines possible line, word, and character breaks
-for a string of Unicode text with a single analysis.  For most
-purposes you may want to use pango_get_log_attrs().
+for a string of Unicode text with a single analysis.
+For most purposes you may want to use pango_get_log_attrs().
+
+Deprecated: 1.44: Use pango_default_break() and pango_tailor_break()
 
 </description>
 <parameters>
 <parameter name="text">
-<parameter_description>      the text to process
+<parameter_description>      the text to process. Must be valid UTF-8
 </parameter_description>
 </parameter>
 <parameter name="length">
@@ -3667,6 +3743,7 @@ with pango_coverage_unref().
 Convert data generated from pango_coverage_to_bytes() back
 to a #PangoCoverage
 
+Deprecated: 1.44: This returns %NULL
 
 </description>
 <parameters>
@@ -3682,6 +3759,7 @@ representing a #PangoCoverage
 </parameters>
 <return> a newly allocated
 #PangoCoverage, or %NULL if the data was invalid.
+
 </return>
 </function>
 
@@ -3710,6 +3788,8 @@ Determine whether a particular index is covered by @coverage
 Set the coverage for each index in @coverage to be the max (better)
 value of the current coverage for the index and the coverage for
 the corresponding index in @other.
+
+Deprecated: 1.44: This function does nothing
 
 </description>
 <parameters>
@@ -3782,6 +3862,8 @@ Modify a particular index within @coverage
 <description>
 Convert a #PangoCoverage structure into a flat binary format
 
+Deprecated: 1.44: This returns %NULL
+
 </description>
 <parameters>
 <parameter name="coverage">
@@ -3818,18 +3900,16 @@ If the result is zero, free the coverage and all associated memory.
 
 <function name="pango_default_break">
 <description>
-This is the default break algorithm, used if no language
-engine overrides it. Normally you should use pango_break()
-instead. Unlike pango_break(),
-@analysis can be %NULL, but only do that if you know what
-you're doing. If you need an analysis to pass to pango_break(),
-you need to pango_itemize().  In most cases however you should
-simply use pango_get_log_attrs().
+This is the default break algorithm. It applies Unicode
+rules without language-specific tailoring, therefore
+the @analyis argument is unused and can be %NULL.
+
+See pango_tailor_break() for language-specific breaks.
 
 </description>
 <parameters>
 <parameter name="text">
-<parameter_description> text to break
+<parameter_description> text to break. Must be valid UTF-8
 </parameter_description>
 </parameter>
 <parameter name="length">
@@ -4016,10 +4096,6 @@ Since: 1.6
 <parameter_description> a #PangoFcFont
 </parameter_description>
 </parameter>
-<parameter name="load_flags">
-<parameter_description> flags to pass to FT_Load_Glyph()
-</parameter_description>
-</parameter>
 <parameter name="glyph">
 <parameter_description> the glyph index to load
 </parameter_description>
@@ -4068,6 +4144,7 @@ Since: 1.4
 Determines whether @font has a glyph for the codepoint @wc.
 
 Since: 1.4
+Deprecated: 1.44: Use pango_font_has_char()
 
 </description>
 <parameters>
@@ -4087,8 +4164,11 @@ Since: 1.4
 
 <function name="pango_fc_font_kern_glyphs">
 <description>
-Adjust each adjacent pair of glyphs in @glyphs according to
-kerning information in @font.
+This function used to adjust each adjacent pair of glyphs
+in @glyphs according to kerning information in @font.
+
+Since 1.44, it does nothing.
+
 
 Since: 1.4
 Deprecated: 1.32
@@ -4168,6 +4248,7 @@ This face will be kept around until you call
 pango_fc_font_unlock_face().
 
 Since: 1.4
+Deprecated: 1.44: Use pango_font_get_hb_font() instead
 
 </description>
 <parameters>
@@ -4381,6 +4462,7 @@ Releases a font previously obtained with
 pango_fc_font_lock_face().
 
 Since: 1.4
+Deprecated: 1.44: Use pango_font_get_hb_font() instead
 
 </description>
 <parameters>
@@ -4511,7 +4593,7 @@ Since: 1.4
 </description>
 <parameters>
 <parameter name="text">
-<parameter_description>   the text to process
+<parameter_description>   the text to process. Must be valid UTF-8
 </parameter_description>
 </parameter>
 <parameter name="length">
@@ -5526,6 +5608,25 @@ Since: 1.4
 </return>
 </function>
 
+<function name="pango_font_family_is_variable">
+<description>
+A variable font is a font which has axes that can be modified to
+produce different faces.
+
+Since: 1.44
+
+</description>
+<parameters>
+<parameter name="family">
+<parameter_description> a #PangoFontFamily
+</parameter_description>
+</parameter>
+</parameters>
+<return> %TRUE if the family is variable
+
+</return>
+</function>
+
 <function name="pango_font_family_list_faces">
 <description>
 Lists the different font faces that make up @family. The faces
@@ -5558,6 +5659,7 @@ longer needed.
 Finds the best matching shaper for a font for a particular
 language tag and character point.
 
+Deprecated: Shape engines are no longer used
 
 </description>
 <parameters>
@@ -5597,6 +5699,39 @@ Computes the coverage map for a given font and language tag.
 <return> a newly-allocated #PangoCoverage
 object.
 </return>
+</function>
+
+<function name="pango_font_get_features">
+<description>
+Obtain the OpenType features that are provided by the font.
+These are passed to the rendering system, together with features
+that have been explicitly set via attributes.
+
+Note that this does not include OpenType features which the
+rendering system enables by default.
+
+Since: 1.44
+
+</description>
+<parameters>
+<parameter name="font">
+<parameter_description> a #PangoFont
+</parameter_description>
+</parameter>
+<parameter name="features">
+<parameter_description> Array to features in
+</parameter_description>
+</parameter>
+<parameter name="len">
+<parameter_description> the length of @features
+</parameter_description>
+</parameter>
+<parameter name="num_features">
+<parameter_description> the number of used items in @features
+</parameter_description>
+</parameter>
+</parameters>
+<return></return>
 </function>
 
 <function name="pango_font_get_font_map">
@@ -5663,6 +5798,29 @@ the glyph or %NULL to indicate that the result is not needed.
 <return></return>
 </function>
 
+<function name="pango_font_get_hb_font">
+<description>
+Get a hb_font_t object backing this font.
+
+Note that the objects returned by this function
+are cached and immutable. If you need to make
+changes to the hb_font_t, use hb_font_create_sub_font().
+
+Since: 1.44
+
+</description>
+<parameters>
+<parameter name="font">
+<parameter_description> a #PangoFont
+</parameter_description>
+</parameter>
+</parameters>
+<return> the hb_font_t object backing the
+font, or %NULL if the font does not have one
+
+</return>
+</function>
+
 <function name="pango_font_get_metrics">
 <description>
 Gets overall metric information for a font. Since the metrics may be
@@ -5688,6 +5846,28 @@ for, or %NULL to indicate to get the metrics for the entire font.
 </parameters>
 <return> a #PangoFontMetrics object. The caller must call pango_font_metrics_unref()
 when finished using the object.
+</return>
+</function>
+
+<function name="pango_font_has_char">
+<description>
+Returns whether the font provides a glyph for this character.
+
+Since: 1.44
+
+</description>
+<parameters>
+<parameter name="font">
+<parameter_description> a #PangoFont
+</parameter_description>
+</parameter>
+<parameter name="wc">
+<parameter_description> a Unicode character
+</parameter_description>
+</parameter>
+</parameters>
+<return>%TRUE if @font can render @wc
+
 </return>
 </function>
 
@@ -5945,6 +6125,28 @@ where the ink will be.)
 </parameter>
 </parameters>
 <return> the descent, in Pango units.
+</return>
+</function>
+
+<function name="pango_font_metrics_get_height">
+<description>
+Gets the line height from a font metrics structure. The
+line height is the distance between successive baselines
+in wrapped text.
+
+If the line height is not available, 0 is returned.
+
+Since: 1.44
+
+</description>
+<parameters>
+<parameter name="metrics">
+<parameter_description> a #PangoFontMetrics structure
+</parameter_description>
+</parameter>
+</parameters>
+<return> the height, in Pango units
+
 </return>
 </function>
 
@@ -6666,7 +6868,7 @@ the word is a word).
 </description>
 <parameters>
 <parameter name="text">
-<parameter_description> text to process
+<parameter_description> text to process. Must be valid UTF-8
 </parameter_description>
 </parameter>
 <parameter name="length">
@@ -7474,6 +7676,35 @@ Since: 1.10
 </return>
 </function>
 
+<function name="pango_item_apply_attrs">
+<description>
+Add attributes to a PangoItem. The idea is that you have
+attributes that don't affect itemization, such as font features,
+so you filter them out using pango_attr_list_filter(), itemize
+your text, then reapply the attributes to the resulting items
+using this function.
+
+The @iter should be positioned before the range of the item,
+and will be advanced past it. This function is meant to be called
+in a loop over the items resulting from itemization, while passing
+the iter to each call.
+
+Since: 1.44
+
+</description>
+<parameters>
+<parameter name="item">
+<parameter_description> a #PangoItem
+</parameter_description>
+</parameter>
+<parameter name="iter">
+<parameter_description> a #PangoAttrIterator
+</parameter_description>
+</parameter>
+</parameters>
+<return></return>
+</function>
+
 <function name="pango_item_copy">
 <description>
 Copy an existing #PangoItem structure.
@@ -7575,7 +7806,7 @@ the range covering the position just after @start_index + @length.
 </parameter_description>
 </parameter>
 <parameter name="text">
-<parameter_description>      the text to itemize.
+<parameter_description>      the text to itemize. Must be valid UTF-8
 </parameter_description>
 </parameter>
 <parameter name="start_index">
@@ -7776,6 +8007,10 @@ though, except that it is positive if the return value is not
 
 The pango_language_includes_script() function uses this function
 internally.
+
+Note: while the return value is declared as PangoScript, the
+returned values are from the GUnicodeScript enumeration, which
+may have more values. Callers need to handle unknown values.
 
 Since: 1.22
 
@@ -8284,6 +8519,23 @@ but will become invalid if changes are made to the
 #PangoLayout.  No changes should be made to the line.
 
 </return>
+</function>
+
+<function name="pango_layout_get_line_spacing">
+<description>
+Gets the value that has been
+set with pango_layout_set_line_spacing().
+
+Since: 1.44
+
+</description>
+<parameters>
+<parameter name="layout">
+<parameter_description> a #PangoLayout
+</parameter_description>
+</parameter>
+</parameters>
+<return></return>
 </function>
 
 <function name="pango_layout_get_lines">
@@ -9000,6 +9252,9 @@ pango_layout_set_spacing() has been called to set layout spacing.
 The Y positions are in layout coordinates (origin at top left of the
 entire layout).
 
+Note: Since 1.44, Pango uses line heights for placing lines,
+and there may be gaps between the ranges returned by this
+function.
 
 </description>
 <parameters>
@@ -9179,6 +9434,27 @@ the glyph string as drawn, or %NULL
 <parameter name="logical_rect">
 <parameter_description>rectangle used to store the logical
 extents of the glyph string, or %NULL
+</parameter_description>
+</parameter>
+</parameters>
+<return></return>
+</function>
+
+<function name="pango_layout_line_get_height">
+<description>
+Computes the height of the line, ie the distance between
+this and the previous lines baseline.
+
+Since: 1.44
+
+</description>
+<parameters>
+<parameter name="line">
+<parameter_description>     a #PangoLayoutLine
+</parameter_description>
+</parameter>
+<parameter name="height">
+<parameter_description> return location for the line height
 </parameter_description>
 </parameter>
 </parameters>
@@ -9670,6 +9946,41 @@ older than 1.18.
 <return></return>
 </function>
 
+<function name="pango_layout_set_line_spacing">
+<description>
+Sets a factor for line spacing.
+Typical values are: 0, 1, 1.5, 2.
+The default values is 1.
+
+If @factor is non-zero, lines are placed
+so that
+
+baseline2 = baseline1 + factor * height2
+
+where height2 is the line height of the
+second line (as determined by the font(s)).
+In this case, the spacing set with
+pango_layout_set_spacing() is ignored.
+
+If @factor is zero, spacing is applied as
+before.
+
+Since: 1.44
+
+</description>
+<parameters>
+<parameter name="layout">
+<parameter_description> a #PangoLayout
+</parameter_description>
+</parameter>
+<parameter name="factor">
+<parameter_description> the new line spacing factor
+</parameter_description>
+</parameter>
+</parameters>
+<return></return>
+</function>
+
 <function name="pango_layout_set_markup">
 <description>
 Same as pango_layout_set_markup_with_accel(), but
@@ -9761,8 +10072,17 @@ you want to allow editing of newlines on a single text line.
 
 <function name="pango_layout_set_spacing">
 <description>
-Sets the amount of spacing in Pango unit between the lines of the
-layout.
+Sets the amount of spacing in Pango unit between
+the lines of the layout. When placing lines with
+spacing, Pango arranges things so that
+
+line2.top = line1.bottom + spacing
+
+Note: Since 1.44, Pango defaults to using the
+line height (as determined by the font) for placing
+lines. The @spacing set with this function is only
+taken into account when the line-height factor is
+set to zero with pango_layout_set_line_spacing().
 
 </description>
 <parameters>
@@ -9803,11 +10123,14 @@ free your copy of @tabs yourself.
 <description>
 Sets the text of the layout.
 
-Note that if you have used
-pango_layout_set_markup() or pango_layout_set_markup_with_accel() on
-@layout before, you may want to call pango_layout_set_attributes() to clear
-the attributes set on the layout from the markup as this function does not
-clear attributes.
+This function validates @text and renders invalid UTF-8
+with a placeholder glyph.
+
+Note that if you have used pango_layout_set_markup() or
+pango_layout_set_markup_with_accel() on @layout before, you may
+want to call pango_layout_set_attributes() to clear the attributes
+set on the layout from the markup as this function does not clear
+attributes.
 
 </description>
 <parameters>
@@ -9816,7 +10139,7 @@ clear attributes.
 </parameter_description>
 </parameter>
 <parameter name="text">
-<parameter_description> a valid UTF-8 string
+<parameter_description> the text
 </parameter_description>
 </parameter>
 <parameter name="length">
@@ -12272,15 +12595,18 @@ Deprecated: 1.38
 
 <function name="pango_script_for_unichar">
 <description>
-Looks up the #PangoScript for a particular character (as defined by
+Looks up the script for a particular character (as defined by
 Unicode Standard Annex \#24). No check is made for @ch being a
 valid Unicode character; if you pass in invalid character, the
 result is undefined.
 
-As of Pango 1.18, this function simply returns the return value of
-g_unichar_get_script().
+Note that while the return type of this function is declared
+as PangoScript, as of Pango 1.18, this function simply returns
+the return value of g_unichar_get_script(). Callers must be
+prepared to handle unknown values.
 
 Since: 1.4
+Deprecated: 1.44. Use g_unichar_get_script()
 
 </description>
 <parameters>
@@ -12363,6 +12689,11 @@ Since: 1.4
 Gets information about the range to which @iter currently points.
 The range is the set of locations p where *start &lt;= p &lt; *end.
 (That is, it doesn't include the character stored at *end)
+
+Note that while the type of the @script argument is declared
+as PangoScript, as of Pango 1.18, this function simply returns
+GUnicodeScript values. Callers must be prepared to handle unknown
+values.
 
 Since: 1.4
 
@@ -12774,6 +13105,39 @@ implementation.
 </parameter>
 <parameter name="location">
 <parameter_description> tab location in Pango units
+</parameter_description>
+</parameter>
+</parameters>
+<return></return>
+</function>
+
+<function name="pango_tailor_break">
+<description>
+Apply language-specific tailoring to the breaks in
+@log_attrs, which are assumed to have been produced
+by pango_default_break().
+
+</description>
+<parameters>
+<parameter name="text">
+<parameter_description> text to process. Must be valid UTF-8
+</parameter_description>
+</parameter>
+<parameter name="length">
+<parameter_description> length in bytes of @text
+</parameter_description>
+</parameter>
+<parameter name="analysis">
+<parameter_description>  #PangoAnalysis structure from pango_itemize() for @text
+</parameter_description>
+</parameter>
+<parameter name="log_attrs">
+<parameter_description> array with one #PangoLogAttr
+per character in @text, plus one extra, to be filled in
+</parameter_description>
+</parameter>
+<parameter name="attrs_len">
+<parameter_description> length of @log_attrs array
 </parameter_description>
 </parameter>
 </parameters>
