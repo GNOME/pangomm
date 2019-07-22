@@ -1,5 +1,3 @@
-/* $Id: layout.hg,v 1.9 2006/06/08 20:39:39 murrayc Exp $ */
-
 /* layout.h
  *
  * Copyright(C) 1998-1999 The gtkmm Development Team
@@ -18,7 +16,6 @@
  * License along with this library; if not, write to the Free
  * Software Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
-
 
 #include <glibmm/object.h>
 #include <pangomm/font.h>
@@ -232,8 +229,8 @@ public:
   _WRAP_METHOD(Glib::RefPtr<LayoutLine> get_line(int line), pango_layout_get_line, refreturn)
   _WRAP_METHOD(Glib::RefPtr<const LayoutLine> get_line(int line) const, pango_layout_get_line_readonly, refreturn)
 
-#m4 _CONVERSION(`GSList*',`std::vector<Glib::RefPtr<LayoutLine>>',`SListHandler_LayoutLine::slist_to_vector($3, Glib::OWNERSHIP_SHALLOW)',)
-#m4 _CONVERSION(`GSList*',`std::vector<Glib::RefPtr<const LayoutLine>>',`SListHandler_ConstLayoutLine::slist_to_vector($3, Glib::OWNERSHIP_SHALLOW)')
+#m4 _CONVERSION(`GSList*',`std::vector<Glib::RefPtr<LayoutLine>>',`SListHandler_LayoutLine::slist_to_vector($3, Glib::OWNERSHIP_NONE)',)
+#m4 _CONVERSION(`GSList*',`std::vector<Glib::RefPtr<const LayoutLine>>',`SListHandler_ConstLayoutLine::slist_to_vector($3, Glib::OWNERSHIP_NONE)')
 
   //Note that the const version uses a different (faster) C function:
   _WRAP_METHOD(std::vector<Glib::RefPtr<LayoutLine>> get_lines(), pango_layout_get_lines)
@@ -277,4 +274,3 @@ _DEPRECATE_IFDEF_END
 };
 
 } /* namespace Pango */
-
