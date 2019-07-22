@@ -37,23 +37,15 @@ class Coverage final
   _CLASS_OPAQUE_REFCOUNTED(Coverage, PangoCoverage, pango_coverage_new, pango_coverage_ref, pango_coverage_unref)
   _IGNORE(pango_coverage_ref, pango_coverage_unref)
   _IGNORE(pango_coverage_copy) //pango ref doc: "This function may now be unecessary since we refcount the structure. Mail otaylor redhat.com if you use it."
-  _IGNORE(pango_coverage_to_bytes)
+  _IGNORE(pango_coverage_to_bytes, pango_coverage_from_bytes, pango_coverage_max)dnl// deprecated
 
 public:
   _WRAP_ENUM(Level, PangoCoverageLevel)
-
-  _WRAP_METHOD(static Glib::RefPtr<Coverage> create(const guchar* bytes, int n_bytes), pango_coverage_from_bytes)
 
   //_WRAP_METHOD(Glib::RefPtr<Coverage> copy() const, pango_coverage_copy) //see above
 
   _WRAP_METHOD(Level get(int index) const, pango_coverage_get)
   _WRAP_METHOD(void set(int index, Level level), pango_coverage_set)
-  _WRAP_METHOD(void max(const Glib::RefPtr<Coverage>& other) const, pango_coverage_max)
-
-  /** Convert the coverage map into a flat binary format.
-   * @return An array of bytes representing the coverage map.
-   */
-  std::vector<unsigned char> to_bytes() const;
 };
 
 } // namespace Pango

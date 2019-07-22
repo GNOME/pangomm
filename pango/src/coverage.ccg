@@ -1,8 +1,4 @@
-// -*- c++ -*-
-/* $Id: coverage.ccg,v 1.1 2003/01/21 13:41:02 murrayc Exp $ */
-
 /*
- *
  * Copyright 1998-1999 The Gtk-- Development Team
  * Copyright 2001      Free Software Foundation
  *
@@ -22,16 +18,3 @@
  */
 
 using Level = Pango::Coverage::Level;
-
-namespace Pango
-{
-
-std::vector<unsigned char> Coverage::to_bytes() const
-{
-  guchar* bytes = nullptr;
-  int n_bytes = 0;
-  pango_coverage_to_bytes(const_cast<PangoCoverage*>(gobj()), &bytes, &n_bytes);
-  return Glib::ArrayHandler<unsigned char>::array_to_vector(bytes, n_bytes, Glib::OWNERSHIP_SHALLOW);
-}
-
-} /* namespace Pango */
