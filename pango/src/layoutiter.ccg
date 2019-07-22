@@ -1,8 +1,4 @@
-// -*- c++ -*-
-/* $Id: layoutiter.ccg,v 1.1 2003/01/21 13:41:06 murrayc Exp $ */
-
 /*
- *
  * Copyright 2001-2002 The gtkmm Development Team
  *
  * This library is free software; you can redistribute it and/or
@@ -24,12 +20,6 @@
 
 namespace Pango
 {
-
-void LayoutIter::assign_gobj(PangoLayoutIter* /* src */)
-{
-  //We don't actually use this anymore, and it was only ever for internal use.
-  //We just have not removed it completely to avoid appearing to break the ABI.
-}
 
 Rectangle LayoutIter::get_char_extents() const
 {
@@ -95,4 +85,3 @@ Rectangle LayoutIter::get_layout_logical_extents() const
 }
 
 } // namespace Pango
-

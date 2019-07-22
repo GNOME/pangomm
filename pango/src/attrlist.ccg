@@ -1,8 +1,4 @@
-// -*- c++ -*-
-/* $Id: attrlist.ccg,v 1.3 2005/11/22 15:00:17 murrayc Exp $ */
-
 /*
- *
  * Copyright 1998-1999 The Gtk-- Development Team
  * Copyright 2001      Free Software Foundation
  *
@@ -31,13 +27,6 @@ AttrList::AttrList(const Glib::ustring& markup_text, gunichar accel_marker)
   if(bTest == FALSE)
     gobject_ = nullptr;
 }
-
-_DEPRECATE_IFDEF_START
-AttrList::operator bool()
-{
-  return gobj() != nullptr;
-}
-_DEPRECATE_IFDEF_END
 
 AttrList::operator bool() const
 {

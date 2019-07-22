@@ -1,8 +1,4 @@
-// -*- c++ -*-
-/* $Id: layout.ccg,v 1.3 2006/05/30 17:14:21 murrayc Exp $ */
-
 /* 
- *
  * Copyright 1998-2002 The gtkmm Development Team
  *
  * This library is free software; you can redistribute it and/or
@@ -133,19 +129,11 @@ Rectangle Layout::get_pixel_logical_extents() const
   return logical_extents;
 }
 
-void Layout::get_iter(LayoutIter& iter)
-{
-  auto* cobject = pango_layout_get_iter(gobj());
-  iter = Glib::wrap(cobject, false /* don't take_copy */);
-}
-
-_DEPRECATE_IFDEF_START
 LayoutIter Layout::get_iter()
 {
   auto* cobject = pango_layout_get_iter(gobj());
   return Glib::wrap(cobject, false /* don't take_copy */);
 }
-_DEPRECATE_IFDEF_END
 
 void Layout::unset_font_description()
 {

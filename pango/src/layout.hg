@@ -68,7 +68,7 @@ public:
   * application that is laying out large amounts of text.
   * 
   * @param context A Cairo context.
-  * @result The newly created Pango Layout.
+  * @return The newly created Pango Layout.
   */
   static Glib::RefPtr<Layout> create(const Cairo::RefPtr<Cairo::Context>& context);
 
@@ -236,23 +236,12 @@ public:
   _WRAP_METHOD(std::vector<Glib::RefPtr<LayoutLine>> get_lines(), pango_layout_get_lines)
   _WRAP_METHOD(std::vector<Glib::RefPtr<const LayoutLine>> get_lines() const, pango_layout_get_lines_readonly)
 
-_DEPRECATE_IFDEF_START
   /** Gets an iterator to iterate over the visual extents of the layout.
-   * @param iter Location to store the iterator.
-   *
-   * @deprecated Use the get_iter() that returns the LayoutIter instead of 
-   * using an output parameter.
-   */
-  void get_iter(LayoutIter& iter);
-_DEPRECATE_IFDEF_END
-  
-  /** Gets an iterator to iterate over the visual extents of the layout.
-   * @result The iterator.
+   * @return The iterator.
    *
    * @newin{2,28}
    */
   LayoutIter get_iter();
-
 
   /** Adds the text in this LayoutLine to the current path in the
    * specified Cairo @a context. The origin of the glyphs (the left edge

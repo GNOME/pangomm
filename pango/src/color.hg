@@ -33,11 +33,6 @@ class Color
 
 public:
 
-  _DEPRECATE_IFDEF_START
-  /// @deprecated Use the const version.
-  explicit operator bool();
-  _DEPRECATE_IFDEF_END
-
   /// Tests whether the Color is valid.
   explicit operator bool() const;
   
