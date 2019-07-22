@@ -1,5 +1,3 @@
-/* $Id: coverage.hg,v 1.1 2003/01/21 13:41:03 murrayc Exp $ */
-
 /* coverage.h
  *
  * Copyright (C) 1998-1999 The gtkmm Development Team
@@ -43,13 +41,19 @@ class Coverage final
   _IGNORE(pango_coverage_to_bytes)
 
 public:
-  _WRAP_METHOD(static Glib::RefPtr<Coverage> create(const guchar* bytes, int n_bytes), pango_coverage_from_bytes)
+  // pango_coverage_from_bytes(), pango_coverage_to_bytes() and pango_coverage_max()
+  // are deprecated in pango 1.43, but not in pangomm 2.42.
+  //TODO: Deprecate in pangomm 2.44.
+  _WRAP_METHOD_DOCS_ONLY(pango_coverage_from_bytes)
+  static Glib::RefPtr<Coverage> create(const guchar* bytes, int n_bytes);
 
   //_WRAP_METHOD(Glib::RefPtr<Coverage> copy() const, pango_coverage_copy) //see above
 
   _WRAP_METHOD(CoverageLevel get(int index) const, pango_coverage_get)
   _WRAP_METHOD(void set(int index, CoverageLevel level), pango_coverage_set)
-  _WRAP_METHOD(void max(const Glib::RefPtr<Coverage>& other) const, pango_coverage_max)
+
+  _WRAP_METHOD_DOCS_ONLY(pango_coverage_max)
+  void max(const Glib::RefPtr<Coverage>& other) const;
 
   /** Convert the coverage map into a flat binary format.
    * @return An array of bytes representing the coverage map.
