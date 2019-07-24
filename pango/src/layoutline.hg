@@ -115,14 +115,3 @@ public:
 };
 
 } // namespace Pango
-
-
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
-namespace Glib
-{
-// forward declaration needed by LayoutLineTraits
-Glib::RefPtr<Pango::LayoutLine> wrap(PangoLayoutLine* object, bool take_copy /* = false */);
-
-} // namespace Glib
-#endif /* DOXYGEN_SHOULD_SKIP_THIS */
-
