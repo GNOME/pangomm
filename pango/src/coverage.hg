@@ -27,8 +27,7 @@ namespace Pango
 
 _CC_INCLUDE(pango/pango-enum-types.h)
 
-
-/** A Pango::Coverage represents a map from ISO-10646 character point to Pango::Level.
+/** A Pango::Coverage represents a map from ISO-10646 character point to Pango::Coverage::Level.
  * It is often necessary in pango to determine if a particular font can represent a particular character,
  * and also how well it can represent that character. Pango::Coverage holds this information.
  */
