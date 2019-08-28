@@ -1,0 +1,176 @@
+# This file is part of pangomm.
+
+project('pangomm', 'cpp',
+  version: '2.43.1',
+  license: 'LGPLv2.1+',
+  default_options: [
+    'cpp_std=c++17'
+  ],
+  meson_version: '>= 0.50.0',
+)
+
+pangomm_api_version = '2.44'
+pangomm_pcname = meson.project_name() + '-' + pangomm_api_version
+
+pangomm_version_array = meson.project_version().split('.')
+pangomm_major_version = pangomm_version_array[0].to_int()
+pangomm_minor_version = pangomm_version_array[1].to_int()
+pangomm_micro_version = pangomm_version_array[2].to_int()
+
+# http://www.gnu.org/software/libtool/manual/html_node/Updating-version-info.html
+# The relation between libtool's current:revison:age interface versioning
+# and the .so filename, .so.x.y.z, is
+# x = current - age
+# y = age
+# z = revision
+# If libtool_soversion is updated as described in libtool's documentation,
+# x.y.z will usually *not* be equal to meson.project_version().
+libtool_soversion = [1, 30, 0]
+pangomm_libversion = '@0@.@1@.@2@'.format(
+  libtool_soversion[0] - libtool_soversion[2],
+  libtool_soversion[2],
+  libtool_soversion[1])
+
+# Use these instead of meson.source_root() and meson.build_root() in subdirectories.
+# source_root() and build_root() are not useful, if this is a subproject.
+project_source_root = meson.current_source_dir()
+project_build_root = meson.current_build_dir()
+
+# Do we build from a git repository?
+is_git_build = run_command('test', '-d', project_source_root / '.git').returncode() == 0
+
+# Options.
+maintainer_mode_opt = get_option('maintainer-mode')
+maintainer_mode = maintainer_mode_opt == 'true' or \
+                 (maintainer_mode_opt == 'if-git-build' and is_git_build)
+warning_level = get_option('warnings')
+build_deprecated_api = get_option('build-deprecated-api')
+build_documentation_opt = get_option('build-documentation')
+build_documentation = build_documentation_opt == 'true' or \
+                     (build_documentation_opt == 'if-maintainer-mode' and maintainer_mode)
+
+# Installation directories are relative to {prefix}.
+install_prefix = get_option('prefix')
+install_includedir = get_option('includedir')
+install_libdir = get_option('libdir')
+install_datadir = get_option('datadir')
+install_pkgconfigdir = install_libdir / 'pkgconfig'
+
+# Dependencies.
+glibmm_req = '>= 2.61.1'
+cairomm_req = '>= 1.15.1'
+pangocairo_req = '>= 1.41.0'
+glibmm_dep = dependency('glibmm-2.62', version: glibmm_req)
+cairomm_dep = dependency('cairomm-1.16', version: cairomm_req)
+pangocairo_dep = dependency('pangocairo', version: pangocairo_req)
+pangomm_deps = [glibmm_dep, cairomm_dep, pangocairo_dep]
+pangomm_requires = ' '.join([
+  'glibmm-2.62', glibmm_req,
+  'cairomm-1.16', cairomm_req,
+  'pangocairo', pangocairo_req,
+])
+
+# Some dependencies are required only in maintainer mode and/or if
+# reference documentation shall be built.
+mm_common_prepare = find_program('mm-common-prepare', version: '>=0.9.12', required: maintainer_mode)
+m4 = find_program('m4', required: maintainer_mode) # Used by gmmproc (in glibmm)
+perl = find_program('perl', required: maintainer_mode or build_documentation)
+doxygen = find_program('doxygen', required: build_documentation)
+dot = find_program('dot', required: build_documentation) # Used by Doxygen
+xsltproc = find_program('xsltproc', required: build_documentation)
+
+# Where to find gmmproc and generate_wrap_init.pl.
+gmmproc_dir = glibmm_dep.get_pkgconfig_variable('gmmprocdir')
+
+script_dir = project_source_root / 'untracked' / 'build_scripts'
+generate_binding_sh = script_dir / 'generate-binding.sh'
+doc_reference_sh = script_dir / 'doc-reference.sh'
+dist_changelog_sh = script_dir / 'dist-changelog.sh'
+dist_build_scripts_sh = script_dir / 'dist-build-scripts.sh'
+dist_cmd_sh = project_source_root / 'tools' / 'dist-cmd.sh' # Must be commited to git.
+
+if maintainer_mode and mm_common_prepare.found()
+  # Copy files to untracked/docs and untracked/build_scripts.
+  run_command(mm_common_prepare, '--force', '--copy',
+    '--doctooldir=' + project_source_root / 'untracked' / 'docs',
+    '--buildscriptdir=' + script_dir)
+endif
+
+cpp_compiler = meson.get_compiler('cpp')
+
+# Set compiler warnings.
+warning_flags = []
+if warning_level == 'min'
+  warning_flags = [ '-Wall' ]
+elif warning_level == 'max' or warning_level == 'fatal'
+  warning_flags = '-pedantic -Wall -Wextra -Wformat-security -Wsuggest-override -Wshadow -Wno-long-long'.split()
+  if warning_level == 'fatal'
+    warning_flags += [ '-Werror' ]
+    deprecations = 'G PANGO GLIBMM SIGCXX'.split()
+    foreach d : deprecations
+      warning_flags += '-D@0@_DISABLE_DEPRECATED'.format(d)
+    endforeach
+  endif
+endif
+
+warning_flags = cpp_compiler.get_supported_arguments(warning_flags)
+add_project_arguments(warning_flags, language: 'cpp')
+
+subdir('tools/extra_defs_gen')
+subdir('pango')
+subdir('docs/reference')
+subdir('MSVC_NMake/pangomm')
+
+if not meson.is_subproject()
+  # Add a ChangeLog file to the distribution directory.
+  # (add_dist_script() is not allowed in a subproject)
+  meson.add_dist_script(
+    dist_cmd_sh,
+    dist_changelog_sh,
+    project_source_root,
+  )
+  # Add build scripts to the distribution directory, and delete .gitignore
+  # files and an empty $MESON_DIST_ROOT/build/ directory.
+  meson.add_dist_script(
+    dist_cmd_sh,
+    dist_build_scripts_sh,
+    project_source_root,
+    'untracked' / 'build_scripts',
+  )
+endif
+
+# Print a summary.
+real_maintainer_mode = ''
+if maintainer_mode_opt == 'if-git-build'
+  real_maintainer_mode = ' (@0@)'.format(maintainer_mode)
+endif
+
+real_build_documentation = ''
+if build_documentation_opt == 'if-maintainer-mode'
+  real_build_documentation = ' (@0@)'.format(build_documentation)
+endif
+
+summary = [
+  '',
+  '------',
+  meson.project_name() + ' ' + meson.project_version(),
+  '',
+  '         Maintainer mode: @0@@1@'.format(maintainer_mode_opt, real_maintainer_mode),
+  '       Compiler warnings: @0@'.format(warning_level),
+  '    Build deprecated API: @0@'.format(build_deprecated_api),
+  'Build HTML documentation: @0@@1@'.format(build_documentation_opt, real_build_documentation),
+  'Directories:',
+  '                  prefix: @0@'.format(install_prefix),
+  '              includedir: @0@'.format(install_prefix / install_includedir),
+  '       includepangommdir: @0@'.format(install_prefix / install_includedir / pangomm_pcname),
+  '                  libdir: @0@'.format(install_prefix / install_libdir),
+  '        includeconfigdir: @0@'.format(install_prefix / install_includeconfigdir),
+  '                   m4dir: @0@'.format(install_prefix / install_m4dir),
+  '            pkgconfigdir: @0@'.format(install_prefix / install_pkgconfigdir),
+  '                 datadir: @0@'.format(install_prefix / install_datadir),
+  '                  docdir: @0@'.format(install_prefix / install_docdir),
+  '              devhelpdir: @0@'.format(install_prefix / install_devhelpdir),
+  '------'
+]
+
+message('\n'.join(summary))

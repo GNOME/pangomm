@@ -1,0 +1,36 @@
+untracked/README
+
+This directory contains files not tracked by a source code control program,
+such as git. (This README file is the exception.)
+
+The files can have one of two origins.
+
+1. Copied by the mm-common-prepare command.
+2. Generated when pangomm is built.
+
+Files of type 2 exist here only if pangomm is built with maintainer-mode=false,
+or the directory comes from a tarball.
+Files of both types exist here only if pangomm is built with Meson,
+or the tarball is created with Meson.
+
+1. Files copied by mm-common-prepare
+------------------------------------
+untracked/docs/doc-install.pl
+               doc-postprocess.pl
+               doxygen-extra.css
+               tagfile-to-devhelp2.xsl
+untracked/build_scripts/dist-build-scripts.sh
+                        dist-changelog.sh
+                        doc-reference.sh
+                        generate-binding.sh
+
+mm-common-prepare may copy more files, but they are not used by pangomm.
+
+2. Generated files
+------------------
+untracked/pango/pangomm/*.h
+                        *.cc
+                        private/*_p.h
+untracked/docs/reference/pangomm-2.44.devhelp2
+                         pangomm-2.44.tag
+                         html/*
