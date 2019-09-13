@@ -2,7 +2,7 @@
 
 # Input: built_files_root, project_source_root, pangomm_pcname, perl,
 #        hg_ccg_basenames, extra_h_files, built_file_targets, install_datadir,
-#        dist_cmd_sh
+#        dist_cmd
 # Output: install_docdir, install_devhelpdir
 
 tag_file_modules = [
@@ -89,7 +89,7 @@ if built_file_targets.length() > 0
     input: src_h_files,
     output: book_name + '.tag',
     command: [
-      doc_reference_sh, 'doxygen',
+      doc_reference, 'doxygen',
       doctool_dir,
       '@OUTPUT@',
       built_h_files,
@@ -106,7 +106,7 @@ else
     input: src_h_files + built_h_files,
     output: book_name + '.tag',
     command: [
-      doc_reference_sh, 'doxygen',
+      doc_reference, 'doxygen',
       doctool_dir,
       '@OUTPUT@',
       '@INPUT@',
@@ -121,7 +121,7 @@ devhelp_file = custom_target('devhelp',
   input: tag_file,
   output: book_name + '.devhelp2',
   command: [
-    doc_reference_sh, 'devhelp',
+    doc_reference, 'devhelp',
     doctool_dir,
     '@INPUT@',
     '@OUTPUT@',
@@ -133,7 +133,7 @@ devhelp_file = custom_target('devhelp',
 
 # Install Devhelp file and html files.
 meson.add_install_script(
-  doc_reference_sh, 'install_doc',
+  doc_reference, 'install_doc',
   doctool_dir,
   devhelp_file.full_path(),
   install_devhelpdir,
@@ -157,8 +157,8 @@ if not meson.is_subproject()
   # Distribute built files and files copied by mm-common-prepare.
   # (add_dist_script() is not allowed in a subproject)
   meson.add_dist_script(
-    dist_cmd_sh,
-    doc_reference_sh, 'dist_doc',
+    dist_cmd,
+    doc_reference, 'dist_doc',
     doctool_dir,
     doctool_dist_dir,
     meson.current_build_dir(),

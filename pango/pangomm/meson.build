@@ -1,8 +1,8 @@
 # pango/pangomm
 
 # Input: pangomm_deps, pangomm_pcname, maintainer_mode, project_source_root,
-#        generate_binding_sh, m4_files, pangomm_libversion, install_includedir,
-#        dist_cmd_sh
+#        generate_binding, m4_files, pangomm_libversion, install_includedir,
+#        dist_cmd
 # Output: hg_ccg_basenames, extra_h_files, built_file_targets, built_files_root
 
 defs_basefiles = [
@@ -81,7 +81,7 @@ if maintainer_mode
     input: hg_files,
     output: 'wrap_init.cc',
     command: [
-      generate_binding_sh,
+      generate_binding,
       'generate_wrap_init',
       gmmproc_dir,
       '@OUTPUT@',
@@ -104,7 +104,7 @@ if maintainer_mode
       input: [hg_file, ccg_file],
       output: [file + '.stamp', file + '.cc'],
       command: [
-        generate_binding_sh,
+        generate_binding,
         'gmmproc',
         gmmproc_dir,
         '@OUTPUT0@',
@@ -128,7 +128,7 @@ if maintainer_mode
 
   # Install built .h and _p.h files.
   meson.add_install_script(
-    generate_binding_sh,
+    generate_binding,
     'install_built_h_files',
     meson.current_build_dir(),
     install_includedir / pangomm_pcname / 'pangomm', # subdir below {prefix}
@@ -139,8 +139,8 @@ if maintainer_mode
     # Distribute built files.
     # (add_dist_script() is not allowed in a subproject)
     meson.add_dist_script(
-      dist_cmd_sh,
-      generate_binding_sh, 'dist_built_files',
+      dist_cmd,
+      generate_binding, 'dist_built_files',
       meson.current_build_dir(),
       untracked_pangomm,
       hg_ccg_basenames,
@@ -166,7 +166,7 @@ else # not maintainer_mode
 
   # Try to copy built source code files to the source tree.
   run_command(
-    generate_binding_sh, 'copy_built_files',
+    generate_binding, 'copy_built_files',
     meson.current_build_dir(),
     src_untracked_pangomm,
     hg_ccg_basenames,
@@ -187,7 +187,7 @@ else # not maintainer_mode
 
   # Install built .h and _p.h files.
   meson.add_install_script(
-    generate_binding_sh,
+    generate_binding,
     'install_built_h_files',
     src_untracked_pangomm,
     install_includedir / pangomm_pcname / 'pangomm', # subdir below {prefix}
@@ -198,8 +198,8 @@ else # not maintainer_mode
     # Distribute built files.
     # (add_dist_script() is not allowed in a subproject)
     meson.add_dist_script(
-      dist_cmd_sh,
-      generate_binding_sh, 'dist_built_files',
+      dist_cmd,
+      generate_binding, 'dist_built_files',
       src_untracked_pangomm,
       untracked_pangomm,
       hg_ccg_basenames,

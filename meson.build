@@ -37,7 +37,14 @@ project_source_root = meson.current_source_dir()
 project_build_root = meson.current_build_dir()
 
 # Do we build from a git repository?
-is_git_build = run_command('test', '-d', project_source_root / '.git').returncode() == 0
+python = import('python').find_installation('python3')
+cmd_py = 'import os, sys\n' \
+       + 'sys.exit(0 if os.path.isdir("' + (project_source_root/'.git') + '") else 1)\n'
+is_git_build = run_command(python, '-c', cmd_py).returncode() == 0
+# In Unix-like system, an alternative is
+# is_git_build = run_command('test', '-d', project_source_root / '.git').returncode() == 0
+# Python code can be used in all operating sytems where Meson can run.
+# Meson requires Python 3.5 or higher.
 
 # Options.
 maintainer_mode_opt = get_option('maintainer-mode')
@@ -72,7 +79,7 @@ pangomm_requires = ' '.join([
 
 # Some dependencies are required only in maintainer mode and/or if
 # reference documentation shall be built.
-mm_common_prepare = find_program('mm-common-prepare', version: '>=0.9.12', required: maintainer_mode)
+mm_common_get = find_program('mm-common-get', version: '>=0.9.12', required: maintainer_mode)
 m4 = find_program('m4', required: maintainer_mode) # Used by gmmproc (in glibmm)
 perl = find_program('perl', required: maintainer_mode or build_documentation)
 doxygen = find_program('doxygen', required: build_documentation)
@@ -83,17 +90,16 @@ xsltproc = find_program('xsltproc', required: build_documentation)
 gmmproc_dir = glibmm_dep.get_pkgconfig_variable('gmmprocdir')
 
 script_dir = project_source_root / 'untracked' / 'build_scripts'
-generate_binding_sh = script_dir / 'generate-binding.sh'
-doc_reference_sh = script_dir / 'doc-reference.sh'
-dist_changelog_sh = script_dir / 'dist-changelog.sh'
-dist_build_scripts_sh = script_dir / 'dist-build-scripts.sh'
-dist_cmd_sh = project_source_root / 'tools' / 'dist-cmd.sh' # Must be commited to git.
+generate_binding = script_dir / 'generate-binding.py'
+doc_reference = script_dir / 'doc-reference.py'
+dist_changelog = script_dir / 'dist-changelog.py'
+dist_build_scripts = script_dir / 'dist-build-scripts.py'
+dist_cmd = project_source_root / 'tools' / 'dist-cmd.py' # Must be committed to git.
 
-if maintainer_mode and mm_common_prepare.found()
-  # Copy files to untracked/docs and untracked/build_scripts.
-  run_command(mm_common_prepare, '--force', '--copy',
-    '--doctooldir=' + project_source_root / 'untracked' / 'docs',
-    '--buildscriptdir=' + script_dir)
+if maintainer_mode and mm_common_get.found()
+  # Copy files to untracked/build_scripts and untracked/docs.
+  run_command(mm_common_get, '--force', script_dir,
+    project_source_root / 'untracked' / 'docs')
 endif
 
 cpp_compiler = meson.get_compiler('cpp')
@@ -101,11 +107,11 @@ cpp_compiler = meson.get_compiler('cpp')
 # Set compiler warnings.
 warning_flags = []
 if warning_level == 'min'
-  warning_flags = [ '-Wall' ]
+  warning_flags = ['-Wall']
 elif warning_level == 'max' or warning_level == 'fatal'
   warning_flags = '-pedantic -Wall -Wextra -Wformat-security -Wsuggest-override -Wshadow -Wno-long-long'.split()
   if warning_level == 'fatal'
-    warning_flags += [ '-Werror' ]
+    warning_flags += ['-Werror']
     deprecations = 'G PANGO GLIBMM SIGCXX'.split()
     foreach d : deprecations
       warning_flags += '-D@0@_DISABLE_DEPRECATED'.format(d)
@@ -125,15 +131,15 @@ if not meson.is_subproject()
   # Add a ChangeLog file to the distribution directory.
   # (add_dist_script() is not allowed in a subproject)
   meson.add_dist_script(
-    dist_cmd_sh,
-    dist_changelog_sh,
+    dist_cmd,
+    dist_changelog,
     project_source_root,
   )
   # Add build scripts to the distribution directory, and delete .gitignore
   # files and an empty $MESON_DIST_ROOT/build/ directory.
   meson.add_dist_script(
-    dist_cmd_sh,
-    dist_build_scripts_sh,
+    dist_cmd,
+    dist_build_scripts,
     project_source_root,
     'untracked' / 'build_scripts',
   )
