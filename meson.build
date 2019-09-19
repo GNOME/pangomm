@@ -84,18 +84,77 @@ install_pkgconfigdir = install_libdir / 'pkgconfig'
 # pangomm_build_dep: Dependencies when building the pangomm library.
 # pangomm_dep (created in pango/pangomm/meson.build):
 #   Dependencies when using the pangomm library.
-glibmm_req = '>= 2.63.1'
-cairomm_req = '>= 1.15.1'
+
+# Pango supported pkg-config files on MSVC files for a good while,
+# so just use that
 pangocairo_req = '>= 1.41.0'
-glibmm_dep = dependency('glibmm-2.64', version: glibmm_req)
-cairomm_dep = dependency('cairomm-1.16', version: cairomm_req)
 pangocairo_dep = dependency('pangocairo', version: pangocairo_req)
-pangomm_build_dep = [glibmm_dep, cairomm_dep, pangocairo_dep]
-pangomm_requires = ' '.join([
-  'glibmm-2.64', glibmm_req,
-  'cairomm-1.16', cairomm_req,
-  'pangocairo', pangocairo_req,
-])
+
+# The -mm libraries do not yet have pkg-config files for MSVC builds,
+# so check for them manually
+glibmm_req_minor_ver = '64'
+cairomm_req_minor_ver = '16'
+
+if is_msvc
+  # We must have Visual Studio 2017 15.7 or later...
+  assert(cpp_compiler.version().split('.')[0].to_int() >= 19 and cpp_compiler.version().split('.')[1].to_int() >= 15, 'Visual Studio 2017 15.7 or later is required')
+
+  assert(cpp_compiler.has_header('sigc++-3.0/sigc++/sigc++.h') and cpp_compiler.has_header('sigc++-3.0/include/sigc++config.h'),
+         'sigc++-3.x headers are required')
+  assert(cpp_compiler.has_header('glibmm-2.@0@/glibmm.h'.format(glibmm_req_minor_ver)) and cpp_compiler.has_header('glibmm-2.@0@/include/glibmmconfig.h'.format(glibmm_req_minor_ver)),
+         'glibmm-2.@0@ headers are required'.format(glibmm_req_minor_ver))
+  assert(cpp_compiler.has_header('cairomm-1.@0@/cairomm/cairomm.h'.format(cairomm_req_minor_ver)) and cpp_compiler.has_header('cairomm-1.@0@/include/cairommconfig.h'.format(cairomm_req_minor_ver)),
+         'cairomm-1.@0@ headers are required'.format(cairomm_req_minor_ver))
+  message('Ensure your INCLUDE and LIB contain the paths that lead to the appropriate headers and .lib\'s for glibmm-2.@0@, cairomm-1.@1@ and libsigc++-3.x'.format(glibmm_req_minor_ver, cairomm_req_minor_ver))
+
+  # Visual Studio 2019 can consume libraries built with 2017, so check for
+  # 2017-built libraries as well if 2019-built libraries cannot be found
+  msvc_check_range = [15]
+  msvc_minor = cpp_compiler.version().split('.')[1].to_int()
+  if msvc_minor >= 20
+    msvc_check_range = [16, 15]
+  endif
+
+  debugsuffix = ''
+  if get_option('buildtype') == 'debug'
+    debugsuffix = '-d'
+  endif
+
+  # We can be looking for MSVC 2017-built libraries on 2019 builds as well,
+  # so we can't just assume that libraries exist, but check that compatible
+  # versions are really found
+  glibmm_dep = dependency('', required: false)
+  cairomm_dep = dependency('', required: false)
+  sigc_dep = dependency('', required: false)
+
+  foreach v : msvc_check_range
+    glibmm_dep = glibmm_dep.found() ? glibmm_dep : cpp_compiler.find_library('glibmm-vc@0@0@1@-2_@2@'.format(v.to_string(), debugsuffix, glibmm_req_minor_ver), required: false)
+    cairomm_dep = cairomm_dep.found() ? cairomm_dep : cpp_compiler.find_library('cairomm-vc@0@0@1@-1_@2@'.format(v.to_string(), debugsuffix, cairomm_req_minor_ver), required: false)
+    sigc_dep = sigc_dep.found() ? sigc_dep : cpp_compiler.find_library('sigc-vc@0@0@1@-3_0'.format(v.to_string(), debugsuffix), required: false)
+  endforeach
+
+  # Now make sure the appropriate -mm libraries are found
+  assert(glibmm_dep.found(), 'Appropriate glibmm-vcxx0@0@-2_@1@.format(debugsuffix, glibmm_req_minor_ver).lib is required')
+  assert(cairomm_dep.found(), 'Appropriate cairomm-vcxx0@0@-2_@1@.format(debugsuffix, cairomm_req_minor_ver).lib is required')
+  assert(sigc_dep.found(), 'Appropriate sigc-vcxx0@0@-3_0.format(debugsuffix).lib is required')
+
+  pangomm_requires = ' '.join([
+    'pangocairo', pangocairo_req,
+  ])
+
+  pangomm_build_dep = [glibmm_dep, cairomm_dep, sigc_dep, pangocairo_dep]
+else
+  glibmm_req = '>= 2.63.1'
+  cairomm_req = '>= 1.15.1'
+  glibmm_dep = dependency('glibmm-2.@0@'.format(glibmm_req_minor_ver), version: glibmm_req)
+  cairomm_dep = dependency('cairomm-1.@0@'.format(cairomm_req_minor_ver), version: cairomm_req)
+  pangomm_build_dep = [glibmm_dep, cairomm_dep, pangocairo_dep]
+  pangomm_requires = ' '.join([
+    'glibmm-2.@0@'.format(glibmm_req_minor_ver), glibmm_req,
+    'cairomm-1.@0@'.format(cairomm_req_minor_ver), cairomm_req,
+    'pangocairo', pangocairo_req,
+  ])
+endif
 
 # Some dependencies are required only in maintainer mode and/or if
 # reference documentation shall be built.
@@ -106,8 +165,10 @@ doxygen = find_program('doxygen', required: build_documentation)
 dot = find_program('dot', required: build_documentation) # Used by Doxygen
 xsltproc = find_program('xsltproc', required: build_documentation)
 
-# Where to find gmmproc and generate_wrap_init.pl.
-gmmproc_dir = glibmm_dep.get_pkgconfig_variable('gmmprocdir')
+# Where to find gmmproc and generate_wrap_init.pl. (N/A on MSVC builds)
+if not is_msvc
+  gmmproc_dir = glibmm_dep.get_pkgconfig_variable('gmmprocdir')
+endif
 
 script_dir = project_source_root / 'untracked' / 'build_scripts'
 generate_binding = script_dir / 'generate-binding.py'
