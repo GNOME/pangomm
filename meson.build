@@ -36,7 +36,10 @@ pangomm_libversion = '@0@.@1@.@2@'.format(
 project_source_root = meson.current_source_dir()
 project_build_root = meson.current_build_dir()
 
+cpp_compiler = meson.get_compiler('cpp')
+is_msvc = cpp_compiler.get_id() == 'msvc'
 python3 = import('python').find_installation('python3')
+
 python_version = python3.language_version()
 python_version_req = '>= 3.5'
 if not python_version.version_compare(python_version_req)
@@ -51,9 +54,14 @@ import sys
 sys.exit(0 if os.path.isdir("@0@") else 1)
 '''.format(project_source_root / '.git')
 is_git_build = run_command(python3, '-c', cmd_py).returncode() == 0
+
 # In Unix-like system, an alternative is
 # is_git_build = run_command('test', '-d', project_source_root / '.git').returncode() == 0
 # Python code can be used in all operating sytems where Meson can run.
+
+# Unfortunately due to m4 requirements, we cannot support MSVC builds
+# directly from GIT checkouts
+assert(not is_msvc or not is_git_build, 'Direct builds from GIT is not supported for MSVC builds')
 
 # Options.
 maintainer_mode_opt = get_option('maintainer-mode')
@@ -113,8 +121,6 @@ if maintainer_mode and mm_common_get.found()
   run_command(mm_common_get, '--force', script_dir,
     project_source_root / 'untracked' / 'docs')
 endif
-
-cpp_compiler = meson.get_compiler('cpp')
 
 # Set compiler warnings.
 warning_flags = []
