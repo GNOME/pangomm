@@ -48,5 +48,18 @@ dist_noinst_SCRIPTS = autogen.sh
 
 DISTCLEANFILES = MSVC_NMake/pangomm/pangommconfig.h
 
+# Distribute files needed when building mm-common with meson.
+EXTRA_DIST = \
+  meson.build \
+  meson_options.txt \
+  MSVC_NMake/pangomm/meson.build \
+  docs/reference/meson.build \
+  pango/meson.build \
+  pango/pangomm/meson.build \
+  pango/pangommconfig.h.meson \
+  tools/dist-cmd.py \
+  tools/extra_defs_gen/meson.build \
+  untracked/README
+
 # Optional: auto-generate the ChangeLog file from the git log on make dist
 include $(top_srcdir)/build/dist-changelog.am
