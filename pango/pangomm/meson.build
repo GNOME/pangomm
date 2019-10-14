@@ -1,9 +1,10 @@
 # pango/pangomm
 
-# Input: pangomm_deps, pangomm_pcname, maintainer_mode, project_source_root,
+# Input: pangomm_build_dep, pangomm_pcname, maintainer_mode, project_source_root,
 #        generate_binding, m4_files, pangomm_libversion, install_includedir,
 #        dist_cmd, python3
-# Output: hg_ccg_basenames, extra_h_files, built_file_targets, built_files_root
+# Output: hg_ccg_basenames, extra_h_files, built_file_targets, built_files_root,
+#         pangomm_dep
 
 defs_basefiles = [
   'pango.defs',
@@ -116,33 +117,16 @@ if maintainer_mode
     )
   endforeach
 
+  extra_include_dirs = ['..']
   pangomm_library = library(pangomm_pcname,
     wrap_init_target, built_file_targets, extra_cc_files,
     version: pangomm_libversion,
-    include_directories: '..',
-    dependencies: pangomm_deps,
+    include_directories: extra_include_dirs,
+    dependencies: pangomm_build_dep,
     install: true,
   )
 
-  # Install built .h and _p.h files.
-  meson.add_install_script(
-    python3.path(), generate_binding, 'install_built_h_files',
-    meson.current_build_dir(),
-    install_includedir / pangomm_pcname / 'pangomm', # subdir below {prefix}
-    hg_ccg_basenames
-  )
-
-  if not meson.is_subproject()
-    # Distribute built files.
-    # (add_dist_script() is not allowed in a subproject)
-    meson.add_dist_script(
-      python3.path(), dist_cmd,
-      python3.path(), generate_binding, 'dist_built_files',
-      meson.current_build_dir(),
-      untracked_pangomm,
-      hg_ccg_basenames,
-    )
-  endif
+  built_h_cc_dir = meson.current_build_dir()
 
 else # not maintainer_mode
 
@@ -174,39 +158,43 @@ else # not maintainer_mode
     built_cc_files += src_untracked_pangomm / file + '.cc'
   endforeach
 
+  extra_include_dirs = [ '..', '..' / '..' / 'untracked' / 'pango' ]
   pangomm_library = library(pangomm_pcname,
     built_cc_files, extra_cc_files,
     version: pangomm_libversion,
-    include_directories: [ '..', '..' / '..' / 'untracked' / 'pango' ],
-    dependencies: pangomm_deps,
+    include_directories: extra_include_dirs,
+    dependencies: pangomm_build_dep,
     install: true,
   )
 
-  # Install built .h and _p.h files.
-  meson.add_install_script(
-    python3.path(), generate_binding, 'install_built_h_files',
-    src_untracked_pangomm,
-    install_includedir / pangomm_pcname / 'pangomm', # subdir below {prefix}
-    hg_ccg_basenames
-  )
-
-  if not meson.is_subproject()
-    # Distribute built files.
-    # (add_dist_script() is not allowed in a subproject)
-    meson.add_dist_script(
-      python3.path(), dist_cmd,
-      python3.path(), generate_binding, 'dist_built_files',
-      src_untracked_pangomm,
-      untracked_pangomm,
-      hg_ccg_basenames,
-    )
-  endif
+  built_h_cc_dir = src_untracked_pangomm
 
 endif
 
+# Install built .h and _p.h files.
+meson.add_install_script(
+  python3.path(), generate_binding, 'install_built_h_files',
+  built_h_cc_dir,
+  install_includedir / pangomm_pcname / 'pangomm', # subdir below {prefix}
+  hg_ccg_basenames
+)
+
+if not meson.is_subproject()
+  # Distribute built files.
+  # (add_dist_script() is not allowed in a subproject)
+  meson.add_dist_script(
+    python3.path(), dist_cmd,
+    python3.path(), generate_binding, 'dist_built_files',
+    built_h_cc_dir,
+    untracked_pangomm,
+    hg_ccg_basenames,
+  )
+endif
+
 # This is useful in the main project when pangomm is used as a subproject.
+# It can also be used if there are example programs and test programs to build.
 pangomm_dep = declare_dependency(
   link_with: pangomm_library,
-  include_directories: '..',
-  dependencies: pangomm_deps
+  include_directories: extra_include_dirs,
+  dependencies: pangomm_build_dep
 )

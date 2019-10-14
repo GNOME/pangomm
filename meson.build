@@ -73,13 +73,16 @@ install_datadir = get_option('datadir')
 install_pkgconfigdir = install_libdir / 'pkgconfig'
 
 # Dependencies.
+# pangomm_build_dep: Dependencies when building the pangomm library.
+# pangomm_dep (created in pango/pangomm/meson.build):
+#   Dependencies when using the pangomm library.
 glibmm_req = '>= 2.63.1'
 cairomm_req = '>= 1.15.1'
 pangocairo_req = '>= 1.41.0'
 glibmm_dep = dependency('glibmm-2.64', version: glibmm_req)
 cairomm_dep = dependency('cairomm-1.16', version: cairomm_req)
 pangocairo_dep = dependency('pangocairo', version: pangocairo_req)
-pangomm_deps = [glibmm_dep, cairomm_dep, pangocairo_dep]
+pangomm_build_dep = [glibmm_dep, cairomm_dep, pangocairo_dep]
 pangomm_requires = ' '.join([
   'glibmm-2.64', glibmm_req,
   'cairomm-1.16', cairomm_req,
