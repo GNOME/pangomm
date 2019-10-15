@@ -11,6 +11,7 @@ configure_file(
 
 # Copy the generated configuration header into the MSVC project directory.
 meson.add_postconf_script(
-  'cp', '-f', project_build_root / 'pango' / 'pangommconfig.h',
-  meson.current_build_dir()
+  'copy-pangommconfig-h.py',
+  project_build_root,
+  meson.current_build_dir(),
 )
