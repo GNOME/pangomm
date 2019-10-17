@@ -159,11 +159,39 @@ else # not maintainer_mode
   endforeach
 
   extra_include_dirs = [ '..', '..' / '..' / 'untracked' / 'pango' ]
-  pangomm_library = library(pangomm_pcname,
+
+  # We need this so that we can run gendef.exe to get the .def file
+  # needed for obtaining the .lib file for the pangomm DLL
+  pango_int_lib = static_library('pangomm-int',
     built_cc_files, extra_cc_files,
-    version: pangomm_libversion,
     include_directories: extra_include_dirs,
     dependencies: pangomm_build_dep,
+    install: false,)
+
+  pangomm_def = []
+  pangomm_extra_link_args = []
+
+  if is_msvc
+    pangomm_def = custom_target('pangomm.def',
+      output: 'pangomm.def',
+      depends: pango_int_lib,
+      command: [ gendef,
+        '@OUTPUT@',
+        '@0@-@1@.dll'.format(pangomm_pcname,
+                             libtool_soversion[0] - libtool_soversion[2]),
+        pango_int_lib.full_path(),
+      ],
+      install: false,
+    )
+    pangomm_extra_link_args = ['/def:@0@'.format(pangomm_def.full_path())]
+  endif
+
+  pangomm_library = library(pangomm_pcname,
+    objects: pango_int_lib.extract_all_objects(),
+    version: pangomm_libversion,
+    dependencies: pangomm_build_dep,
+    link_depends: pangomm_def,
+    link_args: pangomm_extra_link_args,
     install: true,
   )
 

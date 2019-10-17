@@ -202,6 +202,7 @@ warning_flags = cpp_compiler.get_supported_arguments(warning_flags)
 add_project_arguments(warning_flags, language: 'cpp')
 
 subdir('tools/extra_defs_gen')
+subdir('MSVC_NMake/gendef')
 subdir('pango')
 subdir('docs/reference')
 subdir('MSVC_NMake/pangomm')
