@@ -3,7 +3,7 @@
 # Input: pkg_conf_data, project_build_root
 # Output: -
 
-configure_file(
+pangomm_rc = configure_file(
   input: 'pangomm.rc.in',
   output: '@BASENAME@',
   configuration: pkg_conf_data,

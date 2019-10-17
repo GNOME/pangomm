@@ -170,6 +170,7 @@ else # not maintainer_mode
 
   pangomm_def = []
   pangomm_extra_link_args = []
+  extra_pangomm_objects = []
 
   if is_msvc
     pangomm_def = custom_target('pangomm.def',
@@ -186,7 +187,14 @@ else # not maintainer_mode
     pangomm_extra_link_args = ['/def:@0@'.format(pangomm_def.full_path())]
   endif
 
-  pangomm_library = library(pangomm_pcname,
+  # Build the .rc file for Windows builds and link to it
+  if host_machine.system() == 'windows'
+    windows = import('windows')
+    pangomm_res = windows.compile_resources(pangomm_rc)
+    extra_pangomm_objects += pangomm_res
+  endif
+
+  pangomm_library = library(pangomm_pcname, extra_pangomm_objects,
     objects: pango_int_lib.extract_all_objects(),
     version: pangomm_libversion,
     dependencies: pangomm_build_dep,

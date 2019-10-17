@@ -225,8 +225,9 @@ endif
 subdir('tools/extra_defs_gen')
 subdir('MSVC_NMake/gendef')
 subdir('pango')
-subdir('docs/reference')
 subdir('MSVC_NMake/pangomm')
+subdir('pango/pangomm')
+subdir('docs/reference')
 
 if not meson.is_subproject()
   # Add a ChangeLog file to the distribution directory.
