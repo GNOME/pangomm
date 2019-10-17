@@ -186,11 +186,23 @@ endif
 # Set compiler warnings.
 warning_flags = []
 if warning_level == 'min'
-  warning_flags = ['-Wall']
+  if is_msvc
+    warning_flags = ['/W3']
+  else
+    warning_flags = ['-Wall']
+  endif
 elif warning_level == 'max' or warning_level == 'fatal'
-  warning_flags = '-pedantic -Wall -Wextra -Wformat-security -Wsuggest-override -Wshadow -Wno-long-long'.split()
+  if is_msvc
+    warning_flags = ['/W4']
+  else
+    warning_flags = '-pedantic -Wall -Wextra -Wformat-security -Wsuggest-override -Wshadow -Wno-long-long'.split()
+  endif
   if warning_level == 'fatal'
-    warning_flags += ['-Werror']
+    if is_msvc
+      warning_flags += ['/WX']
+    else
+      warning_flags += ['-Werror']
+    endif
     deprecations = 'G PANGO GLIBMM SIGCXX'.split()
     foreach d : deprecations
       warning_flags += '-D@0@_DISABLE_DEPRECATED'.format(d)
@@ -200,6 +212,15 @@ endif
 
 warning_flags = cpp_compiler.get_supported_arguments(warning_flags)
 add_project_arguments(warning_flags, language: 'cpp')
+
+# MSVC: Ignore warnings that aren't really harmful, but make those
+#       that should not be overlooked stand out.
+if is_msvc
+  foreach wd : ['/FImsvc_recommended_pragmas.h', '/wd4267', '/wd4530']
+    disabled_warning = cpp_compiler.get_supported_arguments(wd)
+    add_project_arguments(disabled_warning, language: 'cpp')
+  endforeach
+endif
 
 subdir('tools/extra_defs_gen')
 subdir('MSVC_NMake/gendef')
