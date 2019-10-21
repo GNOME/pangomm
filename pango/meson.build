@@ -47,5 +47,3 @@ configure_file(
   configuration: pkg_conf_data,
   install_dir: install_includeconfigdir,
 )
-
-subdir('pangomm')
