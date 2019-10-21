@@ -7,9 +7,11 @@ msvc_nmake_data =		\
 	create-lists.bat	\
 	detectenv-msvc.mak	\
 	gendef/gendef.cc	\
+	gendef/meson.build	\
 	generate-msvc.mak	\
 	info-msvc.mak		\
 	install.mak		\
 	Makefile.vc		\
 	pangomm/pangomm.rc	\
+	pangomm/copy-pangommconfig-h.py	\
 	pangomm/pangommconfig.h
