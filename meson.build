@@ -134,9 +134,7 @@ if is_msvc
   endforeach
 
   # Now make sure the appropriate -mm libraries are found
-  assert(glibmm_dep.found(), 'Appropriate glibmm-vcxx0@0@-2_@1@.format(debugsuffix, glibmm_req_minor_ver).lib is required')
-  assert(cairomm_dep.found(), 'Appropriate cairomm-vcxx0@0@-2_@1@.format(debugsuffix, cairomm_req_minor_ver).lib is required')
-  assert(sigc_dep.found(), 'Appropriate sigc-vcxx0@0@-3_0.format(debugsuffix).lib is required')
+  assert(glibmm_dep.found() and cairomm_dep.found() and sigc_dep.found(), 'Appropriate glibmm-vcxx0@0@-2_@1@.lib, cairomm-vcxx0@0@-1_@2@.lib and sigc-vcxx0@0@-3_0.lib are required'.format(debugsuffix, glibmm_req_minor_ver, cairomm_req_minor_ver))
 
   pangomm_requires = ' '.join([
     'pangocairo', pangocairo_req,
