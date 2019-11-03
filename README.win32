@@ -2,7 +2,7 @@ Building gtkmm on Win32
 ===========================
 
 Currently, both the mingw (native win32) gcc compiler and MS Visual
-Studio 2013 are supported. gtkmm can be built with mingw32-gcc using
+Studio 2017 are supported. gtkmm can be built with mingw32-gcc using
 the gnu autotools (automake, autoconf, libtool). As explicitly
 stated in the gtk+ for win32 distribution (http://www.gimp.org/win32/),
 the gcc compiler provided by the cygwin distribution should not be
@@ -18,7 +18,7 @@ following :
 * MinGW-4.1 as the base distribution.
 
 The bare mingw distribution does not provide the necessary tools (sh, perl, m4
-, autoconf, automake, ..) to run the provided configure script "as is". One 
+, autoconf, automake, ..) to run the provided configure script "as is". One
 (currently non supported) solution is to use mingw in conjunction with msys,
 which is readily available on the mingw website (http://www.mingw.org/).
 
@@ -27,7 +27,7 @@ that were mentioned above) with mingw by making sure that the mingw
 tools (gcc, ld, dlltool, ..) are called first.
 
 First, make sure that you have working distribution of the native port
-of both libsigc++-2.0.x and gtk+-2.0 on win32 (see
+of both libsigc++-2.x and gtk+-3.0 on win32 (see
 http://www.gimp.org/win32). If you can't compile a simple gtk+ example
 using gcc and `pkg-config --cflags --libs`, you should not even think
 about trying to compile gtkmm, let alone using precompiled libgtkmm
@@ -44,21 +44,83 @@ make
 make check
 make install
 
-2. MS Visual Studio 2013
+2. MS Visual Studio 2017 15.7.0 or later
 
-Open the pangomm.sln solution file in the MSVC_Net2013 directory. In
-the Tools/Options panel, add the appropriate GTK+ and glibmm include
-and lib directories to the Projects and Solutions/VC++ directories,
-if they are not in the locations specified by the property sheets,
-i.e. $(srcroot)\..\vs12\$(Platform). Build the solution.  The option
-/vd2 should not be used in these builds, unlike previous builds, as
-that would cause broken binaries to be built, causing crashes.
+Open a Visual Studio command prompt suitable for your intended build
+configuration, and change to the MSVC_NMake directory.  Ensure that
+all the depedent libraries could be found in $(PREFIX), which is at
+$(srcroot)\..\vs15\$(Platform) by default.  Run
+'nmake /f Makefile.vc CFG=[release|debug]' to build pangomm.  If a
+different $(PREFIX) is desired rather than the aforementioned default,
+pass in PREFIX=$(PATH) into your command line.
 
-3. Gtkmm methods and signals not available on win32
+A 'clean' target is supported to remove all the built object files and
+intermediate files that are generated during the build, while an
+'install' target is supported to copy the built DLL and PDB, .lib and
+headers to their appropriate locations under $(PREFIX).
+
+3. Using Meson
+
+3.1 Meson with Visual Studio 2017 15.7.0 or later
+
+Note that currently it is not possible to build pangomm directly
+from a GIT checkout with Visual Studio using Meson.
+
+You will need to have Python 3.5.x or later installed with Meson 0.50.0
+or later in order to use this build option, in addition to glibmm,
+cairomm and libsigc++-2.x (built with Visual Studio) and PangoCairo,
+with all of their required dependencies.  The Ninja build tool is
+also required if not using --backend=[vs2017|vs2019] in the Meson
+command line, as noted towards the end of this section.
+
+Open a Visual Studio command prompt and ensure these header files can be
+found in the paths indicated by INCLUDE.  The repetitions below are
+necessary so that we reduce the likelihood that pre-C++-11 versions
+of the headers of glibmm, cairomm and libsigc++ are included, which will
+most likely not work.
+
+-glibmm.h (from glibmm-2.62.x or later)
+-glibmm-2.4\glibmm.h (the *same* glibmm as the previous line)
+-cairomm (from cairomm-1.13.x or later)
+-cairomm-1.0\cairomm.h (the *same* cairomm as the previous line)
+-glibmmconfig.h (from glibmm-2.63.x or later)
+-glibmm-2.4\include\glibmmconfig.h  (the *same* glibmmconfig as the previous line)
+-cairommconfig.h (from cairomm-1.13.x or later)
+-cairomm-1.0\include\cairommconfig.h  (the *same* cairommconfig as the previous line)
+-sigc++\sigc++.h (from libsigc++-2.x or later)
+-sigc++-2.0\sigc++\sigc++.h  (the *same* sigc++\sigc++.h as the previous line)
+-sigc++config.h (from libsigc++-2.x or later)
+-sigc++-2.0\include\sigc++config.h  (the *same* sigc++config.h as the previous line)
+
+Ensure that the import libraries of glibmm, cairomm and libsigc++-2.x
+can be found in the paths indicated by LIB.  Note that Visual Studio
+2019 can use 2017-built libraries without problems; but MSVC builds
+cannot make use of MinGW-built versions of these dependencies.  Note
+that debug builds require debug builds of these dependencies, but
+all other builds, including debugoptimized require release builds
+of these dependencies.
+
+You will need to have a working copy of PangoCairo's pkg-config files,
+which point to the corresponding locations of its headers and .lib's
+and the headers and .lib's of all of its dependencies.
+
+To carry out a build, do this in the same command prompt, with
+the Python interpreter, Meson executable script and Ninja executable
+(if not using --backend=[2017|2019]) in your PATH:
+-Create an empty build directory and cd to it.
+-Run "meson <path-to-pangomm-sources> --buildtype=<buildtype> --prefix=<prefix> [--backend=[2017|2019]]" without the quotes.
+-Perform the build using ninja or Visual Studio (if --backend=[2017|2019])
+ is used.  Install the build results after the build succeeds.
+
+3.2 Meson with MinGW
+The standard Meson build instructions for *NIX should work, although it
+is untested at the time of writing.
+
+4. Gtkmm methods and signals not available on win32
 
 All gtkmm methods and signals are available on win32.
 
-4. Gtkmm examples and demos on win32
+5. Gtkmm examples and demos on win32
 
 All demos and examples compile/run on win32
 
