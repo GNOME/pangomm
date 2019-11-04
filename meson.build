@@ -96,8 +96,8 @@ glibmm_req_minor_ver = '4'
 cairomm_req_minor_ver = '0'
 
 if is_msvc
-  # We must have Visual Studio 2017 15.7 or later...
-  assert(cpp_compiler.version().split('.')[0].to_int() >= 19 and cpp_compiler.version().split('.')[1].to_int() >= 15, 'Visual Studio 2017 15.7 or later is required')
+  # We must have Visual Studio 2013 or later...
+  assert(cpp_compiler.version().split('.')[0].to_int() >= 18, 'Visual Studio 2013 or later is required')
 
   assert(cpp_compiler.has_header('sigc++-2.0/sigc++/sigc++.h') and cpp_compiler.has_header('sigc++-2.0/include/sigc++config.h'),
          'sigc++-2.x headers are required')
@@ -107,12 +107,17 @@ if is_msvc
          'cairomm-1.@0@ headers are required'.format(cairomm_req_minor_ver))
   message('Ensure your INCLUDE and LIB contain the paths that lead to the appropriate headers and .lib\'s for glibmm-2.@0@, cairomm-1.@1@ and libsigc++-2.x'.format(glibmm_req_minor_ver, cairomm_req_minor_ver))
 
-  # Visual Studio 2019 can consume libraries built with 2017, so check for
-  # 2017-built libraries as well if 2019-built libraries cannot be found
-  msvc_check_range = [15]
-  msvc_minor = cpp_compiler.version().split('.')[1].to_int()
-  if msvc_minor >= 20
-    msvc_check_range = [16, 15]
+  # We need to look for appropriate versions of Visual
+  # Studio since those built by NMake and the former
+  # Visual Studio projects are versioned by the VS versions
+  if cpp_compiler.version().split('.')[0].to_int() == 18
+    msvc_check_range = [12] # Visual Studio 2013
+    warning('Visual Studio 2013 must configure without -Dwarnings=fatal, which is the default')
+  elif cpp_compiler.version().split('.')[0].to_int() == 19
+    # Visual Studio 2019 can consume libraries built with 2017 and 2015
+    # and Visual Studio 2017 can consume libraries built with 2015
+    msvc_check_range = [14] # Visual Studio 2015, 2017, 2019
+    message('It is safe to ignore warnings from Meson that MSVC does not support C++11')
   endif
 
   debugsuffix = ''
