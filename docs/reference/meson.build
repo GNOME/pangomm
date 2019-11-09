@@ -7,9 +7,9 @@
 
 tag_file_modules = [
   'mm-common-libstdc++',
-  'sigc++-3.0',
-  'glibmm-2.64',
-  'cairomm-1.16',
+  'sigc++-2.0',
+  'glibmm-2.4',
+  'cairomm-1.0',
 ]
 doxygen_tagfiles = ''
 docinstall_flags = []

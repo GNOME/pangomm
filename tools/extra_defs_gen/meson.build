@@ -5,7 +5,7 @@
 
 if not is_msvc
   glibmm_generate_extra_defs_dep = cpp_compiler.find_library(
-    'glibmm_generate_extra_defs-2.64',
+    'glibmm_generate_extra_defs-2.4',
   )
 
   executable('generate_extra_defs', 'generate_defs_pango.cc',
