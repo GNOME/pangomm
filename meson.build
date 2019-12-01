@@ -51,7 +51,7 @@ endif
 cmd_py = '''
 import os
 import sys
-sys.exit(0 if os.path.isdir("@0@") else 1)
+sys.exit(0 if os.path.exists("@0@") else 1)
 '''.format(project_source_root / '.git')
 is_git_build = run_command(python3, '-c', cmd_py).returncode() == 0
 
