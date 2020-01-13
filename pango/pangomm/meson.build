@@ -2,8 +2,8 @@
 
 # Input: pangomm_build_dep, pangomm_pcname, maintainer_mode, project_source_root,
 #        generate_binding, m4_files, pangomm_libversion, install_includedir,
-#        dist_cmd, python3
-# Output: hg_ccg_basenames, extra_h_files, built_file_targets, built_files_root,
+#        dist_cmd, python3, pangomm_rc
+# Output: hg_ccg_basenames, extra_h_files, built_h_file_targets, built_files_root,
 #         pangomm_dep
 
 defs_basefiles = [
@@ -71,6 +71,11 @@ if maintainer_mode
 
   # docs/reference/meson.build needs this.
   built_files_root = project_build_root
+  built_h_file_targets = []
+
+  # Force meson+ninja to generate source files before anything is compiled.
+  # Compilation must depend on these targets.
+  built_cc_file_targets = []
 
   hg_files = []
   foreach file : hg_ccg_basenames
@@ -78,7 +83,7 @@ if maintainer_mode
   endforeach
 
   # Create wrap_init.cc in project_build_root/pango/pangomm.
-  wrap_init_target = custom_target('wrap_init.cc',
+  built_cc_file_targets += custom_target('wrap_init.cc',
     input: hg_files,
     output: 'wrap_init.cc',
     command: [
@@ -92,17 +97,13 @@ if maintainer_mode
     install: false,
   )
 
-  # Force meson+ninja to generate source files before anything is compiled.
-  # Compilation must depend on these targets.
-  built_file_targets = []
-
   # Create .h/_p.h/.cc files from .hg/.ccg files in project_build_root/pango/pangomm.
   foreach file : hg_ccg_basenames
     hg_file = '..' / 'src' / file + '.hg'
     ccg_file = '..' / 'src' / file + '.ccg'
-    built_file_targets += custom_target(file + '.cc',
+    built_file_target = custom_target(file + '.cc',
       input: [hg_file, ccg_file],
-      output: [file + '.stamp', file + '.cc'],
+      output: [file + '.stamp', file + '.cc', file + '.h'],
       command: [
         python3, generate_binding, 'gmmproc',
         gmmproc_dir,
@@ -115,11 +116,13 @@ if maintainer_mode
       build_by_default: maintainer_mode,
       install: false,
     )
+    built_cc_file_targets += built_file_target[1]
+    built_h_file_targets += built_file_target[2]
   endforeach
 
   extra_include_dirs = ['..']
   pangomm_library = library(pangomm_pcname,
-    wrap_init_target, built_file_targets, extra_cc_files,
+    built_cc_file_targets, built_h_file_targets, extra_cc_files,
     version: pangomm_libversion,
     include_directories: extra_include_dirs,
     dependencies: pangomm_build_dep,
@@ -134,8 +137,8 @@ else # not maintainer_mode
   # project_source_root/untracked/pango/pangomm.
 
   # docs/reference/meson.build needs these.
-  built_file_targets = []
   built_files_root = project_source_root / 'untracked'
+  built_h_file_targets = []
 
   # Two cases:
   # 1. The source code comes from a tarball, where the built files
@@ -230,6 +233,7 @@ endif
 # This is useful in the main project when pangomm is used as a subproject.
 # It can also be used if there are example programs and test programs to build.
 pangomm_dep = declare_dependency(
+  sources: built_h_file_targets,
   link_with: pangomm_library,
   include_directories: extra_include_dirs,
   dependencies: pangomm_build_dep
