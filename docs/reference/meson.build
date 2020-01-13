@@ -1,7 +1,7 @@
 # docs/reference
 
 # Input: built_files_root, project_source_root, pangomm_pcname, perl,
-#        hg_ccg_basenames, extra_h_files, built_file_targets, install_datadir,
+#        hg_ccg_basenames, extra_h_files, built_h_file_targets, install_datadir,
 #        dist_cmd, python3
 # Output: install_docdir, install_devhelpdir
 
@@ -83,39 +83,33 @@ src_h_files += project_source_root / 'pango' / 'pangomm.h'
 doctool_dir = project_source_root / 'untracked' / 'docs' # MMDOCTOOLDIR
 doctool_dist_dir = 'untracked' / 'docs' # Relative to MESON_DIST_ROOT
 
-if built_file_targets.length() > 0
+doc_h_files = src_h_files
+if built_h_file_targets.length() > 0
   # .h files have been generated from .hg files (maintainer mode).
-  tag_file = custom_target('html_and_tag',
-    input: src_h_files,
-    output: book_name + '.tag',
-    command: [
-      python3, doc_reference, 'doxygen',
-      doctool_dir,
-      '@OUTPUT@',
-      built_h_files,
-      '@INPUT@',
-    ],
-    build_by_default: build_documentation,
-    depends: built_file_targets,
-    install: true,
-    install_dir: install_reference_docdir,
-  )
+  # Use built_h_file_targets instead of built_h_files here, or else Meson won't
+  # know that Doxygen must not be executed until the .h files have been built.
+  doc_h_files += built_h_file_targets
 else
   # All .h files are stored in the source tree (not maintainer mode).
-  tag_file = custom_target('html_and_tag',
-    input: src_h_files + built_h_files,
-    output: book_name + '.tag',
-    command: [
-      python3, doc_reference, 'doxygen',
-      doctool_dir,
-      '@OUTPUT@',
-      '@INPUT@',
-    ],
-    build_by_default: build_documentation,
-    install: true,
-    install_dir: install_reference_docdir,
-  )
+  doc_h_files += built_h_files
 endif
+
+# Can't use @INPUT@ in the command. It requires absolute file paths.
+# Paths in built_h_file_targets are relative to project_build_root.
+tag_file = custom_target('html_and_tag',
+  input: doc_h_files,
+  output: book_name + '.tag',
+  command: [
+    python3, doc_reference, 'doxygen',
+    doctool_dir,
+    '@OUTPUT@',
+    src_h_files,
+    built_h_files,
+  ],
+  build_by_default: build_documentation,
+  install: true,
+  install_dir: install_reference_docdir,
+)
 
 devhelp_file = custom_target('devhelp',
   input: tag_file,
