@@ -40,13 +40,13 @@ pangomm_generated_private_headers = $(files_hg:.hg=_p.h)
 !if [call create-lists.bat header pangomm.mak pangomm_OBJS]
 !endif
 
-!if [for %c in ($(files_built_cc)) do @if "%~xc" == ".cc" @call create-lists.bat file pangomm.mak ^$(CFG)\^$(PLAT)\pangomm\%~nc.obj]
+!if [for %c in ($(files_built_cc)) do @if "%~xc" == ".cc" @call create-lists.bat file pangomm.mak vs^$(VSVER)\^$(CFG)\^$(PLAT)\pangomm\%~nc.obj]
 !endif
 
-!if [for %c in ($(files_extra_cc)) do @if "%~xc" == ".cc" @call create-lists.bat file pangomm.mak ^$(CFG)\^$(PLAT)\pangomm\%~nc.obj]
+!if [for %c in ($(files_extra_cc)) do @if "%~xc" == ".cc" @call create-lists.bat file pangomm.mak vs^$(VSVER)\^$(CFG)\^$(PLAT)\pangomm\%~nc.obj]
 !endif
 
-!if [@call create-lists.bat file pangomm.mak ^$(CFG)\^$(PLAT)\pangomm\pangomm.res]
+!if [@call create-lists.bat file pangomm.mak vs^$(VSVER)\^$(CFG)\^$(PLAT)\pangomm\pangomm.res]
 !endif
 
 !if [call create-lists.bat footer pangomm.mak]

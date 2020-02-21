@@ -4,10 +4,10 @@
 # one is maintaining the NMake build files.
 
 # Create the build directories
-$(CFG)\$(PLAT)\gendef	\
-$(CFG)\$(PLAT)\pangomm:
+vs$(VSVER)\$(CFG)\$(PLAT)\gendef	\
+vs$(VSVER)\$(CFG)\$(PLAT)\pangomm:
 	@-mkdir $@
 
 # Generate .def files
-$(CFG)\$(PLAT)\pangomm\pangomm.def: $(GENDEF) $(CFG)\$(PLAT)\pangomm $(pangomm_OBJS)
-	$(CFG)\$(PLAT)\gendef.exe $@ $(PANGOMM_LIBNAME) $(CFG)\$(PLAT)\pangomm\*.obj
+vs$(VSVER)\$(CFG)\$(PLAT)\pangomm\pangomm.def: $(GENDEF) vs$(VSVER)\$(CFG)\$(PLAT)\pangomm $(pangomm_OBJS)
+	vs$(VSVER)\$(CFG)\$(PLAT)\gendef.exe $@ $(PANGOMM_LIBNAME) vs$(VSVER)\$(CFG)\$(PLAT)\pangomm\*.obj
