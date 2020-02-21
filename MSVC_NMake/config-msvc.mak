@@ -25,7 +25,8 @@ DEBUG_SUFFIX =
 !endif
 
 PANGOMM_BASE_CFLAGS =		\
-	/I..\pango /I.\pangomm	\
+	/I..\pango /I..\untracked\pango	\
+	/I.\pangomm /I..\untracked\MSVC_NMake\pangomm	\
 	/wd4530 /std:c++17	\
 	/FImsvc_recommended_pragmas.h
 

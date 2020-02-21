@@ -18,7 +18,15 @@
 $<
 <<
 
+{..\untracked\pango\pangomm\}.cc{$(CFG)\$(PLAT)\pangomm\}.obj::
+	$(CXX) $(LIBPANGOMM_CFLAGS) $(CFLAGS_NOGL) /Fo$(CFG)\$(PLAT)\pangomm\ /c @<<
+$<
+<<
+
 {.\pangomm\}.rc{$(CFG)\$(PLAT)\pangomm\}.res:
+	rc /fo$@ $<
+
+{..\untracked\MSVC_NMake\pangomm\}.rc{$(CFG)\$(PLAT)\pangomm\}.res:
 	rc /fo$@ $<
 
 # Rules for building .lib files
