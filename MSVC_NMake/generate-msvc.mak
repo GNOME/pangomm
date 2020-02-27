@@ -4,17 +4,17 @@
 # one is maintaining the NMake build files.
 
 # Create the build directories
-$(CFG)\$(PLAT)\gendef	\
-$(CFG)\$(PLAT)\pangomm	\
-$(CFG)\$(PLAT)\pangomm\private:
+vs$(PDBVER)\$(CFG)\$(PLAT)\gendef	\
+vs$(PDBVER)\$(CFG)\$(PLAT)\pangomm	\
+vs$(PDBVER)\$(CFG)\$(PLAT)\pangomm\private:
 	@-md $@
 
 # Generate .def files
-$(CFG)\$(PLAT)\pangomm\pangomm.def: $(GENDEF) $(CFG)\$(PLAT)\pangomm $(pangomm_OBJS)
-	$(CFG)\$(PLAT)\gendef.exe $@ $(PANGOMM_LIBNAME) $(CFG)\$(PLAT)\pangomm\*.obj
+vs$(PDBVER)\$(CFG)\$(PLAT)\pangomm\pangomm.def: $(GENDEF) vs$(PDBVER)\$(CFG)\$(PLAT)\pangomm $(pangomm_OBJS)
+	vs$(PDBVER)\$(CFG)\$(PLAT)\gendef.exe $@ $(PANGOMM_LIBNAME) vs$(PDBVER)\$(CFG)\$(PLAT)\pangomm\*.obj
 
 # Generate wrap_init.cc files
-$(CFG)\$(PLAT)\pangomm\wrap_init.cc: $(pangomm_real_hg)
+vs$(PDBVER)\$(CFG)\$(PLAT)\pangomm\wrap_init.cc: $(pangomm_real_hg)
 	@if not exist ..\pango\pangomm\wrap_init.cc $(PERL) -- "$(GMMPROC_DIR)/generate_wrap_init.pl" --namespace=Pango --parent_dir=pangomm $(pangomm_real_hg:\=/)>$@
 
 # Generate pre-generated resources and configuration headers (builds from GIT)

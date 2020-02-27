@@ -30,7 +30,7 @@ GMMPROC_DIR=$(PREFIX)\share\glibmm-$(GLIBMM_MAJOR_VERSION).$(GLIBMM_MINOR_VERSIO
 !endif
 
 PANGOMM_BASE_CFLAGS =			\
-	/I$(CFG)\$(PLAT)	\
+	/Ivs$(PDBVER)\$(CFG)\$(PLAT)	\
 	/I..\pango /I..\pango\pangomm /I.\pangomm		\
 	/wd4530 /EHsc	\
 	/FImsvc_recommended_pragmas.h
@@ -64,10 +64,10 @@ LIBSIGC_LIB = $(LIBSIGC_LIBNAME).lib
 
 PANGOMM_LIBNAME = pangomm-vc$(PDBVER)0$(DEBUG_SUFFIX)-$(PANGOMM_MAJOR_VERSION)_$(PANGOMM_MINOR_VERSION)
 
-PANGOMM_DLL = $(CFG)\$(PLAT)\$(PANGOMM_LIBNAME).dll
-PANGOMM_LIB = $(CFG)\$(PLAT)\$(PANGOMM_LIBNAME).lib
+PANGOMM_DLL = vs$(PDBVER)\$(CFG)\$(PLAT)\$(PANGOMM_LIBNAME).dll
+PANGOMM_LIB = vs$(PDBVER)\$(CFG)\$(PLAT)\$(PANGOMM_LIBNAME).lib
 
-GENDEF = $(CFG)\$(PLAT)\gendef.exe
+GENDEF = vs$(PDBVER)\$(CFG)\$(PLAT)\gendef.exe
 GOBJECT_LIBS = gobject-$(GLIB_API_VERSION).lib glib-$(GLIB_API_VERSION).lib
 
 PANGO_LIBS = pangocairo-$(PANGO_API_VERSION).lib pango-$(PANGO_API_VERSION).lib $(GOBJECT_LIBS) cairo.lib

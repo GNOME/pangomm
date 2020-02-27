@@ -10,7 +10,7 @@ all-build-info:
 help:
 	@echo.
 	@echo ============================
-	@echo Building atkmm Using NMake
+	@echo Building pangomm Using NMake
 	@echo ============================
 	@echo nmake /f Makefile.vc CFG=[release^|debug] ^<PREFIX=PATH^> <option1=xxx option2=xxx>
 	@echo.

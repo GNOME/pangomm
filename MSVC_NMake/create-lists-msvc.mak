@@ -42,13 +42,13 @@ files_extra_ph_int = $(files_extra_ph:/=\)
 !if [call create-lists.bat header pangomm.mak pangomm_OBJS]
 !endif
 
-!if [for %c in ($(files_built_cc)) do @if "%~xc" == ".cc" @call create-lists.bat file pangomm.mak ^$(CFG)\^$(PLAT)\pangomm\%~nc.obj]
+!if [for %c in ($(files_built_cc)) do @if "%~xc" == ".cc" @call create-lists.bat file pangomm.mak vs^$(PDBVER)\^$(CFG)\^$(PLAT)\pangomm\%~nc.obj]
 !endif
 
-!if [for %c in ($(files_extra_cc)) do @if "%~xc" == ".cc" @call create-lists.bat file pangomm.mak ^$(CFG)\^$(PLAT)\pangomm\%~nc.obj]
+!if [for %c in ($(files_extra_cc)) do @if "%~xc" == ".cc" @call create-lists.bat file pangomm.mak vs^$(PDBVER)\^$(CFG)\^$(PLAT)\pangomm\%~nc.obj]
 !endif
 
-!if [@call create-lists.bat file pangomm.mak ^$(CFG)\^$(PLAT)\pangomm\pangomm.res]
+!if [@call create-lists.bat file pangomm.mak vs^$(PDBVER)\^$(CFG)\^$(PLAT)\pangomm\pangomm.res]
 !endif
 
 !if [call create-lists.bat footer pangomm.mak]
