@@ -63,4 +63,5 @@ clean:
 	@-del /f /q $(CFG)\$(PLAT)\gendef\*.obj
 	@-rd $(CFG)\$(PLAT)\pangomm
 	@-rd $(CFG)\$(PLAT)\gendef
+	@-del pkg-ver.mak
 	@-del /f /q vc$(PDBVER)0.pdb
