@@ -52,7 +52,9 @@ all the depedent libraries could be found in $(PREFIX), which is at
 $(srcroot)\..\vs15\$(Platform) by default.  Run
 'nmake /f Makefile.vc CFG=[release|debug]' to build pangomm.  If a
 different $(PREFIX) is desired rather than the aforementioned default,
-pass in PREFIX=$(PATH) into your command line.
+pass in PREFIX=$(PATH) into your command line.  If using C++
+dependencies that are built with Meson, specify USE_MESON_LIBS=1 in your
+NMake command line.
 
 A 'clean' target is supported to remove all the built object files and
 intermediate files that are generated during the build, while an
