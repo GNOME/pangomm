@@ -13,10 +13,26 @@
 # 	$(CC)|$(CXX) $(cflags) /Fo$(destdir) /c @<<
 # $<
 # <<
+{$(CFG)\$(PLAT)\pangomm\}.cc{$(CFG)\$(PLAT)\pangomm\}.obj::
+	$(CXX) $(PANGOMM_CFLAGS) $(CFLAGS_NOGL) /Fo$(CFG)\$(PLAT)\pangomm\ /c @<<
+$<
+<<
+
+{..\untracked\pango\pangomm\}.cc{$(CFG)\$(PLAT)\pangomm\}.obj::
+	$(CXX) $(PANGOMM_CFLAGS) $(CFLAGS_NOGL) /Fo$(CFG)\$(PLAT)\pangomm\ /c @<<
+$<
+<<
+
 {..\pango\pangomm\}.cc{$(CFG)\$(PLAT)\pangomm\}.obj::
 	$(CXX) $(LIBPANGOMM_CFLAGS) $(CFLAGS_NOGL) /Fo$(CFG)\$(PLAT)\pangomm\ /c @<<
 $<
 <<
+
+{..\pango\src\}.ccg{$(CFG)\$(PLAT)\pangomm\}.obj:
+	@if not exist $(@D)\private\ $(MAKE) /f Makefile.vc CFG=$(CFG) $(@D)\private
+	@for %%s in ($(<D)\*.ccg) do @if not exist ..\pango\pangomm\%%~ns.cc if not exist $(@D)\%%~ns.cc $(PERL) -- $(GMMPROC_DIR)/gmmproc -I ../tools/m4 --defs $(<D:\=/) %%~ns $(<D:\=/) $(@D)
+	@if exist $(@D)\$(<B).cc $(CXX) $(PANGOMM_CFLAGS) $(CFLAGS_NOGL) /Fo$(@D)\ /c $(@D)\$(<B).cc
+	@if exist ..\pango\pangomm\$(<B).cc $(CXX) $(PANGOMM_CFLAGS) $(CFLAGS_NOGL) /Fo$(@D)\ /c ..\pango\pangomm\$(<B).cc
 
 {.\pangomm\}.rc{$(CFG)\$(PLAT)\pangomm\}.res:
 	rc /fo$@ $<
@@ -61,8 +77,14 @@ clean:
 	@-del /f /q $(CFG)\$(PLAT)\pangomm\*.def
 	@-del /f /q $(CFG)\$(PLAT)\pangomm\*.res
 	@-del /f /q $(CFG)\$(PLAT)\pangomm\*.obj
+	@-del /f /q $(CFG)\$(PLAT)\pangomm\private\*.h
+	@-del /f /q $(CFG)\$(PLAT)\pangomm\*.h
+	@-del /f /q $(CFG)\$(PLAT)\pangomm\*.cc
 	@-del /f /q $(CFG)\$(PLAT)\gendef\*.obj
+	@-rd $(CFG)\$(PLAT)\pangomm\private
 	@-rd $(CFG)\$(PLAT)\pangomm
 	@-rd $(CFG)\$(PLAT)\gendef
 	@-del pkg-ver.mak
 	@-del /f /q vc$(PDBVER)0.pdb
+
+.SUFFIXES: .cc .h .ccg .hg .obj

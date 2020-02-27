@@ -25,7 +25,8 @@ DEBUG_SUFFIX =
 !endif
 
 PANGOMM_BASE_CFLAGS =		\
-	/I..\pango /I.\pangomm	\
+	/I$(CFG)\$(PLAT)	\
+	/I..\pango /I..\pango\pangomm /I.\pangomm		\
 	/wd4530 /std:c++17	\
 	/FImsvc_recommended_pragmas.h
 
