@@ -61,6 +61,32 @@ intermediate files that are generated during the build, while an
 'install' target is supported to copy the built DLL and PDB, .lib and
 headers to their appropriate locations under $(PREFIX).
 
+The NMake Makefiles now support building the pangomm libraries directly from a GIT checkout
+with a few manual steps required, namely to:
+
+-Ensure that you have a copy of Cygwin or MSYS/MSYS64 installed, including
+ m4.exe and sh.exe.  You should also have a PERL for Windows installation
+ as well, and your PATH should contain the paths to your PERL interpreter
+ and the bin\ directory of your Cygwin or MSYS/MSYS64 installation, and
+ it is recommended that these paths are towards the end of your PATH.  You need
+ to install the XML::Parser PERL module as well, which requires libexpat.  You
+ may wish to pass in the directory where gmmproc and generate_wrap_init.pl
+ from glibmm is found, if they are not in $(PREFIX)\share\glibmm-2.4\proc.
+
+-Make a new copy of the entire source tree to some location, where the build
+ is to be done; then in $(srcroot)\MSVC_NMake run
+ nmake /f Makefile.vc CFG=[release|debug] prep-git-build, which will copy and generate
+ the following files with the proper info:
+ --$(srcroot)\MSVC_NMake\pangomm\pangommconfig.h
+ --$(srcroot)\MSVC_NMake\pangomm\pangomm.rc
+
+For pangommconfig.h, it is recommended to keep PANGOMM_DISABLE_DEPRECATED
+undefined unless you know what you are doing.  If $(srcroot)\MSVC_NMake\pangomm\pangommconfig.h
+and/or $(srcroot)\MSVC_NMake\pangomm\pangomm.rc is missing from the release tarball, you may
+also generate them using nmake /f Makefile.vc CFG=[release|debug] prep-git-build.
+
+Note that the prep-git-build target will require a working PERL installation.
+
 3. Using Meson
 
 3.1 Meson with Visual Studio 2013 or later

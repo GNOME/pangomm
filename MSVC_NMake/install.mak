@@ -10,6 +10,10 @@ install: all
 	@copy /b $(CFG)\$(PLAT)\$(PANGOMM_LIBNAME).lib $(PREFIX)\lib
 	@copy ..\pango\pangomm.h "$(PREFIX)\include\pangomm-$(PANGOMM_MAJOR_VERSION).$(PANGOMM_MINOR_VERSION)\"
 	@for %h in ($(files_extra_h)) do @copy ..\pango\pangomm\%h "$(PREFIX)\include\pangomm-$(PANGOMM_MAJOR_VERSION).$(PANGOMM_MINOR_VERSION)\pangomm\%h"
-	@for %h in ($(files_built_h)) do @copy ..\pango\pangomm\%h "$(PREFIX)\include\pangomm-$(PANGOMM_MAJOR_VERSION).$(PANGOMM_MINOR_VERSION)\pangomm\%h"
-	@for %h in ($(PANGOMM_BUILD_PRIVATE_HEADERS)) do @copy ..\pango\pangomm\private\%h "$(PREFIX)\include\pangomm-$(PANGOMM_MAJOR_VERSION).$(PANGOMM_MINOR_VERSION)\pangomm\private\%h"
+	@for %h in ($(files_built_h)) do @if exist ..\untracked\pango\pangomm\%h copy ..\untracked\pango\pangomm\%h "$(PREFIX)\include\pangomm-$(PANGOMM_MAJOR_VERSION).$(PANGOMM_MINOR_VERSION)\pangomm\%h"
+	@for %h in ($(files_built_h)) do @if exist ..\pango\pangomm\%h if not exist ..\untracked\pango\pangomm\%h copy ..\pango\pangomm\%h "$(PREFIX)\include\pangomm-$(PANGOMM_MAJOR_VERSION).$(PANGOMM_MINOR_VERSION)\pangomm\%h"
+	@for %h in ($(files_built_h)) do @if exist $(CFG)\$(PLAT)\pangomm\%h copy $(CFG)\$(PLAT)\pangomm\%h "$(PREFIX)\include\pangomm-$(PANGOMM_MAJOR_VERSION).$(PANGOMM_MINOR_VERSION)\pangomm\%h"
+	@for %h in ($(files_built_h)) do @if exist ..\untracked\pango\pangomm\private\%h copy ..\untracked\pango\pangomm\private\%h "$(PREFIX)\include\pangomm-$(PANGOMM_MAJOR_VERSION).$(PANGOMM_MINOR_VERSION)\pangomm\private\%h"
+	@for %h in ($(PANGOMM_BUILD_PRIVATE_HEADERS)) do @if exist ..\pango\pangomm\private\%h if not exist ..\untracked\pango\pangomm\private\%h copy ..\pango\pangomm\private\%h "$(PREFIX)\include\pangomm-$(PANGOMM_MAJOR_VERSION).$(PANGOMM_MINOR_VERSION)\pangomm\private\%h"
+	@for %h in ($(PANGOMM_BUILD_PRIVATE_HEADERS)) do @if exist $(CFG)\$(PLAT)\pangomm\private\%h copy $(CFG)\$(PLAT)\pangomm\private\%h "$(PREFIX)\include\pangomm-$(PANGOMM_MAJOR_VERSION).$(PANGOMM_MINOR_VERSION)\pangomm\private\%h"
 	@copy ".\pangomm\pangommconfig.h" "$(PREFIX)\lib\pangomm-$(PANGOMM_MAJOR_VERSION).$(PANGOMM_MINOR_VERSION)\include\"

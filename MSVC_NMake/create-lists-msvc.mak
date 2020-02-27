@@ -54,6 +54,15 @@ files_extra_ph_int = $(files_extra_ph:/=\)
 !if [call create-lists.bat footer pangomm.mak]
 !endif
 
+!if [call create-lists.bat header pangomm.mak pangomm_real_hg]
+!endif
+
+!if [for %c in ($(files_hg)) do @call create-lists.bat file pangomm.mak ..\pango\src\%c]
+!endif
+
+!if [call create-lists.bat footer pangomm.mak]
+!endif
+
 !include pangomm.mak
 
 !if [del /f /q pangomm.mak]
