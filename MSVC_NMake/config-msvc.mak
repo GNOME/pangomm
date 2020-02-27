@@ -24,8 +24,12 @@ DEBUG_SUFFIX = -d
 DEBUG_SUFFIX =
 !endif
 
-PANGOMM_BASE_CFLAGS =		\
-	/I$(CFG)\$(PLAT)	\
+!ifndef GMMPROC_DIR
+GMMPROC_DIR=$(PREFIX)\share\glibmm-$(GLIBMM_MAJOR_VERSION).$(GLIBMM_MINOR_VERSION)\proc
+!endif
+
+PANGOMM_BASE_CFLAGS =			\
+	/Ivs$(VSVER)\$(CFG)\$(PLAT)	\
 	/I..\pango /I..\pango\pangomm /I.\pangomm		\
 	/wd4530 /std:c++17	\
 	/FImsvc_recommended_pragmas.h
@@ -63,12 +67,11 @@ CAIROMM_LIB = $(CAIROMM_LIBNAME).lib
 
 PANGOMM_LIBNAME = pangomm-vc$(VSVER)0$(DEBUG_SUFFIX)-$(PANGOMM_MAJOR_VERSION)_$(PANGOMM_MINOR_VERSION)
 
-PANGOMM_DLL = $(CFG)\$(PLAT)\$(PANGOMM_LIBNAME).dll
-PANGOMM_LIB = $(CFG)\$(PLAT)\$(PANGOMM_LIBNAME).lib
+PANGOMM_DLL = vs$(VSVER)\$(CFG)\$(PLAT)\$(PANGOMM_LIBNAME).dll
+PANGOMM_LIB = vs$(VSVER)\$(CFG)\$(PLAT)\$(PANGOMM_LIBNAME).lib
 
-GENDEF = $(CFG)\$(PLAT)\gendef.exe
-GOBJECT_LIBS = gobject-2.0.lib gmodule-2.0.lib glib-2.0.lib
-
+GENDEF = vs$(VSVER)\$(CFG)\$(PLAT)\gendef.exe
+GOBJECT_LIBS = gobject-$(GLIB_API_VERSION).lib glib-$(GLIB_API_VERSION).lib
 CAIRO_LIB = cairo.lib
-PANGO_LIBS = pangocairo-1.0.lib pango-1.0.lib $(GOBJECT_LIBS) $(CAIRO_LIB)
+PANGO_LIBS = pangocairo-$(PANGO_API_VERSION).lib pango-$(PANGO_API_VERSION).lib $(GOBJECT_LIBS) $(CAIRO_LIB)
 PANGOMM_DEP_LIBS = $(GLIBMM_LIB) $(CAIROMM_LIB) $(LIBSIGC_LIB) $(PANGO_LIBS)

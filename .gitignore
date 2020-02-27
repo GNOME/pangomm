@@ -25,6 +25,7 @@ stamp-h?
 /tools/extra_defs_gen/generate_extra_defs
 /MSVC_NMake/pangomm/pangomm.rc
 /MSVC_NMake/pangomm/pangommconfig.h
+/MSVC_NMake/pkg-ver.mak
 untracked/build_scripts/
 untracked/docs/
 untracked/pango/
