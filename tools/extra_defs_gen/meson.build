@@ -3,16 +3,14 @@
 # Input: cpp_compiler, pangomm_build_dep, install_libdir, pangomm_pcname
 # Output: m4_files, install_m4dir
 
-if not is_msvc
-  glibmm_generate_extra_defs_dep = cpp_compiler.find_library(
-    'glibmm_generate_extra_defs-2.64',
-  )
+glibmm_generate_extra_defs_dep = cpp_compiler.find_library(
+  'glibmm_generate_extra_defs-2.64',
+)
 
-  executable('generate_extra_defs', 'generate_defs_pango.cc',
-    dependencies: [pangomm_build_dep, glibmm_generate_extra_defs_dep],
-    install: false,
-  )
-endif
+executable('generate_extra_defs', 'generate_defs_pango.cc',
+  dependencies: [pangomm_build_dep, glibmm_generate_extra_defs_dep],
+  install: false,
+)
 
 # Install m4 files for reuse by other *mm projects, when building from git.
 m4_basefiles = [
