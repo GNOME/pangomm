@@ -28,7 +28,7 @@ namespace Pango
  */
 class Color
 {
-  _CLASS_BOXEDTYPE_STATIC(Color, PangoColor, _pango_color_new, pango_color_copy, pango_color_free)
+  _CLASS_BOXEDTYPE_STATIC(Color, PangoColor)
   _IGNORE(pango_color_copy, pango_color_free)
 
 public:
