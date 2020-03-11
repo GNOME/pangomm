@@ -30,6 +30,7 @@ GMMPROC_DIR=$(PREFIX)\share\glibmm-$(GLIBMM_MAJOR_VERSION).$(GLIBMM_MINOR_VERSIO
 
 PANGOMM_BASE_CFLAGS =			\
 	/Ivs$(VSVER)\$(CFG)\$(PLAT)	\
+	/I..\untracked\pango /I..\untracked\pango\pangomm		\
 	/I..\pango /I..\pango\pangomm /I.\pangomm		\
 	/wd4530 /std:c++17	\
 	/FImsvc_recommended_pragmas.h

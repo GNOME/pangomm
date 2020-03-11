@@ -26,6 +26,7 @@ $<
 {..\pango\pangomm\}.cc{vs$(VSVER)\$(CFG)\$(PLAT)\pangomm\}.obj::
 	$(CXX) $(LIBPANGOMM_CFLAGS) $(CFLAGS_NOGL) /Fovs$(VSVER)\$(CFG)\$(PLAT)\pangomm\ /Fdvs$(VSVER)\$(CFG)\$(PLAT)\pangomm\ /c @<<
 $<
+<<
 
 {..\pango\src\}.ccg{vs$(VSVER)\$(CFG)\$(PLAT)\pangomm\}.obj:
 	@if not exist $(@D)\private\ $(MAKE) /f Makefile.vc CFG=$(CFG) $(@D)\private
