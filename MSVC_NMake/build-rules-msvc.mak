@@ -48,8 +48,8 @@ $(PANGOMM_LIB): $(PANGOMM_DLL)
 # $(dependent_objects)
 # <<
 # 	@-if exist $@.manifest mt /manifest $@.manifest /outputresource:$@;2
-$(PANGOMM_DLL): vs$(VSVER)\$(CFG)\$(PLAT)\pangomm\pangomm.def $(pangomm_OBJS)
-	link /DLL $(LDFLAGS_NOLTCG) $(PANGOMM_DEP_LIBS) /implib:$(PANGOMM_LIB) /def:vs$(VSVER)\$(CFG)\$(PLAT)\pangomm\pangomm.def -out:$@ @<<
+$(PANGOMM_DLL): vs$(VSVER)\$(CFG)\$(PLAT)\pangomm $(pangomm_OBJS)
+	link /DLL $(LDFLAGS_NOLTCG) $(PANGOMM_DEP_LIBS) /implib:$(PANGOMM_LIB) -out:$@ @<<
 $(pangomm_OBJS)
 <<
 
@@ -63,11 +63,6 @@ $(pangomm_OBJS)
 # <<
 # 	@-if exist $@.manifest mt /manifest $@.manifest /outputresource:$@;1
 
-# For the gendef tool
-{.\gendef\}.cc{vs$(VSVER)\$(CFG)\$(PLAT)\}.exe:
-	@if not exist vs$(VSVER)\$(CFG)\$(PLAT)\gendef\ $(MAKE) -f Makefile.vc CFG=$(CFG) vs$(VSVER)\$(CFG)\$(PLAT)\gendef
-	$(CXX) $(PANGOMM_BASE_CFLAGS) $(CFLAGS) /Fo$(@D)\gendef\ /Fd$(@D)\gendef\ $< /link $(LDFLAGS) /out:$@
-
 clean:
 	@-del /f /q vs$(VSVER)\$(CFG)\$(PLAT)\*.exe
 	@-del /f /q vs$(VSVER)\$(CFG)\$(PLAT)\*.dll
@@ -75,17 +70,13 @@ clean:
 	@-del /f /q vs$(VSVER)\$(CFG)\$(PLAT)\*.ilk
 	@-del /f /q vs$(VSVER)\$(CFG)\$(PLAT)\*.exp
 	@-del /f /q vs$(VSVER)\$(CFG)\$(PLAT)\*.lib
-	@-del /f /q vs$(VSVER)\$(CFG)\$(PLAT)\pangomm\*.def
 	@-del /f /q vs$(VSVER)\$(CFG)\$(PLAT)\pangomm\*.res
 	@-del /f /q vs$(VSVER)\$(CFG)\$(PLAT)\pangomm\*.pdb
 	@-del /f /q vs$(VSVER)\$(CFG)\$(PLAT)\pangomm\*.obj
 	@-del /f /q vs$(VSVER)\$(CFG)\$(PLAT)\pangomm\private\*.h
 	@-del /f /q vs$(VSVER)\$(CFG)\$(PLAT)\pangomm\*.h
 	@-del /f /q vs$(VSVER)\$(CFG)\$(PLAT)\pangomm\*.cc
-	@-del /f /q vs$(VSVER)\$(CFG)\$(PLAT)\gendef\*.pdb
-	@-del /f /q vs$(VSVER)\$(CFG)\$(PLAT)\gendef\*.obj
 	@-rd vs$(VSVER)\$(CFG)\$(PLAT)\pangomm\private
 	@-rd vs$(VSVER)\$(CFG)\$(PLAT)\pangomm
-	@-rd vs$(VSVER)\$(CFG)\$(PLAT)\gendef
 
 .SUFFIXES: .cc .h .ccg .hg .obj
