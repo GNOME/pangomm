@@ -21,6 +21,8 @@
  * Software Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
+#include <pangommconfig.h>
+
 namespace Pango
 {
 
@@ -29,6 +31,7 @@ namespace Pango
  * You do not need to call this if you are using Gtk::Main,
  * because it calls it for you.
  */
+PANGOMM_API
 void init();
 
 } // namespace Pango
