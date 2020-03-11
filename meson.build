@@ -55,10 +55,6 @@ sys.exit(os.path.isdir("@0@") or os.path.isfile("@0@"))
 '''.format(project_source_root / '.git')
 is_git_build = run_command(python3, '-c', cmd_py).returncode() != 0
 
-# Unfortunately due to m4 requirements, we cannot support MSVC builds
-# directly from GIT checkouts
-assert(not is_msvc or not is_git_build, 'Direct builds from GIT is not supported for MSVC builds')
-
 # Options.
 maintainer_mode_opt = get_option('maintainer-mode')
 maintainer_mode = maintainer_mode_opt == 'true' or \
@@ -160,8 +156,12 @@ dot = find_program('dot', required: build_documentation) # Used by Doxygen
 xsltproc = find_program('xsltproc', required: build_documentation)
 
 # Where to find gmmproc and generate_wrap_init.pl. (N/A on MSVC builds)
-if not is_msvc
+if glibmm_dep.type_name() == 'pkgconfig'
   gmmproc_dir = glibmm_dep.get_pkgconfig_variable('gmmprocdir')
+else
+  if is_msvc
+    gmmproc_dir = get_option('gmmproc-dir')
+  endif
 endif
 
 script_dir = project_source_root / 'untracked' / 'build_scripts'
