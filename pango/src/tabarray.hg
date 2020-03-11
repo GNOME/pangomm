@@ -33,9 +33,9 @@ _WRAP_ENUM(TabAlign, PangoTabAlign)
 /** A Pango::TabArray contains an array of tab stops.
  * Each tab stop has an alignment and a position.
  */
-class TabArray
+class PANGOMM_API TabArray
 {
-  _CLASS_BOXEDTYPE(TabArray, PangoTabArray, NONE, pango_tab_array_copy, pango_tab_array_free)
+  _CLASS_BOXEDTYPE(TabArray, PangoTabArray, NONE, pango_tab_array_copy, pango_tab_array_free, PANGOMM_API)
   _IGNORE(pango_tab_array_free, pango_tab_array_copy, pango_tab_array_get_tab, pango_tab_array_get_tabs, pango_tab_array_new_with_positions)
 public:
   explicit TabArray(int initial_size, bool positions_in_pixels = true);

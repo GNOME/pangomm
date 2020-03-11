@@ -32,9 +32,9 @@ namespace Pango
 /** A Pango::GlyphString is used to store strings of glyphs with geometry and visual attribute information.
  * It can be measured or drawn to the screen.
  */
-class GlyphString
+class PANGOMM_API GlyphString
 {
-  _CLASS_BOXEDTYPE(GlyphString, PangoGlyphString, pango_glyph_string_new, pango_glyph_string_copy, pango_glyph_string_free)
+  _CLASS_BOXEDTYPE(GlyphString, PangoGlyphString, pango_glyph_string_new, pango_glyph_string_copy, pango_glyph_string_free, PANGOMM_API)
   _IGNORE(pango_glyph_string_free, pango_glyph_string_copy)
   _IGNORE(pango_glyph_string_index_to_x, pango_glyph_string_x_to_index, pango_glyph_string_get_logical_widths)
 

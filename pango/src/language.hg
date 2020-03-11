@@ -15,6 +15,8 @@
  * Software Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
+_CONFIGINCLUDE(pangommconfig.h)
+
 #include <glibmm/value.h>
 #include <pango/pango-attributes.h>
 
@@ -27,9 +29,9 @@ _WRAP_ENUM(Script, PangoScript)
 
 /** A Pango::Language is used to represent a language.
  */
-class Language
+class PANGOMM_API Language
 {
-  _CLASS_BOXEDTYPE(Language, PangoLanguage, _pango_language_new, _pango_language_copy, _pango_language_free)
+  _CLASS_BOXEDTYPE(Language, PangoLanguage, _pango_language_new, _pango_language_copy, _pango_language_free, PANGOMM_API)
   _IGNORE(pango_language_get_sample_string) //This function is a bad hack for internal use by renderers and Pango (from pango/pango-utils.c)
   _IGNORE(pango_language_to_string) //This is defined as a macro
   _CUSTOM_DEFAULT_CTOR

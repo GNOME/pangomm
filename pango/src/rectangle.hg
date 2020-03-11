@@ -15,6 +15,8 @@
  * Software Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
+_CONFIGINCLUDE(pangommconfig.h)
+
 #include <pango/pango-types.h>
 
 _DEFS(pangomm,pango)
@@ -30,7 +32,7 @@ namespace Pango
  * from the extents rectangle to more traditional font metrics.
  * The units of rectangles usually are in 1/Pango::SCALE of a device unit.
  */
-class Rectangle
+class PANGOMM_API Rectangle
 {
   _CLASS_GENERIC(Rectangle, PangoRectangle)
 
@@ -137,9 +139,11 @@ namespace Glib
 {
 
 /** @relates Pango::Rectangle */
+PANGOMM_API
 Pango::Rectangle& wrap(PangoRectangle* object);
 
 /** @relates Pango::Rectangle */
+PANGOMM_API
 const Pango::Rectangle& wrap(const PangoRectangle* object);
 
 } /* namespace Glib */

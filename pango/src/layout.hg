@@ -44,9 +44,9 @@ _WRAP_ENUM(EllipsizeMode, PangoEllipsizeMode)
  * the layout can be rendered, and conversion between logical character positions
  * within the layout's text, and the physical position of the resulting glyphs can be made.
  */
-class Layout : public Glib::Object
+class PANGOMM_API Layout : public Glib::Object
 {
-  _CLASS_GOBJECT(Layout, PangoLayout, PANGO_LAYOUT, Glib::Object, GObject)
+  _CLASS_GOBJECT(Layout, PangoLayout, PANGO_LAYOUT, Glib::Object, GObject, , , PANGOMM_API)
   _IGNORE(pango_layout_set_text, pango_layout_set_markup, pango_layout_set_markup_with_accel, pango_layout_get_log_attrs, pango_layout_get_iter)
 
 protected:

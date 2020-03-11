@@ -32,9 +32,9 @@ namespace Pango
 
 /** A Pango::FontFace is used to represent a group of fonts with the same family, slant, weight, width, but varying sizes.
  */
-class FontFace : public Glib::Object
+class PANGOMM_API FontFace : public Glib::Object
 {
-   _CLASS_GOBJECT(FontFace, PangoFontFace, PANGO_FONT_FACE, Glib::Object, GObject)
+   _CLASS_GOBJECT(FontFace, PangoFontFace, PANGO_FONT_FACE, Glib::Object, GObject, , , PANGOMM_API)
 
 public:
   _WRAP_METHOD(FontDescription describe() const, pango_font_face_describe)

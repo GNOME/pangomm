@@ -29,13 +29,13 @@ _PINCLUDE(glibmm/private/object_p.h)
 namespace Pango
 {
 
-class Context;
+class PANGOMM_API Context;
 
 /** A Pango::FontMap represents the set of fonts available for a particular rendering system.
  */
-class FontMap : public Glib::Object
+class PANGOMM_API FontMap : public Glib::Object
 {
-   _CLASS_GOBJECT(FontMap, PangoFontMap, PANGO_FONT_MAP, Glib::Object, GObject)
+   _CLASS_GOBJECT(FontMap, PangoFontMap, PANGO_FONT_MAP, Glib::Object, GObject, , , PANGOMM_API)
    _IGNORE(pango_font_map_list_families)
 
 public:

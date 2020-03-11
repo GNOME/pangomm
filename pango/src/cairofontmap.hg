@@ -17,6 +17,8 @@
  * Software Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
+_CONFIGINCLUDE(pangommconfig.h)
+
 #include <glibmm/interface.h>
 #include <cairomm/enums.h>
 #include <pango/pangocairo.h>
@@ -33,9 +35,9 @@ namespace Pango
 
 /** A Pango::CairoFontMap represents the set of fonts available for a particular rendering system.
  */
-class CairoFontMap : public Glib::Interface
+class PANGOMM_API CairoFontMap : public Glib::Interface
 {
-   _CLASS_INTERFACE(CairoFontMap, PangoCairoFontMap, PANGO_CAIRO_FONT_MAP, PangoCairoFontMapIface)
+   _CLASS_INTERFACE(CairoFontMap, PangoCairoFontMap, PANGO_CAIRO_FONT_MAP, PangoCairoFontMapIface, , , PANGOMM_API)
 
 public:
   //_WRAP_METHOD(static Glib::RefPtr<PangoFontMap> get_default(), pango_cairo_font_map_get_default) //TODO: ref this?
