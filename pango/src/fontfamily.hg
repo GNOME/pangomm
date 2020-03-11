@@ -34,9 +34,9 @@ namespace Pango
 /** A Pango::FontFamily is used to represent a family of related font faces.
  * The faces in a family share a common design, but differ in slant, weight, width and other aspects.
  */
-class FontFamily : public Glib::Object
+class PANGOMM_API FontFamily : public Glib::Object
 {
-   _CLASS_GOBJECT(FontFamily, PangoFontFamily, PANGO_FONT_FAMILY, Glib::Object, GObject)
+   _CLASS_GOBJECT(FontFamily, PangoFontFamily, PANGO_FONT_FAMILY, Glib::Object, GObject, , , PANGOMM_API)
    _IGNORE(pango_font_family_list_faces)
 
 public:

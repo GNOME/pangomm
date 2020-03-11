@@ -41,9 +41,9 @@ _WRAP_ENUM(RenderPart, PangoRenderPart)
  * By subclassing Pango::Renderer and overriding operations such as draw_glyphs and draw_rectangle, 
  * renderers for particular font backends and destinations can be created.
  */
-class Renderer : public Glib::Object
+class PANGOMM_API Renderer : public Glib::Object
 {
-  _CLASS_GOBJECT(Renderer, PangoRenderer, PANGO_RENDERER, Glib::Object, GObject)
+  _CLASS_GOBJECT(Renderer, PangoRenderer, PANGO_RENDERER, Glib::Object, GObject, , , PANGOMM_API)
  
 protected:
  

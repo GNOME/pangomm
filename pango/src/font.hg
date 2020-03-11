@@ -45,14 +45,14 @@ const double SCALE_X_LARGE  = 1.4399999999999;
 const double SCALE_XX_LARGE = 1.728;
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
-class FontMap;
+class PANGOMM_API FontMap;
 #endif //DOXYGEN_SHOULD_SKIP_THIS
 
 /** A Pango::Font is used to represent a font in a rendering-system-independent matter.
  */
-class Font : public Glib::Object
+class PANGOMM_API Font : public Glib::Object
 {
-  _CLASS_GOBJECT(Font, PangoFont, PANGO_FONT, Glib::Object, GObject)
+  _CLASS_GOBJECT(Font, PangoFont, PANGO_FONT, Glib::Object, GObject, , , PANGOMM_API)
   _IGNORE(pango_font_find_shaper) //This would return a PangoEngineShape* but the definition of the struct is surrounded by #define PANGO_ENABLE_BACKEND [...] #endif. So don't wrap it.
 
 public:

@@ -25,8 +25,8 @@ _DEFS(pangomm,pango)
 namespace Pango
 {
 
-class Font;
-class GlyphString;
+class PANGOMM_API Font;
+class PANGOMM_API GlyphString;
 
 /** A Pango::Analysis stores information about the properties of a segment of text.
  * Pango::Analysis is used as an output type only so there is no public default constructor.
@@ -34,7 +34,7 @@ class GlyphString;
  * calling Pango::Item::get_analysis(). Objects of this class can be used for some
  * calculations in Pango::GlyphString.
  */
-class Analysis
+class PANGOMM_API Analysis
 {
   _CLASS_GENERIC(Analysis, PangoAnalysis)
 
@@ -89,7 +89,7 @@ protected:
  * the Pango::Analysis data member that can be accessed with get_analysis()
  * it is needed for further calculations in Pango::GlyphString.
  */
-class Item
+class PANGOMM_API Item
 {
   _CLASS_GENERIC(Item, PangoItem) //There is the whole set of functions for _CLASS_BOXEDTYPE but unfortunately PangoItem is not registered as a boxed type and lacks pango_item_get_type...
   _IGNORE(pango_item_copy,pango_item_free)
@@ -171,12 +171,15 @@ namespace Glib
 {
 
 /** @relates Pango::Analysis */
+PANGOMM_API
 Pango::Analysis& wrap(PangoAnalysis* object);
 
 /** @relates Pango::Analysis */
+PANGOMM_API
 const Pango::Analysis& wrap(const PangoAnalysis* object);
 
 /** @relates Pango::Item */
+PANGOMM_API
 Pango::Item wrap(PangoItem* object, bool take_copy=true);
 
 } // namespace Glib

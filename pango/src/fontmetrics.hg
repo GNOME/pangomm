@@ -19,6 +19,8 @@
  * Software Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
+_CONFIGINCLUDE(pangommconfig.h)
+
 #include <glibmm/value.h>
 #include <pango/pango-font.h>
 
@@ -29,9 +31,9 @@ namespace Pango
 
 /** A Pango::FontMetrics holds the overall metric information for a font (possibly restricted to a script).
  */
-class FontMetrics
+class PANGOMM_API FontMetrics
 {
-  _CLASS_BOXEDTYPE(FontMetrics, PangoFontMetrics, NONE, pango_font_metrics_ref, pango_font_metrics_unref)
+  _CLASS_BOXEDTYPE(FontMetrics, PangoFontMetrics, NONE, pango_font_metrics_ref, pango_font_metrics_unref, PANGOMM_API)
   _IGNORE(pango_font_metrics_unref, pango_font_metrics_ref)
 public:
   _WRAP_METHOD(int get_ascent() const, pango_font_metrics_get_ascent)

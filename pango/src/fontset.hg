@@ -33,9 +33,9 @@ namespace Pango
 
 /** A Pango::Fontset is used to represent a set of fonts.
  */
-class Fontset : public Glib::Object
+class PANGOMM_API Fontset : public Glib::Object
 {
-  _CLASS_GOBJECT(Fontset, PangoFontset, PANGO_FONTSET, Glib::Object, GObject)
+  _CLASS_GOBJECT(Fontset, PangoFontset, PANGO_FONTSET, Glib::Object, GObject, , , PANGOMM_API)
 
 public:
   _WRAP_METHOD(Glib::RefPtr<Font> get_font(guint wc) const, pango_fontset_get_font)

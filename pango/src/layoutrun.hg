@@ -25,9 +25,9 @@ _DEFS(pangomm,pango)
 namespace Pango
 {
 
-class Item;
-class GlyphString;
-class LayoutRun;
+class PANGOMM_API Item;
+class PANGOMM_API GlyphString;
+class PANGOMM_API LayoutRun;
 
 /** A Pango::GlyphItem is a pair of a Pango::Items and the glyphs resulting from shaping the text corresponding to an item.
  * As an example of the usage of Pango::GlyphItem, the results of shaping text with Pango::Layout is a list of Pango::LayoutLine, 
@@ -40,9 +40,9 @@ typedef LayoutRun GlyphItem;
 /** A Pango::LayoutRun represents a single run within a LayoutLine.
  * It is simply an alternate name for GlyphItem.
  */
-class LayoutRun
+class PANGOMM_API LayoutRun
 {
-  _CLASS_BOXEDTYPE(LayoutRun, PangoGlyphItem, NONE, pango_glyph_item_copy, pango_glyph_item_free)
+  _CLASS_BOXEDTYPE(LayoutRun, PangoGlyphItem, NONE, pango_glyph_item_copy, pango_glyph_item_free, PANGOMM_API)
   _IGNORE(pango_glyph_item_free, pango_glyph_item_copy)
 
   _WRAP_METHOD(GlyphItem split(const Glib::ustring& text, int split_index), pango_glyph_item_split)

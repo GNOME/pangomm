@@ -17,6 +17,8 @@
  * Software Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
+_CONFIGINCLUDE(pangommconfig.h)
+
 #include <glibmm/arrayhandle.h>
 #include <pango/pango-font.h>
 
@@ -33,9 +35,9 @@ _WRAP_ENUM(CoverageLevel, PangoCoverageLevel)
  * It is often necessary in pango to determine if a particular font can represent a particular character,
  * and also how well it can represent that character. Pango::Coverage holds this information.
  */
-class Coverage final
+class PANGOMM_API Coverage final
 {
-  _CLASS_OPAQUE_REFCOUNTED(Coverage, PangoCoverage, pango_coverage_new, pango_coverage_ref, pango_coverage_unref)
+  _CLASS_OPAQUE_REFCOUNTED(Coverage, PangoCoverage, pango_coverage_new, pango_coverage_ref, pango_coverage_unref, PANGOMM_API)
   _IGNORE(pango_coverage_ref, pango_coverage_unref)
   _IGNORE(pango_coverage_copy) //pango ref doc: "This function may now be unecessary since we refcount the structure. Mail otaylor redhat.com if you use it."
   _IGNORE(pango_coverage_to_bytes)
