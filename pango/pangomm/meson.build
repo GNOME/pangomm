@@ -65,6 +65,8 @@ install_headers(extra_h_files, subdir: pangomm_pcname / 'pangomm')
 untracked_pangomm = 'untracked' / 'pango' / 'pangomm'
 src_untracked_pangomm = project_source_root / untracked_pangomm
 
+pangomm_cpp_args = [ '-DPANGOMM_BUILD=1' ]
+
 if maintainer_mode
 
   # Maintainer mode. Generate .h and .cc files from .hg and .ccg files in ../src.
@@ -127,6 +129,7 @@ if maintainer_mode
   pango_int_lib = static_library('pangomm-int',
     built_cc_file_targets, built_h_file_targets, extra_cc_files,
     include_directories: extra_include_dirs,
+    cpp_args: pangomm_cpp_args,
     dependencies: pangomm_build_dep,
     install: false,
   )
@@ -170,6 +173,7 @@ else # not maintainer_mode
   pango_int_lib = static_library('pangomm-int',
     built_cc_files, extra_cc_files,
     include_directories: extra_include_dirs,
+    cpp_args: pangomm_cpp_args,
     dependencies: pangomm_build_dep,
     install: false,)
 
