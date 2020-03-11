@@ -55,10 +55,6 @@ sys.exit(os.path.isdir("@0@") or os.path.isfile("@0@"))
 '''.format(project_source_root / '.git')
 is_git_build = run_command(python3, '-c', cmd_py).returncode() != 0
 
-# Unfortunately due to m4 requirements, we cannot support MSVC builds
-# directly from GIT checkouts
-assert(not is_msvc or not is_git_build, 'Direct builds from GIT is not supported for MSVC builds')
-
 # Options.
 maintainer_mode_opt = get_option('maintainer-mode')
 maintainer_mode = maintainer_mode_opt == 'true' or \
@@ -81,6 +77,10 @@ install_pkgconfigdir = install_libdir / 'pkgconfig'
 # pangomm_dep (created in pango/pangomm/meson.build):
 #   Dependencies when using the pangomm library.
 
+# glibmm recently gained Meson build support, so we can try looking
+# for its pkg-config files on Visual Studio as well
+glibmm_req = '>= 2.48.0'
+
 # Pango supported pkg-config files on MSVC files for a good while,
 # so just use that
 pangocairo_req = '>= 1.41.0'
@@ -95,10 +95,17 @@ if is_msvc
   # We must have Visual Studio 2013 or later...
   assert(cpp_compiler.version().split('.')[0].to_int() >= 18, 'Visual Studio 2013 or later is required')
 
-  assert(cpp_compiler.has_header('sigc++-2.0/sigc++/sigc++.h') and cpp_compiler.has_header('sigc++-2.0/include/sigc++config.h'),
-         'sigc++-2.x headers are required')
-  assert(cpp_compiler.has_header('glibmm-2.@0@/glibmm.h'.format(glibmm_req_minor_ver)) and cpp_compiler.has_header('glibmm-2.@0@/include/glibmmconfig.h'.format(glibmm_req_minor_ver)),
-         'glibmm-2.@0@ headers are required'.format(glibmm_req_minor_ver))
+  sigc_major_ver = '2'
+
+  glibmm_dep = dependency('glibmm-2.@0@'.format(glibmm_req_minor_ver), required: false, version: glibmm_req)
+  if not glibmm_dep.found()
+    assert(cpp_compiler.has_header('sigc++-@0@.0/sigc++/sigc++.h'.format(sigc_major_ver)) and cpp_compiler.has_header('sigc++-@0@.0/include/sigc++config.h'.format(sigc_major_ver)),
+           'sigc++-@0@.x headers are required'.format(sigc_major_ver))
+    assert(cpp_compiler.has_header('glibmm-2.@0@/glibmm.h'.format(glibmm_req_minor_ver)) and cpp_compiler.has_header('glibmm-2.@0@/include/glibmmconfig.h'.format(glibmm_req_minor_ver)),
+           'glibmm-2.@0@ headers are required'.format(glibmm_req_minor_ver))
+  else
+    sigc_dep = dependency('', required: false) # glibmm covers for libsigc++ in its pkg-config file
+  endif
   assert(cpp_compiler.has_header('cairomm-1.@0@/cairomm/cairomm.h'.format(cairomm_req_minor_ver)) and cpp_compiler.has_header('cairomm-1.@0@/include/cairommconfig.h'.format(cairomm_req_minor_ver)),
          'cairomm-1.@0@ headers are required'.format(cairomm_req_minor_ver))
   message('Ensure your INCLUDE and LIB contain the paths that lead to the appropriate headers and .lib\'s for glibmm-2.@0@, cairomm-1.@1@ and libsigc++-2.x'.format(glibmm_req_minor_ver, cairomm_req_minor_ver))
@@ -121,29 +128,43 @@ if is_msvc
     debugsuffix = '-d'
   endif
 
-  # We can be looking for MSVC 2017-built libraries on 2019 builds as well,
-  # so we can't just assume that libraries exist, but check that compatible
-  # versions are really found
-  glibmm_dep = dependency('', required: false)
+  # We can be looking for MSVC 2015-built libraries on 2017 and 2019 builds as well,
+  # as well as 2017-built libraries on 2019 as well, so we can't just assume that
+  # libraries exist, but check that compatible versions are really found
   cairomm_dep = dependency('', required: false)
-  sigc_dep = dependency('', required: false)
 
   foreach v : msvc_check_range
     glibmm_dep = glibmm_dep.found() ? glibmm_dep : cpp_compiler.find_library('glibmm-vc@0@0@1@-2_@2@'.format(v.to_string(), debugsuffix, glibmm_req_minor_ver), required: false)
     cairomm_dep = cairomm_dep.found() ? cairomm_dep : cpp_compiler.find_library('cairomm-vc@0@0@1@-1_@2@'.format(v.to_string(), debugsuffix, cairomm_req_minor_ver), required: false)
-    sigc_dep = sigc_dep.found() ? sigc_dep : cpp_compiler.find_library('sigc-vc@0@0@1@-2_0'.format(v.to_string(), debugsuffix), required: false)
   endforeach
 
-  # Now make sure the appropriate -mm libraries are found
-  assert(glibmm_dep.found() and cairomm_dep.found() and sigc_dep.found(), 'Appropriate glibmm-vcxx0@0@-2_@1@.lib, cairomm-vcxx0@0@-1_@2@.lib and sigc-vcxx0@0@-2_0.lib are required'.format(debugsuffix, glibmm_req_minor_ver, cairomm_req_minor_ver))
+  if glibmm_dep.type_name() == 'library'
+    warning('Note: Be sure to check that this finds the same libsigc++ .lib your glibmm is linked to')
+    sigc_dep = cpp_compiler.find_library('sigc-@0@.0'.format(sigc_major_ver), required: false)
+    foreach v : msvc_check_range
+      sigc_dep = sigc_dep.found() ? sigc_dep : cpp_compiler.find_library('sigc-vc@0@0@1@-2_0'.format(v.to_string(), debugsuffix), required: false)
+    endforeach
+  endif
 
-  pangomm_requires = ' '.join([
+  # Now make sure the appropriate -mm libraries are found
+  assert(glibmm_dep.found() and cairomm_dep.found() and (glibmm_dep.type_name() == 'pkgconfig' or sigc_dep.found()), 'Appropriate glibmm-vcxx0@0@-2_@1@.lib, cairomm-vcxx0@0@-1_@2@.lib and sigc-vcxx0@0@-@3@_0.lib are required'.format(debugsuffix, glibmm_req_minor_ver, cairomm_req_minor_ver, sigc_major_ver))
+
+  # Put glibmm in the required packages if we find it by pkg-config
+  # When cairomm gains Meson build support, we can replace
+  # this with what is done on other build systems.
+  mm_lib_requires = ''
+  if glibmm_dep.type_name() == 'pkgconfig'
+    mm_lib_requires += ' '.join([
+      'glibmm-2.@0@'.format(glibmm_req_minor_ver), glibmm_req,
+    ]) + ' '
+  endif
+
+  pangomm_requires = mm_lib_requires + ' '.join([
     'pangocairo', pangocairo_req,
   ])
 
   pangomm_build_dep = [glibmm_dep, cairomm_dep, sigc_dep, pangocairo_dep]
 else
-  glibmm_req = '>= 2.48.0'
   cairomm_req = '>= 1.2.2'
   glibmm_dep = dependency('glibmm-2.@0@'.format(glibmm_req_minor_ver), version: glibmm_req)
   cairomm_dep = dependency('cairomm-1.@0@'.format(cairomm_req_minor_ver), version: cairomm_req)
@@ -164,9 +185,13 @@ doxygen = find_program('doxygen', required: build_documentation)
 dot = find_program('dot', required: build_documentation) # Used by Doxygen
 xsltproc = find_program('xsltproc', required: build_documentation)
 
-# Where to find gmmproc and generate_wrap_init.pl. (N/A on MSVC builds)
-if not is_msvc
+# Where to find gmmproc and generate_wrap_init.pl.
+if glibmm_dep.type_name() == 'pkgconfig'
   gmmproc_dir = glibmm_dep.get_pkgconfig_variable('gmmprocdir')
+else
+  if is_msvc
+    gmmproc_dir = get_option('gmmproc-dir')
+  endif
 endif
 
 script_dir = project_source_root / 'untracked' / 'build_scripts'
@@ -215,7 +240,7 @@ add_project_arguments(warning_flags, language: 'cpp')
 # MSVC: Ignore warnings that aren't really harmful, but make those
 #       that should not be overlooked stand out.
 if is_msvc
-  foreach wd : ['/FImsvc_recommended_pragmas.h', '/wd4267', '/wd4530']
+  foreach wd : ['/FImsvc_recommended_pragmas.h', '/wd4267', '/wd4530', '/wd4251']
     disabled_warning = cpp_compiler.get_supported_arguments(wd)
     add_project_arguments(disabled_warning, language: 'cpp')
   endforeach
