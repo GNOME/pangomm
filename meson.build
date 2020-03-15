@@ -245,7 +245,6 @@ if is_msvc
 endif
 
 subdir('tools/extra_defs_gen')
-subdir('MSVC_NMake/gendef')
 subdir('pango')
 subdir('MSVC_NMake/pangomm')
 subdir('pango/pangomm')

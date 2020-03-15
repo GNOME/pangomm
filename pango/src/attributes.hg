@@ -49,15 +49,15 @@ _WRAP_ENUM(Underline, PangoUnderline)
 typedef PangoLogAttr LogAttr;
 
 
-class AttrString;
-class AttrLanguage;
-class AttrColor;
-class AttrInt;
-class AttrFloat;
-class AttrFontDesc;
-class AttrShape;
+class PANGOMM_API AttrString;
+class PANGOMM_API AttrLanguage;
+class PANGOMM_API AttrColor;
+class PANGOMM_API AttrInt;
+class PANGOMM_API AttrFloat;
+class PANGOMM_API AttrFontDesc;
+class PANGOMM_API AttrShape;
 
-enum class GravityHint;
+enum class PANGOMM_API GravityHint;
 
 /** The Pango::Attribute structure represents the common portions of all attributes.
  * Particular types of attributes derive this class. It holds the range in which the
@@ -66,7 +66,7 @@ enum class GravityHint;
  * Attributed text is used in a number of places in pango. It is used as the input to
  * the itemization process and also when creating a Pango::Layout.
  */
-class Attribute
+class PANGOMM_API Attribute
 {
   _CLASS_GENERIC(Attribute, PangoAttribute)
   _IGNORE(pango_attribute_copy,pango_attribute_destroy)
@@ -333,7 +333,7 @@ inline bool operator!=(const Attribute& lhs, const Attribute& rhs)
 
 /** A Pango::AttrString is used to represent an attribute with a string value.
  */
-class AttrString : public Attribute
+class PANGOMM_API AttrString : public Attribute
 {
   _CLASS_GENERIC(AttrString, PangoAttrString)
 
@@ -364,7 +364,7 @@ public:
 
 /** A Pango::AttrLanguage is used to represent an attribute that is a language.
  */
-class AttrLanguage : public Attribute
+class PANGOMM_API AttrLanguage : public Attribute
 {
   _CLASS_GENERIC(AttrLanguage, PangoAttrLanguage)
 
@@ -395,7 +395,7 @@ public:
 
 /** A Pango::AttrColor is used to represent an attribute which is a color.
  */
-class AttrColor : public Attribute
+class PANGOMM_API AttrColor : public Attribute
 {
   _CLASS_GENERIC(AttrColor, PangoAttrColor)
 
@@ -426,7 +426,7 @@ public:
 
 /** A Pango::AttrInt is used to represent an attribute with an integer or enumeration value.
  */
-class AttrInt : public Attribute
+class PANGOMM_API AttrInt : public Attribute
 {
   _CLASS_GENERIC(AttrInt, PangoAttrInt)
 
@@ -457,7 +457,7 @@ public:
 
 /** A Pango::AttrFloat is used to represent an attribute with a float or double value.
  */
-class AttrFloat : public Attribute
+class PANGOMM_API AttrFloat : public Attribute
 {
   _CLASS_GENERIC(AttrFloat, PangoAttrFloat)
 
@@ -488,7 +488,7 @@ public:
 
 /** A Pango::AttrFontDesc is used to represent an attribute that sets all aspects of the font description at once.
  */
-class AttrFontDesc : public Attribute
+class PANGOMM_API AttrFontDesc : public Attribute
 {
   _CLASS_GENERIC(AttrFontDesc, PangoAttrFontDesc)
 
@@ -519,7 +519,7 @@ public:
 
 /** A Pango::AttrShape structure is used to represent an attribute which imposes shape restrictions.
  */
-class AttrShape : public Attribute
+class PANGOMM_API AttrShape : public Attribute
 {
   _CLASS_GENERIC(AttrShape, PangoAttrShape)
 
@@ -577,27 +577,35 @@ namespace Glib
 {
 
 /** @relates Pango::Attribute */
+PANGOMM_API
 Pango::Attribute wrap(PangoAttribute* object, bool take_copy = false);
 
 /** @relates Pango::AttrString */
+PANGOMM_API
 Pango::AttrString wrap(PangoAttrString* object, bool take_copy = false);
 
 /** @relates Pango::AttrLanguage */
+PANGOMM_API
 Pango::AttrLanguage wrap(PangoAttrLanguage* object, bool take_copy = false);
 
 /** @relates Pango::AttrColor */
+PANGOMM_API
 Pango::AttrColor wrap(PangoAttrColor* object, bool take_copy = false);
 
 /** @relates Pango::AttrInt */
+PANGOMM_API
 Pango::AttrInt wrap(PangoAttrInt* object, bool take_copy = false);
 
 /** @relates Pango::AttrFloat */
+PANGOMM_API
 Pango::AttrFloat wrap(PangoAttrFloat* object, bool take_copy = false);
 
 /** @relates Pango::AttrFontDesc */
+PANGOMM_API
 Pango::AttrFontDesc wrap(PangoAttrFontDesc* object, bool take_copy = false);
 
 /** @relates Pango::AttrShape */
+PANGOMM_API
 Pango::AttrShape wrap(PangoAttrShape* object, bool take_copy = false);
 
 } //namespace Glib

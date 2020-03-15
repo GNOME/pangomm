@@ -16,4 +16,20 @@
 /* Micro version number of pangomm. */
 #mesondefine PANGOMM_MICRO_VERSION
 
+/* Enable DLL-specific stuff only when not building a static library */
+#if !defined(__CYGWIN__) && (defined(__MINGW32__) || defined (_MSC_VER)) && !defined(PANGOMM_STATIC_LIB)
+# define PANGOMM_DLL 1
+#endif
+
+#ifdef PANGOMM_DLL
+# if defined(PANGOMM_BUILD)
+#  define PANGOMM_API __declspec(dllexport)
+# else
+#  define PANGOMM_API __declspec(dllimport)
+# endif /* PANGOMM_BUILD - _WINDLL */
+#else
+/* Build a static library or a non-native-Windows library */
+# define PANGOMM_API
+#endif /* PANGOMM_DLL */
+
 #endif /* !PANGOMM_PANGOMMCONFIG_H_INCLUDED */
