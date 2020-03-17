@@ -84,11 +84,11 @@ pangocairo_dep = dependency('pangocairo', version: pangocairo_req)
 
 # glibmm recently gained Meson build support, so we can try looking
 # for its pkg-config files on Visual Studio as well
-glibmm_req = '>= 2.63.1'
+glibmm_req = '>= 2.65.1'
 
 # The -mm libraries do not yet have pkg-config files for MSVC builds,
 # so check for them manually
-glibmm_req_minor_ver = '64'
+glibmm_req_minor_ver = '66'
 cairomm_req_minor_ver = '16'
 
 if is_msvc

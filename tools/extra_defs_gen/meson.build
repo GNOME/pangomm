@@ -4,7 +4,7 @@
 # Output: m4_files, install_m4dir
 
 glibmm_generate_extra_defs_dep = cpp_compiler.find_library(
-  'glibmm_generate_extra_defs-2.64',
+  'glibmm_generate_extra_defs-2.66',
 )
 
 executable('generate_extra_defs', 'generate_defs_pango.cc',
