@@ -209,6 +209,11 @@ endif
 
 # Set compiler warnings.
 warning_flags = []
+
+if is_msvc
+  add_project_arguments(cpp_compiler.get_supported_arguments([ '/utf-8', '/wd4828']), language: 'cpp')
+endif
+
 if warning_level == 'min'
   if is_msvc
     warning_flags = ['/W3']
