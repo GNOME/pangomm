@@ -1,3 +1,27 @@
+2.42.1 (stable):
+
+* Coverage: Ignore deprecations of pango functions
+  (so it can be used with the latest versions of pango)
+  (Kjell Ahlstedt)
+* Layout::get_lines(): Fix ownership of the GSList
+  (Kjell Ahlstedt)
+* pango/src/color.hg: Fix call to _CLASS_BOXEDTYPE_STATIC
+  (Chun-wei Fan) Merge request !10
+
+Build:
+* tools/gen_scripts: Update for non-source-dir builds
+  (Kjell Ahlstedt)
+* Add support for building pangomm with Meson
+  (Chun-wei Fan, Kjell Ahlstedt) Merge request !7, !10
+* meson.build: Check if .git is a directory or file
+  (Ting-Wei Lan) Merge request !8
+* NMake Makefiles: Allow builds from a GIT checkout
+  (Chun-wei Fan)
+* The fixed call to _CLASS_BOXEDTYPE_STATIC in color.hg
+  is necessary in order to use glibmm 2.64.0 or later,
+  combined with maintainer-mode in pangomm.
+
+
 2.42.0 (stable):
 
 * Attribute: Add several create_attr_*() methods
