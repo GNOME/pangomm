@@ -1,8 +1,8 @@
 # pango/pangomm
 
 # Input: pangomm_build_dep, pangomm_pcname, maintainer_mode, project_source_root,
-#        generate_binding, m4_files, pangomm_libversion, install_includedir,
-#        dist_cmd, python3, pangomm_rc
+#        generate_binding_py, m4_files, pangomm_libversion, install_includedir,
+#        python3, pangomm_rc, dummy_header_py, gmmproc_dir
 # Output: hg_ccg_basenames, extra_h_files, built_h_file_targets, built_files_root,
 #         pangomm_dep
 
@@ -80,7 +80,7 @@ if maintainer_mode
 
   # Maintainer mode. Generate .h and .cc files from .hg and .ccg files in ../src.
 
-  # docs/reference/meson.build needs this.
+  # docs/reference/meson.build needs these.
   built_files_root = project_build_root
   built_h_file_targets = []
 
@@ -98,7 +98,7 @@ if maintainer_mode
     input: hg_files,
     output: 'wrap_init.cc',
     command: [
-      python3, generate_binding, 'generate_wrap_init',
+      python3, generate_binding_py, 'generate_wrap_init',
       gmmproc_dir,
       '@OUTPUT@',
       'Pango', # namespace
@@ -116,7 +116,7 @@ if maintainer_mode
       input: [hg_file, ccg_file],
       output: [file + '.stamp', file + '.cc', file + '.h'],
       command: [
-        python3, generate_binding, 'gmmproc',
+        python3, generate_binding_py, 'gmmproc',
         gmmproc_dir,
         '@OUTPUT0@',
         file,
@@ -131,10 +131,28 @@ if maintainer_mode
     built_h_file_targets += built_file_target[2]
   endforeach
 
+  # Create dummy_header.h, depending on all generated headers.
+  # It's created if it does not exist, but it's never updated.
+  # It guarantees that all generated headers are built before pangomm_library
+  # is built, at the same time avoiding unnecessary recompilations.
+  # If built_h_file_targets would be listed as sources to pangomm_library,
+  # all generated .cc files could be recompiled if one generated .h file has
+  # been changed.
+  built_dummy_h_file_target = custom_target('dummy_header.h',
+    input: built_h_file_targets,
+    output: 'dummy_header.h',
+    command: [
+      python3, dummy_header_py,
+      '@OUTPUT@',
+    ],
+    build_by_default: maintainer_mode,
+    install: false,
+  )
+
   extra_include_dirs = ['..']
 
   pangomm_library = library(pangomm_pcname, extra_pangomm_objects,
-    built_cc_file_targets, built_h_file_targets, extra_cc_files,
+    built_cc_file_targets, extra_cc_files, built_dummy_h_file_target,
     version: pangomm_libversion,
     include_directories: extra_include_dirs,
     cpp_args: pangomm_cpp_args,
@@ -163,7 +181,7 @@ else # not maintainer_mode
 
   # Try to copy built source code files to the source tree.
   run_command(
-    python3, generate_binding, 'copy_built_files',
+    python3, generate_binding_py, 'copy_built_files',
     meson.current_build_dir(),
     src_untracked_pangomm,
     hg_ccg_basenames,
@@ -191,7 +209,7 @@ endif
 
 # Install built .h and _p.h files.
 meson.add_install_script(
-  python3.path(), generate_binding, 'install_built_h_files',
+  python3.path(), generate_binding_py, 'install_built_h_files',
   built_h_cc_dir,
   install_includedir / pangomm_pcname / 'pangomm', # subdir below {prefix}
   hg_ccg_basenames
@@ -201,8 +219,7 @@ if not meson.is_subproject()
   # Distribute built files.
   # (add_dist_script() is not allowed in a subproject)
   meson.add_dist_script(
-    python3.path(), dist_cmd,
-    python3.path(), generate_binding, 'dist_built_files',
+    python3.path(), generate_binding_py, 'dist_built_files',
     built_h_cc_dir,
     untracked_pangomm,
     hg_ccg_basenames,

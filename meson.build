@@ -183,27 +183,29 @@ doxygen = find_program('doxygen', required: build_documentation)
 dot = find_program('dot', required: build_documentation) # Used by Doxygen
 xsltproc = find_program('xsltproc', required: build_documentation)
 
-# Where to find gmmproc and generate_wrap_init.pl. (N/A on MSVC builds)
+# Where to find gmmproc and generate_wrap_init.pl.
 if glibmm_dep.type_name() == 'pkgconfig'
   gmmproc_dir = glibmm_dep.get_pkgconfig_variable('gmmprocdir')
 else
-  if is_msvc
-    gmmproc_dir = get_option('gmmproc-dir')
-  endif
+  gmmproc_dir = get_option('gmmproc-dir')
 endif
 
+# Script files copied to 'untracked' by mm-common-get.
 script_dir = project_source_root / 'untracked' / 'build_scripts'
-generate_binding = script_dir / 'generate-binding.py'
-doc_reference = script_dir / 'doc-reference.py'
-dist_changelog = script_dir / 'dist-changelog.py'
-dist_build_scripts = script_dir / 'dist-build-scripts.py'
-dist_cmd = project_source_root / 'tools' / 'dist-cmd.py' # Must be committed to git.
+generate_binding_py = script_dir / 'generate-binding.py'
+doc_reference_py = script_dir / 'doc-reference.py'
+dist_changelog_py = script_dir / 'dist-changelog.py'
+dist_build_scripts_py = script_dir / 'dist-build-scripts.py'
 
 if maintainer_mode and mm_common_get.found()
   # Copy files to untracked/build_scripts and untracked/docs.
   run_command(mm_common_get, '--force', script_dir,
     project_source_root / 'untracked' / 'docs')
 endif
+
+# pangomm's own script files.
+pangomm_script_dir = project_source_root / 'tools'
+dummy_header_py = pangomm_script_dir / 'dummy-header.py'
 
 # Set compiler warnings.
 warning_flags = []
@@ -254,15 +256,13 @@ if not meson.is_subproject()
   # Add a ChangeLog file to the distribution directory.
   # (add_dist_script() is not allowed in a subproject)
   meson.add_dist_script(
-    python3.path(), dist_cmd,
-    python3.path(), dist_changelog,
+    python3.path(), dist_changelog_py,
     project_source_root,
   )
   # Add build scripts to the distribution directory, and delete .gitignore
   # files and an empty $MESON_DIST_ROOT/build/ directory.
   meson.add_dist_script(
-    python3.path(), dist_cmd,
-    python3.path(), dist_build_scripts,
+    python3.path(), dist_build_scripts_py,
     project_source_root,
     'untracked' / 'build_scripts',
   )
@@ -299,7 +299,12 @@ summary = [
   '                 datadir: @0@'.format(install_prefix / install_datadir),
   '                  docdir: @0@'.format(install_prefix / install_docdir),
   '              devhelpdir: @0@'.format(install_prefix / install_devhelpdir),
-  '------'
 ]
+if maintainer_mode
+  summary += [
+    '              gmmprocdir: @0@'.format(gmmproc_dir),
+  ]
+endif
+summary += ['------']
 
 message('\n'.join(summary))
