@@ -36,12 +36,12 @@ _CC_INCLUDE(pango/pango-enum-types.h)
  * custom attributes using Pango::Attribute::register_type(). The predefined values
  * are given below.
  */
-_WRAP_ENUM(AttrType, PangoAttrType)
+_WRAP_ENUM(AttrType, PangoAttrType, decl_prefix PANGOMM_API)
 
 
 /** A Pango::Underline is used to specify whether text should be underlined, and if so, the type of underlining.
  */
-_WRAP_ENUM(Underline, PangoUnderline)
+_WRAP_ENUM(Underline, PangoUnderline, decl_prefix PANGOMM_API)
 
 
 /** A Pango::LogAttr stores information about the attributes of a single character.

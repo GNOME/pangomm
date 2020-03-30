@@ -30,12 +30,12 @@ namespace Pango
 {
 
 _CC_INCLUDE(pango/pango-enum-types.h)
-_WRAP_ENUM(Style, PangoStyle)
-_WRAP_ENUM(Variant, PangoVariant)
-_WRAP_ENUM(Stretch, PangoStretch)
-_WRAP_ENUM(Weight, PangoWeight)
-_WRAP_ENUM(FontMask, PangoFontMask)
-_WRAP_ENUM(Gravity, PangoGravity)
+_WRAP_ENUM(Style, PangoStyle, decl_prefix PANGOMM_API)
+_WRAP_ENUM(Variant, PangoVariant, decl_prefix PANGOMM_API)
+_WRAP_ENUM(Stretch, PangoStretch, decl_prefix PANGOMM_API)
+_WRAP_ENUM(Weight, PangoWeight, decl_prefix PANGOMM_API)
+_WRAP_ENUM(FontMask, PangoFontMask, decl_prefix PANGOMM_API)
+_WRAP_ENUM(Gravity, PangoGravity, decl_prefix PANGOMM_API)
 
 /** A Pango::FontDescription represents the description of an ideal font.
  * It is used both to list what fonts are available on the system and also for specifying the characteristics of a font to load.
