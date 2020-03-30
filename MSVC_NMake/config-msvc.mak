@@ -31,7 +31,11 @@ GMMPROC_DIR=$(PREFIX)\share\glibmm-$(GLIBMM_MAJOR_VERSION).$(GLIBMM_MINOR_VERSIO
 
 PANGOMM_BASE_CFLAGS =			\
 	/Ivs$(PDBVER)\$(CFG)\$(PLAT)	\
-	/I..\pango /I..\pango\pangomm /I.\pangomm		\
+	/I..\untracked\pango	\
+	/I..\pango	\
+	/I..\untracked\pango\pangomm	\
+	/I..\pango\pangomm	\
+	/I.\pangomm		\
 	/wd4530 /EHsc	\
 	/FImsvc_recommended_pragmas.h
 
