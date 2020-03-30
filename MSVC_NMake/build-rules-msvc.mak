@@ -30,7 +30,7 @@ $<
 
 {..\pango\src\}.ccg{vs$(PDBVER)\$(CFG)\$(PLAT)\pangomm\}.obj:
 	@if not exist $(@D)\private\ $(MAKE) /f Makefile.vc CFG=$(CFG) $(@D)\private
-	@for %%s in ($(<D)\*.ccg) do @if not exist ..\pango\pangomm\%%~ns.cc if not exist $(@D)\%%~ns.cc $(PERL) -- $(GMMPROC_DIR)/gmmproc -I ../tools/m4 --defs $(<D:\=/) %%~ns $(<D:\=/) $(@D)
+	@for %%s in ($(<D)\*.ccg) do @if not exist ..\pango\pangomm\%%~ns.cc if not exist ..\untracked\pango\pangomm\%%~ns.cc if not exist $(@D)\%%~ns.cc $(PERL) -- $(GMMPROC_DIR)/gmmproc -I ../tools/m4 --defs $(<D:\=/) %%~ns $(<D:\=/) $(@D)
 	@if exist $(@D)\$(<B).cc $(CXX) $(PANGOMM_CFLAGS) $(CFLAGS_NOGL) /Fo$(@D)\ /Fd$(@D)\ /c $(@D)\$(<B).cc
 	@if exist ..\pango\pangomm\$(<B).cc $(CXX) $(PANGOMM_CFLAGS) $(CFLAGS_NOGL) /Fo$(@D)\ /Fd$(@D)\ /c ..\pango\pangomm\$(<B).cc
 	@if exist ..\untracked\pango\pangomm\$(<B).cc $(CXX) $(PANGOMM_CFLAGS) $(CFLAGS_NOGL) /Fo$(@D)\ /Fd$(@D)\ /c ..\pango\pangomm\$(<B).cc
@@ -48,8 +48,8 @@ $(PANGOMM_LIB): $(PANGOMM_DLL)
 # $(dependent_objects)
 # <<
 # 	@-if exist $@.manifest mt /manifest $@.manifest /outputresource:$@;2
-$(PANGOMM_DLL): vs$(PDBVER)\$(CFG)\$(PLAT)\pangomm\pangomm.def $(pangomm_OBJS)
-	link /DLL $(LDFLAGS_NOLTCG) $(PANGO_LIBS) $(CAIROMM_LIB) $(GLIBMM_LIB) $(LIBSIGC_LIB) /implib:$(PANGOMM_LIB) /def:vs$(PDBVER)\$(CFG)\$(PLAT)\pangomm\pangomm.def -out:$@ @<<
+$(PANGOMM_DLL): $(PANGOMM_INT_TARGET) $(pangomm_OBJS)
+	link /DLL $(LDFLAGS_NOLTCG) $(PANGO_LIBS) $(CAIROMM_LIB) $(GLIBMM_LIB) $(LIBSIGC_LIB) /implib:$(PANGOMM_LIB) $(PANGOMM_DEF_LDFLAG) -out:$@ @<<
 $(pangomm_OBJS)
 <<
 	@-if exist $@.manifest mt /manifest $@.manifest /outputresource:$@;2
