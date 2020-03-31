@@ -25,7 +25,7 @@ _DEFS(pangomm,pango)
 namespace Pango
 {
 
-_WRAP_ENUM(Script, PangoScript)
+_WRAP_ENUM(Script, PangoScript, decl_prefix PANGOMM_API)
 
 /** A Pango::Language is used to represent a language.
  */
