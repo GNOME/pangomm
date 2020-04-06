@@ -19,6 +19,8 @@
  * Software Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
+_CONFIGINCLUDE(pangommconfig.h)
+
 #include <glibmm/value.h>
 #include <pango/pango-font.h>
 
@@ -28,19 +30,19 @@ namespace Pango
 {
 
 _CC_INCLUDE(pango/pango-enum-types.h)
-_WRAP_ENUM(Style, PangoStyle)
-_WRAP_ENUM(Variant, PangoVariant)
-_WRAP_ENUM(Stretch, PangoStretch)
-_WRAP_ENUM(Weight, PangoWeight)
-_WRAP_ENUM(FontMask, PangoFontMask)
-_WRAP_ENUM(Gravity, PangoGravity)
+_WRAP_ENUM(Style, PangoStyle, decl_prefix PANGOMM_API)
+_WRAP_ENUM(Variant, PangoVariant, decl_prefix PANGOMM_API)
+_WRAP_ENUM(Stretch, PangoStretch, decl_prefix PANGOMM_API)
+_WRAP_ENUM(Weight, PangoWeight, decl_prefix PANGOMM_API)
+_WRAP_ENUM(FontMask, PangoFontMask, decl_prefix PANGOMM_API)
+_WRAP_ENUM(Gravity, PangoGravity, decl_prefix PANGOMM_API)
 
 /** A Pango::FontDescription represents the description of an ideal font.
  * It is used both to list what fonts are available on the system and also for specifying the characteristics of a font to load.
  */
-class FontDescription
+class PANGOMM_API FontDescription
 {
-  _CLASS_BOXEDTYPE(FontDescription, PangoFontDescription, pango_font_description_new, pango_font_description_copy, pango_font_description_free)
+  _CLASS_BOXEDTYPE(FontDescription, PangoFontDescription, pango_font_description_new, pango_font_description_copy, pango_font_description_free, PANGOMM_API)
   _IGNORE(pango_font_description_free, pango_font_description_copy, pango_font_description_copy_static, pango_font_description_equal)
 
   /* These functions are dangerous! The first casts the "const" from the parameter away

@@ -63,7 +63,22 @@ files_extra_ph_int = $(files_extra_ph:/=\)
 !if [call create-lists.bat footer pangomm.mak]
 !endif
 
+!if [for %f in (pangomm\attributes.h) do @if not exist ..\pango\%f if not exist ..\untracked\pango\%f if not exist vs$(PDBVER)\$(CFG)\$(PLAT)\%f (md vs$(PDBVER)\$(CFG)\$(PLAT)\pangomm\private) & ($(PERL) -- $(GMMPROC_DIR)/gmmproc -I ../tools/m4 --defs ../pango/src attributes ../pango/src vs$(PDBVER)/$(CFG)/$(PLAT)/pangomm)]
+!endif
+
+!if [for %d in (vs$(PDBVER)\$(CFG)\$(PLAT)\pangomm ..\pango\pangomm ..\untracked\pango\pangomm) do @if exist %d\attributes.h call get-gmmproc-ver %d\attributes.h>>pangomm.mak]
+!endif
+
 !include pangomm.mak
 
 !if [del /f /q pangomm.mak]
+!endif
+
+!if "$(GMMPROC_VER)" >= "2.64.3"
+PANGOMM_INT_TARGET = vs$(PDBVER)\$(CFG)\$(PLAT)\pangomm
+PANGOMM_DEF_LDFLAG =
+!else
+PANGOMM_INT_TARGET = vs$(PDBVER)\$(CFG)\$(PLAT)\pangomm\pangomm.def
+PANGOMM_DEF_LDFLAG = /def:$(PANGOMM_INT_TARGET)
+PANGOMM_BASE_CFLAGS = $(PANGOMM_BASE_CFLAGS) /DPANGOMM_USE_GENDEF
 !endif

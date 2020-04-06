@@ -36,9 +36,9 @@ namespace Pango
  *
  * When obtaining an AttrList, you should check that it is valid. For instance, if(attrlist).
  */
-class AttrList
+class PANGOMM_API AttrList
 {
-  _CLASS_BOXEDTYPE(AttrList, PangoAttrList, pango_attr_list_new, pango_attr_list_copy, pango_attr_list_unref)
+  _CLASS_BOXEDTYPE(AttrList, PangoAttrList, pango_attr_list_new, pango_attr_list_copy, pango_attr_list_unref, PANGOMM_API)
   _IGNORE(pango_attr_list_copy, pango_attr_list_ref, pango_attr_list_unref)
 public:
   /** Constructs an attribute list by parsing a marked-up text (see markup format).

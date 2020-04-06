@@ -17,6 +17,8 @@
  * Software Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
+_CONFIGINCLUDE(pangommconfig.h)
+
 #include <pango/pango-glyph.h>
 
 _DEFS(pangomm,pango)
@@ -24,8 +26,8 @@ _DEFS(pangomm,pango)
 namespace Pango
 {
 
-class GlyphInfo;
-class GlyphGeometry;
+class PANGOMM_API GlyphInfo;
+class PANGOMM_API GlyphGeometry;
 
 
 /** A Pango::Glyph represents a single glyph in the output form of a string.
@@ -45,7 +47,7 @@ typedef PangoGlyphVisAttr GlyphVisAttr;
 
 /** A Pango::GlyphInfo represents a single glyph together with positioning information and visual attributes.
  */
-class GlyphInfo
+class PANGOMM_API GlyphInfo
 {
   _CLASS_GENERIC(GlyphInfo, PangoGlyphInfo)
 
@@ -96,7 +98,7 @@ protected:
 
 /** A Pango::GlyphGeometry contains width and positioning information for a single glyph. Distances are in 1/64ths of a point.
  */
-class GlyphGeometry
+class PANGOMM_API GlyphGeometry
 {
   _CLASS_GENERIC(GlyphGeometry, PangoGlyphGeometry)
 
@@ -147,7 +149,7 @@ protected:
  * to create a wrapper class for PangoGlyphVisAttr in future. Currently, however,
  * PangoGlyphVisAttr just contains one simple data field (guint is_cluster_start).
  */
-/*class GlyphVisAttr
+/*class PANGOMM_API GlyphVisAttr
 {
   _CLASS_GENERIC(GlyphVisAttr, PangoGlyphVisAttr)
 
@@ -175,21 +177,27 @@ namespace Glib
 {
 
 /** @relates Pango::GlyphInfo */
+PANGOMM_API
 Pango::GlyphInfo& wrap(PangoGlyphInfo* object);
 
 /** @relates Pango::GlyphInfo */
+PANGOMM_API
 const Pango::GlyphInfo& wrap(const PangoGlyphInfo* object);
 
 /** @relates Pango::GlyphGeometry */
+PANGOMM_API
 Pango::GlyphGeometry& wrap(PangoGlyphGeometry* object);
 
 /** @relates Pango::GlyphGeometry */
+PANGOMM_API
 const Pango::GlyphGeometry& wrap(const PangoGlyphGeometry* object);
 
 /* @relates Pango::GlyphVisAttr */
+//PANGOMM_API
 //Pango::GlyphVisAttr& wrap(PangoGlyphVisAttr* object);
 
 /* @relates Pango::GlyphVisAttr */
+//PANGOMM_API
 //const Pango::GlyphVisAttr& wrap(const PangoGlyphVisAttr* object);
 
 } //namespace Glib

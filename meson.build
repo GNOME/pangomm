@@ -91,18 +91,27 @@ pangocairo_dep = dependency('pangocairo', version: pangocairo_req)
 glibmm_req_minor_ver = '4'
 cairomm_req_minor_ver = '0'
 
+glibmm_dep = dependency('glibmm-2.@0@'.format(glibmm_req_minor_ver), version: glibmm_req, required: not is_msvc)
+
+# Where to find gmmproc and generate_wrap_init.pl.
+if glibmm_dep.found() and glibmm_dep.type_name() == 'pkgconfig'
+  gmmproc_dir = glibmm_dep.get_pkgconfig_variable('gmmprocdir')
+endif
+
 if is_msvc
   # We must have Visual Studio 2013 or later...
   assert(cpp_compiler.version().split('.')[0].to_int() >= 18, 'Visual Studio 2013 or later is required')
 
   sigc_major_ver = '2'
 
-  glibmm_dep = dependency('glibmm-2.@0@'.format(glibmm_req_minor_ver), required: false, version: glibmm_req)
   if not glibmm_dep.found()
     assert(cpp_compiler.has_header('sigc++-@0@.0/sigc++/sigc++.h'.format(sigc_major_ver)) and cpp_compiler.has_header('sigc++-@0@.0/include/sigc++config.h'.format(sigc_major_ver)),
            'sigc++-@0@.x headers are required'.format(sigc_major_ver))
     assert(cpp_compiler.has_header('glibmm-2.@0@/glibmm.h'.format(glibmm_req_minor_ver)) and cpp_compiler.has_header('glibmm-2.@0@/include/glibmmconfig.h'.format(glibmm_req_minor_ver)),
            'glibmm-2.@0@ headers are required'.format(glibmm_req_minor_ver))
+
+    # We don't have a pkg-config file for glibmm, so use build options
+    gmmproc_dir = get_option('gmmproc-dir')
   else
     sigc_dep = dependency('', required: false) # glibmm covers for libsigc++ in its pkg-config file
   endif
@@ -138,6 +147,9 @@ if is_msvc
     cairomm_dep = cairomm_dep.found() ? cairomm_dep : cpp_compiler.find_library('cairomm-vc@0@0@1@-1_@2@'.format(v.to_string(), debugsuffix, cairomm_req_minor_ver), required: false)
   endforeach
 
+  # Check whether we compile pangomm without using gendef
+  build_shared_libs_directly = false
+
   if glibmm_dep.type_name() == 'library'
     warning('Note: Be sure to check that this finds the same libsigc++ .lib your glibmm is linked to')
     sigc_dep = cpp_compiler.find_library('sigc-@0@.0'.format(sigc_major_ver), required: false)
@@ -166,7 +178,6 @@ if is_msvc
   pangomm_build_dep = [glibmm_dep, cairomm_dep, sigc_dep, pangocairo_dep]
 else
   cairomm_req = '>= 1.2.2'
-  glibmm_dep = dependency('glibmm-2.@0@'.format(glibmm_req_minor_ver), version: glibmm_req)
   cairomm_dep = dependency('cairomm-1.@0@'.format(cairomm_req_minor_ver), version: cairomm_req)
   pangomm_build_dep = [glibmm_dep, cairomm_dep, pangocairo_dep]
   pangomm_requires = ' '.join([
@@ -174,6 +185,8 @@ else
     'cairomm-1.@0@'.format(cairomm_req_minor_ver), cairomm_req,
     'pangocairo', pangocairo_req,
   ])
+
+  build_shared_libs_directly = true
 endif
 
 # Some dependencies are required only in maintainer mode and/or if
@@ -185,20 +198,12 @@ doxygen = find_program('doxygen', required: build_documentation)
 dot = find_program('dot', required: build_documentation) # Used by Doxygen
 xsltproc = find_program('xsltproc', required: build_documentation)
 
-# Where to find gmmproc and generate_wrap_init.pl.
-if glibmm_dep.type_name() == 'pkgconfig'
-  gmmproc_dir = glibmm_dep.get_pkgconfig_variable('gmmprocdir')
-else
-  if is_msvc
-    gmmproc_dir = get_option('gmmproc-dir')
-  endif
-endif
-
 script_dir = project_source_root / 'untracked' / 'build_scripts'
 generate_binding = script_dir / 'generate-binding.py'
 doc_reference = script_dir / 'doc-reference.py'
 dist_changelog = script_dir / 'dist-changelog.py'
 dist_build_scripts = script_dir / 'dist-build-scripts.py'
+check_dllexport_usage = script_dir / 'check-dllexport-usage.py'
 dist_cmd = project_source_root / 'tools' / 'dist-cmd.py' # Must be committed to git.
 
 if maintainer_mode and mm_common_get.found()
@@ -209,6 +214,30 @@ endif
 
 # Set compiler warnings.
 warning_flags = []
+
+if is_msvc
+  add_project_arguments(cpp_compiler.get_supported_arguments([ '/utf-8', '/wd4828']), language: 'cpp')
+
+  # Check for the first line in a file generated with gmmproc,
+  # to see which gmmproc version was used
+  if maintainer_mode
+    check_gmmproc_ver_cmd = [
+      python3, check_dllexport_usage,
+      '--gmmprocdir=@0@'.format(gmmproc_dir),
+    ]
+  else
+    check_gmmproc_ver_cmd = [
+      python3, check_dllexport_usage,
+      '--file=@0@/untracked/pango/pangomm/attributes.h'.format('/'.join(project_source_root.split('\\')))
+    ]
+  endif
+
+  # Enable __declspec(dllexport) if the pangomm headers generated from the .hg files
+  # were generated using a recent enough gmmproc
+  build_shared_libs_directly = run_command(check_gmmproc_ver_cmd).returncode() == 0
+  message('Using __declspec(dllexport) to build pangomm: @0@'.format(build_shared_libs_directly ? 'YES' : 'NO'))
+endif
+
 if warning_level == 'min'
   if is_msvc
     warning_flags = ['/W3']

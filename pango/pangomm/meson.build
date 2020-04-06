@@ -65,6 +65,12 @@ install_headers(extra_h_files, subdir: pangomm_pcname / 'pangomm')
 untracked_pangomm = 'untracked' / 'pango' / 'pangomm'
 src_untracked_pangomm = project_source_root / untracked_pangomm
 
+pangomm_cpp_args = [ '-DPANGOMM_BUILD=1' ]
+
+if is_msvc and not build_shared_libs_directly
+  pangomm_cpp_args += '-DPANGOMM_USE_GENDEF'
+endif
+
 if maintainer_mode
 
   # Maintainer mode. Generate .h and .cc files from .hg and .ccg files in ../src.
@@ -122,14 +128,8 @@ if maintainer_mode
 
   extra_include_dirs = ['..']
 
-  # We need this so that we can run gendef.exe to get the .def file
-  # needed for obtaining the .lib file for the pangomm DLL
-  pango_int_lib = static_library('pangomm-int',
-    built_cc_file_targets, built_h_file_targets, extra_cc_files,
-    include_directories: extra_include_dirs,
-    dependencies: pangomm_build_dep,
-    install: false,
-  )
+  pango_gen_sources = built_cc_file_targets
+  pango_built_headers = built_h_file_targets
 
   built_h_cc_dir = meson.current_build_dir()
 
@@ -163,26 +163,50 @@ else # not maintainer_mode
     built_cc_files += src_untracked_pangomm / file + '.cc'
   endforeach
 
+  pango_gen_sources = built_cc_files
+  pango_built_headers = []
+
   extra_include_dirs = [ '..', '..' / '..' / 'untracked' / 'pango' ]
 
-  # We need this so that we can run gendef.exe to get the .def file
-  # needed for obtaining the .lib file for the pangomm DLL
-  pango_int_lib = static_library('pangomm-int',
-    built_cc_files, extra_cc_files,
-    include_directories: extra_include_dirs,
-    dependencies: pangomm_build_dep,
-    install: false,
-  )
 
   built_h_cc_dir = src_untracked_pangomm
 
 endif
 
-pangomm_def = []
-pangomm_extra_link_args = []
 extra_pangomm_objects = []
 
-if is_msvc
+# Build the .rc file for Windows builds and link to it
+if host_machine.system() == 'windows'
+  windows = import('windows')
+  pangomm_res = windows.compile_resources(pangomm_rc)
+  extra_pangomm_objects += pangomm_res
+endif
+
+if build_shared_libs_directly
+  pangomm_library = library(pangomm_pcname, extra_pangomm_objects,
+    pango_gen_sources, pango_built_headers, extra_cc_files,
+    include_directories: extra_include_dirs,
+    cpp_args: pangomm_cpp_args,
+    version: pangomm_libversion,
+    dependencies: pangomm_build_dep,
+    install: true,
+  )
+else
+  # Building with headers generated from *.hg files with
+  # gmmproc < 2.64.0 on Visual Studio: We need this so
+  # that we can run gendef.exe to get the .def file
+  # needed for obtaining the .lib file for the pangomm DLL
+  pango_int_lib = static_library('pangomm-int',
+    pango_gen_sources, pango_built_headers, extra_cc_files,
+    include_directories: extra_include_dirs,
+    cpp_args: pangomm_cpp_args,
+    dependencies: pangomm_build_dep,
+    install: false,
+  )
+
+  pangomm_def = []
+  pangomm_extra_link_args = []
+
   pangomm_def = custom_target('pangomm.def',
     output: 'pangomm.def',
     depends: pango_int_lib,
@@ -195,23 +219,16 @@ if is_msvc
     install: false,
   )
   pangomm_extra_link_args = ['/def:@0@'.format(pangomm_def.full_path())]
-endif
 
-# Build the .rc file for Windows builds and link to it
-if host_machine.system() == 'windows'
-  windows = import('windows')
-  pangomm_res = windows.compile_resources(pangomm_rc)
-  extra_pangomm_objects += pangomm_res
+  pangomm_library = library(pangomm_pcname, extra_pangomm_objects,
+    objects: pango_int_lib.extract_all_objects(),
+    version: pangomm_libversion,
+    dependencies: pangomm_build_dep,
+    link_depends: pangomm_def,
+    link_args: pangomm_extra_link_args,
+    install: true,
+  )
 endif
-
-pangomm_library = library(pangomm_pcname, extra_pangomm_objects,
-  objects: pango_int_lib.extract_all_objects(),
-  version: pangomm_libversion,
-  dependencies: pangomm_build_dep,
-  link_depends: pangomm_def,
-  link_args: pangomm_extra_link_args,
-  install: true,
-)
 
 # Install built .h and _p.h files.
 meson.add_install_script(

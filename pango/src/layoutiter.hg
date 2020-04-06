@@ -30,9 +30,9 @@ namespace Pango
 
 /** A Pango::LayoutIter can be used to iterate over the visual extents of a Pango::Layout.
  */
-class LayoutIter
+class PANGOMM_API LayoutIter
 {
-  _CLASS_BOXEDTYPE(LayoutIter, PangoLayoutIter, NONE, pango_layout_iter_copy, pango_layout_iter_free)
+  _CLASS_BOXEDTYPE(LayoutIter, PangoLayoutIter, NONE, pango_layout_iter_copy, pango_layout_iter_free, PANGOMM_API)
   _IGNORE(pango_layout_iter_copy, pango_layout_iter_free)
 
 public:

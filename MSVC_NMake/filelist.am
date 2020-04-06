@@ -9,6 +9,7 @@ msvc_nmake_data =		\
 	gendef/gendef.cc	\
 	gendef/meson.build	\
 	generate-msvc.mak	\
+	get-gmmproc-ver.bat	\
 	info-msvc.mak		\
 	install.mak		\
 	Makefile.vc		\

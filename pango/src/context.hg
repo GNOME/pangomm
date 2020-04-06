@@ -41,8 +41,8 @@ namespace Pango
 {
 
 _CC_INCLUDE(pango/pango-enum-types.h)
-_WRAP_ENUM(Direction, PangoDirection)
-_WRAP_ENUM(GravityHint, PangoGravityHint)
+_WRAP_ENUM(Direction, PangoDirection, decl_prefix PANGOMM_API)
+_WRAP_ENUM(GravityHint, PangoGravityHint, decl_prefix PANGOMM_API)
 
 
 /** A Pango::Context stores global information used to control the itemization process.
@@ -70,9 +70,9 @@ _WRAP_ENUM(GravityHint, PangoGravityHint)
  * that is the closest match for a Pango::FontDescription; however that's not
  * necessarily the font that will be used for rendering).
  */
-class Context : public Glib::Object
+class PANGOMM_API Context : public Glib::Object
 {
-   _CLASS_GOBJECT(Context, PangoContext, PANGO_CONTEXT, Glib::Object, GObject)
+   _CLASS_GOBJECT(Context, PangoContext, PANGO_CONTEXT, Glib::Object, GObject, , , PANGOMM_API)
    _IGNORE(pango_context_set_font_map) //PANGO_ENABLE_BACKEND
    _IGNORE(pango_context_list_families)
 protected:

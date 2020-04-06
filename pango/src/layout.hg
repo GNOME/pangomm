@@ -35,9 +35,9 @@ namespace Pango
 {
 
 _CC_INCLUDE(pango/pango-enum-types.h)
-_WRAP_ENUM(Alignment, PangoAlignment)
-_WRAP_ENUM(WrapMode, PangoWrapMode)
-_WRAP_ENUM(EllipsizeMode, PangoEllipsizeMode)
+_WRAP_ENUM(Alignment, PangoAlignment, decl_prefix PANGOMM_API)
+_WRAP_ENUM(WrapMode, PangoWrapMode, decl_prefix PANGOMM_API)
+_WRAP_ENUM(EllipsizeMode, PangoEllipsizeMode, decl_prefix PANGOMM_API)
 
 /** A Pango::Layout represents an entire paragraph of text.
  * It is initialized with a Pango::Context, UTF-8 string and set of attributes for that string.
@@ -45,9 +45,9 @@ _WRAP_ENUM(EllipsizeMode, PangoEllipsizeMode)
  * the layout can be rendered, and conversion between logical character positions
  * within the layout's text, and the physical position of the resulting glyphs can be made.
  */
-class Layout : public Glib::Object
+class PANGOMM_API Layout : public Glib::Object
 {
-  _CLASS_GOBJECT(Layout, PangoLayout, PANGO_LAYOUT, Glib::Object, GObject)
+  _CLASS_GOBJECT(Layout, PangoLayout, PANGO_LAYOUT, Glib::Object, GObject, , , PANGOMM_API)
   _IGNORE(pango_layout_set_text, pango_layout_set_markup, pango_layout_set_markup_with_accel, pango_layout_get_log_attrs, pango_layout_get_iter)
 
 protected:

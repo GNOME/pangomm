@@ -30,7 +30,7 @@ namespace Pango
  * it can be advanced through the style changes in the text using Pango::AttrIter::next().
  * At each style change, the range of the current style segment and the attributes currently in effect can be queried.
  */
-class AttrIter
+class PANGOMM_API AttrIter
 {
   _CLASS_GENERIC(AttrIter, PangoAttrIterator)
   _IGNORE(pango_attr_iterator_copy, pango_attr_iterator_destroy, pango_attr_iterator_next, pango_attr_iterator_get_font)
@@ -108,6 +108,7 @@ namespace Glib
 {
 
 /** @relates Pango::AttrIter */
+PANGOMM_API
 Pango::AttrIter wrap(PangoAttrIterator* object, bool take_copy=false);
 
 } // namespace Glib
