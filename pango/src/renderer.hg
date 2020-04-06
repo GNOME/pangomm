@@ -44,7 +44,7 @@ class PANGOMM_API Renderer : public Glib::Object
   _CLASS_GOBJECT(Renderer, PangoRenderer, PANGO_RENDERER, Glib::Object, GObject, , , PANGOMM_API)
 
 public:
-  _WRAP_ENUM(Part, PangoRenderPart)
+  _WRAP_ENUM(Part, PangoRenderPart, decl_prefix PANGOMM_API)
 
   _WRAP_METHOD(void draw_layout(const Glib::RefPtr<Layout>& layout, int x, int y), pango_renderer_draw_layout)
   _WRAP_METHOD(void draw_layout_line(const Glib::RefPtr<LayoutLine>& line, int x, int y), pango_renderer_draw_layout_line)

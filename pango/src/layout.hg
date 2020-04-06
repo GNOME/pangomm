@@ -34,9 +34,9 @@ namespace Pango
 {
 
 _CC_INCLUDE(pango/pango-enum-types.h)
-_WRAP_ENUM(Alignment, PangoAlignment)
-_WRAP_ENUM(WrapMode, PangoWrapMode)
-_WRAP_ENUM(EllipsizeMode, PangoEllipsizeMode)
+_WRAP_ENUM(Alignment, PangoAlignment, decl_prefix PANGOMM_API)
+_WRAP_ENUM(WrapMode, PangoWrapMode, decl_prefix PANGOMM_API)
+_WRAP_ENUM(EllipsizeMode, PangoEllipsizeMode, decl_prefix PANGOMM_API)
 
 /** A Pango::Layout represents an entire paragraph of text.
  * It is initialized with a Pango::Context, UTF-8 string and set of attributes for that string.

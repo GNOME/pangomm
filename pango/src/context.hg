@@ -39,8 +39,8 @@ namespace Pango
 {
 
 _CC_INCLUDE(pango/pango-enum-types.h)
-_WRAP_ENUM(Direction, PangoDirection)
-_WRAP_ENUM(GravityHint, PangoGravityHint)
+_WRAP_ENUM(Direction, PangoDirection, decl_prefix PANGOMM_API)
+_WRAP_ENUM(GravityHint, PangoGravityHint, decl_prefix PANGOMM_API)
 
 
 /** A Pango::Context stores global information used to control the itemization process.
