@@ -148,7 +148,7 @@ endforeach
 install_data(image_files, install_dir: install_image_docdir)
 
 if not meson.is_subproject()
-  # Distribute built files and files copied by mm-common-prepare.
+  # Distribute built files and files copied by mm-common-get.
   # (add_dist_script() is not allowed in a subproject)
   meson.add_dist_script(
     python3.path(), doc_reference_py, 'dist_doc',
