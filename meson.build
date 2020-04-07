@@ -226,6 +226,16 @@ if maintainer_mode
   # Copy files to untracked/build_scripts and untracked/docs.
   run_command(mm_common_get, '--force', script_dir,
     project_source_root / 'untracked' / 'docs')
+else
+  cmd_py = '''
+import os
+import sys
+sys.exit(os.path.isfile("@0@"))
+'''.format(generate_binding_py)
+  file_exists = run_command(python3, '-c', cmd_py).returncode() != 0
+  if not file_exists
+    error('Missing files in untracked/. You must enable maintainer-mode.')
+  endif
 endif
 
 # pangomm's own script files.
