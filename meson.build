@@ -96,6 +96,9 @@ glibmm_dep = dependency('glibmm-2.@0@'.format(glibmm_req_minor_ver), version: gl
 # Where to find gmmproc and generate_wrap_init.pl.
 if glibmm_dep.found() and glibmm_dep.type_name() == 'pkgconfig'
   gmmproc_dir = glibmm_dep.get_pkgconfig_variable('gmmprocdir')
+else
+  # We don't have a pkg-config file for glibmm, so use build option.
+  gmmproc_dir = get_option('gmmproc-dir')
 endif
 
 if is_msvc
@@ -110,8 +113,6 @@ if is_msvc
     assert(cpp_compiler.has_header('glibmm-2.@0@/glibmm.h'.format(glibmm_req_minor_ver)) and cpp_compiler.has_header('glibmm-2.@0@/include/glibmmconfig.h'.format(glibmm_req_minor_ver)),
            'glibmm-2.@0@ headers are required'.format(glibmm_req_minor_ver))
 
-    # We don't have a pkg-config file for glibmm, so use build options
-    gmmproc_dir = get_option('gmmproc-dir')
   else
     sigc_dep = dependency('', required: false) # glibmm covers for libsigc++ in its pkg-config file
   endif
@@ -177,6 +178,7 @@ if is_msvc
 
   pangomm_build_dep = [glibmm_dep, cairomm_dep, sigc_dep, pangocairo_dep]
 else
+  # not MSVC
   cairomm_req = '>= 1.2.2'
   cairomm_dep = dependency('cairomm-1.@0@'.format(cairomm_req_minor_ver), version: cairomm_req)
   pangomm_build_dep = [glibmm_dep, cairomm_dep, pangocairo_dep]
@@ -198,13 +200,13 @@ doxygen = find_program('doxygen', required: build_documentation)
 dot = find_program('dot', required: build_documentation) # Used by Doxygen
 xsltproc = find_program('xsltproc', required: build_documentation)
 
+# Script files copied to 'untracked' by mm-common-get.
 script_dir = project_source_root / 'untracked' / 'build_scripts'
-generate_binding = script_dir / 'generate-binding.py'
-doc_reference = script_dir / 'doc-reference.py'
-dist_changelog = script_dir / 'dist-changelog.py'
-dist_build_scripts = script_dir / 'dist-build-scripts.py'
-check_dllexport_usage = script_dir / 'check-dllexport-usage.py'
-dist_cmd = project_source_root / 'tools' / 'dist-cmd.py' # Must be committed to git.
+generate_binding_py = script_dir / 'generate-binding.py'
+doc_reference_py = script_dir / 'doc-reference.py'
+dist_changelog_py = script_dir / 'dist-changelog.py'
+dist_build_scripts_py = script_dir / 'dist-build-scripts.py'
+check_dllexport_usage_py = script_dir / 'check-dllexport-usage.py'
 
 if maintainer_mode and mm_common_get.found()
   # Copy files to untracked/build_scripts and untracked/docs.
@@ -212,8 +214,9 @@ if maintainer_mode and mm_common_get.found()
     project_source_root / 'untracked' / 'docs')
 endif
 
-# Set compiler warnings.
-warning_flags = []
+# pangomm's own script files.
+pangomm_script_dir = project_source_root / 'tools'
+dummy_header_py = pangomm_script_dir / 'dummy-header.py'
 
 if is_msvc
   add_project_arguments(cpp_compiler.get_supported_arguments([ '/utf-8', '/wd4828']), language: 'cpp')
@@ -222,12 +225,12 @@ if is_msvc
   # to see which gmmproc version was used
   if maintainer_mode
     check_gmmproc_ver_cmd = [
-      python3, check_dllexport_usage,
+      python3, check_dllexport_usage_py,
       '--gmmprocdir=@0@'.format(gmmproc_dir),
     ]
   else
     check_gmmproc_ver_cmd = [
-      python3, check_dllexport_usage,
+      python3, check_dllexport_usage_py,
       '--file=@0@/untracked/pango/pangomm/attributes.h'.format('/'.join(project_source_root.split('\\')))
     ]
   endif
@@ -238,6 +241,8 @@ if is_msvc
   message('Using __declspec(dllexport) to build pangomm: @0@'.format(build_shared_libs_directly ? 'YES' : 'NO'))
 endif
 
+# Set compiler warnings.
+warning_flags = []
 if warning_level == 'min'
   if is_msvc
     warning_flags = ['/W3']
@@ -286,15 +291,13 @@ if not meson.is_subproject()
   # Add a ChangeLog file to the distribution directory.
   # (add_dist_script() is not allowed in a subproject)
   meson.add_dist_script(
-    python3.path(), dist_cmd,
-    python3.path(), dist_changelog,
+    python3.path(), dist_changelog_py,
     project_source_root,
   )
   # Add build scripts to the distribution directory, and delete .gitignore
   # files and an empty $MESON_DIST_ROOT/build/ directory.
   meson.add_dist_script(
-    python3.path(), dist_cmd,
-    python3.path(), dist_build_scripts,
+    python3.path(), dist_build_scripts_py,
     project_source_root,
     'untracked' / 'build_scripts',
   )
@@ -331,7 +334,12 @@ summary = [
   '                 datadir: @0@'.format(install_prefix / install_datadir),
   '                  docdir: @0@'.format(install_prefix / install_docdir),
   '              devhelpdir: @0@'.format(install_prefix / install_devhelpdir),
-  '------'
 ]
+if maintainer_mode
+  summary += [
+    '              gmmprocdir: @0@'.format(gmmproc_dir),
+  ]
+endif
+summary += ['------']
 
 message('\n'.join(summary))

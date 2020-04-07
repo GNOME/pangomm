@@ -14,5 +14,4 @@ msvc_nmake_data =		\
 	install.mak		\
 	Makefile.vc		\
 	pangomm/pangomm.rc	\
-	pangomm/copy-pangommconfig-h.py	\
 	pangomm/pangommconfig.h

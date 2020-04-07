@@ -48,7 +48,7 @@ dist_noinst_SCRIPTS = autogen.sh
 
 DISTCLEANFILES = MSVC_NMake/pangomm/pangommconfig.h
 
-# Distribute files needed when building mm-common with meson.
+# Distribute files needed when building pangomm with Meson.
 EXTRA_DIST = \
   meson.build \
   meson_options.txt \
@@ -57,7 +57,7 @@ EXTRA_DIST = \
   pango/meson.build \
   pango/pangomm/meson.build \
   pango/pangommconfig.h.meson \
-  tools/dist-cmd.py \
+  tools/dummy-header.py \
   tools/extra_defs_gen/meson.build \
   untracked/README
 

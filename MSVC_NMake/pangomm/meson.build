@@ -1,6 +1,6 @@
 # MSVC_NMake/pangomm
 
-# Input: pkg_conf_data, project_build_root
+# Input: pkg_conf_data, pangommconfig_h
 # Output: pangomm_rc
 
 pangomm_rc = configure_file(
@@ -10,8 +10,8 @@ pangomm_rc = configure_file(
 )
 
 # Copy the generated configuration header into the MSVC project directory.
-meson.add_postconf_script(
-  'copy-pangommconfig-h.py',
-  project_build_root,
-  meson.current_build_dir(),
+configure_file(
+  input: pangommconfig_h,
+  output: 'pangommconfig.h',
+  copy: true,
 )
