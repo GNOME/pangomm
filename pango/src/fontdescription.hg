@@ -96,7 +96,7 @@ public:
   _WRAP_METHOD(Glib::ustring to_filename() const, pango_font_description_to_filename)
 
 #m4begin
-  _WRAP_EQUAL(pango_font_description_equal)
+  _WRAP_EQUAL(pango_font_description_equal, , PANGOMM_API)
 #m4end
 };
 
