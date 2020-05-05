@@ -124,21 +124,28 @@ if is_msvc
   # so only look for libsigc++ if glibmm's nor cairomm's pkg-config
   # files can't be found
   if not glibmm_dep.found() and not cairomm_dep.found()
-    assert(cpp_compiler.has_header('sigc++-@0@.0/sigc++/sigc++.h'.format(sigc_major_ver)) and cpp_compiler.has_header('sigc++-@0@.0/include/sigc++config.h'.format(sigc_major_ver)),
-           'sigc++-@0@.x headers are required'.format(sigc_major_ver))
-  else
-    sigc_dep = dependency('', required: false) # cairomm/glibmm covers for libsigc++ in their pkg-config files
+    sigc_required_headers = [
+      'sigc++-@0@.0/sigc++/sigc++.h'.format(sigc_major_ver),
+      'sigc++-@0@.0/include/sigc++config.h'.format(sigc_major_ver)
+    ]
   endif
 
-  if not glibmm_dep.found()
-    assert(cpp_compiler.has_header('glibmm-2.@0@/glibmm.h'.format(glibmm_req_minor_ver)) and cpp_compiler.has_header('glibmm-2.@0@/include/glibmmconfig.h'.format(glibmm_req_minor_ver)),
-           'glibmm-2.@0@ headers are required'.format(glibmm_req_minor_ver))
+  # cairomm/glibmm covers for libsigc++ in their pkg-config files,
+  # so we only look for libsigc++ if needed
+  sigc_dep = dependency('', required: false)
 
+  if not glibmm_dep.found()
+    glibmm_required_headers = [
+      'glibmm-2.@0@/glibmm.h'.format(glibmm_req_minor_ver),
+      'glibmm-2.@0@/include/glibmmconfig.h'.format(glibmm_req_minor_ver)
+    ]
   endif
 
   if not cairomm_dep.found()
-    assert(cpp_compiler.has_header('cairomm-1.@0@/cairomm/cairomm.h'.format(cairomm_req_minor_ver)) and cpp_compiler.has_header('cairomm-1.@0@/include/cairommconfig.h'.format(cairomm_req_minor_ver)),
-         'cairomm-1.@0@ headers are required'.format(cairomm_req_minor_ver))
+    cairomm_required_headers = [
+      'cairomm-1.@0@/cairomm/cairomm.h'.format(cairomm_req_minor_ver),
+      'cairomm-1.@0@/include/cairommconfig.h'.format(cairomm_req_minor_ver)
+    ]
   endif
 
   if not glibmm_dep.found() or not cairomm_dep.found()
@@ -168,8 +175,16 @@ if is_msvc
   # libraries exist, but check that compatible versions are really found
 
   foreach v : msvc_check_range
-    glibmm_dep = glibmm_dep.found() ? glibmm_dep : cpp_compiler.find_library('glibmm-vc@0@0@1@-2_@2@'.format(v.to_string(), debugsuffix, glibmm_req_minor_ver), required: false)
-    cairomm_dep = cairomm_dep.found() ? cairomm_dep : cpp_compiler.find_library('cairomm-vc@0@0@1@-1_@2@'.format(v.to_string(), debugsuffix, cairomm_req_minor_ver), required: false)
+    if not glibmm_dep.found()
+      glibmm_dep = cpp_compiler.find_library('glibmm-vc@0@0@1@-2_@2@'.format(v.to_string(), debugsuffix, glibmm_req_minor_ver),
+                                             required: false,
+                                             has_headers: glibmm_required_headers)
+    endif
+    if not cairomm_dep.found()
+      cairomm_dep = cpp_compiler.find_library('cairomm-vc@0@0@1@-1_@2@'.format(v.to_string(), debugsuffix, cairomm_req_minor_ver),
+                                              required: false,
+                                              has_headers: cairomm_required_headers)
+    endif
   endforeach
 
   # Check whether we compile pangomm without using gendef
@@ -178,9 +193,12 @@ if is_msvc
   if glibmm_dep.type_name() == 'library' and \
      cairomm_dep.type_name() == 'library'
     warning('Note: Be sure to check that this finds the same libsigc++ .lib your glibmm is linked to')
-    sigc_dep = cpp_compiler.find_library('sigc-@0@.0'.format(sigc_major_ver), required: false)
     foreach v : msvc_check_range
-      sigc_dep = sigc_dep.found() ? sigc_dep : cpp_compiler.find_library('sigc-vc@0@0@1@-2_0'.format(v.to_string(), debugsuffix), required: false)
+      if not sigc_dep.found()
+        sigc_dep = cpp_compiler.find_library('sigc-vc@0@0@1@-2_0'.format(v.to_string(), debugsuffix),
+                                             required: false,
+                                             has_headers: sigc_required_headers)
+      endif
     endforeach
   endif
 
