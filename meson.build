@@ -88,8 +88,9 @@ install_pkgconfigdir = install_libdir / 'pkgconfig'
 # pangomm_dep (created in pango/pangomm/meson.build):
 #   Dependencies when using the pangomm library.
 
-# glibmm recently gained Meson build support, so we can try looking
+# cairomm and glibmm recently gained Meson build support, so we can try looking
 # for its pkg-config files on Visual Studio as well
+cairomm_req = '>= 1.2.2'
 glibmm_req = '>= 2.48.0'
 
 # Pango supported pkg-config files on MSVC files for a good while,
@@ -97,11 +98,12 @@ glibmm_req = '>= 2.48.0'
 pangocairo_req = '>= 1.41.0'
 pangocairo_dep = dependency('pangocairo', version: pangocairo_req)
 
-# The -mm libraries do not yet have pkg-config files for MSVC builds,
-# so check for them manually
+# The -mm libraries may have pkg-config files for MSVC builds,
+# so check for them manually, if needed
 glibmm_req_minor_ver = '4'
 cairomm_req_minor_ver = '0'
 
+cairomm_dep = dependency('cairomm-1.@0@'.format(cairomm_req_minor_ver), version: cairomm_req, required: not is_msvc)
 glibmm_dep = dependency('glibmm-2.@0@'.format(glibmm_req_minor_ver), version: glibmm_req, required: not is_msvc)
 
 # Where to find gmmproc and generate_wrap_init.pl.
@@ -118,18 +120,37 @@ if is_msvc
 
   sigc_major_ver = '2'
 
-  if not glibmm_dep.found()
-    assert(cpp_compiler.has_header('sigc++-@0@.0/sigc++/sigc++.h'.format(sigc_major_ver)) and cpp_compiler.has_header('sigc++-@0@.0/include/sigc++config.h'.format(sigc_major_ver)),
-           'sigc++-@0@.x headers are required'.format(sigc_major_ver))
-    assert(cpp_compiler.has_header('glibmm-2.@0@/glibmm.h'.format(glibmm_req_minor_ver)) and cpp_compiler.has_header('glibmm-2.@0@/include/glibmmconfig.h'.format(glibmm_req_minor_ver)),
-           'glibmm-2.@0@ headers are required'.format(glibmm_req_minor_ver))
-
-  else
-    sigc_dep = dependency('', required: false) # glibmm covers for libsigc++ in its pkg-config file
+  # The glibmm and cairomm pkg-config files pulls in libsigc++,
+  # so only look for libsigc++ if glibmm's nor cairomm's pkg-config
+  # files can't be found
+  if not glibmm_dep.found() and not cairomm_dep.found()
+    sigc_required_headers = [
+      'sigc++-@0@.0/sigc++/sigc++.h'.format(sigc_major_ver),
+      'sigc++-@0@.0/include/sigc++config.h'.format(sigc_major_ver)
+    ]
   endif
-  assert(cpp_compiler.has_header('cairomm-1.@0@/cairomm/cairomm.h'.format(cairomm_req_minor_ver)) and cpp_compiler.has_header('cairomm-1.@0@/include/cairommconfig.h'.format(cairomm_req_minor_ver)),
-         'cairomm-1.@0@ headers are required'.format(cairomm_req_minor_ver))
-  message('Ensure your INCLUDE and LIB contain the paths that lead to the appropriate headers and .lib\'s for glibmm-2.@0@, cairomm-1.@1@ and libsigc++-2.x'.format(glibmm_req_minor_ver, cairomm_req_minor_ver))
+
+  # cairomm/glibmm covers for libsigc++ in their pkg-config files,
+  # so we only look for libsigc++ if needed
+  sigc_dep = dependency('', required: false)
+
+  if not glibmm_dep.found()
+    glibmm_required_headers = [
+      'glibmm-2.@0@/glibmm.h'.format(glibmm_req_minor_ver),
+      'glibmm-2.@0@/include/glibmmconfig.h'.format(glibmm_req_minor_ver)
+    ]
+  endif
+
+  if not cairomm_dep.found()
+    cairomm_required_headers = [
+      'cairomm-1.@0@/cairomm/cairomm.h'.format(cairomm_req_minor_ver),
+      'cairomm-1.@0@/include/cairommconfig.h'.format(cairomm_req_minor_ver)
+    ]
+  endif
+
+  if not glibmm_dep.found() or not cairomm_dep.found()
+    message('Ensure your INCLUDE and LIB contain the paths that lead to the appropriate headers and .lib\'s for glibmm-2.@0@, cairomm-1.@1@ and libsigc++-2.x'.format(glibmm_req_minor_ver, cairomm_req_minor_ver))
+  endif
 
   # We need to look for appropriate versions of Visual
   # Studio since those built by NMake and the former
@@ -152,34 +173,48 @@ if is_msvc
   # We can be looking for MSVC 2015-built libraries on 2017 and 2019 builds as well,
   # as well as 2017-built libraries on 2019 as well, so we can't just assume that
   # libraries exist, but check that compatible versions are really found
-  cairomm_dep = dependency('', required: false)
 
   foreach v : msvc_check_range
-    glibmm_dep = glibmm_dep.found() ? glibmm_dep : cpp_compiler.find_library('glibmm-vc@0@0@1@-2_@2@'.format(v.to_string(), debugsuffix, glibmm_req_minor_ver), required: false)
-    cairomm_dep = cairomm_dep.found() ? cairomm_dep : cpp_compiler.find_library('cairomm-vc@0@0@1@-1_@2@'.format(v.to_string(), debugsuffix, cairomm_req_minor_ver), required: false)
+    if not glibmm_dep.found()
+      glibmm_dep = cpp_compiler.find_library('glibmm-vc@0@0@1@-2_@2@'.format(v.to_string(), debugsuffix, glibmm_req_minor_ver),
+                                             required: false,
+                                             has_headers: glibmm_required_headers)
+    endif
+    if not cairomm_dep.found()
+      cairomm_dep = cpp_compiler.find_library('cairomm-vc@0@0@1@-1_@2@'.format(v.to_string(), debugsuffix, cairomm_req_minor_ver),
+                                              required: false,
+                                              has_headers: cairomm_required_headers)
+    endif
   endforeach
 
   # Check whether we compile pangomm without using gendef
   build_shared_libs_directly = false
 
-  if glibmm_dep.type_name() == 'library'
+  if glibmm_dep.type_name() == 'library' and \
+     cairomm_dep.type_name() == 'library'
     warning('Note: Be sure to check that this finds the same libsigc++ .lib your glibmm is linked to')
-    sigc_dep = cpp_compiler.find_library('sigc-@0@.0'.format(sigc_major_ver), required: false)
     foreach v : msvc_check_range
-      sigc_dep = sigc_dep.found() ? sigc_dep : cpp_compiler.find_library('sigc-vc@0@0@1@-2_0'.format(v.to_string(), debugsuffix), required: false)
+      if not sigc_dep.found()
+        sigc_dep = cpp_compiler.find_library('sigc-vc@0@0@1@-2_0'.format(v.to_string(), debugsuffix),
+                                             required: false,
+                                             has_headers: sigc_required_headers)
+      endif
     endforeach
   endif
 
   # Now make sure the appropriate -mm libraries are found
-  assert(glibmm_dep.found() and cairomm_dep.found() and (glibmm_dep.type_name() == 'pkgconfig' or sigc_dep.found()), 'Appropriate glibmm-vcxx0@0@-2_@1@.lib, cairomm-vcxx0@0@-1_@2@.lib and sigc-vcxx0@0@-@3@_0.lib are required'.format(debugsuffix, glibmm_req_minor_ver, cairomm_req_minor_ver, sigc_major_ver))
+  assert(glibmm_dep.found() and cairomm_dep.found() and (glibmm_dep.type_name() == 'pkgconfig' or cairomm_dep.type_name() == 'pkgconfig' or sigc_dep.found()), 'Appropriate glibmm-vcxx0@0@-2_@1@.lib, cairomm-vcxx0@0@-1_@2@.lib and sigc-vcxx0@0@-@3@_0.lib are required'.format(debugsuffix, glibmm_req_minor_ver, cairomm_req_minor_ver, sigc_major_ver))
 
-  # Put glibmm in the required packages if we find it by pkg-config
-  # When cairomm gains Meson build support, we can replace
-  # this with what is done on other build systems.
+  # Put glibmm and cairomm in the required packages if we find it by pkg-config
   mm_lib_requires = ''
   if glibmm_dep.type_name() == 'pkgconfig'
     mm_lib_requires += ' '.join([
       'glibmm-2.@0@'.format(glibmm_req_minor_ver), glibmm_req,
+    ]) + ' '
+  endif
+  if cairomm_dep.type_name() == 'pkgconfig'
+    mm_lib_requires += ' '.join([
+      'cairomm-1.@0@'.format(cairomm_req_minor_ver), cairomm_req,
     ]) + ' '
   endif
 
@@ -190,8 +225,6 @@ if is_msvc
   pangomm_build_dep = [glibmm_dep, cairomm_dep, sigc_dep, pangocairo_dep]
 else
   # not MSVC
-  cairomm_req = '>= 1.2.2'
-  cairomm_dep = dependency('cairomm-1.@0@'.format(cairomm_req_minor_ver), version: cairomm_req)
   pangomm_build_dep = [glibmm_dep, cairomm_dep, pangocairo_dep]
   pangomm_requires = ' '.join([
     'glibmm-2.@0@'.format(glibmm_req_minor_ver), glibmm_req,
@@ -298,7 +331,7 @@ add_project_arguments(warning_flags, language: 'cpp')
 # MSVC: Ignore warnings that aren't really harmful, but make those
 #       that should not be overlooked stand out.
 if is_msvc
-  foreach wd : ['/FImsvc_recommended_pragmas.h', '/wd4267', '/wd4530', '/wd4251']
+  foreach wd : ['/FImsvc_recommended_pragmas.h', '/wd4267', '/wd4530', '/wd4251', '/wd4275']
     disabled_warning = cpp_compiler.get_supported_arguments(wd)
     add_project_arguments(disabled_warning, language: 'cpp')
   endforeach
