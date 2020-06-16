@@ -13,29 +13,29 @@
 # 	$(CC)|$(CXX) $(cflags) /Fo$(destdir) /c @<<
 # $<
 # <<
-{vs$(PDBVER)\$(CFG)\$(PLAT)\pangomm\}.cc{vs$(PDBVER)\$(CFG)\$(PLAT)\pangomm\}.obj::
-	$(CXX) $(PANGOMM_CFLAGS) $(CFLAGS_NOGL) /Fovs$(PDBVER)\$(CFG)\$(PLAT)\pangomm\ /Fdvs$(PDBVER)\$(CFG)\$(PLAT)\pangomm\ /c @<<
+{vs$(VSVER)\$(CFG)\$(PLAT)\pangomm\}.cc{vs$(VSVER)\$(CFG)\$(PLAT)\pangomm\}.obj::
+	$(CXX) $(PANGOMM_CFLAGS) $(CFLAGS_NOGL) /Fovs$(VSVER)\$(CFG)\$(PLAT)\pangomm\ /Fdvs$(VSVER)\$(CFG)\$(PLAT)\pangomm\ /c @<<
 $<
 <<
 
-{..\untracked\pango\pangomm\}.cc{vs$(PDBVER)\$(CFG)\$(PLAT)\pangomm\}.obj::
-	$(CXX) $(PANGOMM_CFLAGS) $(CFLAGS_NOGL) /Fovs$(PDBVER)\$(CFG)\$(PLAT)\pangomm\ /Fdvs$(PDBVER)\$(CFG)\$(PLAT)\pangomm\ /c @<<
+{..\untracked\pango\pangomm\}.cc{vs$(VSVER)\$(CFG)\$(PLAT)\pangomm\}.obj::
+	$(CXX) $(PANGOMM_CFLAGS) $(CFLAGS_NOGL) /Fovs$(VSVER)\$(CFG)\$(PLAT)\pangomm\ /Fdvs$(VSVER)\$(CFG)\$(PLAT)\pangomm\ /c @<<
 $<
 <<
 
-{..\pango\pangomm\}.cc{vs$(PDBVER)\$(CFG)\$(PLAT)\pangomm\}.obj::
-	$(CXX) $(PANGOMM_CFLAGS) $(CFLAGS_NOGL) /Fovs$(PDBVER)\$(CFG)\$(PLAT)\pangomm\ /Fdvs$(PDBVER)\$(CFG)\$(PLAT)\pangomm\ /c @<<
+{..\pango\pangomm\}.cc{vs$(VSVER)\$(CFG)\$(PLAT)\pangomm\}.obj::
+	$(CXX) $(PANGOMM_CFLAGS) $(CFLAGS_NOGL) /Fovs$(VSVER)\$(CFG)\$(PLAT)\pangomm\ /Fdvs$(VSVER)\$(CFG)\$(PLAT)\pangomm\ /c @<<
 $<
 <<
 
-{..\pango\src\}.ccg{vs$(PDBVER)\$(CFG)\$(PLAT)\pangomm\}.obj:
+{..\pango\src\}.ccg{vs$(VSVER)\$(CFG)\$(PLAT)\pangomm\}.obj:
 	@if not exist $(@D)\private\ $(MAKE) /f Makefile.vc CFG=$(CFG) $(@D)\private
 	@for %%s in ($(<D)\*.ccg) do @if not exist ..\pango\pangomm\%%~ns.cc if not exist ..\untracked\pango\pangomm\%%~ns.cc if not exist $(@D)\%%~ns.cc $(PERL) -- $(GMMPROC_DIR)/gmmproc -I ../tools/m4 --defs $(<D:\=/) %%~ns $(<D:\=/) $(@D)
 	@if exist $(@D)\$(<B).cc $(CXX) $(PANGOMM_CFLAGS) $(CFLAGS_NOGL) /Fo$(@D)\ /Fd$(@D)\ /c $(@D)\$(<B).cc
 	@if exist ..\pango\pangomm\$(<B).cc $(CXX) $(PANGOMM_CFLAGS) $(CFLAGS_NOGL) /Fo$(@D)\ /Fd$(@D)\ /c ..\pango\pangomm\$(<B).cc
 	@if exist ..\untracked\pango\pangomm\$(<B).cc $(CXX) $(PANGOMM_CFLAGS) $(CFLAGS_NOGL) /Fo$(@D)\ /Fd$(@D)\ /c ..\pango\pangomm\$(<B).cc
 
-{.\pangomm\}.rc{vs$(PDBVER)\$(CFG)\$(PLAT)\pangomm\}.res:
+{.\pangomm\}.rc{vs$(VSVER)\$(CFG)\$(PLAT)\pangomm\}.res:
 	rc /fo$@ $<
 
 # Rules for building .lib files
@@ -63,28 +63,28 @@ $(pangomm_OBJS)
 # 	@-if exist $@.manifest mt /manifest $@.manifest /outputresource:$@;1
 
 # For the gendef tool
-{.\gendef\}.cc{vs$(PDBVER)\$(CFG)\$(PLAT)\}.exe:
-	@if not exist vs$(PDBVER)\$(CFG)\$(PLAT)\gendef\ $(MAKE) -f Makefile.vc CFG=$(CFG) vs$(PDBVER)\$(CFG)\$(PLAT)\gendef
+{.\gendef\}.cc{vs$(VSVER)\$(CFG)\$(PLAT)\}.exe:
+	@if not exist vs$(VSVER)\$(CFG)\$(PLAT)\gendef\ $(MAKE) -f Makefile.vc CFG=$(CFG) vs$(VSVER)\$(CFG)\$(PLAT)\gendef
 	$(CXX) $(PANGOMM_BASE_CFLAGS) $(CFLAGS) /Fo$(@D)\gendef\ /Fd$(@D)\gendef\ $< /link $(LDFLAGS) /out:$@
 
 clean:
-	@-del /f /q vs$(PDBVER)\$(CFG)\$(PLAT)\*.exe
-	@-del /f /q vs$(PDBVER)\$(CFG)\$(PLAT)\*.dll
-	@-del /f /q vs$(PDBVER)\$(CFG)\$(PLAT)\*.pdb
-	@-del /f /q vs$(PDBVER)\$(CFG)\$(PLAT)\*.ilk
-	@-del /f /q vs$(PDBVER)\$(CFG)\$(PLAT)\*.exp
-	@-del /f /q vs$(PDBVER)\$(CFG)\$(PLAT)\*.lib
-	@-del /f /q vs$(PDBVER)\$(CFG)\$(PLAT)\pangomm\*.def
-	@-del /f /q vs$(PDBVER)\$(CFG)\$(PLAT)\pangomm\*.res
-	@-del /f /q vs$(PDBVER)\$(CFG)\$(PLAT)\pangomm\*.pdb
-	@-del /f /q vs$(PDBVER)\$(CFG)\$(PLAT)\pangomm\*.obj
-	@-del /f /q vs$(PDBVER)\$(CFG)\$(PLAT)\pangomm\private\*.h
-	@-del /f /q vs$(PDBVER)\$(CFG)\$(PLAT)\pangomm\*.h
-	@-del /f /q vs$(PDBVER)\$(CFG)\$(PLAT)\pangomm\*.cc
-	@-del /f /q vs$(PDBVER)\$(CFG)\$(PLAT)\gendef\*.pdb
-	@-del /f /q vs$(PDBVER)\$(CFG)\$(PLAT)\gendef\*.obj
-	@-rd vs$(PDBVER)\$(CFG)\$(PLAT)\pangomm\private
-	@-rd vs$(PDBVER)\$(CFG)\$(PLAT)\pangomm
-	@-rd vs$(PDBVER)\$(CFG)\$(PLAT)\gendef
+	@-del /f /q vs$(VSVER)\$(CFG)\$(PLAT)\*.exe
+	@-del /f /q vs$(VSVER)\$(CFG)\$(PLAT)\*.dll
+	@-del /f /q vs$(VSVER)\$(CFG)\$(PLAT)\*.pdb
+	@-del /f /q vs$(VSVER)\$(CFG)\$(PLAT)\*.ilk
+	@-del /f /q vs$(VSVER)\$(CFG)\$(PLAT)\*.exp
+	@-del /f /q vs$(VSVER)\$(CFG)\$(PLAT)\*.lib
+	@-del /f /q vs$(VSVER)\$(CFG)\$(PLAT)\pangomm\*.def
+	@-del /f /q vs$(VSVER)\$(CFG)\$(PLAT)\pangomm\*.res
+	@-del /f /q vs$(VSVER)\$(CFG)\$(PLAT)\pangomm\*.pdb
+	@-del /f /q vs$(VSVER)\$(CFG)\$(PLAT)\pangomm\*.obj
+	@-del /f /q vs$(VSVER)\$(CFG)\$(PLAT)\pangomm\private\*.h
+	@-del /f /q vs$(VSVER)\$(CFG)\$(PLAT)\pangomm\*.h
+	@-del /f /q vs$(VSVER)\$(CFG)\$(PLAT)\pangomm\*.cc
+	@-del /f /q vs$(VSVER)\$(CFG)\$(PLAT)\gendef\*.pdb
+	@-del /f /q vs$(VSVER)\$(CFG)\$(PLAT)\gendef\*.obj
+	@-rd vs$(VSVER)\$(CFG)\$(PLAT)\pangomm\private
+	@-rd vs$(VSVER)\$(CFG)\$(PLAT)\pangomm
+	@-rd vs$(VSVER)\$(CFG)\$(PLAT)\gendef
 
 .SUFFIXES: .cc .h .ccg .hg .obj

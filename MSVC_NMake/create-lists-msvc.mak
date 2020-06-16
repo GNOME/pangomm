@@ -42,13 +42,13 @@ files_extra_ph_int = $(files_extra_ph:/=\)
 !if [call create-lists.bat header pangomm.mak pangomm_OBJS]
 !endif
 
-!if [for %c in ($(files_built_cc)) do @if "%~xc" == ".cc" @call create-lists.bat file pangomm.mak vs^$(PDBVER)\^$(CFG)\^$(PLAT)\pangomm\%~nc.obj]
+!if [for %c in ($(files_built_cc)) do @if "%~xc" == ".cc" @call create-lists.bat file pangomm.mak vs^$(VSVER)\^$(CFG)\^$(PLAT)\pangomm\%~nc.obj]
 !endif
 
-!if [for %c in ($(files_extra_cc)) do @if "%~xc" == ".cc" @call create-lists.bat file pangomm.mak vs^$(PDBVER)\^$(CFG)\^$(PLAT)\pangomm\%~nc.obj]
+!if [for %c in ($(files_extra_cc)) do @if "%~xc" == ".cc" @call create-lists.bat file pangomm.mak vs^$(VSVER)\^$(CFG)\^$(PLAT)\pangomm\%~nc.obj]
 !endif
 
-!if [@call create-lists.bat file pangomm.mak vs^$(PDBVER)\^$(CFG)\^$(PLAT)\pangomm\pangomm.res]
+!if [@call create-lists.bat file pangomm.mak vs^$(VSVER)\^$(CFG)\^$(PLAT)\pangomm\pangomm.res]
 !endif
 
 !if [call create-lists.bat footer pangomm.mak]
@@ -63,10 +63,10 @@ files_extra_ph_int = $(files_extra_ph:/=\)
 !if [call create-lists.bat footer pangomm.mak]
 !endif
 
-!if [for %f in (pangomm\attributes.h) do @if not exist ..\pango\%f if not exist ..\untracked\pango\%f if not exist vs$(PDBVER)\$(CFG)\$(PLAT)\%f (md vs$(PDBVER)\$(CFG)\$(PLAT)\pangomm\private) & ($(PERL) -- $(GMMPROC_DIR)/gmmproc -I ../tools/m4 --defs ../pango/src attributes ../pango/src vs$(PDBVER)/$(CFG)/$(PLAT)/pangomm)]
+!if [for %f in (pangomm\attributes.h) do @if not exist ..\pango\%f if not exist ..\untracked\pango\%f if not exist vs$(VSVER)\$(CFG)\$(PLAT)\%f (md vs$(VSVER)\$(CFG)\$(PLAT)\pangomm\private) & ($(PERL) -- $(GMMPROC_DIR)/gmmproc -I ../tools/m4 --defs ../pango/src attributes ../pango/src vs$(VSVER)/$(CFG)/$(PLAT)/pangomm)]
 !endif
 
-!if [for %d in (vs$(PDBVER)\$(CFG)\$(PLAT)\pangomm ..\pango\pangomm ..\untracked\pango\pangomm) do @if exist %d\attributes.h call get-gmmproc-ver %d\attributes.h>>pangomm.mak]
+!if [for %d in (vs$(VSVER)\$(CFG)\$(PLAT)\pangomm ..\pango\pangomm ..\untracked\pango\pangomm) do @if exist %d\attributes.h call get-gmmproc-ver %d\attributes.h>>pangomm.mak]
 !endif
 
 !include pangomm.mak
@@ -75,10 +75,10 @@ files_extra_ph_int = $(files_extra_ph:/=\)
 !endif
 
 !if "$(GMMPROC_VER)" >= "2.64.3"
-PANGOMM_INT_TARGET = vs$(PDBVER)\$(CFG)\$(PLAT)\pangomm
+PANGOMM_INT_TARGET = vs$(VSVER)\$(CFG)\$(PLAT)\pangomm
 PANGOMM_DEF_LDFLAG =
 !else
-PANGOMM_INT_TARGET = vs$(PDBVER)\$(CFG)\$(PLAT)\pangomm\pangomm.def
+PANGOMM_INT_TARGET = vs$(VSVER)\$(CFG)\$(PLAT)\pangomm\pangomm.def
 PANGOMM_DEF_LDFLAG = /def:$(PANGOMM_INT_TARGET)
 PANGOMM_BASE_CFLAGS = $(PANGOMM_BASE_CFLAGS) /DPANGOMM_USE_GENDEF
 !endif
