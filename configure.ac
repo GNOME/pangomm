@@ -50,6 +50,7 @@ AC_DISABLE_STATIC
 LT_INIT([win32-dll])
 
 AC_SUBST([PANGOMM_MODULES], ['glibmm-2.66 >= 2.65.1 cairomm-1.16 >= 1.15.1 pangocairo >= 1.41.0'])
+AC_SUBST([MSVC_TOOLSET_VER], [''])
 PKG_CHECK_MODULES([PANGOMM], [$PANGOMM_MODULES])
 
 MM_PKG_CONFIG_SUBST([GTHREAD_CFLAGS], [--cflags-only-other gthread-2.0])

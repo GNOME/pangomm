@@ -6,5 +6,5 @@ Description: C++ binding for Pango, not installed
 Version: @PACKAGE_VERSION@
 URL: http://www.gtkmm.org/
 Requires: @PANGOMM_MODULES@
-Libs: ${pc_top_builddir}/${pcfiledir}/pangomm/libpangomm-@PANGOMM_API_VERSION@.la
+Libs: ${pc_top_builddir}/${pcfiledir}/pangomm/libpangomm@MSVC_TOOLSET_VER@-@PANGOMM_API_VERSION@.la
 Cflags: -I${pc_top_builddir}/${pcfiledir} -I${pc_top_builddir}/${pcfiledir}/@srcdir@

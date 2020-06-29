@@ -2,7 +2,7 @@
 
 # Input: pangomm_build_dep, pangomm_pcname, maintainer_mode, project_source_root,
 #        generate_binding_py, m4_files, pangomm_libversion, install_includedir,
-#        python3, pangomm_rc, dummy_header_py, gmmproc_dir
+#        python3, pangomm_rc, dummy_header_py, gmmproc_dir, msvc14x_toolset_ver
 # Output: hg_ccg_basenames, extra_h_files, built_h_file_targets, built_files_root,
 #         pangomm_dep
 
@@ -75,6 +75,8 @@ if host_machine.system() == 'windows'
   pangomm_res = windows.compile_resources(pangomm_rc)
   extra_pangomm_objects += pangomm_res
 endif
+
+pangomm_libname = meson.project_name() + msvc14x_toolset_ver + '-' + pangomm_api_version
 
 if maintainer_mode
 
@@ -151,7 +153,7 @@ if maintainer_mode
 
   extra_include_dirs = ['..']
 
-  pangomm_library = library(pangomm_pcname, extra_pangomm_objects,
+  pangomm_library = library(pangomm_libname, extra_pangomm_objects,
     built_cc_file_targets, extra_cc_files, built_dummy_h_file_target,
     version: pangomm_libversion,
     include_directories: extra_include_dirs,
@@ -194,7 +196,7 @@ else # not maintainer_mode
 
   extra_include_dirs = [ '..', '..' / '..' / 'untracked' / 'pango' ]
 
-  pangomm_library = library(pangomm_pcname, extra_pangomm_objects,
+  pangomm_library = library(pangomm_libname, extra_pangomm_objects,
     built_cc_files, extra_cc_files,
     version: pangomm_libversion,
     include_directories: extra_include_dirs,
