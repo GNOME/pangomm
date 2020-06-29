@@ -3,7 +3,8 @@
 # Input: install_prefix, install_datadir, install_includedir,
 #        pangomm_pcname, pangomm_api_version, pangomm_requires,
 #        install_pkgconfigdir, install_libdir, build_deprecated_api,
-#        pangomm_major_version, pangomm_minor_version, pangomm_micro_version
+#        pangomm_major_version, pangomm_minor_version, pangomm_micro_version,
+#        msvc14x_toolset_ver
 # Output: pkg_conf_data, install_includeconfigdir, pangommconfig_h
 
 pkg_conf_data = configuration_data()
@@ -19,6 +20,7 @@ pkg_conf_data.set('PACKAGE_VERSION', meson.project_version())
 pkg_conf_data.set('PANGOMM_MODULE_NAME', pangomm_pcname)
 pkg_conf_data.set('PANGOMM_API_VERSION', pangomm_api_version)
 pkg_conf_data.set('PANGOMM_MODULES', pangomm_requires)
+pkg_conf_data.set('MSVC_TOOLSET_VER', msvc14x_toolset_ver)
 
 if not build_deprecated_api
   pkg_conf_data.set('PANGOMM_DISABLE_DEPRECATED', true)

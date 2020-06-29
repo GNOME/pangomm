@@ -162,6 +162,13 @@ endif
 pangomm_script_dir = project_source_root / 'tools'
 dummy_header_py = pangomm_script_dir / 'dummy-header.py'
 
+# Whether to include toolset version in .lib and DLL file names
+# on Visual Studio 2015 and later (default: yes)
+use_msvc14x_toolset_ver = get_option('msvc14x-parallel-installable')
+
+# Add toolset version in builds done with Visual Studio 2015 or later
+msvc14x_toolset_ver = ''
+
 if is_msvc
   add_project_arguments(cpp_compiler.get_supported_arguments([ '/utf-8', '/wd4828']), language: 'cpp')
 
@@ -183,6 +190,20 @@ if is_msvc
   # were generated using a recent enough gmmproc
   build_shared_libs_directly = run_command(check_gmmproc_ver_cmd).returncode() == 0
   message('Using __declspec(dllexport) to build pangomm: @0@'.format(build_shared_libs_directly ? 'YES' : 'NO'))
+
+  # Put in the toolset version if the build is done with Visual Studio
+  # 2015 or later, unless explicitly told not to
+  if use_msvc14x_toolset_ver
+    if cpp_compiler.version().version_compare('>=19.20')
+      msvc14x_toolset_ver = '-vc142'
+    elif cpp_compiler.version().version_compare('>=19.10')
+      msvc14x_toolset_ver = '-vc141'
+    elif cpp_compiler.version().version_compare('>=19.00')
+      msvc14x_toolset_ver = '-vc140'
+    else
+      message('Visual Studio toolset version not applied for pre-Visual Studio 2015 builds')
+    endif
+  endif
 endif
 
 # Set compiler warnings.

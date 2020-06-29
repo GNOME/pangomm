@@ -2,7 +2,8 @@
 
 # Input: pangomm_build_dep, pangomm_pcname, maintainer_mode, project_source_root,
 #        generate_binding_py, m4_files, pangomm_libversion, install_includedir,
-#        python3, pangomm_rc, dummy_header_py, gmmproc_dir
+#        python3, pangomm_rc, dummy_header_py, gmmproc_dir, build_shared_libs_directly,
+#        msvc14x_toolset_ver
 # Output: hg_ccg_basenames, extra_h_files, built_h_file_targets, built_files_root,
 #         pangomm_dep
 
@@ -198,8 +199,10 @@ if host_machine.system() == 'windows'
   extra_pangomm_objects += pangomm_res
 endif
 
+pangomm_libname = meson.project_name() + msvc14x_toolset_ver + '-' + pangomm_api_version
+
 if build_shared_libs_directly
-  pangomm_library = library(pangomm_pcname, extra_pangomm_objects,
+  pangomm_library = library(pangomm_libname, extra_pangomm_objects,
     pango_gen_sources, built_dummy_h_file_target, extra_cc_files,
     include_directories: extra_include_dirs,
     cpp_args: pangomm_cpp_args,
@@ -225,7 +228,7 @@ else
     depends: pango_int_lib,
     command: [ gendef,
       '@OUTPUT@',
-      '@0@-@1@.dll'.format(pangomm_pcname,
+      '@0@-@1@.dll'.format(pangomm_libname,
                            libtool_soversion[0] - libtool_soversion[2]),
       pango_int_lib.full_path(),
     ],
@@ -233,7 +236,7 @@ else
   )
   pangomm_extra_link_args = ['/def:@0@'.format(pangomm_def.full_path())]
 
-  pangomm_library = library(pangomm_pcname, extra_pangomm_objects,
+  pangomm_library = library(pangomm_libname, extra_pangomm_objects,
     objects: pango_int_lib.extract_all_objects(),
     version: pangomm_libversion,
     dependencies: pangomm_build_dep,
