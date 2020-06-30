@@ -32,7 +32,7 @@ PANGOMM_BASE_CFLAGS =			\
 	/Ivs$(VSVER)\$(CFG)\$(PLAT)	\
 	/I..\untracked\pango /I..\untracked\pango\pangomm		\
 	/I..\pango /I..\pango\pangomm /I.\pangomm		\
-	/wd4530 /wd4251 /wd4275 /std:c++17	\
+	/wd4530 /wd4251 /wd4275 /std:c++17 /utf-8	\
 	/FImsvc_recommended_pragmas.h
 
 PANGOMM_EXTRA_INCLUDES =	\
