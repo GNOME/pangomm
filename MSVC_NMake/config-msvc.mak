@@ -36,7 +36,7 @@ PANGOMM_BASE_CFLAGS =			\
 	/I..\untracked\pango\pangomm	\
 	/I..\pango\pangomm	\
 	/I.\pangomm		\
-	/wd4530 /wd4251 /wd4275 /EHsc	\
+	/wd4530 /wd4251 /wd4275 /EHsc /utf-8	\
 	/FImsvc_recommended_pragmas.h
 
 PANGOMM_EXTRA_INCLUDES =	\
