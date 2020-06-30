@@ -93,9 +93,6 @@ Note that the prep-git-build target will require a working PERL installation.
 
 3.1 Meson with Visual Studio 2013 or later
 
-Note that currently it is not possible to build pangomm directly
-from a GIT checkout with Visual Studio using Meson.
-
 Note also that before building, if using Visual Studio 2013,you will
 need to ensure that 'warnings' is not configured to 'fatal' (the
 default), as the C++11 support in Visual Studio 2013 is not complete
@@ -109,37 +106,22 @@ with all of their required dependencies.  The Ninja build tool is
 also required if not using --backend=[vs2015|vs2017|vs2019] in the Meson
 command line, as noted towards the end of this section.
 
-Open a Visual Studio command prompt and ensure these header files can be
-found in the paths indicated by INCLUDE.  The repetitions below are
-necessary so that we reduce the likelihood that C++-17 versions
-of the headers of glibmm, cairomm and libsigc++ are included, which will
-most likely not work.
+Note that for the -mm libraries (cairomm and glibmm), do ensure that the same compiler
+is used to build the -mm libraries and pangomm, even if on Visual Studio 2015, 2017 or
+2019.  One should be able to interexchange dependent C libraries that were built with
+Visual Studio 2015, 2017 or 2019 without problems.  If there are strange linker errors,
+it is likely caused by using a different compiler version.
 
--glibmm.h (from glibmm-2.62.x or later)
--glibmm-2.4\glibmm.h (the *same* glibmm as the previous line)
--cairomm (from cairomm-1.13.x or later)
--cairomm-1.0\cairomm.h (the *same* cairomm as the previous line)
--glibmmconfig.h (from glibmm-2.62.x or later)
--glibmm-2.4\include\glibmmconfig.h  (the *same* glibmmconfig as the previous line)
--cairommconfig.h (from cairomm-1.13.x or later)
--cairomm-1.0\include\cairommconfig.h  (the *same* cairommconfig as the previous line)
--sigc++\sigc++.h (from libsigc++-2.x or later)
--sigc++-2.0\sigc++\sigc++.h  (the *same* sigc++\sigc++.h as the previous line)
--sigc++config.h (from libsigc++-2.x or later)
--sigc++-2.0\include\sigc++config.h  (the *same* sigc++config.h as the previous line)
+Note that 'debug' builds should only be used against dependencies that are built
+as debug builds, and 'release' and 'debugoptimized' should be only used against
+dependencies that are built as 'release' or 'debugoptimized'.  On Visual Studio
+builds in Meson, 'debugoptimized' is roughly equivilant to a Release build with
+.PDB files enabled, perhaps with some debugging features that are specific to the
+respective packages.
 
-Ensure that the import libraries of glibmm, cairomm and libsigc++-2.x
-can be found in the paths indicated by LIB.  Note that Visual Studio
-2019 can use 2017 and 2015-built libraries without problems, and VS
-2017 can use 2015-built libraries without problems; but MSVC builds
-cannot make use of MinGW-built versions of these dependencies.  Note
-that debug builds require debug builds of these dependencies, but
-all other builds, including debugoptimized require release builds
-of these dependencies.
-
-You will need to have a working copy of PangoCairo's pkg-config files,
-which point to the corresponding locations of its headers and .lib's
-and the headers and .lib's of all of its dependencies.
+You will need to have a working copy of glibmm, cairomm and PangoCairo's
+pkg-config files, which point to the corresponding locations of its headers
+and .lib's and the headers and .lib's of all of its dependencies.
 
 To carry out a build, do this in the same command prompt, with
 the Python interpreter, Meson executable script and Ninja executable
