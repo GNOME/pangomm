@@ -21,6 +21,7 @@
 
 
 #include <glibmm/object.h>
+#include <giomm/listmodel.h>
 #include <pangomm/fontface.h>
 #include <pango/pango-font.h>
 
@@ -33,9 +34,10 @@ namespace Pango
 /** A Pango::FontFamily is used to represent a family of related font faces.
  * The faces in a family share a common design, but differ in slant, weight, width and other aspects.
  */
-class PANGOMM_API FontFamily : public Glib::Object
+class PANGOMM_API FontFamily : public Glib::Object, public Gio::ListModel
 {
    _CLASS_GOBJECT(FontFamily, PangoFontFamily, PANGO_FONT_FAMILY, Glib::Object, GObject, , , PANGOMM_API)
+   _IMPLEMENTS_INTERFACE(Gio::ListModel)
    _IGNORE(pango_font_family_list_faces)
 
 public:
