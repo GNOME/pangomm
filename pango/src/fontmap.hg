@@ -18,6 +18,7 @@
  */
 
 #include <glibmm/object.h>
+#include <giomm/listmodel.h>
 #include <pangomm/font.h>
 #include <pangomm/fontset.h>
 #include <pangomm/fontfamily.h>
@@ -33,9 +34,10 @@ class PANGOMM_API Context;
 
 /** A Pango::FontMap represents the set of fonts available for a particular rendering system.
  */
-class PANGOMM_API FontMap : public Glib::Object
+class PANGOMM_API FontMap : public Glib::Object, public Gio::ListModel
 {
    _CLASS_GOBJECT(FontMap, PangoFontMap, PANGO_FONT_MAP, Glib::Object, GObject, , , PANGOMM_API)
+   _IMPLEMENTS_INTERFACE(Gio::ListModel)
    _IGNORE(pango_font_map_list_families)
 
 public:

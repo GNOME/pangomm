@@ -103,10 +103,11 @@ cairomm_req_minor_ver = '16'
 
 cairomm_dep = dependency('cairomm-1.@0@'.format(cairomm_req_minor_ver), version: cairomm_req)
 glibmm_dep = dependency('glibmm-2.@0@'.format(glibmm_req_minor_ver), version: glibmm_req)
+giomm_dep = dependency('giomm-2.@0@'.format(glibmm_req_minor_ver), version: glibmm_req)
 
-pangomm_build_dep = [glibmm_dep, cairomm_dep, pangocairo_dep]
+pangomm_build_dep = [giomm_dep, cairomm_dep, pangocairo_dep]
 pangomm_requires = ' '.join([
-  'glibmm-2.@0@'.format(glibmm_req_minor_ver), glibmm_req,
+  'giomm-2.@0@'.format(glibmm_req_minor_ver), glibmm_req,
   'cairomm-1.@0@'.format(cairomm_req_minor_ver), cairomm_req,
   'pangocairo', pangocairo_req,
 ])
