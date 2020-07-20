@@ -137,6 +137,26 @@ attribute is listed in parentheses after the description.
 <parameter_description> background alpha (#PangoAttrInt). Since 1.38
 </parameter_description>
 </parameter>
+<parameter name="PANGO_ATTR_ALLOW_BREAKS">
+<parameter_description> whether breaks are allowed (#PangoAttrInt). Since 1.44
+</parameter_description>
+</parameter>
+<parameter name="PANGO_ATTR_SHOW">
+<parameter_description> how to render invisible characters (#PangoAttrInt). Since 1.44
+</parameter_description>
+</parameter>
+<parameter name="PANGO_ATTR_INSERT_HYPHENS">
+<parameter_description> whether to insert hyphens at intra-word line breaks (#PangoAttrInt). Since 1.44
+</parameter_description>
+</parameter>
+<parameter name="PANGO_ATTR_OVERLINE">
+<parameter_description> whether the text has an overline (#PangoAttrInt). Since 1.46
+</parameter_description>
+</parameter>
+<parameter name="PANGO_ATTR_OVERLINE_COLOR">
+<parameter_description> overline color (#PangoAttrColor). Since 1.46
+</parameter_description>
+</parameter>
 </parameters>
 </enum>
 
@@ -483,6 +503,28 @@ identify the various OpenType tables in the
 </parameters>
 </enum>
 
+<enum name="PangoOverline">
+<description>
+The #PangoOverline enumeration is used to specify
+whether text should be overlined, and if so, the type
+of line.
+
+Since: 1.46
+
+</description>
+<parameters>
+<parameter name="PANGO_OVERLINE_NONE">
+<parameter_description> no overline should be drawn
+</parameter_description>
+</parameter>
+<parameter name="PANGO_OVERLINE_SINGLE">
+<parameter_description> Draw a single line above the ink
+extents of the text being underlined.
+</parameter_description>
+</parameter>
+</parameters>
+</enum>
+
 <enum name="PangoRenderPart">
 <description>
 #PangoRenderPart defines different items to render for such
@@ -506,6 +548,10 @@ Since: 1.8
 </parameter>
 <parameter name="PANGO_RENDER_PART_STRIKETHROUGH">
 <parameter_description> strikethrough lines
+</parameter_description>
+</parameter>
+<parameter name="PANGO_RENDER_PART_OVERLINE">
+<parameter_description> overlines
 </parameter_description>
 </parameter>
 </parameters>
@@ -1002,6 +1048,54 @@ base glyph to which it is attached
 </parameters>
 </enum>
 
+<enum name="PangoShapeFlags">
+<description>
+Flags influencing the shaping process.
+These can be passed to pango_shape_with_flags().
+
+</description>
+<parameters>
+<parameter name="PANGO_SHAPE_NONE">
+<parameter_description> Default value.
+</parameter_description>
+</parameter>
+<parameter name="PANGO_SHAPE_ROUND_POSITIONS">
+<parameter_description> Round glyph positions
+and widths to whole device units. This option should
+be set if the target renderer can't do subpixel
+positioning of glyphs.
+</parameter_description>
+</parameter>
+</parameters>
+</enum>
+
+<enum name="PangoShowFlags">
+<description>
+These flags affect how Pango treats characters that are normally
+not visible in the output.
+
+</description>
+<parameters>
+<parameter name="PANGO_SHOW_NONE">
+<parameter_description> No special treatment for invisible characters
+</parameter_description>
+</parameter>
+<parameter name="PANGO_SHOW_SPACES">
+<parameter_description> Render spaces, tabs and newlines visibly
+</parameter_description>
+</parameter>
+<parameter name="PANGO_SHOW_LINE_BREAKS">
+<parameter_description> Render line breaks visibly
+</parameter_description>
+</parameter>
+<parameter name="PANGO_SHOW_IGNORABLES">
+<parameter_description> Render default-ignorable Unicode
+characters visibly
+</parameter_description>
+</parameter>
+</parameters>
+</enum>
+
 <enum name="PangoStretch">
 <description>
 An enumeration specifying the width of the font relative to other designs
@@ -1103,20 +1197,38 @@ of underlining.
 </parameter_description>
 </parameter>
 <parameter name="PANGO_UNDERLINE_LOW">
-<parameter_description> a single underline should be drawn at a position
-beneath the ink extents of the text being
+<parameter_description> a single underline should be drawn at a
+position beneath the ink extents of the text being
 underlined. This should be used only for underlining
-single characters, such as for keyboard
-accelerators. %PANGO_UNDERLINE_SINGLE should
-be used for extended portions of text.
+single characters, such as for keyboard accelerators.
+%PANGO_UNDERLINE_SINGLE should be used for extended
+portions of text.
 </parameter_description>
 </parameter>
 <parameter name="PANGO_UNDERLINE_ERROR">
 <parameter_description> a wavy underline should be drawn below.
-This underline is typically used to indicate
-an error such as a possilble mispelling; in some
-cases a contrasting color may automatically
-be used. This type of underlining is available since Pango 1.4.
+This underline is typically used to indicate an error such
+as a possible mispelling; in some cases a contrasting color
+may automatically be used. This type of underlining is
+available since Pango 1.4.
+</parameter_description>
+</parameter>
+<parameter name="PANGO_UNDERLINE_SINGLE_LINE">
+<parameter_description> Like @PANGO_UNDERLINE_SINGLE, but
+drawn continuously across multiple runs. This type
+of underlining is available since Pango 1.46.
+</parameter_description>
+</parameter>
+<parameter name="PANGO_UNDERLINE_DOUBLE_LINE">
+<parameter_description> Like @PANGO_UNDERLINE_DOUBLE, but
+drawn continuously across multiple runs. This type
+of underlining is available since Pango 1.46.
+</parameter_description>
+</parameter>
+<parameter name="PANGO_UNDERLINE_ERROR_LINE">
+<parameter_description> Like @PANGO_UNDERLINE_ERROR, but
+drawn continuously across multiple runs. This type
+of underlining is available since Pango 1.46.
 </parameter_description>
 </parameter>
 </parameters>
@@ -1219,6 +1331,28 @@ enough space for a full word.
 </parameter>
 </parameters>
 </enum>
+
+<function name="pango_attr_allow_breaks_new">
+<description>
+Create a new allow-breaks attribute.
+
+If breaks are disabled, the range will be kept in a
+single run, as far as possible.
+
+Since: 1.44
+
+</description>
+<parameters>
+<parameter name="allow_breaks">
+<parameter_description> %TRUE if we line breaks are allowed
+</parameter_description>
+</parameter>
+</parameters>
+<return> the newly allocated #PangoAttribute,
+which should be freed with pango_attribute_destroy()
+
+</return>
+</function>
 
 <function name="pango_attr_background_alpha_new">
 <description>
@@ -1426,6 +1560,28 @@ which should be freed with pango_attribute_destroy().
 </return>
 </function>
 
+<function name="pango_attr_insert_hyphens_new">
+<description>
+Create a new insert-hyphens attribute.
+
+Pango will insert hyphens when breaking lines in the middle
+of a word. This attribute can be used to suppress the hyphen.
+
+Since: 1.44
+
+</description>
+<parameters>
+<parameter name="insert_hyphens">
+<parameter_description> %TRUE if hyphens should be inserted
+</parameter_description>
+</parameter>
+</parameters>
+<return> the newly allocated #PangoAttribute,
+which should be freed with pango_attribute_destroy()
+
+</return>
+</function>
+
 <function name="pango_attr_iterator_copy">
 <description>
 Copy a #PangoAttrIterator
@@ -1628,7 +1784,7 @@ replace any attributes of the same type on that segment
 and be merged with any adjoining attributes that are identical.
 
 This function is slower than pango_attr_list_insert() for
-creating a attribute list in order (potentially much slower
+creating an attribute list in order (potentially much slower
 for large lists). However, pango_attr_list_insert() is not
 suitable for continually changing a set of attributes
 since it never removes or combines existing attributes.
@@ -1664,6 +1820,30 @@ Copy @list and return an identical new list.
 reference count of one, which should
 be freed with pango_attr_list_unref().
 Returns %NULL if @list was %NULL.
+</return>
+</function>
+
+<function name="pango_attr_list_equal">
+<description>
+Checks whether @list and @other_list contain the same attributes and
+whether those attributes apply to the same ranges. Beware that this
+will return wrong values if any list contains duplicates.
+
+Since: 1.46
+
+</description>
+<parameters>
+<parameter name="list">
+<parameter_description> a #PangoAttrList
+</parameter_description>
+</parameter>
+<parameter name="other_list">
+<parameter_description> the other #PangoAttrList
+</parameter_description>
+</parameter>
+</parameters>
+<return> %TRUE if the lists are equal, %FALSE if they aren't.
+
 </return>
 </function>
 
@@ -1905,6 +2085,54 @@ Since: 1.44
 <return></return>
 </function>
 
+<function name="pango_attr_overline_color_new">
+<description>
+Create a new overline color attribute. This attribute
+modifies the color of overlines. If not set, overlines
+will use the foreground color.
+
+Since: 1.45
+
+</description>
+<parameters>
+<parameter name="red">
+<parameter_description> the red value (ranging from 0 to 65535)
+</parameter_description>
+</parameter>
+<parameter name="green">
+<parameter_description> the green value
+</parameter_description>
+</parameter>
+<parameter name="blue">
+<parameter_description> the blue value
+</parameter_description>
+</parameter>
+</parameters>
+<return> the newly allocated #PangoAttribute,
+which should be freed with pango_attribute_destroy().
+
+</return>
+</function>
+
+<function name="pango_attr_overline_new">
+<description>
+Create a new overline-style attribute.
+
+Since: 1.45
+
+</description>
+<parameters>
+<parameter name="overline">
+<parameter_description> the overline style
+</parameter_description>
+</parameter>
+</parameters>
+<return> the newly allocated #PangoAttribute,
+which should be freed with pango_attribute_destroy().
+
+</return>
+</function>
+
 <function name="pango_attr_rise_new">
 <description>
 Create a new baseline displacement attribute.
@@ -2005,6 +2233,26 @@ freed with pango_attribute_destroy().
 </return>
 </function>
 
+<function name="pango_attr_show_new">
+<description>
+Create a new attribute that influences how invisible
+characters are rendered.
+
+Since: 1.44
+
+</description>
+<parameters>
+<parameter name="flags">
+<parameter_description> #PangoShowFlags to apply
+</parameter_description>
+</parameter>
+</parameters>
+<return> the newly allocated #PangoAttribute,
+which should be freed with pango_attribute_destroy().
+
+</return>
+</function>
+
 <function name="pango_attr_size_new">
 <description>
 Create a new font-size attribute in fractional points.
@@ -2013,7 +2261,7 @@ Create a new font-size attribute in fractional points.
 </description>
 <parameters>
 <parameter name="size">
-<parameter_description> the font size, in %PANGO_SCALE&lt;!-- --&gt;ths of a point.
+<parameter_description> the font size, in %PANGO_SCALEths of a point.
 </parameter_description>
 </parameter>
 </parameters>
@@ -2031,7 +2279,7 @@ Since: 1.8
 </description>
 <parameters>
 <parameter name="size">
-<parameter_description> the font size, in %PANGO_SCALE&lt;!-- --&gt;ths of a device unit.
+<parameter_description> the font size, in %PANGO_SCALEths of a device unit.
 </parameter_description>
 </parameter>
 </parameters>
@@ -3423,6 +3671,23 @@ when finished using the object.
 </return>
 </function>
 
+<function name="pango_context_get_round_glyph_positions">
+<description>
+Returns whether font rendering with this context should
+round glyph positions and widths.
+
+Since: 1.44
+
+</description>
+<parameters>
+<parameter name="context">
+<parameter_description> a #PangoContext
+</parameter_description>
+</parameter>
+</parameters>
+<return></return>
+</function>
+
 <function name="pango_context_get_serial">
 <description>
 Returns the current serial number of @context.  The serial number is
@@ -3695,6 +3960,34 @@ Since: 1.6
 <parameter name="matrix">
 <parameter_description> a #PangoMatrix, or %NULL to unset any existing
 matrix. (No matrix set is the same as setting the identity matrix.)
+</parameter_description>
+</parameter>
+</parameters>
+<return></return>
+</function>
+
+<function name="pango_context_set_round_glyph_positions">
+<description>
+Sets whether font rendering with this context should
+round glyph positions and widths to integral positions,
+in device units.
+
+This is useful when the renderer can't handle subpixel
+positioning of glyphs.
+
+The default value is to round glyph positions, to remain
+compatible with previous Pango behavior.
+
+Since: 1.44
+
+</description>
+<parameters>
+<parameter name="context">
+<parameter_description> a #PangoContext
+</parameter_description>
+</parameter>
+<parameter name="round_positions">
+<parameter_description> whether to round glyph positions
 </parameter_description>
 </parameter>
 </parameters>
@@ -3986,8 +4279,8 @@ Since: 1.6
 </parameter_description>
 </parameter>
 </parameters>
-<return> the #FcCharset for @fcfont; must not be modified
-or freed.
+<return> the #FcCharset for @fcfont; must not
+be modified or freed.
 
 </return>
 </function>
@@ -4243,7 +4536,7 @@ Since: 1.24
 
 <function name="pango_fc_font_lock_face">
 <description>
-Gets the FreeType &lt;type&gt;FT_Face&lt;/type&gt; associated with a font,
+Gets the FreeType `FT_Face` associated with a font,
 This face will be kept around until you call
 pango_fc_font_unlock_face().
 
@@ -4257,7 +4550,7 @@ Deprecated: 1.44: Use pango_font_get_hb_font() instead
 </parameter_description>
 </parameter>
 </parameters>
-<return> the FreeType &lt;type&gt;FT_Face&lt;/type&gt; associated with @font.
+<return> the FreeType `FT_Face` associated with @font.
 
 </return>
 </function>
@@ -4377,15 +4670,17 @@ Since: 1.26
 </parameter_description>
 </parameter>
 </parameters>
-<return> a newly created #PangoFcDecoder object or
-%NULL if no decoder is set for @pattern.
+<return> a newly created #PangoFcDecoder
+object or %NULL if no decoder is set for @pattern.
 
 </return>
 </function>
 
 <function name="pango_fc_font_map_get_config">
 <description>
-Fetches FcConfig attached to a font map.  See pango_fc_font_map_set_config().
+Fetches the `FcConfig` attached to a font map.
+
+See also: pango_fc_font_map_set_config()
 
 Since: 1.38
 
@@ -4396,8 +4691,30 @@ Since: 1.38
 </parameter_description>
 </parameter>
 </parameters>
-<return> the #FcConfig object attached to @fcfontmap, which
+<return> the `FcConfig` object attached to @fcfontmap, which
 might be %NULL.
+
+</return>
+</function>
+
+<function name="pango_fc_font_map_get_hb_face">
+<description>
+Retrieves the `hb_face_t` for the given #PangoFcFont.
+
+Since: 1.44
+
+</description>
+<parameters>
+<parameter name="fcfontmap">
+<parameter_description> a #PangoFcFontMap
+</parameter_description>
+</parameter>
+<parameter name="fcfont">
+<parameter_description> a #PangoFcFont
+</parameter_description>
+</parameter>
+</parameters>
+<return> the `hb_face_t` for the given Pango font
 
 </return>
 </function>
@@ -4428,7 +4745,7 @@ Since: 1.38
 </parameter_description>
 </parameter>
 <parameter name="fcconfig">
-<parameter_description> a #FcConfig, or %NULL
+<parameter_description> a `FcConfig`, or %NULL
 </parameter_description>
 </parameter>
 </parameters>
@@ -4825,17 +5142,47 @@ Frees a font description.
 <function name="pango_font_description_from_string">
 <description>
 Creates a new font description from a string representation in the
-form &quot;[FAMILY-LIST] [STYLE-OPTIONS] [SIZE]&quot;, where FAMILY-LIST is a
-comma separated list of families optionally terminated by a comma,
-STYLE_OPTIONS is a whitespace separated list of words where each word
-describes one of style, variant, weight, stretch, or gravity, and SIZE
-is a decimal number (size in points) or optionally followed by the
-unit modifier &quot;px&quot; for absolute size. Any one of the options may
-be absent.  If FAMILY-LIST is absent, then the family_name field of
-the resulting font description will be initialized to %NULL.  If
-STYLE-OPTIONS is missing, then all style options will be set to the
-default values. If SIZE is missing, the size in the resulting font
-description will be set to 0.
+form
+
+&quot;\[FAMILY-LIST] \[STYLE-OPTIONS] \[SIZE] \[VARIATIONS]&quot;,
+
+where FAMILY-LIST is a comma-separated list of families optionally
+terminated by a comma, STYLE_OPTIONS is a whitespace-separated list
+of words where each word describes one of style, variant, weight,
+stretch, or gravity, and SIZE is a decimal number (size in points)
+or optionally followed by the unit modifier &quot;px&quot; for absolute size.
+VARIATIONS is a comma-separated list of font variation
+specifications of the form &quot;\@axis=value&quot; (the = sign is optional).
+
+The following words are understood as styles:
+&quot;Normal&quot;, &quot;Roman&quot;, &quot;Oblique&quot;, &quot;Italic&quot;.
+
+The following words are understood as variants:
+&quot;Small-Caps&quot;.
+
+The following words are understood as weights:
+&quot;Thin&quot;, &quot;Ultra-Light&quot;, &quot;Extra-Light&quot;, &quot;Light&quot;, &quot;Semi-Light&quot;,
+&quot;Demi-Light&quot;, &quot;Book&quot;, &quot;Regular&quot;, &quot;Medium&quot;, &quot;Semi-Bold&quot;, &quot;Demi-Bold&quot;,
+&quot;Bold&quot;, &quot;Ultra-Bold&quot;, &quot;Extra-Bold&quot;, &quot;Heavy&quot;, &quot;Black&quot;, &quot;Ultra-Black&quot;,
+&quot;Extra-Black&quot;.
+
+The following words are understood as stretch values:
+&quot;Ultra-Condensed&quot;, &quot;Extra-Condensed&quot;, &quot;Condensed&quot;, &quot;Semi-Condensed&quot;,
+&quot;Semi-Expanded&quot;, &quot;Expanded&quot;, &quot;Extra-Expanded&quot;, &quot;Ultra-Expanded&quot;.
+
+The following words are understood as gravity values:
+&quot;Not-Rotated&quot;, &quot;South&quot;, &quot;Upside-Down&quot;, &quot;North&quot;, &quot;Rotated-Left&quot;,
+&quot;East&quot;, &quot;Rotated-Right&quot;, &quot;West&quot;.
+
+Any one of the options may be absent. If FAMILY-LIST is absent, then
+the family_name field of the resulting font description will be
+initialized to %NULL. If STYLE-OPTIONS is missing, then all style
+options will be set to the default values. If SIZE is missing, the
+size in the resulting font description will be set to 0.
+
+A typical example:
+
+&quot;Cantarell Italic Light 15 \@wght=200&quot;
 
 
 </description>
@@ -5511,6 +5858,25 @@ owned by the face object and must not be modified or freed.
 </return>
 </function>
 
+<function name="pango_font_face_get_family">
+<description>
+Gets the #PangoFontFamily that @face
+belongs to.
+
+Since: 1.46
+
+</description>
+<parameters>
+<parameter name="face">
+<parameter_description> a #PangoFontFace
+</parameter_description>
+</parameter>
+</parameters>
+<return> the #PangoFontFamily
+
+</return>
+</function>
+
 <function name="pango_font_face_is_synthesized">
 <description>
 Returns whether a #PangoFontFace is synthesized by the underlying
@@ -5558,6 +5924,31 @@ should be freed with g_free().
 </parameter>
 </parameters>
 <return></return>
+</function>
+
+<function name="pango_font_family_get_face">
+<description>
+Gets the #PangoFontFace of @family with the given name.
+
+Since: 1.46
+
+</description>
+<parameters>
+<parameter name="family">
+<parameter_description> a #PangoFontFamily
+</parameter_description>
+</parameter>
+<parameter name="name">
+<parameter_description> the name of a face. If the name is %NULL,
+the family's default face (fontconfig calls it &quot;Regular&quot;)
+will be returned.
+</parameter_description>
+</parameter>
+</parameters>
+<return> the #PangoFontFace,
+or %NULL if no face with the given name exists.
+
+</return>
 </function>
 
 <function name="pango_font_family_get_name">
@@ -5698,6 +6089,24 @@ Computes the coverage map for a given font and language tag.
 </parameters>
 <return> a newly-allocated #PangoCoverage
 object.
+</return>
+</function>
+
+<function name="pango_font_get_face">
+<description>
+Gets the #PangoFontFace to which @font belongs.
+
+Since: 1.46
+
+</description>
+<parameters>
+<parameter name="font">
+<parameter_description> a #PangoFont
+</parameter_description>
+</parameter>
+</parameters>
+<return> the #PangoFontFace
+
 </return>
 </function>
 
@@ -5915,6 +6324,28 @@ Since: 1.22
 </parameters>
 <return> the newly allocated #PangoContext,
 which should be freed with g_object_unref().
+
+</return>
+</function>
+
+<function name="pango_font_map_get_family">
+<description>
+Gets a font family by name.
+
+Since: 1.46
+
+</description>
+<parameters>
+<parameter name="fontmap">
+<parameter_description> a #PangoFontMap
+</parameter_description>
+</parameter>
+<parameter name="name">
+<parameter_description> a family name
+</parameter_description>
+</parameter>
+</parameters>
+<return> the #PangoFontFamily
 
 </return>
 </function>
@@ -6392,14 +6823,14 @@ Returns the number of fonts in the fontset.
 
 <function name="pango_ft2_font_get_coverage">
 <description>
-Gets the #PangoCoverage for a &lt;type&gt;PangoFT2Font&lt;/type&gt;. Use
+Gets the #PangoCoverage for a `PangoFT2Font`. Use
 pango_font_get_coverage() instead.
 
 
 </description>
 <parameters>
 <parameter name="font">
-<parameter_description> a &lt;type&gt;PangoFT2Font&lt;/type&gt;.
+<parameter_description> a Pango FT2 font
 </parameter_description>
 </parameter>
 <parameter name="language">
@@ -6413,7 +6844,7 @@ pango_font_get_coverage() instead.
 
 <function name="pango_ft2_font_get_face">
 <description>
-Returns the native FreeType2 &lt;type&gt;FT_Face&lt;/type&gt; structure used for this #PangoFont.
+Returns the native FreeType2 `FT_Face` structure used for this #PangoFont.
 This may be useful if you want to use FreeType2 functions directly.
 
 Use pango_fc_font_lock_face() instead; when you are done with a
@@ -6428,9 +6859,8 @@ pango_fc_font_unlock_face().
 </parameter_description>
 </parameter>
 </parameters>
-<return> a pointer to a &lt;type&gt;FT_Face&lt;/type&gt;
-structure, with the size set correctly, or %NULL if
-@font is %NULL.
+<return> a pointer to a `FT_Face` structure, with the
+size set correctly, or %NULL if @font is %NULL.
 </return>
 </function>
 
@@ -7279,6 +7709,10 @@ or %NULL if @string was %NULL.
 Compute the logical and ink extents of a glyph string. See the documentation
 for pango_font_get_glyph_extents() for details about the interpretation
 of the rectangles.
+
+Examples of logical (red) and ink (green) rects:
+
+![](rects1.png) ![](rects2.png)
 
 </description>
 <parameters>
@@ -8183,7 +8617,8 @@ Gets the attribute list for the layout, if any.
 </parameter_description>
 </parameter>
 </parameters>
-<return> a #PangoAttrList.
+<return> a #PangoAttrList or %NULL
+if none was set.
 </return>
 </function>
 
@@ -8296,6 +8731,29 @@ direction of the layout are inserted.
 </parameter>
 </parameters>
 <return></return>
+</function>
+
+<function name="pango_layout_get_direction">
+<description>
+Gets the text direction at the given character
+position in @layout.
+
+Since: 1.46
+
+</description>
+<parameters>
+<parameter name="layout">
+<parameter_description> a #PangoLayout
+</parameter_description>
+</parameter>
+<parameter name="index">
+<parameter_description> the byte index of the char
+</parameter_description>
+</parameter>
+</parameters>
+<return> the text direction at @index
+
+</return>
 </function>
 
 <function name="pango_layout_get_ellipsize">
@@ -9950,7 +10408,7 @@ older than 1.18.
 <description>
 Sets a factor for line spacing.
 Typical values are: 0, 1, 1.5, 2.
-The default values is 1.
+The default values is 0.
 
 If @factor is non-zero, lines are placed
 so that
@@ -10344,8 +10802,8 @@ handle this script.
 </parameter_description>
 </parameter>
 <parameter name="fallback_engines">
-<parameter_description> location to store list of engines that approximately
-handle this script.
+<parameter_description> location to store list of engines that
+approximately handle this script.
 </parameter_description>
 </parameter>
 </parameters>
@@ -11071,8 +11529,8 @@ Since: 1.2
 </parameter_description>
 </parameter>
 </parameters>
-<return> the #PangoOTInfo for @face. This object will have
-the same lifetime as @face.
+<return> the #PangoOTInfo for @face. This object
+will have the same lifetime as @face.
 
 </return>
 </function>
@@ -12309,7 +12767,7 @@ inherited from the environment.
 <description>
 Gets the layout currently being rendered using @renderer.
 Calling this function only makes sense from inside a subclass's
-methods, like in its draw_shape&lt;!----&gt;() for example.
+methods, like in its draw_shape vfunc, for example.
 
 The returned layout should not be modified while still being
 rendered.
@@ -12333,7 +12791,7 @@ no layout is being rendered using @renderer at this time.
 <description>
 Gets the layout line currently being rendered using @renderer.
 Calling this function only makes sense from inside a subclass's
-methods, like in its draw_shape&lt;!----&gt;() for example.
+methods, like in its draw_shape vfunc, for example.
 
 The returned layout line should not be modified while still being
 rendered.
@@ -12845,6 +13303,55 @@ Since: 1.32
 <return></return>
 </function>
 
+<function name="pango_shape_with_flags">
+<description>
+Given a segment of text and the corresponding
+#PangoAnalysis structure returned from pango_itemize(),
+convert the characters into glyphs. You may also pass
+in only a substring of the item from pango_itemize().
+
+This is similar to pango_shape_full(), except it also takes
+flags that can influence the shaping process.
+
+Since: 1.44
+
+</description>
+<parameters>
+<parameter name="item_text">
+<parameter_description> valid UTF-8 text to shape
+</parameter_description>
+</parameter>
+<parameter name="item_length">
+<parameter_description> the length (in bytes) of @item_text.
+-1 means nul-terminated text.
+</parameter_description>
+</parameter>
+<parameter name="paragraph_text">
+<parameter_description> text of the paragraph (see details).
+May be %NULL.
+</parameter_description>
+</parameter>
+<parameter name="paragraph_length">
+<parameter_description> the length (in bytes) of @paragraph_text.
+-1 means nul-terminated text.
+</parameter_description>
+</parameter>
+<parameter name="analysis">
+<parameter_description>  #PangoAnalysis structure from pango_itemize()
+</parameter_description>
+</parameter>
+<parameter name="glyphs">
+<parameter_description> glyph string in which to store results
+</parameter_description>
+</parameter>
+<parameter name="flags">
+<parameter_description> flags influencing the shaping process
+</parameter_description>
+</parameter>
+</parameters>
+<return></return>
+</function>
+
 <function name="pango_skip_space">
 <description>
 Skips 0 or more characters of white space.
@@ -13117,6 +13624,11 @@ Apply language-specific tailoring to the breaks in
 @log_attrs, which are assumed to have been produced
 by pango_default_break().
 
+If @offset is not -1, it is used to apply attributes
+from @analysis that are relevant to line breaking.
+
+Since: 1.44
+
 </description>
 <parameters>
 <parameter name="text">
@@ -13131,12 +13643,17 @@ by pango_default_break().
 <parameter_description>  #PangoAnalysis structure from pango_itemize() for @text
 </parameter_description>
 </parameter>
+<parameter name="offset">
+<parameter_description> Byte offset of @text from the beginning of the
+paragraph, or -1 to ignore attributes from @analysis
+</parameter_description>
+</parameter>
 <parameter name="log_attrs">
 <parameter_description> array with one #PangoLogAttr
 per character in @text, plus one extra, to be filled in
 </parameter_description>
 </parameter>
-<parameter name="attrs_len">
+<parameter name="log_attrs_len">
 <parameter_description> length of @log_attrs array
 </parameter_description>
 </parameter>
@@ -13811,7 +14328,7 @@ Free cached resources.
 
 <function name="pango_xft_font_get_display">
 <description>
-Returns the X display of the XftFont of a font.
+Returns the X display of the `XftFont` of a font.
 
 
 </description>
@@ -13827,7 +14344,7 @@ Returns the X display of the XftFont of a font.
 
 <function name="pango_xft_font_get_font">
 <description>
-Returns the XftFont of a font.
+Returns the `XftFont` of a font.
 
 
 </description>
@@ -13837,8 +14354,8 @@ Returns the XftFont of a font.
 </parameter_description>
 </parameter>
 </parameters>
-<return> the XftFont associated to @font, or %NULL
-if @font is %NULL.
+<return> the `XftFont` associated to @font,
+or %NULL if @font is %NULL.
 </return>
 </function>
 
@@ -13918,9 +14435,9 @@ Since: 1.2
 
 <function name="pango_xft_font_lock_face">
 <description>
-Gets the FreeType &lt;type&gt;FT_Face&lt;/type&gt; associated with a font,
-This face will be kept around until you call
-pango_xft_font_unlock_face().
+Gets the FreeType `FT_Face` associated with a font.
+
+This face will be kept around until you call pango_xft_font_unlock_face().
 
 Use pango_fc_font_lock_face() instead.
 
@@ -13933,7 +14450,7 @@ Since: 1.2
 </parameter_description>
 </parameter>
 </parameters>
-<return> the FreeType &lt;type&gt;FT_Face&lt;/type&gt; associated with @font.
+<return> the FreeType `FT_Face` associated with @font.
 
 </return>
 </function>
