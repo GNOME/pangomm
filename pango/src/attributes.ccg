@@ -76,6 +76,11 @@ AttrType Attribute::register_type(const Glib::ustring& name)
   return (AttrType)pango_attr_type_register(name.c_str());
 }
 
+Glib::ustring Attribute::get_type_name(AttrType type)
+{
+  return Glib::convert_const_gchar_ptr_to_ustring(pango_attr_type_get_name((PangoAttrType)type));
+}
+
 AttrString Attribute::create_attr_family(const Glib::ustring& family)
 {
   return Glib::wrap((PangoAttrString*)pango_attr_family_new(family.c_str()));
@@ -151,6 +156,16 @@ AttrColor Attribute::create_attr_underline_color(guint16 red, guint16 green, gui
   return Glib::wrap((PangoAttrColor*)pango_attr_underline_color_new(red, green, blue));
 }
 
+AttrInt Attribute::create_attr_overline(Overline overline)
+{
+  return Glib::wrap((PangoAttrInt*)pango_attr_overline_new((PangoOverline)overline));
+}
+
+AttrColor Attribute::create_attr_overline_color(guint16 red, guint16 green, guint16 blue)
+{
+  return Glib::wrap((PangoAttrColor*)pango_attr_overline_color_new(red, green, blue));
+}
+
 AttrInt Attribute::create_attr_strikethrough(bool strikethrough)
 {
   return Glib::wrap((PangoAttrInt*)pango_attr_strikethrough_new(strikethrough));
@@ -199,6 +214,21 @@ AttrInt Attribute::create_attr_gravity_hint(GravityHint hint)
 AttrString Attribute::create_attr_font_features(const Glib::ustring& features)
 {
   return Glib::wrap((PangoAttrString*)pango_attr_font_features_new(features.c_str()));
+}
+
+AttrInt Attribute::create_attr_allow_breaks(bool allow_breaks)
+{
+  return Glib::wrap((PangoAttrInt*)pango_attr_allow_breaks_new(allow_breaks));
+}
+
+AttrInt Attribute::create_attr_insert_hyphens(bool insert_hyphens)
+{
+  return Glib::wrap((PangoAttrInt*)pango_attr_insert_hyphens_new(insert_hyphens));
+}
+
+AttrInt Attribute::create_attr_show(ShowFlags show)
+{
+  return Glib::wrap((PangoAttrInt*)pango_attr_show_new((PangoShowFlags)show));
 }
 
 

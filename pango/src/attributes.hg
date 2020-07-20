@@ -33,16 +33,15 @@ _CC_INCLUDE(pango/pango-enum-types.h)
 /** Pango::AttrType distinguishes between different types of attributes.
  * Along with the predefined values, it is possible to allocate additional values for
  * custom attributes using Pango::Attribute::register_type(). The predefined values
- * are given below.
+ * are given below. The type of structure used to store the
+ * attribute is listed in parentheses after the description.
  */
 _WRAP_ENUM(AttrType, PangoAttrType, s#^SCALE$#SCALE_FACTOR#, decl_prefix PANGOMM_API)
 // gcc complains that SCALE shadows the global constant SCALE from font.h.
 
-
-/** A Pango::Underline is used to specify whether text should be underlined, and if so, the type of underlining.
- */
 _WRAP_ENUM(Underline, PangoUnderline, decl_prefix PANGOMM_API)
-
+_WRAP_ENUM(Overline, PangoOverline, decl_prefix PANGOMM_API)
+_WRAP_ENUM(ShowFlags, PangoShowFlags, decl_prefix PANGOMM_API)
 
 /** A Pango::LogAttr stores information about the attributes of a single character.
  */
@@ -88,10 +87,26 @@ public:
   AttrType get_type() const;
 
   /** Allocate a new attribute type ID.
-   * @param name An identifier for the type (currently unused).
+   *
+   * The attribute type name can be accessed later by using get_type_name().
+   *
+   * @param name An identifier for the type.
    * @return The new type ID.
    */
   static AttrType register_type(const Glib::ustring& name);
+
+  /** Fetches the attribute type name passed in when registering the type using
+   * register_type().
+   *
+   * @newin{2,46}
+   *
+   * @param type An attribute type ID to fetch the name for.
+   * @return The type ID name (which may be an empty string), or an empty string
+   *         if @a type is a built-in Pango attribute type or invalid.
+   */
+  static Glib::ustring get_type_name(AttrType type);
+  // _WRAP_METHOD() can't be used here, because glibmm/tools/defs_gen/h2def.py
+  // assumes that pango_attr_type_get_name() is a method of a class named PangoAttrType.
 
   /** Gets the start index of the range.
    * @return The start index of the range.
@@ -223,6 +238,29 @@ public:
    */
   static AttrColor create_attr_underline_color(guint16 red, guint16 green, guint16 blue);
 
+  /** Create a new overline-style object.
+   *
+   * @newin{2,46}
+   *
+   * @param overline The overline style.
+   * @return An attribute of type AttrInt.
+   */
+  static AttrInt create_attr_overline(Overline overline);
+
+  /** Create a new overline color attribute.
+   *
+   * This attribute modifies the color of overlines. If not set,
+   * overlines will use the foreground color.
+   *
+   * @newin{2,46}
+   *
+   * @param red The red value (ranging from 0 to 65535).
+   * @param green The green value (ranging from 0 to 65535).
+   * @param blue The blue value (ranging from 0 to 65535).
+   * @return An attribute of type AttrColor.
+   */
+  static AttrColor create_attr_overline_color(guint16 red, guint16 green, guint16 blue);
+
   /** Create a new font strike-through attribute.
    * @param strikethrough True indicates the text should be struck-through.
    * @return An attribute of type AttrInt.
@@ -313,6 +351,39 @@ public:
    * @return An attribute of type AttrString.
    */
   static AttrString create_attr_font_features(const Glib::ustring& features);
+
+  /** Create a new allow-breaks attribute.
+   *
+   * If breaks are disabled, the range will be kept in a
+   * single run, as far as possible.
+   *
+   * @newin{2,46}
+   *
+   * @param allow_breaks <tt>true</tt> if line breaks are allowed.
+   * @return An attribute of type AttrInt.
+   */
+  static AttrInt create_attr_allow_breaks(bool allow_breaks);
+
+  /** Create a new insert-hyphens attribute.
+   *
+   * Pangomm will insert hyphens when breaking lines in the middle
+   * of a word. This attribute can be used to suppress the hyphen.
+   *
+   * @newin{2,46}
+   *
+   * @param insert_hyphens <tt>true</tt> if hyphens should be inserted.
+   * @return An attribute of type AttrInt.
+   */
+  static AttrInt create_attr_insert_hyphens(bool insert_hyphens);
+
+  /** Create a new attribute that influences how invisible characters are rendered.
+   *
+   * @newin{2,46}
+   *
+   * @param flags Pango::ShowFlags to apply.
+   * @return An attribute of type AttrInt.
+   */
+  static AttrInt create_attr_show(ShowFlags show);
 
 protected:
   PangoAttribute* gobject_;
