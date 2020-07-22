@@ -1,8 +1,4 @@
-// -*- c++ -*-
-/* $Id: fontface.ccg,v 1.2 2004/03/03 01:07:40 murrayc Exp $ */
-
 /* 
- *
  * Copyright 1998-2002 The gtkmm Development Team
  *
  * This library is free software; you can redistribute it and/or
@@ -20,6 +16,8 @@
  * Software Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
+#include <pangomm/fontfamily.h>
+
 namespace Pango
 {
 
@@ -33,6 +31,3 @@ std::vector<int> FontFace::list_sizes() const
 }
 
 } //namespace Pango
-
-
-                            

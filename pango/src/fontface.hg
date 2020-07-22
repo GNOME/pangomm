@@ -1,5 +1,3 @@
-/* $Id: fontface.hg,v 1.3 2004/03/03 01:07:40 murrayc Exp $ */
-
 /* fontface.h
  * 
  * Copyright 2001      The gtkmm Development Team
@@ -19,7 +17,6 @@
  * Software Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
-
 #include <pangomm/fontdescription.h>
 #include <glibmm/object.h>
 #include <pango/pango-font.h>
@@ -29,6 +26,7 @@ _PINCLUDE(glibmm/private/object_p.h)
 
 namespace Pango
 {
+class PANGOMM_API FontFamily;
 
 /** A Pango::FontFace is used to represent a group of fonts with the same family, slant, weight, width, but varying sizes.
  */
@@ -48,13 +46,11 @@ public:
   _IGNORE(pango_font_face_list_sizes)
 
   _WRAP_METHOD(bool is_synthesized() const, pango_font_face_is_synthesized)
+  _WRAP_METHOD(Glib::RefPtr<FontFamily> get_family(), pango_font_face_get_family, refreturn)
+  _WRAP_METHOD(Glib::RefPtr<const FontFamily> get_family() const, pango_font_face_get_family, refreturn, constversion)
   
-protected:
-  //We can't wrap the virtual functions because PangoFontFace has a hidden class.
-  //We probably don't need to subclass this anyway.
-  //_WRAP_VFUNC(const char* get_name() const, "get_face_name")
-  //_WRAP_VFUNC(PangoFontDescription* describe(), "describe")
+// PangoFontFaceClass is hidden when PANGO_DISABLE_DEPRECATED is defined.
+// Don't wrap vfuncs.
 };
 
 } /* namespace Pango */
-

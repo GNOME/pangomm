@@ -1,5 +1,3 @@
-/* $Id: fontfamily.hg,v 1.2 2004/03/03 01:07:40 murrayc Exp $ */
-
 /* fontfamily.h
  * 
  * Copyright 2001      The gtkmm Development Team
@@ -18,7 +16,6 @@
  * License along with this library; if not, write to the Free
  * Software Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
-
 
 #include <glibmm/object.h>
 #include <giomm/listmodel.h>
@@ -49,6 +46,15 @@ public:
 
   _WRAP_METHOD(Glib::ustring get_name() const, pango_font_family_get_name)
   _WRAP_METHOD(bool is_monospace() const, pango_font_family_is_monospace)
+  _WRAP_METHOD(bool is_variable() const, pango_font_family_is_variable)
+
+  _WRAP_METHOD(Glib::RefPtr<FontFace> get_face(const Glib::ustring& name{NULL} = {}),
+    pango_font_family_get_face, refreturn)
+  _WRAP_METHOD(Glib::RefPtr<const FontFace> get_face(const Glib::ustring& name{NULL} = {}) const,
+    pango_font_family_get_face, refreturn, constversion)
+
+// PangoFontFamilyClass is hidden when PANGO_DISABLE_DEPRECATED is defined.
+// Don't wrap vfuncs.
 };
 
 /*
@@ -66,4 +72,3 @@ struct FontFamilyRefPtrTraits
 */
 
 } // namespace Pango
-

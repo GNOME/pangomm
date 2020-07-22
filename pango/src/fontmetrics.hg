@@ -1,5 +1,3 @@
-/* $Id: fontmetrics.hg,v 1.2 2004/12/01 11:46:29 murrayc Exp $ */
-
 /* fontmetrics.h
  *
  * Copyright (C) 1998-1999 The gtkmm Development Team
@@ -38,6 +36,7 @@ class PANGOMM_API FontMetrics
 public:
   _WRAP_METHOD(int get_ascent() const, pango_font_metrics_get_ascent)
   _WRAP_METHOD(int get_descent() const, pango_font_metrics_get_descent)
+  _WRAP_METHOD(int get_height() const, pango_font_metrics_get_height)
   _WRAP_METHOD(int get_approximate_char_width() const, pango_font_metrics_get_approximate_char_width)
   _WRAP_METHOD(int get_approximate_digit_width() const, pango_font_metrics_get_approximate_digit_width)
 
