@@ -2,16 +2,110 @@
 ; virtual function definitions
 ; define-vfunc is gtkmm-specific
 
-; PangoFontFace
+; PangoRenderer
 
-(define-vfunc get_face_name
-  (of-object "PangoFontFace")
-  (return-type "const-gchar*")
+(define-vfunc draw_glyphs
+  (of-object "PangoRenderer")
+  (return-type "void")
+  (parameters
+    '("PangoFont*" "font")
+    '("PangoGlyphString*" "glyphs")
+    '("int" "x")
+    '("int" "y")
+  )
 )
 
-(define-vfunc describe
-  (of-object "PangoFontFace")
-  (return-type "PangoFontDescription*")
+(define-vfunc draw_rectangle
+  (of-object "PangoRenderer")
+  (return-type "void")
+  (parameters
+    '("PangoRenderPart" "part")
+    '("int" "x")
+    '("int" "y")
+    '("int" "width")
+    '("int" "height")
+  )
 )
 
+(define-vfunc draw_error_underline
+  (of-object "PangoRenderer")
+  (return-type "void")
+  (parameters
+    '("int" "x")
+    '("int" "y")
+    '("int" "width")
+    '("int" "height")
+  )
+)
 
+(define-vfunc draw_shape
+  (of-object "PangoRenderer")
+  (return-type "void")
+  (parameters
+    '("PangoAttrShape*" "attr")
+    '("int" "x")
+    '("int" "y")
+  )
+)
+
+(define-vfunc draw_trapezoid
+  (of-object "PangoRenderer")
+  (return-type "void")
+  (parameters
+    '("PangoRenderPart" "part")
+    '("double" "y1")
+    '("double" "x11")
+    '("double" "x21")
+    '("double" "y2")
+    '("double" "x12")
+    '("double" "x22")
+  )
+)
+
+(define-vfunc draw_glyph
+  (of-object "PangoRenderer")
+  (return-type "void")
+  (parameters
+    '("PangoFont*" "font")
+    '("PangoGlyph" "glyph")
+    '("double" "x")
+    '("double" "y")
+  )
+)
+
+(define-vfunc part_changed
+  (of-object "PangoRenderer")
+  (return-type "void")
+  (parameters
+    '("PangoRenderPart" "part")
+  )
+)
+
+(define-vfunc begin
+  (of-object "PangoRenderer")
+  (return-type "void")
+)
+
+(define-vfunc end
+  (of-object "PangoRenderer")
+  (return-type "void")
+)
+
+(define-vfunc prepare_run
+  (of-object "PangoRenderer")
+  (return-type "void")
+  (parameters
+    '("PangoLayoutRun*" "run")
+  )
+)
+
+(define-vfunc draw_glyph_item
+  (of-object "PangoRenderer")
+  (return-type "void")
+  (parameters
+    '("const-char*" "text")
+    '("PangoGlyphItem*" "glyph_item")
+    '("int" "x")
+    '("int" "y")
+  )
+)
