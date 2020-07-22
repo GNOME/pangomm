@@ -75,17 +75,20 @@ with a few manual steps required, namely to:
 
 -Make a new copy of the entire source tree to some location, where the build
  is to be done; then in $(srcroot)\MSVC_NMake run
- nmake /f Makefile.vc CFG=[release|debug] prep-git-build, which will copy and generate
+ nmake /f Makefile.vc CFG=[release|debug], which will copy and generate
  the following files with the proper info:
  --$(srcroot)\MSVC_NMake\pangomm\pangommconfig.h
  --$(srcroot)\MSVC_NMake\pangomm\pangomm.rc
+ and will proceed with the build
 
 For pangommconfig.h, it is recommended to keep PANGOMM_DISABLE_DEPRECATED
 undefined unless you know what you are doing.  If $(srcroot)\MSVC_NMake\pangomm\pangommconfig.h
-and/or $(srcroot)\MSVC_NMake\pangomm\pangomm.rc is missing from the release tarball, you may
-also generate them using nmake /f Makefile.vc CFG=[release|debug] prep-git-build.
+and/or $(srcroot)\MSVC_NMake\pangomm\pangomm.rc is missing from the release tarball, they will
+also be generated when nmake /f Makefile.vc CFG=[release|debug] is run.
 
-Note that the prep-git-build target will require a working PERL installation.
+Note that if $(srcroot)\MSVC_NMake\pangomm\pangommconfig.h and/or
+$(srcroot)\MSVC_NMake\pangomm\pangomm.rc needs to be generated, a working PERL installation is
+required.
 
 3. Using Meson
 

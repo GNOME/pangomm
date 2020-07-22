@@ -16,25 +16,29 @@ vs$(VSVER)\$(CFG)\$(PLAT)\pangomm\wrap_init.cc: $(pangomm_real_hg)
 prep-git-build: pkg-ver.mak
 	$(MAKE) /f Makefile.vc CFG=$(CFG) GENERATE_VERSIONED_FILES=1 pangomm\pangomm.rc pangomm\pangommconfig.h
 
-pangomm\pangomm.rc: pkg-ver.mak pangomm\pangomm.rc.in
-	@echo Generating $@...
-	@copy $@.in $@
-	@$(PERL) -pi.bak -e "s/\@PANGOMM_MAJOR_VERSION\@/$(PKG_MAJOR_VERSION)/g" $@
-	@$(PERL) -pi.bak -e "s/\@PANGOMM_MINOR_VERSION\@/$(PKG_MINOR_VERSION)/g" $@
-	@$(PERL) -pi.bak -e "s/\@PANGOMM_MICRO_VERSION\@/$(PKG_MICRO_VERSION)/g" $@
-	@$(PERL) -pi.bak -e "s/\@PACKAGE_VERSION\@/$(PKG_MAJOR_VERSION).$(PKG_MINOR_VERSION).$(PKG_MICRO_VERSION)/g" $@
-	@$(PERL) -pi.bak -e "s/\@PANGOMM_MODULE_NAME\@/pangomm-$(PANGOMM_MAJOR_VERSION).$(PANGOMM_MINOR_VERSION)/g" $@
-	@del $@.bak
+pangomm\pangomm.rc: ..\configure.ac pangomm\pangomm.rc.in
+	@if not "$(DO_REAL_GEN)" == "1" if exist pkg-ver.mak del pkg-ver.mak
+	@if not exist pkg-ver.mak $(MAKE) /f Makefile.vc CFG=$(CFG) prep-git-build
+	@if "$(DO_REAL_GEN)" == "1" echo Generating $@...
+	@if "$(DO_REAL_GEN)" == "1" copy $@.in $@
+	@if "$(DO_REAL_GEN)" == "1" $(PERL) -pi.bak -e "s/\@PANGOMM_MAJOR_VERSION\@/$(PKG_MAJOR_VERSION)/g" $@
+	@if "$(DO_REAL_GEN)" == "1" $(PERL) -pi.bak -e "s/\@PANGOMM_MINOR_VERSION\@/$(PKG_MINOR_VERSION)/g" $@
+	@if "$(DO_REAL_GEN)" == "1" $(PERL) -pi.bak -e "s/\@PANGOMM_MICRO_VERSION\@/$(PKG_MICRO_VERSION)/g" $@
+	@if "$(DO_REAL_GEN)" == "1" $(PERL) -pi.bak -e "s/\@PACKAGE_VERSION\@/$(PKG_MAJOR_VERSION).$(PKG_MINOR_VERSION).$(PKG_MICRO_VERSION)/g" $@
+	@if "$(DO_REAL_GEN)" == "1" $(PERL) -pi.bak -e "s/\@PANGOMM_MODULE_NAME\@/pangomm-$(PANGOMM_MAJOR_VERSION).$(PANGOMM_MINOR_VERSION)/g" $@
+	@if "$(DO_REAL_GEN)" == "1" del $@.bak
 
 # You may change PANGOMM_DISABLE_DEPRECATED if you know what you are doing
-pangomm\pangommconfig.h: pkg-ver.mak ..\pango\pangommconfig.h.in
-	@echo Generating $@...
-	@copy ..\pango\$(@F).in $@
-	@$(PERL) -pi.bak -e "s/\#undef PANGOMM_DISABLE_DEPRECATED/\/\* \#undef PANGOMM_DISABLE_DEPRECATED \*\//g" $@
-	@$(PERL) -pi.bak -e "s/\#undef PANGOMM_MAJOR_VERSION/\#define PANGOMM_MAJOR_VERSION $(PKG_MAJOR_VERSION)/g" $@
-	@$(PERL) -pi.bak -e "s/\#undef PANGOMM_MINOR_VERSION/\#define PANGOMM_MINOR_VERSION $(PKG_MINOR_VERSION)/g" $@
-	@$(PERL) -pi.bak -e "s/\#undef PANGOMM_MICRO_VERSION/\#define PANGOMM_MICRO_VERSION $(PKG_MICRO_VERSION)/g" $@
-	@del $@.bak
+pangomm\pangommconfig.h: ..\configure.ac ..\pango\pangommconfig.h.in
+	@if not "$(DO_REAL_GEN)" == "1" if exist pkg-ver.mak del pkg-ver.mak
+	@if not exist pkg-ver.mak $(MAKE) /f Makefile.vc CFG=$(CFG) prep-git-build
+	@if "$(DO_REAL_GEN)" == "1" echo Generating $@...
+	@if "$(DO_REAL_GEN)" == "1" copy ..\pango\$(@F).in $@
+	@if "$(DO_REAL_GEN)" == "1" $(PERL) -pi.bak -e "s/\#undef PANGOMM_DISABLE_DEPRECATED/\/\* \#undef PANGOMM_DISABLE_DEPRECATED \*\//g" $@
+	@if "$(DO_REAL_GEN)" == "1" $(PERL) -pi.bak -e "s/\#undef PANGOMM_MAJOR_VERSION/\#define PANGOMM_MAJOR_VERSION $(PKG_MAJOR_VERSION)/g" $@
+	@if "$(DO_REAL_GEN)" == "1" $(PERL) -pi.bak -e "s/\#undef PANGOMM_MINOR_VERSION/\#define PANGOMM_MINOR_VERSION $(PKG_MINOR_VERSION)/g" $@
+	@if "$(DO_REAL_GEN)" == "1" $(PERL) -pi.bak -e "s/\#undef PANGOMM_MICRO_VERSION/\#define PANGOMM_MICRO_VERSION $(PKG_MICRO_VERSION)/g" $@
+	@if "$(DO_REAL_GEN)" == "1" del $@.bak
 
 pkg-ver.mak: ..\configure.ac
 	@echo Generating version info Makefile Snippet...
