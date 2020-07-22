@@ -91,11 +91,13 @@
   (return-type "void")
 )
 
+; pango-renderer.h has PangoLayoutRun instead of PangoGlyphItem.
+; PangoLayoutRun is an alias for PangoGlyphItem.
 (define-vfunc prepare_run
   (of-object "PangoRenderer")
   (return-type "void")
   (parameters
-    '("PangoLayoutRun*" "run")
+    '("PangoGlyphItem*" "run")
   )
 )
 

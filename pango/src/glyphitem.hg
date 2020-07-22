@@ -1,4 +1,4 @@
-/* layoutrun.h
+/* glyphitem.h
  *
  * Copyright (C) 1998-1999 The gtkmm Development Team
  *
@@ -18,7 +18,7 @@
  */
 
 #include <pangomm/attributes.h> //For LogAttr.
-#include <pango/pango-layout.h>
+#include <pango/pango-glyph-item.h>
 
 _DEFS(pangomm,pango)
 
@@ -27,28 +27,30 @@ namespace Pango
 
 class PANGOMM_API Item;
 class PANGOMM_API GlyphString;
-class PANGOMM_API LayoutRun;
 
-/** A Pango::GlyphItem is a pair of a Pango::Items and the glyphs resulting from shaping the text corresponding to an item.
- * As an example of the usage of Pango::GlyphItem, the results of shaping text with Pango::Layout is a list of Pango::LayoutLine, 
- * each of which contains a list of Pango::GlyphItem. 
+/** A %Pango::GlyphItem is a pair of a Pango::Item and the glyphs
+ * resulting from shaping the text corresponding to an item.
+ *
+ * As an example of the usage of %Pango::GlyphItem, the results
+ * of shaping text with Pango::Layout is a list of Pango::LayoutLine,
+ * each of which contains a list of Pango::GlyphItem.
+ *
+ * For backward compatibility PangoLayoutRun is an alias for PangoGlyphItem
+ * in pango's C code. There is no Pango::LayoutRun in this version of pangomm.
+ *
+ * @newin{2,48}
  */
-typedef LayoutRun GlyphItem;
-
-//TODO: Change this to just GlyphItem when we can break API/ABI.
-
-/** A Pango::LayoutRun represents a single run within a LayoutLine.
- * It is simply an alternate name for GlyphItem.
- */
-class PANGOMM_API LayoutRun
+class PANGOMM_API GlyphItem
 {
-  _CLASS_BOXEDTYPE(LayoutRun, PangoGlyphItem, NONE, pango_glyph_item_copy, pango_glyph_item_free, PANGOMM_API)
+  _CLASS_BOXEDTYPE(GlyphItem, PangoGlyphItem, NONE, pango_glyph_item_copy, pango_glyph_item_free, PANGOMM_API)
   _IGNORE(pango_glyph_item_free, pango_glyph_item_copy)
 
   _WRAP_METHOD(GlyphItem split(const Glib::ustring& text, int split_index), pango_glyph_item_split)
 
-  //This takes ownership of the GlyphItem, which is strange: _WRAP_METHOD(GSList* apply_attrs(const Glib::ustring& text, const AttrList& list), pango_glyph_item_apply_attrs)
-  _WRAP_METHOD(void letter_space(const Glib::ustring& text, const LogAttr& log_attrs, int letter_spacing = 0), pango_glyph_item_letter_space)
+  //This takes ownership of the GlyphItem, which is strange:
+  // _WRAP_METHOD(GSList* apply_attrs(const Glib::ustring& text, const AttrList& list), pango_glyph_item_apply_attrs)
+  _WRAP_METHOD(void letter_space(const Glib::ustring& text, const LogAttr& log_attrs,
+    int letter_spacing = 0), pango_glyph_item_letter_space)
 
   /** Gets the Pango::Item object that provides information about the segment of text in this run.
    * @return A Pango::Item object.
@@ -62,6 +64,3 @@ class PANGOMM_API LayoutRun
 };
 
 } /* namespace Pango */
-
-
-

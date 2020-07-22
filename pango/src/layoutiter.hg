@@ -18,7 +18,7 @@
  */
 
 #include <pangomm/layoutline.h>
-#include <pangomm/layoutrun.h>
+#include <pangomm/glyphitem.h>
 #include <pango/pango-layout.h>
 
 _DEFS(pangomm,pango)
@@ -36,7 +36,7 @@ class PANGOMM_API LayoutIter
 public:
 
   _WRAP_METHOD(int get_index() const, pango_layout_iter_get_index)
-  _WRAP_METHOD(LayoutRun get_run() const, pango_layout_iter_get_run)
+  _WRAP_METHOD(GlyphItem get_run() const, pango_layout_iter_get_run)
   //TODO: Use pango_layout_iter_get_run_readonly()?
 
   _WRAP_METHOD(Glib::RefPtr<LayoutLine> get_line() const, pango_layout_iter_get_line, refreturn)

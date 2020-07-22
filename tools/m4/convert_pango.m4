@@ -144,7 +144,7 @@ _CONVERSION(`const Glib::RefPtr<LayoutLine>&',`PangoLayoutLine*',__CONVERT_REFPT
 _CONVERSION(`const Glib::RefPtr<const Pango::LayoutLine>&',`PangoLayoutLine*',__CONVERT_CONST_REFPTR_TO_P_SUN(Pango::LayoutLine))
 _CONVERSION(`const Glib::RefPtr<const LayoutLine>&',`PangoLayoutLine*',__CONVERT_CONST_REFPTR_TO_P_SUN(LayoutLine))
 
-_CONVERSION(`PangoLayoutRun*',`LayoutRun',Glib::wrap($3))
+_CONVERSION(`PangoLayoutRun*',`GlyphItem',Glib::wrap($3))
 
 _CONVERSION(`PangoLayoutIter*',`LayoutIter',`LayoutIter($3)')
 

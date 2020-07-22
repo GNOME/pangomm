@@ -18,11 +18,3 @@
 
 #include <pangomm/item.h>
 #include <pangomm/glyphstring.h>
-
-namespace Pango
-{
-
-} /* namespace Pango */
-
-
-

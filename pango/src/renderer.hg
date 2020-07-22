@@ -20,7 +20,7 @@
 
 #include <glibmm/object.h>
 #include <pangomm/context.h>
-#include <pangomm/layoutrun.h> //Has a typedef for GlyphItem
+#include <pangomm/glyphitem.h>
 #include <pangomm/glyphstring.h>
 #include <pangomm/layout.h>
 #include <pangomm/layoutline.h>
@@ -89,8 +89,6 @@ _CONVERSION(`PangoFont*',`const Glib::RefPtr<Font>&',`Glib::wrap($3, true)')
 _CONVERSION(`PangoGlyphString*',`const GlyphString&',`Glib::wrap($3, true)')
 _CONVERSION(`const AttrShape&',`PangoAttrShape*',`const_cast<PangoAttrShape*>(($3).gobj())')
 _CONVERSION(`PangoAttrShape*',`const AttrShape&',`Glib::wrap($3, true)')
-_CONVERSION(`const LayoutRun&',`PangoLayoutRun*',`const_cast<PangoLayoutRun*>(($3).gobj())')
-_CONVERSION(`PangoLayoutRun*',`const LayoutRun&',`Glib::wrap($3, true)')
 _CONVERSION(`const GlyphItem&',`PangoGlyphItem*',`const_cast<PangoGlyphItem*>(($3).gobj())')
 _CONVERSION(`PangoGlyphItem*',`const GlyphItem&',`Glib::wrap($3, true)')
 #m4end
@@ -103,7 +101,7 @@ _CONVERSION(`PangoGlyphItem*',`const GlyphItem&',`Glib::wrap($3, true)')
   _WRAP_VFUNC(void part_changed(Part part), part_changed)
   _WRAP_VFUNC(void begin(), begin)
   _WRAP_VFUNC(void end(), end)
-  _WRAP_VFUNC(void prepare_run(const LayoutRun& run), prepare_run)
+  _WRAP_VFUNC(void prepare_run(const GlyphItem& run), prepare_run)
   _WRAP_VFUNC(void draw_glyph_item(const Glib::ustring& text, const GlyphItem& glyph_item, int x, int y), draw_glyph_item)
 };
 

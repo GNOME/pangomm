@@ -25,13 +25,13 @@ files_hg =			\
 	fontmetrics.hg		\
 	fontset.hg		\
 	glyph.hg		\
+	glyphitem.hg		\
 	glyphstring.hg		\
 	item.hg			\
 	language.hg		\
 	layout.hg		\
 	layoutiter.hg		\
 	layoutline.hg		\
-	layoutrun.hg		\
 	rectangle.hg		\
 	renderer.hg		\
 	tabarray.hg
