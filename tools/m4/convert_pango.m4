@@ -87,6 +87,7 @@ _CONVERSION(`PangoGlyphString*',`const GlyphString',`GlyphString(($3))')
 _CONVERSION(`const Pango::GlyphString&',`PangoGlyphString*',const_cast<PangoGlyphString*>($3.gobj()))
 _CONVERSION(`const GlyphString&',`PangoGlyphString*',const_cast<PangoGlyphString*>($3.gobj()))
 
+_CONVERSION(`PangoLayoutRun*',`GlyphItem',`GlyphItem(($3))')
 _CONVERSION(`PangoGlyphItem*',`GlyphItem',`GlyphItem(($3))')
 _CONVERSION(`const GlyphItem&',`PangoGlyphItem*',const_cast<PangoGlyphItem*>($3.gobj()))
 
@@ -143,8 +144,6 @@ _CONVERSION(`const Glib::RefPtr<LayoutLine>&',`PangoLayoutLine*',__CONVERT_REFPT
 # Special treatment for the Sun Forte compiler
 _CONVERSION(`const Glib::RefPtr<const Pango::LayoutLine>&',`PangoLayoutLine*',__CONVERT_CONST_REFPTR_TO_P_SUN(Pango::LayoutLine))
 _CONVERSION(`const Glib::RefPtr<const LayoutLine>&',`PangoLayoutLine*',__CONVERT_CONST_REFPTR_TO_P_SUN(LayoutLine))
-
-_CONVERSION(`PangoLayoutRun*',`GlyphItem',Glib::wrap($3))
 
 _CONVERSION(`PangoLayoutIter*',`LayoutIter',`LayoutIter($3)')
 
