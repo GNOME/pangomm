@@ -11,7 +11,7 @@ vs$(VSVER)\$(CFG)\$(PLAT)\pangomm\private:
 
 # Generate .def files
 vs$(VSVER)\$(CFG)\$(PLAT)\pangomm\pangomm.def: $(GENDEF) vs$(VSVER)\$(CFG)\$(PLAT)\pangomm $(pangomm_OBJS)
-	vs$(VSVER)\$(CFG)\$(PLAT)\gendef.exe $@ $(PANGOMM_LIBNAME) vs$(VSVER)\$(CFG)\$(PLAT)\pangomm\*.obj
+	vs$(VSVER)\$(CFG)\$(PLAT)\gendef.exe $@ $(PANGOMM_DLLNAME).dll vs$(VSVER)\$(CFG)\$(PLAT)\pangomm\*.obj
 
 # Generate wrap_init.cc files
 vs$(VSVER)\$(CFG)\$(PLAT)\pangomm\wrap_init.cc: $(pangomm_real_hg)
