@@ -3,7 +3,7 @@
 # Input: pangomm_build_dep, pangomm_pcname, maintainer_mode, project_source_root,
 #        generate_binding_py, m4_files, pangomm_libversion, install_includedir,
 #        python3, pangomm_rc, dummy_header_py, gmmproc_dir, build_shared_libs_directly,
-#        msvc14x_toolset_ver
+#        msvc14x_toolset_ver, macos_darwin_versions
 # Output: hg_ccg_basenames, extra_h_files, built_h_file_targets, built_files_root,
 #         pangomm_dep
 
@@ -207,6 +207,7 @@ if build_shared_libs_directly
     include_directories: extra_include_dirs,
     cpp_args: pangomm_cpp_args,
     version: pangomm_libversion,
+    darwin_versions: macos_darwin_versions,
     dependencies: pangomm_build_dep,
     install: true,
   )
@@ -239,6 +240,7 @@ else
   pangomm_library = library(pangomm_libname, extra_pangomm_objects,
     objects: pango_int_lib.extract_all_objects(),
     version: pangomm_libversion,
+    darwin_versions: macos_darwin_versions,
     dependencies: pangomm_build_dep,
     link_depends: pangomm_def,
     link_args: pangomm_extra_link_args,
