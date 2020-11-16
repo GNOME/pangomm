@@ -23,12 +23,13 @@ _DEFS(pangomm,pango)
 
 namespace Pango
 {
+_WRAP_ENUM(ShapeFlags, PangoShapeFlags, newin "2,44", decl_prefix PANGOMM_API)
 
 class Font;
 class GlyphString;
 
-/** A Pango::Analysis stores information about the properties of a segment of text.
- * Pango::Analysis is used as an output type only so there is no public default constructor.
+/** A %Pango::Analysis stores information about the properties of a segment of text.
+ * %Pango::Analysis is used as an output type only so there is no public default constructor.
  * You can retrieve an object of this type from an object of type Pango::Item by
  * calling Pango::Item::get_analysis(). Objects of this class can be used for some
  * calculations in Pango::GlyphString.
@@ -134,11 +135,32 @@ public:
    */
   Glib::ustring get_segment(const Glib::ustring& text) const;
 
-  /** Convert a segment of text into a string of glyphs.
-   * @param text The text to process. This must either be the whole segment of text that corresponds to the item as returned by get_segment() or a sub-string of that segment. You need to pass the same text to the member functions of Pango::GlyphString for further calculations.
+  /** Converts a segment of text into a string of glyphs.
+   *
+   * @param text The text to process. This must either be the whole segment of text
+   *             that corresponds to the item as returned by get_segment() or a
+   *             substring of that segment. You need to pass the same text to
+   *             the member functions of Pango::GlyphString for further calculations.
    * @return A Pango::GlyphString object that can be measured or drawn.
    */
   GlyphString shape(const Glib::ustring& text) const;
+
+  /** Converts a segment of text into a string of glyphs.
+   *
+   * @newin{2,44}
+   *
+   * @param item_text The text to process. This must either be the whole segment of text
+   *             that corresponds to the item as returned by get_segment() or a
+   *             substring of that segment. You need to pass the same text to
+   *             the member functions of Pango::GlyphString for further calculations.
+   * @param paragraph_text Text of the paragraph. See GlyphString::GlyphString(
+   *        const Glib::ustring& item_text, const Glib::ustring& paragraph_text,
+   *        const Analysis& analysis, ShapeFlags flags).
+   * @param flags Flags influencing the shaping process.
+   * @return A Pango::GlyphString object that can be measured or drawn.
+   */
+  GlyphString shape(const Glib::ustring& item_text, const Glib::ustring& paragraph_text,
+    ShapeFlags flags = ShapeFlags::NONE) const;
 
   /// Provides access to the underlying C GObject.  
   PangoItem*       gobj()       { return gobject_; }
@@ -150,7 +172,6 @@ protected:
 };
 
 } // namespace Pango
-
 
 namespace Glib
 {
@@ -168,4 +189,3 @@ PANGOMM_API
 Pango::Item wrap(PangoItem* object, bool take_copy=true);
 
 } // namespace Glib
-

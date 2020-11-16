@@ -49,7 +49,7 @@ MM_AX_CXX_COMPILE_STDCXX([17], [noext], [mandatory])
 AC_DISABLE_STATIC
 LT_INIT([win32-dll])
 
-AC_SUBST([PANGOMM_MODULES], ['giomm-2.66 >= 2.65.1 cairomm-1.16 >= 1.15.1 pangocairo >= 1.41.0'])
+AC_SUBST([PANGOMM_MODULES], ['giomm-2.66 >= 2.65.1 cairomm-1.16 >= 1.15.1 pangocairo >= 1.44.3'])
 AC_SUBST([MSVC_TOOLSET_VER], [''])
 PKG_CHECK_MODULES([PANGOMM], [$PANGOMM_MODULES])
 
