@@ -15,7 +15,7 @@
 ## You should have received a copy of the GNU Lesser General Public License
 ## along with this library.  If not, see <http://www.gnu.org/licenses/>.
 
-AC_INIT([pangomm], [2.43.3],
+AC_INIT([pangomm], [2.47.1],
         [https://gitlab.gnome.org/GNOME/pangomm/issues/],
         [pangomm], [http://www.gtkmm.org/])
 AC_PREREQ([2.59])
@@ -33,7 +33,7 @@ AM_MAINTAINER_MODE
 AC_ARG_VAR([ACLOCAL_FLAGS], [aclocal flags, e.g. -I <macro dir>])
 
 MM_PREREQ([0.9.12])
-MM_INIT_MODULE([pangomm-2.44])
+MM_INIT_MODULE([pangomm-2.48])
 
 # Copy the mm-common .pl scripts into docs/,
 # and use them from there,
@@ -49,18 +49,18 @@ MM_AX_CXX_COMPILE_STDCXX([17], [noext], [mandatory])
 AC_DISABLE_STATIC
 LT_INIT([win32-dll])
 
-AC_SUBST([PANGOMM_MODULES], ['giomm-2.66 >= 2.65.1 cairomm-1.16 >= 1.15.1 pangocairo >= 1.45.1'])
+AC_SUBST([PANGOMM_MODULES], ['giomm-2.68 >= 2.67.1 cairomm-1.16 >= 1.15.1 pangocairo >= 1.45.1'])
 AC_SUBST([MSVC_TOOLSET_VER], [''])
 PKG_CHECK_MODULES([PANGOMM], [$PANGOMM_MODULES])
 
 MM_PKG_CONFIG_SUBST([GTHREAD_CFLAGS], [--cflags-only-other gthread-2.0])
-MM_PKG_CONFIG_SUBST([GMMPROC_DIR], [--variable=gmmprocdir glibmm-2.66])
+MM_PKG_CONFIG_SUBST([GMMPROC_DIR], [--variable=gmmprocdir glibmm-2.68])
 
 MM_ARG_DISABLE_DEPRECATED_API
 MM_ARG_ENABLE_DOCUMENTATION
 MM_ARG_WITH_TAGFILE_DOC([libstdc++.tag], [mm-common-libstdc++])
 MM_ARG_WITH_TAGFILE_DOC([libsigc++-3.0.tag], [sigc++-3.0])
-MM_ARG_WITH_TAGFILE_DOC([glibmm-2.66.tag], [glibmm-2.66])
+MM_ARG_WITH_TAGFILE_DOC([glibmm-2.68.tag], [glibmm-2.68])
 MM_ARG_WITH_TAGFILE_DOC([cairomm-1.16.tag], [cairomm-1.16])
 
 AC_LANG([C++])

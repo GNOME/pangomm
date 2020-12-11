@@ -1,7 +1,7 @@
 # This file is part of pangomm.
 
 project('pangomm', 'cpp',
-  version: '2.43.3',
+  version: '2.47.1',
   license: 'LGPLv2.1+',
   default_options: [
     'cpp_std=c++17'
@@ -9,7 +9,7 @@ project('pangomm', 'cpp',
   meson_version: '>= 0.50.0', # required for python3.path()
 )
 
-pangomm_api_version = '2.44'
+pangomm_api_version = '2.48'
 pangomm_pcname = meson.project_name() + '-' + pangomm_api_version
 
 pangomm_version_array = meson.project_version().split('.')
@@ -96,14 +96,14 @@ install_pkgconfigdir = install_libdir / 'pkgconfig'
 # cairomm and glibmm recently gained Meson build support, so we look
 # for their pkg-config files on Visual Studio, too
 cairomm_req = '>= 1.15.1'
-glibmm_req = '>= 2.65.1'
+glibmm_req = '>= 2.67.1'
 
 # Pango supported pkg-config files on MSVC files for a good while,
 # so just use that
 pangocairo_req = '>= 1.45.1'
 pangocairo_dep = dependency('pangocairo', version: pangocairo_req)
 
-glibmm_req_minor_ver = '66'
+glibmm_req_minor_ver = '68'
 cairomm_req_minor_ver = '16'
 
 cairomm_dep = dependency('cairomm-1.@0@'.format(cairomm_req_minor_ver), version: cairomm_req)

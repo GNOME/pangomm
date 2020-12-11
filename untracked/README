@@ -31,6 +31,6 @@ mm-common-get may copy more files, but they are not used by pangomm.
 untracked/pango/pangomm/*.h
                         *.cc
                         private/*_p.h
-untracked/docs/reference/pangomm-2.44.devhelp2
-                         pangomm-2.44.tag
+untracked/docs/reference/pangomm-2.48.devhelp2
+                         pangomm-2.48.tag
                          html/*
