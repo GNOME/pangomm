@@ -1,3 +1,29 @@
+2.42.2 (stable):
+
+The tarball for 2.42.2 has been created with 'meson dist'.
+If you build with Autotools from the tarball, please read the relevant
+part of the README file.
+
+Build:
+* Use __declspec(dllexport) when building with Visual Studio
+  (Chun-wei Fan) Merge request !14, !17
+* Meson build: Avoid some recompilations
+  (Kjell Ahlstedt)
+* Meson build: Better error message if trying to build with
+  maintainer-mode=false when true is necessary
+  (Kjell Ahlstedt) Issue #6 (Rasmus Thomsen)
+* Meson build: Set default value of the 'warnings' option to 'min'
+  (Kjell Ahlstedt)
+* Improve NMake support
+  (Chun-wei Fan)
+* Improve Visual Studio support
+  (Chun-wei Fan) Merge request !14, !18
+* docs/reference/: Update for Doxygen >= 1.8.16
+  (Kjell Ahlstedt)
+* Meson build: Fix versioning on macOS
+  (Kjell Ahlstedt) Pull request libsigcplusplus#65 (Tom Schoonjans)
+
+
 2.42.1 (stable):
 
 * Coverage: Ignore deprecations of pango functions
