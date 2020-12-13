@@ -39,6 +39,21 @@
  * @code
  * g++ program.cc -o program  `pkg-config --cflags --libs pangomm-1.4`
  * @endcode
+ * If your version of g++ is not C++11-compliant by default,
+ * add the @c -std=c++11 option.
+ *
+ * If you use <a href="https://mesonbuild.com/">Meson</a>, include the following
+ * in @c meson.build:
+ * @code
+ * pangomm_dep = dependency('pangomm-1.4')
+ * program_name = 'program'
+ * cpp_sources = [ 'program.cc' ]
+ * executable(program_name,
+ *   cpp_sources,
+ *   dependencies: [ pangomm_dep ]
+ * )
+ * @endcode
+ *
  * Alternatively, if using autoconf, use the following in @c configure.ac:
  * @code
  * PKG_CHECK_MODULES([PANGOMM], [pangomm-1.4])
