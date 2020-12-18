@@ -544,6 +544,16 @@
   )
 )
 
+(define-method parse_with_alpha
+  (of-object "PangoColor")
+  (c-name "pango_color_parse_with_alpha")
+  (return-type "gboolean")
+  (parameters
+    '("guint16*" "alpha")
+    '("const-char*" "spec")
+  )
+)
+
 (define-method to_string
   (of-object "PangoColor")
   (c-name "pango_color_to_string")
@@ -1902,6 +1912,18 @@
   )
 )
 
+(define-method get_languages
+  (of-object "PangoFcFont")
+  (c-name "pango_fc_font_get_languages")
+  (return-type "PangoLanguage**")
+)
+
+(define-method get_pattern
+  (of-object "PangoFcFont")
+  (c-name "pango_fc_font_get_pattern")
+  (return-type "FcPattern*")
+)
+
 (define-method get_unknown_glyph
   (of-object "PangoFcFont")
   (c-name "pango_fc_font_get_unknown_glyph")
@@ -2016,6 +2038,23 @@
   (parameters
     '("PangoFcFont*" "fcfont")
   )
+)
+
+(define-method set_default_substitute
+  (of-object "PangoFcFontMap")
+  (c-name "pango_fc_font_map_set_default_substitute")
+  (return-type "none")
+  (parameters
+    '("PangoFcSubstituteFunc" "func")
+    '("gpointer" "data")
+    '("GDestroyNotify" "notify")
+  )
+)
+
+(define-method substitute_changed
+  (of-object "PangoFcFontMap")
+  (c-name "pango_fc_font_map_substitute_changed")
+  (return-type "none")
 )
 
 
@@ -3228,6 +3267,11 @@
 (define-function pango_language_get_default
   (c-name "pango_language_get_default")
   (return-type "PangoLanguage*")
+)
+
+(define-function pango_language_get_preferred
+  (c-name "pango_language_get_preferred")
+  (return-type "PangoLanguage**")
 )
 
 (define-method matches

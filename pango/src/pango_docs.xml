@@ -2091,7 +2091,7 @@ Create a new overline color attribute. This attribute
 modifies the color of overlines. If not set, overlines
 will use the foreground color.
 
-Since: 1.45
+Since: 1.46
 
 </description>
 <parameters>
@@ -2118,7 +2118,7 @@ which should be freed with pango_attribute_destroy().
 <description>
 Create a new overline-style attribute.
 
-Since: 1.45
+Since: 1.46
 
 </description>
 <parameters>
@@ -3039,8 +3039,8 @@ is unreffed and the new font map referenced.
 
 Note that since Pango 1.32.6, the default fontmap is per-thread.
 This function only changes the default fontmap for
-the current thread.   Default fontmaps of exisiting threads
-are not changed.  Default fontmaps of any new threads will
+the current thread.  Default fontmaps of existing threads
+are not changed. Default fontmaps of any new threads will
 still be created using pango_cairo_font_map_new().
 
 A value of %NULL for @fontmap will cause the current default
@@ -3399,6 +3399,47 @@ result, or %NULL
 </parameters>
 <return> %TRUE if parsing of the specifier succeeded,
 otherwise false.
+</return>
+</function>
+
+<function name="pango_color_parse_with_alpha">
+<description>
+Fill in the fields of a color from a string specification. The
+string can either one of a large set of standard names. (Taken
+from the CSS &lt;ulink url=&quot;http://dev.w3.org/csswg/css-color/#named-colors&quot;&gt;specification&lt;/ulink&gt;), or it can be a hexadecimal
+value in the
+form '&#35;rgb' '&#35;rrggbb' '&#35;rrrgggbbb' or '&#35;rrrrggggbbbb' where
+'r', 'g' and 'b' are hex digits of the red, green, and blue
+components of the color, respectively. (White in the four
+forms is '&#35;fff' '&#35;ffffff' '&#35;fffffffff' and '&#35;ffffffffffff')
+
+Additionally, parse strings of the form
+'&#35;rgba', '&#35;rrggbbaa', '&#35;rrrrggggbbbbaaaa',
+if @alpha is not %NULL, and set @alpha to the value specified
+by the hex digits for 'a'. If no alpha component is found
+in @spec, @alpha is set to 0xffff (for a solid color).
+
+Since: 1.46
+
+</description>
+<parameters>
+<parameter name="color">
+<parameter_description> a #PangoColor structure in which to store the
+result, or %NULL
+</parameter_description>
+</parameter>
+<parameter name="alpha">
+<parameter_description> return location for alpha, or %NULL
+</parameter_description>
+</parameter>
+<parameter name="spec">
+<parameter_description> a string specifying the new color
+</parameter_description>
+</parameter>
+</parameters>
+<return> %TRUE if parsing of the specifier succeeded,
+otherwise false.
+
 </return>
 </function>
 
@@ -4369,6 +4410,48 @@ character doesn't exist in the font.
 </return>
 </function>
 
+<function name="pango_fc_font_get_languages">
+<description>
+Returns the languages that are supported by @font.
+
+This corresponds to the FC_LANG member of the FcPattern.
+
+The returned array is only valid as long as the font
+and its fontmap are valid.
+
+Since: 1.48
+
+</description>
+<parameters>
+<parameter name="font">
+<parameter_description> a #PangoFcFont
+</parameter_description>
+</parameter>
+</parameters>
+<return> a %NULL-terminated
+array of PangoLanguage*
+
+</return>
+</function>
+
+<function name="pango_fc_font_get_pattern">
+<description>
+Returns the FcPattern that @font is based on.
+
+Since: 1.48
+
+</description>
+<parameters>
+<parameter name="font">
+<parameter_description> a #PangoFcFont
+</parameter_description>
+</parameter>
+</parameters>
+<return> the fontconfig pattern for this font
+
+</return>
+</function>
+
 <function name="pango_fc_font_get_raw_extents">
 <description>
 Gets the extents of a single glyph from a font. The extents are in
@@ -4752,6 +4835,38 @@ Since: 1.38
 <return></return>
 </function>
 
+<function name="pango_fc_font_map_set_default_substitute">
+<description>
+Sets a function that will be called to do final configuration
+substitution on a #FcPattern before it is used to load
+the font. This function can be used to do things like set
+hinting and antialiasing options.
+
+Since: 1.48
+
+</description>
+<parameters>
+<parameter name="fontmap">
+<parameter_description> a #PangoFcFontMap
+</parameter_description>
+</parameter>
+<parameter name="func">
+<parameter_description> function to call to to do final config tweaking
+on #FcPattern objects.
+</parameter_description>
+</parameter>
+<parameter name="data">
+<parameter_description> data to pass to @func
+</parameter_description>
+</parameter>
+<parameter name="notify">
+<parameter_description> function to call when @data is no longer used.
+</parameter_description>
+</parameter>
+</parameters>
+<return></return>
+</function>
+
 <function name="pango_fc_font_map_shutdown">
 <description>
 Clears all cached information for the fontmap and marks
@@ -4766,6 +4881,26 @@ Since: 1.4
 </description>
 <parameters>
 <parameter name="fcfontmap">
+<parameter_description> a #PangoFcFontMap
+</parameter_description>
+</parameter>
+</parameters>
+<return></return>
+</function>
+
+<function name="pango_fc_font_map_substitute_changed">
+<description>
+Call this function any time the results of the
+default substitution function set with
+pango_fc_font_map_set_default_substitute() change.
+That is, if your substitution function will return different
+results for the same input pattern, you must call this function.
+
+Since: 1.48
+
+</description>
+<parameters>
+<parameter name="fontmap">
 <parameter_description> a #PangoFcFontMap
 </parameter_description>
 </parameter>
@@ -6954,6 +7089,9 @@ substitution on a #FcPattern before it is used to load
 the font. This function can be used to do things like set
 hinting and antialiasing options.
 
+Deprecated: 1.46: Use pango_fc_font_map_set_default_substitute()
+instead.
+
 Since: 1.2
 
 </description>
@@ -7010,6 +7148,9 @@ default substitution function set with
 pango_ft2_font_map_set_default_substitute() change.
 That is, if your substitution function will return different
 results for the same input pattern, you must call this function.
+
+Deprecated: 1.46: Use pango_fc_font_map_substitute_changed()
+instead.
 
 Since: 1.2
 
@@ -8383,6 +8524,29 @@ Since: 1.16
 </parameters>
 <return> the default language as a
 #PangoLanguage, must not be freed.
+
+</return>
+</function>
+
+<function name="pango_language_get_preferred">
+<description>
+Returns the list of languages that the user prefers, as specified
+by the PANGO_LANGUAGE or LANGUAGE environment variables, in order
+of preference. Note that this list does not necessarily include
+the language returned by pango_language_get_default().
+
+When choosing language-specific resources, such as the sample
+text returned by pango_language_get_sample_string(), you should
+first try the default language, followed by the languages returned
+by this function.
+
+Since: 1.48
+
+</description>
+<parameters>
+</parameters>
+<return> a %NULL-terminated array of
+PangoLanguage*
 
 </return>
 </function>
@@ -13227,14 +13391,18 @@ Since: 1.4
 
 <function name="pango_shape">
 <description>
-Given a segment of text and the corresponding
-#PangoAnalysis structure returned from pango_itemize(),
-convert the characters into glyphs. You may also pass
-in only a substring of the item from pango_itemize().
+Given a segment of text and the corresponding #PangoAnalysis structure
+returned from pango_itemize(), convert the characters into glyphs. You
+may also pass in only a substring of the item from pango_itemize().
 
 It is recommended that you use pango_shape_full() instead, since
 that API allows for shaping interaction happening across text item
 boundaries.
+
+Note that the extra attributes in the @analyis that is returned from
+pango_itemize() have indices that are relative to the entire paragraph,
+so you need to subtract the item offset from their indices before
+calling pango_shape().
 
 </description>
 <parameters>
@@ -13270,6 +13438,11 @@ the full paragraph text as input, which will then be used to perform
 certain cross-item shaping interactions.  If you have access to the broader
 text of which @item_text is part of, provide the broader text as
 @paragraph_text.  If @paragraph_text is %NULL, item text is used instead.
+
+Note that the extra attributes in the @analyis that is returned from
+pango_itemize() have indices that are relative to the entire paragraph,
+so you do not pass the full paragraph text as @paragraph_text, you need
+to subtract the item offset from their indices before calling pango_shape_full().
 
 Since: 1.32
 
@@ -13312,6 +13485,12 @@ in only a substring of the item from pango_itemize().
 
 This is similar to pango_shape_full(), except it also takes
 flags that can influence the shaping process.
+
+Note that the extra attributes in the @analyis that is returned from
+pango_itemize() have indices that are relative to the entire paragraph,
+so you do not pass the full paragraph text as @paragraph_text, you need
+to subtract the item offset from their indices before calling
+pango_shape_with_flags().
 
 Since: 1.44
 
@@ -14781,6 +14960,9 @@ substitution on a #FcPattern before it is used to load
 the font. This function can be used to do things like set
 hinting and antialiasing options.
 
+Deprecated: 1.46: Use pango_fc_font_map_set_default_substitute()
+instead.
+
 Since: 1.2
 
 </description>
@@ -14840,6 +15022,9 @@ default substitution function set with
 pango_xft_set_default_substitute() change.
 That is, if your substitution function will return different
 results for the same input pattern, you must call this function.
+
+Deprecated: 1.46: Use pango_fc_font_map_substitute_changed()
+instead.
 
 Since: 1.2
 
