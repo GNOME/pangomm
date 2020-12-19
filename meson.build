@@ -1,7 +1,7 @@
 # This file is part of pangomm.
 
 project('pangomm', 'cpp',
-  version: '2.47.1',
+  version: '2.48.0',
   license: 'LGPLv2.1+',
   default_options: [
     'cpp_std=c++17'
@@ -96,7 +96,7 @@ install_pkgconfigdir = install_libdir / 'pkgconfig'
 # cairomm and glibmm recently gained Meson build support, so we look
 # for their pkg-config files on Visual Studio, too
 cairomm_req = '>= 1.15.1'
-glibmm_req = '>= 2.67.1'
+glibmm_req = '>= 2.68.0'
 
 # Pango supported pkg-config files on MSVC files for a good while,
 # so just use that
