@@ -2,6 +2,8 @@
 # Enums:
 _CONV_ENUM(Pango,AttrType)
 _CONV_ENUM(Pango,Underline)
+_CONV_ENUM(Pango,Overline)
+_CONV_ENUM(Pango,ShowFlags)
 _CONV_ENUM(Pango,Direction)
 _CONV_ENUM(Pango,CoverageLevel)
 _CONV_ENUM(Pango,Style)
