@@ -1,5 +1,3 @@
-/* $Id: fontmap.hg,v 1.2 2004/03/03 01:07:40 murrayc Exp $ */
-
 /* fontmap.h
  *
  * Copyright 2001      The gtkmm Development Team
@@ -35,6 +33,7 @@ namespace Pango
 
 class PANGOMM_API Context;
 
+//TODO: When we can break ABI, let FontMap implement the Gio::ListModel interface.
 /** A Pango::FontMap represents the set of fonts available for a particular rendering system.
  */
 class PANGOMM_API FontMap : public Glib::Object
@@ -62,4 +61,3 @@ public:
 };
 
 } /* namespace Pango */
-
