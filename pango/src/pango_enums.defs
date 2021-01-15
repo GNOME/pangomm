@@ -28,7 +28,12 @@
 ;;   PANGO_ATTR_GRAVITY_HINT,	/* PangoAttrInt */
 ;;   PANGO_ATTR_FONT_FEATURES,	/* PangoAttrString */
 ;;   PANGO_ATTR_FOREGROUND_ALPHA,	/* PangoAttrInt */
-;;   PANGO_ATTR_BACKGROUND_ALPHA	/* PangoAttrInt */
+;;   PANGO_ATTR_BACKGROUND_ALPHA,	/* PangoAttrInt */
+;;   PANGO_ATTR_ALLOW_BREAKS,	/* PangoAttrInt */
+;;   PANGO_ATTR_SHOW,		/* PangoAttrInt */
+;;   PANGO_ATTR_INSERT_HYPHENS,	/* PangoAttrInt */
+;;   PANGO_ATTR_OVERLINE,		/* PangoAttrInt */
+;;   PANGO_ATTR_OVERLINE_COLOR,	/* PangoAttrColor */
 ;; } PangoAttrType;
 
 (define-enum-extended AttrType
@@ -61,6 +66,11 @@
     '("font-features" "PANGO_ATTR_FONT_FEATURES" "23")
     '("foreground-alpha" "PANGO_ATTR_FOREGROUND_ALPHA" "24")
     '("background-alpha" "PANGO_ATTR_BACKGROUND_ALPHA" "25")
+    '("allow-breaks" "PANGO_ATTR_ALLOW_BREAKS" "26")
+    '("show" "PANGO_ATTR_SHOW" "27")
+    '("insert-hyphens" "PANGO_ATTR_INSERT_HYPHENS" "28")
+    '("overline" "PANGO_ATTR_OVERLINE" "29")
+    '("overline-color" "PANGO_ATTR_OVERLINE_COLOR" "30")
   )
 )
 
@@ -70,7 +80,10 @@
 ;;   PANGO_UNDERLINE_SINGLE,
 ;;   PANGO_UNDERLINE_DOUBLE,
 ;;   PANGO_UNDERLINE_LOW,
-;;   PANGO_UNDERLINE_ERROR
+;;   PANGO_UNDERLINE_ERROR,
+;;   PANGO_UNDERLINE_SINGLE_LINE,
+;;   PANGO_UNDERLINE_DOUBLE_LINE,
+;;   PANGO_UNDERLINE_ERROR_LINE
 ;; } PangoUnderline;
 
 (define-enum-extended Underline
@@ -82,6 +95,43 @@
     '("double" "PANGO_UNDERLINE_DOUBLE" "2")
     '("low" "PANGO_UNDERLINE_LOW" "3")
     '("error" "PANGO_UNDERLINE_ERROR" "4")
+    '("single-line" "PANGO_UNDERLINE_SINGLE_LINE" "5")
+    '("double-line" "PANGO_UNDERLINE_DOUBLE_LINE" "6")
+    '("error-line" "PANGO_UNDERLINE_ERROR_LINE" "7")
+  )
+)
+
+;; Original typedef:
+;; typedef enum {
+;;   PANGO_OVERLINE_NONE,
+;;   PANGO_OVERLINE_SINGLE
+;; } PangoOverline;
+
+(define-enum-extended Overline
+  (in-module "Pango")
+  (c-name "PangoOverline")
+  (values
+    '("none" "PANGO_OVERLINE_NONE" "0")
+    '("single" "PANGO_OVERLINE_SINGLE" "1")
+  )
+)
+
+;; Original typedef:
+;; typedef enum {
+;;   PANGO_SHOW_NONE        = 0,
+;;   PANGO_SHOW_SPACES      = 1 << 0,
+;;   PANGO_SHOW_LINE_BREAKS = 1 << 1,
+;;   PANGO_SHOW_IGNORABLES  = 1 << 2
+;; } PangoShowFlags;
+
+(define-flags-extended ShowFlags
+  (in-module "Pango")
+  (c-name "PangoShowFlags")
+  (values
+    '("none" "PANGO_SHOW_NONE" "0x0")
+    '("spaces" "PANGO_SHOW_SPACES" "1 << 0")
+    '("line-breaks" "PANGO_SHOW_LINE_BREAKS" "1 << 1")
+    '("ignorables" "PANGO_SHOW_IGNORABLES" "1 << 2")
   )
 )
 
@@ -141,6 +191,29 @@
   )
 )
 
+;; From pango-coverage.h
+
+;; Original typedef:
+;; typedef enum {
+;;   PANGO_COVERAGE_NONE,
+;;   PANGO_COVERAGE_FALLBACK,
+;;   PANGO_COVERAGE_APPROXIMATE,
+;;   PANGO_COVERAGE_EXACT
+;; } PangoCoverageLevel;
+
+(define-enum-extended CoverageLevel
+  (in-module "Pango")
+  (c-name "PangoCoverageLevel")
+  (values
+    '("none" "PANGO_COVERAGE_NONE" "0")
+    '("fallback" "PANGO_COVERAGE_FALLBACK" "1")
+    '("approximate" "PANGO_COVERAGE_APPROXIMATE" "2")
+    '("exact" "PANGO_COVERAGE_EXACT" "3")
+  )
+)
+
+;; From pango-direction.h
+
 ;; Original typedef:
 ;; typedef enum {
 ;;   PANGO_DIRECTION_LTR,
@@ -163,27 +236,6 @@
     '("weak-ltr" "PANGO_DIRECTION_WEAK_LTR" "4")
     '("weak-rtl" "PANGO_DIRECTION_WEAK_RTL" "5")
     '("neutral" "PANGO_DIRECTION_NEUTRAL" "6")
-  )
-)
-
-;; From pango-coverage.h
-
-;; Original typedef:
-;; typedef enum {
-;;   PANGO_COVERAGE_NONE,
-;;   PANGO_COVERAGE_FALLBACK,
-;;   PANGO_COVERAGE_APPROXIMATE,
-;;   PANGO_COVERAGE_EXACT
-;; } PangoCoverageLevel;
-
-(define-enum-extended CoverageLevel
-  (in-module "Pango")
-  (c-name "PangoCoverageLevel")
-  (values
-    '("none" "PANGO_COVERAGE_NONE" "0")
-    '("fallback" "PANGO_COVERAGE_FALLBACK" "1")
-    '("approximate" "PANGO_COVERAGE_APPROXIMATE" "2")
-    '("exact" "PANGO_COVERAGE_EXACT" "3")
   )
 )
 
@@ -312,6 +364,23 @@
   )
 )
 
+;; From pango-glyph.h
+
+;; Original typedef:
+;; typedef enum {
+;;   PANGO_SHAPE_NONE            = 0,
+;;   PANGO_SHAPE_ROUND_POSITIONS = 1 << 0,
+;; } PangoShapeFlags;
+
+(define-flags-extended ShapeFlags
+  (in-module "Pango")
+  (c-name "PangoShapeFlags")
+  (values
+    '("none" "PANGO_SHAPE_NONE" "0x0")
+    '("round-positions" "PANGO_SHAPE_ROUND_POSITIONS" "1 << 0")
+  )
+)
+
 ;; From pango-gravity.h
 
 ;; Original typedef:
@@ -433,7 +502,8 @@
 ;;   PANGO_RENDER_PART_FOREGROUND,
 ;;   PANGO_RENDER_PART_BACKGROUND,
 ;;   PANGO_RENDER_PART_UNDERLINE,
-;;   PANGO_RENDER_PART_STRIKETHROUGH
+;;   PANGO_RENDER_PART_STRIKETHROUGH,
+;;   PANGO_RENDER_PART_OVERLINE
 ;; } PangoRenderPart;
 
 (define-enum-extended RenderPart
@@ -444,6 +514,7 @@
     '("background" "PANGO_RENDER_PART_BACKGROUND" "1")
     '("underline" "PANGO_RENDER_PART_UNDERLINE" "2")
     '("strikethrough" "PANGO_RENDER_PART_STRIKETHROUGH" "3")
+    '("overline" "PANGO_RENDER_PART_OVERLINE" "4")
   )
 )
 
