@@ -48,7 +48,9 @@ _WRAP_ENUM(EllipsizeMode, PangoEllipsizeMode, decl_prefix PANGOMM_API)
 class PANGOMM_API Layout : public Glib::Object
 {
   _CLASS_GOBJECT(Layout, PangoLayout, PANGO_LAYOUT, Glib::Object, GObject, , , PANGOMM_API)
-  _IGNORE(pango_layout_set_text, pango_layout_set_markup, pango_layout_set_markup_with_accel, pango_layout_get_log_attrs, pango_layout_get_iter)
+
+  _IGNORE(pango_layout_set_text, pango_layout_set_markup, pango_layout_set_markup_with_accel,
+    pango_layout_get_log_attrs, pango_layout_get_log_attrs_readonly, pango_layout_get_iter)
 
 protected:
   explicit Layout(const Glib::RefPtr<Context>& context);
@@ -133,6 +135,8 @@ public:
   _WRAP_METHOD(int get_indent() const, pango_layout_get_indent)
   _WRAP_METHOD(void set_spacing(int spacing), pango_layout_set_spacing)
   _WRAP_METHOD(int get_spacing() const, pango_layout_get_spacing)
+  _WRAP_METHOD(void set_line_spacing(float factor), pango_layout_set_line_spacing)
+  _WRAP_METHOD(float get_line_spacing() const, pango_layout_get_line_spacing)
   _WRAP_METHOD(void set_justify(bool justify = true), pango_layout_set_justify)
   _WRAP_METHOD(bool get_justify() const, pango_layout_get_justify)
 
