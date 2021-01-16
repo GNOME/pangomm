@@ -1,8 +1,4 @@
-// -*- c++ -*-
-/* $Id: font.ccg,v 1.2 2006/06/08 20:39:39 murrayc Exp $ */
-
 /* 
- *
  * Copyright 1998-1999 The Gtk-- Development Team
  * Copyright 2001      Free Software Foundation
  *
@@ -21,6 +17,7 @@
  * Software Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
+#include <pangomm/fontface.h>
 #include <pangomm/fontmap.h>
 
 namespace Pango
@@ -46,5 +43,3 @@ Rectangle Font::get_glyph_logical_extents(Glyph glyph) const
 }
 
 } /* namespace Pango */
-
-

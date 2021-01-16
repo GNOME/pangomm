@@ -1,5 +1,3 @@
-/* $Id: font.hg,v 1.2 2006/06/08 20:39:39 murrayc Exp $ */
-
 /* font.h
  * 
  * Copyright (C) 1998-1999 The gtkmm Development Team 
@@ -45,6 +43,7 @@ const double SCALE_X_LARGE  = 1.4399999999999;
 const double SCALE_XX_LARGE = 1.728;
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
+class PANGOMM_API FontFace;
 class PANGOMM_API FontMap;
 #endif //DOXYGEN_SHOULD_SKIP_THIS
 
@@ -53,7 +52,7 @@ class PANGOMM_API FontMap;
 class PANGOMM_API Font : public Glib::Object
 {
   _CLASS_GOBJECT(Font, PangoFont, PANGO_FONT, Glib::Object, GObject, , , PANGOMM_API)
-  _IGNORE(pango_font_find_shaper) //This would return a PangoEngineShape* but the definition of the struct is surrounded by #define PANGO_ENABLE_BACKEND [...] #endif. So don't wrap it.
+  _IGNORE(pango_font_find_shaper) // Deprecated
 
 public:
   _WRAP_METHOD(FontDescription describe() const, pango_font_describe)
@@ -72,6 +71,11 @@ public:
   _WRAP_METHOD(Glib::RefPtr<FontMap> get_font_map(), pango_font_get_font_map)
   _WRAP_METHOD(Glib::RefPtr<const FontMap> get_font_map() const, pango_font_get_font_map, constversion)
 
+  _WRAP_METHOD(Glib::RefPtr<FontFace> get_face(), pango_font_get_face, refreturn)
+  _WRAP_METHOD(Glib::RefPtr<const FontFace> get_face() const, pango_font_get_face, refreturn, constversion)
+
+  _WRAP_METHOD(bool has_char(gunichar wc) const, pango_font_has_char)
+
   /** Get the ink extents of a glyph within the font.
    * @param glyph The glyph index.
    * @return The extents of the glyph as drawn.
@@ -83,7 +87,9 @@ public:
    * @return The logical extents of the glyph.
    */
   Rectangle get_glyph_logical_extents(Glyph glyph) const;
+
+// PangoFontClass is hidden when PANGO_DISABLE_DEPRECATED is defined.
+// Don't wrap vfuncs.
 };
 
 } /* namespace Pango */
-
