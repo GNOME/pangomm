@@ -19,7 +19,7 @@
 
 #include <pangomm/font.h>
 #include <pangomm/glyph.h>
-#include <pangomm/item.h>
+#include <pangomm/item.h> // for Analysis and ShapeFlags
 #include <cairomm/context.h>
 #include <pango/pango-glyph.h>
 #include <pango/pango-item.h> //For PangoAnalysis.
@@ -28,7 +28,6 @@ _DEFS(pangomm,pango)
 
 namespace Pango
 {
-
 /** A Pango::GlyphString is used to store strings of glyphs with geometry and visual attribute information.
  * It can be measured or drawn to the screen.
  */
@@ -39,14 +38,44 @@ class PANGOMM_API GlyphString
   _IGNORE(pango_glyph_string_index_to_x, pango_glyph_string_x_to_index, pango_glyph_string_get_logical_widths)
 
 public:
-  /** Construct a string of glyphs from a string of characters.
+
+  /** Constructs a string of glyphs from a string of characters.
+   *
    * Given a segment of text and the corresponding Pango::Analysis structure
    * returned from Pango::Context::itemize(), convert the characters into glyphs.
-   * You may also pass in only a sub-string of the item.
-   * @param text The text to process. You must pass the same string into those member functions expecting a const Glib::ustring&.
-   * @param analysis The analysis information return from Pango::Context::itemize().
+   * You may also pass in only a substring of the item.
+   *
+   * It is recommended that you use the constructor with @a item_text and
+   * @a paragraph_text parameters instead, since that API allows for shaping
+   * interaction happening across text item boundaries.
+   *
+   * @param text The text to process. You must pass the same string into those
+   *             member functions expecting a const Glib::ustring&.
+   * @param analysis The analysis information returned from Pango::Context::itemize().
    */
   GlyphString(const Glib::ustring& text, const Analysis& analysis);
+
+  /** Constructs a string of glyphs from a string of characters.
+   *
+   * Given a segment of text and the corresponding Pango::Analysis structure
+   * returned from Pango::Context::itemize(), convert the characters into glyphs.
+   * You may also pass in only a substring of the item.
+   *
+   * This is similar to the constructor with only one @a text parameter, except
+   * it also takes @a flags and the full paragraph text as input, which will then
+   * be used to perform certain cross-item shaping interactions. If you have
+   * access to the broader text of which @a item_text is a part, provide the
+   * broader text as @a paragraph_text.
+   *
+   * @newin{2,46}
+   *
+   * @param item_text Valid UTF-8 text to shape.
+   * @param paragraph_text Text of the paragraph (see details).
+   * @param analysis The analysis information returned from Pango::Context::itemize().
+   * @param flags Flags influencing the shaping process.
+   */
+  GlyphString(const Glib::ustring& item_text, const Glib::ustring& paragraph_text,
+    const Analysis& analysis, ShapeFlags flags = SHAPE_NONE);
 
   _WRAP_METHOD(void set_size (int new_len), pango_glyph_string_set_size)
 

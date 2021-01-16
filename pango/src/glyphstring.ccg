@@ -1,8 +1,4 @@
-// -*- c++ -*-
-/* $Id: glyphstring.ccg,v 1.2 2006/05/30 17:14:21 murrayc Exp $ */
-
 /*
- *
  * Copyright 1998-2002 The gtkmm Development Team
  *
  * This library is free software; you can redistribute it and/or
@@ -30,7 +26,16 @@ GlyphString::GlyphString(const Glib::ustring& text, const Analysis& analysis)
 :
   gobject_(pango_glyph_string_new())
 {
-  pango_shape(text.c_str(), text.bytes(), const_cast<PangoAnalysis*>(analysis.gobj()), gobj());
+  pango_shape(text.c_str(), text.bytes(), analysis.gobj(), gobj());
+}
+
+GlyphString::GlyphString(const Glib::ustring& item_text, const Glib::ustring& paragraph_text,
+  const Analysis& analysis, ShapeFlags flags)
+:
+  gobject_(pango_glyph_string_new())
+{
+  pango_shape_with_flags(item_text.c_str(), item_text.bytes(), paragraph_text.c_str(),
+   paragraph_text.bytes(), analysis.gobj(), gobj(), static_cast<PangoShapeFlags>(flags));
 }
 
 Rectangle GlyphString::get_ink_extents(const Glib::RefPtr<const Font>& font) const

@@ -19,12 +19,12 @@ _CONV_ENUM(Pango,EllipsizeMode)
 _CONV_ENUM(Pango,RenderPart)
 _CONV_ENUM(Pango,Gravity)
 _CONV_ENUM(Pango,GravityHint)
+_CONV_ENUM(Pango,ShapeFlags)
 
 # General conversions:
 _CONVERSION(`gchar*',`const char*',`($3)')
 _CONVERSION(`guchar*&',`guchar**',`&($3)')
 _CONVERSION(`int*&',`int**',`&($3)')
-
 
 # Wrapper type conversions:
 _CONVERSION(`PangoLanguage*',`Language',`Language($3)')
@@ -175,5 +175,3 @@ _CONVERSION(`GSList*',`SListHandle_ConstLayoutLine',__FL2H_SHALLOW)
 _CONVERSION(`const Cairo::FontOptions&',`const cairo_font_options_t*',`($3).cobj()')
 
 _CONVERSION(`const LogAttr&',`PangoLogAttr*',&(const_cast<LogAttr&>($3)))
-
-
