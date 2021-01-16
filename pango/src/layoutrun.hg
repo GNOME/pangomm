@@ -45,9 +45,12 @@ class PANGOMM_API LayoutRun
   _CLASS_BOXEDTYPE(LayoutRun, PangoGlyphItem, NONE, pango_glyph_item_copy, pango_glyph_item_free, PANGOMM_API)
   _IGNORE(pango_glyph_item_free, pango_glyph_item_copy)
 
+  // pango_glyph_item_split() returns a newly created PangoGlyphItem. Don't take a copy.
+#m4 _CONVERSION(`PangoGlyphItem*',`GlyphItem',`Glib::wrap($3)')
   _WRAP_METHOD(GlyphItem split(const Glib::ustring& text, int split_index), pango_glyph_item_split)
 
-  //This takes ownership of the GlyphItem, which is strange: _WRAP_METHOD(GSList* apply_attrs(const Glib::ustring& text, const AttrList& list), pango_glyph_item_apply_attrs)
+  //This takes ownership of the GlyphItem, which is strange:
+  // _WRAP_METHOD(GSList* apply_attrs(const Glib::ustring& text, const AttrList& list), pango_glyph_item_apply_attrs)
   _WRAP_METHOD(void letter_space(const Glib::ustring& text, const LogAttr& log_attrs, int letter_spacing = 0), pango_glyph_item_letter_space)
 
   /** Gets the Pango::Item object that provides information about the segment of text in this run.
@@ -62,6 +65,3 @@ class PANGOMM_API LayoutRun
 };
 
 } /* namespace Pango */
-
-
-
