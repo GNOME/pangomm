@@ -161,8 +161,14 @@ public:
 
   _WRAP_METHOD(guint get_serial() const, pango_layout_get_serial)
 
-  /** Retrieve an array of logical attributes for each character in the layout.
-   * @return An array of logical attributes.
+  /** Retrieve a vector of logical attributes for each character in the layout.
+   *
+   * The number of attributes returned will be one more
+   * than the total number of characters in the layout, since there
+   * need to be attributes corresponding to both the position before
+   * the first character and the position after the last character.
+   *
+   * @return A vector of logical attributes.
    */
   std::vector<LogAttr> get_log_attrs() const;
 

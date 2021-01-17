@@ -72,12 +72,10 @@ void Layout::set_markup(const Glib::ustring& markup, gunichar accel_marker, guni
 
 std::vector<PangoLogAttr> Layout::get_log_attrs() const
 {
-  //Get array:
-  PangoLogAttr* pAttrs = nullptr;
   int n_attrs = 0;
-  pango_layout_get_log_attrs(const_cast<PangoLayout*>(gobj()), &pAttrs, &n_attrs);
+  const PangoLogAttr* const pAttrs = pango_layout_get_log_attrs_readonly(const_cast<PangoLayout*>(gobj()), &n_attrs);
 
-  return Glib::ArrayHandler<PangoLogAttr>::array_to_vector(pAttrs, n_attrs, Glib::OWNERSHIP_SHALLOW);
+  return Glib::ArrayHandler<PangoLogAttr>::array_to_vector(pAttrs, n_attrs, Glib::OWNERSHIP_NONE);
 }
 
 Rectangle Layout::index_to_pos(int index) const
