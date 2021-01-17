@@ -20,13 +20,8 @@
 namespace Pango
 {
 
-// Deprecated in pango 1.43, but not in pangomm 2.42.
+_DEPRECATE_IFDEF_START
 G_GNUC_BEGIN_IGNORE_DEPRECATIONS
-Glib::RefPtr<Coverage> Coverage::create(const guchar* bytes, int n_bytes)
-{
-  return Glib::wrap(pango_coverage_from_bytes(const_cast<guchar*>(bytes), n_bytes));
-}
-
 Glib::ArrayHandle<unsigned char> Coverage::to_bytes() const
 {
   guchar* bytes = 0;
@@ -34,11 +29,7 @@ Glib::ArrayHandle<unsigned char> Coverage::to_bytes() const
   pango_coverage_to_bytes(const_cast<PangoCoverage*>(gobj()), &bytes, &n_bytes);
   return Glib::ArrayHandle<unsigned char>(bytes, n_bytes, Glib::OWNERSHIP_SHALLOW);
 }
-
-void Coverage::max(const Glib::RefPtr<Coverage>& other) const
-{
-  pango_coverage_max(const_cast<PangoCoverage*>(gobj()), Glib::unwrap(other));
-}
 G_GNUC_END_IGNORE_DEPRECATIONS
+_DEPRECATE_IFDEF_END
 
 } /* namespace Pango */
