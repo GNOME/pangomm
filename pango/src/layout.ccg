@@ -112,19 +112,19 @@ Rectangle Layout::get_pixel_logical_extents() const
   return logical_extents;
 }
 
+_DEPRECATE_IFDEF_START
 void Layout::get_iter(LayoutIter& iter)
 {
   PangoLayoutIter* cobject = pango_layout_get_iter(gobj());
   iter = Glib::wrap(cobject, false /* don't take_copy */);
 }
+_DEPRECATE_IFDEF_END
 
-_DEPRECATE_IFDEF_START
 LayoutIter Layout::get_iter()
 {
   PangoLayoutIter* cobject = pango_layout_get_iter(gobj());
   return Glib::wrap(cobject, false /* don't take_copy */);
 }
-_DEPRECATE_IFDEF_END
 
 void Layout::unset_font_description()
 {
