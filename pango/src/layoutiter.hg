@@ -51,17 +51,29 @@ public:
 
   /** Gets the current line.
    *
-   * Use the faster const version of get_line() if you do not plan
+   * Use the faster get_const_line() if you do not plan
    * to modify the contents of the line (glyphs, glyph widths, etc.).
    *
    * @return The current line.
    */
   _WRAP_METHOD(Glib::RefPtr<LayoutLine> get_line(), pango_layout_iter_get_line, refreturn)
+
   /** Gets the current line for read-only access.
    *
    * @return The current line, that should not be modified.
    */
   _WRAP_METHOD(Glib::RefPtr<const LayoutLine> get_line() const, pango_layout_iter_get_line_readonly, refreturn)
+
+  /** Gets the current line for read-only access.
+   *
+   * This is a faster alternative to get_line(), but the user is not expected
+   * to modify the contents of the line (glyphs, glyph widths, etc.).
+   *
+   * @newin{2,50}
+   *
+   * @return The current line, that should not be modified.
+   */
+  _WRAP_METHOD(Glib::RefPtr<const LayoutLine> get_const_line() const, pango_layout_iter_get_line_readonly, refreturn)
 
   _WRAP_METHOD(bool at_last_line() const, pango_layout_iter_at_last_line)
 

@@ -236,15 +236,82 @@ public:
   _WRAP_METHOD(int get_line_count() const, pango_layout_get_line_count)
 
   //Note that the const version uses a different (faster) C function:
+  /** Retrieves a particular line from a Pango::Layout.
+   *
+   * Use the faster get_const_line() if you do not plan
+   * to modify the contents of the line (glyphs, glyph widths, etc.).
+   *
+   * @param line The index of a line, which must be between 0 and
+   * <tt>get_line_count() - 1</tt>, inclusive.
+   * @return The requested Pango::LayoutLine, or an empty RefPtr if the index
+   * is out of range. This layout line will become invalid if changes are made
+   * to the Pango::Layout.
+   */
   _WRAP_METHOD(Glib::RefPtr<LayoutLine> get_line(int line), pango_layout_get_line, refreturn)
+
+  /** Retrieves a particular line from a Pango::Layout.
+   *
+   * @param line The index of a line, which must be between 0 and
+   * <tt>get_line_count() - 1</tt>, inclusive.
+   * @return The requested Pango::LayoutLine, or an empty RefPtr if the index
+   * is out of range. This layout line will become invalid if changes are made
+   * to the Pango::Layout. No changes should be made to the line.
+   */
   _WRAP_METHOD(Glib::RefPtr<const LayoutLine> get_line(int line) const, pango_layout_get_line_readonly, refreturn)
+
+  /** Retrieves a particular line from a Pango::Layout.
+   *
+   * This is a faster alternative to get_line(), but the user is not expected
+   * to modify the contents of the line (glyphs, glyph widths, etc.).
+   *
+   * @newin{2,50}
+   *
+   * @param line The index of a line, which must be between 0 and
+   * <tt>get_line_count() - 1</tt>, inclusive.
+   * @return The requested Pango::LayoutLine, or an empty RefPtr if the index
+   * is out of range. This layout line will become invalid if changes are made
+   * to the Pango::Layout. No changes should be made to the line.
+   */
+  _WRAP_METHOD(Glib::RefPtr<const LayoutLine> get_const_line(int line) const, pango_layout_get_line_readonly, refreturn)
 
 #m4 _CONVERSION(`GSList*',`std::vector<Glib::RefPtr<LayoutLine>>',`SListHandler_LayoutLine::slist_to_vector($3, Glib::OWNERSHIP_NONE)',)
 #m4 _CONVERSION(`GSList*',`std::vector<Glib::RefPtr<const LayoutLine>>',`SListHandler_ConstLayoutLine::slist_to_vector($3, Glib::OWNERSHIP_NONE)')
 
   //Note that the const version uses a different (faster) C function:
+  /** Returns the lines of the layout as a vector.
+   *
+   * Use the faster get_const_lines() if you do not plan
+   * to modify the contents of the lines (glyphs, glyph widths, etc.).
+   *
+   * @return A std::vector containing
+   * the lines in the layout. This points to internal data of the Pango::Layout
+   * and must be used with care. It will become invalid on any change to the layout's
+   * text or properties.
+   */
   _WRAP_METHOD(std::vector<Glib::RefPtr<LayoutLine>> get_lines(), pango_layout_get_lines)
+
+  /** Returns the lines of the layout as a vector.
+   *
+   * @return A std::vector containing
+   * the lines in the layout. This points to internal data of the Pango::Layout and
+   * must be used with care. It will become invalid on any change to the layout's
+   * text or properties. No changes should be made to the lines.
+   */
   _WRAP_METHOD(std::vector<Glib::RefPtr<const LayoutLine>> get_lines() const, pango_layout_get_lines_readonly)
+
+  /** Returns the lines of the layout as a vector.
+   *
+   * This is a faster alternative to get_lines(), but the user is not expected
+   * to modify the contents of the lines (glyphs, glyph widths, etc.).
+   *
+   * @newin{2,50}
+   *
+   * @return A std::vector containing
+   * the lines in the layout. This points to internal data of the Pango::Layout and
+   * must be used with care. It will become invalid on any change to the layout's
+   * text or properties. No changes should be made to the lines.
+   */
+  _WRAP_METHOD(std::vector<Glib::RefPtr<const LayoutLine>> get_const_lines() const, pango_layout_get_lines_readonly)
 
   /** Gets an iterator to iterate over the visual extents of the layout.
    * @return The iterator.
