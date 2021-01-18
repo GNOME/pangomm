@@ -45,6 +45,7 @@ class PANGOMM_API GlyphItem
   _CLASS_BOXEDTYPE(GlyphItem, PangoGlyphItem, NONE, pango_glyph_item_copy, pango_glyph_item_free, PANGOMM_API)
   _IGNORE(pango_glyph_item_free, pango_glyph_item_copy)
 
+public:
   // pango_glyph_item_split() returns a newly created PangoGlyphItem. Don't take a copy.
 #m4 _CONVERSION(`PangoGlyphItem*',`GlyphItem',`Glib::wrap($3)')
   _WRAP_METHOD(GlyphItem split(const Glib::ustring& text, int split_index), pango_glyph_item_split)
