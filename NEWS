@@ -1,3 +1,34 @@
+2.46.0 (stable):
+
+The tarball for 2.46.0 has been created with 'meson dist'.
+If you build with Autotools from the tarball, please read the relevant
+part of the README file.
+
+* Attribute: Add Overline and ShowFlags enums and some create*() methods
+  (Kjell Ahlstedt) Issue #9 (misos1)
+* Font, FontFace, FontFamily, FontMetrics: Add new methods
+  (Kjell Ahlstedt)
+* LayoutIter: Fix get_run()
+  (Kjell Ahlstedt)
+* LayoutRun: Fix a memory leak in split()
+  (Kjell Ahlstedt)
+* GlyphString, Item: Wrap pango_shape_with_flags()
+  (Kjell Ahlstedt) Issue #9 (Tavmjong Bah)
+* Layout: Add set/get_line_spacing()
+  (Kjell Ahlstedt) Issue #9 (misos1)
+* Layout: Add get_const_line() and get_const_lines()
+  (Kjell Ahlstedt) Issue #10 (misos1)
+* LayoutRun: Make most methods public
+  (Kjell Ahlstedt) Issue #11 (Josh Bialkowski)
+* Coverage: Deprecate create(bytes, n_bytes), max(), to_bytes()
+  (Kjell Ahlstedt)
+
+Build:
+* Requires pango >= 1.45.1
+  because of Overline
+  (Kjell Ahlstedt)
+
+
 2.42.2 (stable):
 
 The tarball for 2.42.2 has been created with 'meson dist'.
