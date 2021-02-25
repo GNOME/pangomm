@@ -64,6 +64,7 @@ install_headers('..' / 'pangomm.h', subdir: pangomm_pcname)
 install_headers(extra_h_files, subdir: pangomm_pcname / 'pangomm')
 
 untracked_pangomm = 'untracked' / 'pango' / 'pangomm'
+rel_untracked_pangomm = '..' / '..' / untracked_pangomm
 src_untracked_pangomm = project_source_root / untracked_pangomm
 
 pangomm_cpp_args = [ '-DPANGOMM_BUILD=1' ]
@@ -176,9 +177,9 @@ else # not maintainer_mode
     hg_ccg_basenames,
   )
 
-  built_cc_files = [ src_untracked_pangomm / 'wrap_init.cc' ]
+  built_cc_files = [ rel_untracked_pangomm / 'wrap_init.cc' ]
   foreach file : hg_ccg_basenames
-    built_cc_files += src_untracked_pangomm / file + '.cc'
+    built_cc_files += rel_untracked_pangomm / file + '.cc'
   endforeach
 
   pango_gen_sources = built_cc_files
