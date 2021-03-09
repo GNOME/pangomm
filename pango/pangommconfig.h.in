@@ -24,8 +24,10 @@
 #ifdef PANGOMM_DLL
 # if defined(PANGOMM_BUILD)
 #  define PANGOMM_API __declspec(dllexport)
-# else
+# elif !defined (__GNUC__)
 #  define PANGOMM_API __declspec(dllimport)
+# else /* don't dllimport classes/methods on GCC/MinGW */
+#  define PANGOMM_API
 # endif /* PANGOMM_BUILD - _WINDLL */
 #else
 /* Build a static library or a non-native-Windows library */
