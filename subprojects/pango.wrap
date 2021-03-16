@@ -1,0 +1,8 @@
+[wrap-git]
+directory=pango
+url=https://gitlab.gnome.org/GNOME/pango.git
+revision=master
+depth=1
+
+[provide]
+dependency_names = pango, pangocairo

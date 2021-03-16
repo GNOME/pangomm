@@ -4,7 +4,7 @@
 #        generate_binding_py, m4_files, pangomm_libversion, install_includedir,
 #        python3, pangomm_rc, dummy_header_py, gmmproc_dir, msvc14x_toolset_ver
 # Output: hg_ccg_basenames, extra_h_files, built_h_file_targets, built_files_root,
-#         pangomm_dep
+#         pangomm_own_dep
 
 defs_basefiles = [
   'pango.defs',
@@ -231,9 +231,9 @@ if not meson.is_subproject()
   )
 endif
 
-# This is useful in the main project when pangomm is used as a subproject.
+# This is part of pangomm_dep, when pangomm is a subproject.
 # It can also be used if there are example programs and test programs to build.
-pangomm_dep = declare_dependency(
+pangomm_own_dep = declare_dependency(
   sources: built_h_file_targets,
   link_with: pangomm_library,
   include_directories: extra_include_dirs,
