@@ -5,7 +5,7 @@
 #        python3, pangomm_rc, dummy_header_py, gmmproc_dir, build_shared_libs_directly,
 #        msvc14x_toolset_ver, macos_darwin_versions
 # Output: hg_ccg_basenames, extra_h_files, built_h_file_targets, built_files_root,
-#         pangomm_dep
+#         pangomm_own_dep
 
 defs_basefiles = [
   'pango.defs',
@@ -205,6 +205,7 @@ pangomm_libname = meson.project_name() + msvc14x_toolset_ver + '-' + pangomm_api
 if build_shared_libs_directly
   pangomm_library = library(pangomm_libname, extra_pangomm_objects,
     pango_gen_sources, built_dummy_h_file_target, extra_cc_files,
+    implicit_include_directories: false,
     include_directories: extra_include_dirs,
     cpp_args: pangomm_cpp_args,
     version: pangomm_libversion,
@@ -219,6 +220,7 @@ else
   # needed for obtaining the .lib file for the pangomm DLL
   pango_int_lib = static_library('pangomm-int',
     pango_gen_sources, built_dummy_h_file_target, extra_cc_files,
+    implicit_include_directories: false,
     include_directories: extra_include_dirs,
     cpp_args: pangomm_cpp_args,
     dependencies: pangomm_build_dep,
@@ -242,6 +244,7 @@ else
     objects: pango_int_lib.extract_all_objects(),
     version: pangomm_libversion,
     darwin_versions: macos_darwin_versions,
+    implicit_include_directories: false,
     dependencies: pangomm_build_dep,
     link_depends: pangomm_def,
     link_args: pangomm_extra_link_args,
@@ -268,9 +271,9 @@ if not meson.is_subproject()
   )
 endif
 
-# This is useful in the main project when pangomm is used as a subproject.
+# This is part of pangomm_dep, when pangomm is a subproject.
 # It can also be used if there are example programs and test programs to build.
-pangomm_dep = declare_dependency(
+pangomm_own_dep = declare_dependency(
   sources: built_h_file_targets,
   link_with: pangomm_library,
   include_directories: extra_include_dirs,

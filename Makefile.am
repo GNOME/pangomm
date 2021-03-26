@@ -57,6 +57,9 @@ EXTRA_DIST = \
   pango/meson.build \
   pango/pangomm/meson.build \
   pango/pangommconfig.h.meson \
+  subprojects/cairomm-1.0.wrap \
+  subprojects/glibmm-2.4.wrap \
+  subprojects/pango.wrap \
   tools/dummy-header.py \
   tools/extra_defs_gen/meson.build \
   untracked/README
