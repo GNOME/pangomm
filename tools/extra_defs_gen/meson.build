@@ -16,6 +16,7 @@ endif
 
 executable('generate_extra_defs', 'generate_defs_pango.cc',
   dependencies: [pangomm_build_dep, glibmm_generate_extra_defs_dep],
+  implicit_include_directories: false,
   install: false,
 )
 
