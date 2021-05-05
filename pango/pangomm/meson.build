@@ -3,7 +3,7 @@
 # Input: pangomm_build_dep, pangomm_pcname, maintainer_mode, project_source_root,
 #        generate_binding_py, m4_files, pangomm_libversion, install_includedir,
 #        python3, pangomm_rc, dummy_header_py, gmmproc_dir, build_shared_libs_directly,
-#        msvc14x_toolset_ver, macos_darwin_versions
+#        msvc14x_toolset_ver, macos_darwin_versions, can_add_dist_script
 # Output: hg_ccg_basenames, extra_h_files, built_h_file_targets, built_files_root,
 #         pangomm_own_dep
 
@@ -260,9 +260,8 @@ meson.add_install_script(
   hg_ccg_basenames
 )
 
-if not meson.is_subproject()
+if can_add_dist_script
   # Distribute built files.
-  # (add_dist_script() is not allowed in a subproject)
   meson.add_dist_script(
     python3.path(), generate_binding_py, 'dist_built_files',
     built_h_cc_dir,
