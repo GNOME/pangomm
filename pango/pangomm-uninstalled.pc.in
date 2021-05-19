@@ -1,5 +1,5 @@
 doxytagfile=${pc_top_builddir}/docs/reference/@PANGOMM_MODULE_NAME@.tag
-htmlrefpub=http://library.gnome.org/devel/@PACKAGE_TARNAME@/unstable/
+htmlrefpub=http://library.gnome.org/devel/@PACKAGE_TARNAME@/2.46/
 
 Name: pangomm
 Description: C++ binding for Pango, not installed
