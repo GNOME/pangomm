@@ -1,3 +1,29 @@
+2.49.1 (unstable)
+
+* Layout, LayoutIter: Add get_const_line() and get_const_lines()
+  (Kjell Ahlstedt) Issue #10 (misos1)
+* GlyphItem: Make most methods public
+  (Kjell Ahlstedt) Issue #11 (Josh Bialkowski)
+
+
+2.48.1 (stable):
+
+* GlyphItem: Fix a memory leak in split()
+  (Kjell Ahlstedt)
+* Layout: Speed up get_log_attrs()
+  (Kjell Ahlstedt)
+
+Build:
+* Meson build: Use relative paths to untracked/
+  (Kjell Ahlstedt) Merge request gtkmm!61 (Mingli Yu)
+* pangommconfig.h.*: Don't dllimport on MinGW
+  (Chun-wei Fan) Issue gtkmm#90 (Lukas K.)
+* Meson build: Make it possible to use pangomm as a subproject
+  (Kjell Ahlstedt)
+* Meson build: No implicit_include_directories
+  (Kjell Ahlstedt)
+
+
 2.48.0 (stable):
 This is the first stable release in the pangomm-2.48 ABI series.
 It is parallel-installable with the pangomm-1.4 ABI.
