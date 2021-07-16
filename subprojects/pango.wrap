@@ -1,7 +1,7 @@
 [wrap-git]
 directory=pango
 url=https://gitlab.gnome.org/GNOME/pango.git
-revision=master
+revision=main
 depth=1
 
 [provide]
