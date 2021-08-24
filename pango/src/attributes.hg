@@ -21,7 +21,7 @@
 #include <pangomm/rectangle.h>
 #include <pangomm/color.h>
 #include <pangomm/fontdescription.h>
-#include <pango/pango-attributes.h>
+#include <pango/pango.h>
 
 _DEFS(pangomm,pango)
 
