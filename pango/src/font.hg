@@ -25,7 +25,7 @@
 #include <pangomm/fontdescription.h>
 #include <pangomm/fontmetrics.h>
 #include <pangomm/coverage.h>
-#include <pango/pango-font.h>
+#include <pango/pango.h>
 
 _DEFS(pangomm,pango)
 _PINCLUDE(glibmm/private/object_p.h)

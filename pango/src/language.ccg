@@ -15,9 +15,6 @@
  * Software Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
-#include <pango/pango-enum-types.h>
-#include <pango/pango-script.h>
-
 namespace Pango
 {
 

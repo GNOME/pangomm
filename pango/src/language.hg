@@ -18,7 +18,7 @@
 _CONFIGINCLUDE(pangommconfig.h)
 
 #include <glibmm/value.h>
-#include <pango/pango-attributes.h>
+#include <pango/pango.h>
 
 _DEFS(pangomm,pango)
 

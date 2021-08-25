@@ -20,7 +20,7 @@
 #include <glibmm/refptr.h>
 #include <pangomm/rectangle.h>
 #include <cairomm/context.h>
-#include <pango/pango-layout.h>
+#include <pango/pango.h>
 
 _DEFS(pangomm,pango)
 

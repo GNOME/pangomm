@@ -17,7 +17,7 @@
 
 _CONFIGINCLUDE(pangommconfig.h)
 
-#include <pango/pango-types.h>
+#include <pango/pango.h>
 
 _DEFS(pangomm,pango)
 

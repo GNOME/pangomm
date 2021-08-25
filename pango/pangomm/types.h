@@ -1,5 +1,3 @@
-/* $Id: types.h 295 2004-12-01 11:46:29Z murrayc $ */
-
 /* Copyright (C) 2002 The gtkmm Development Team
  *
  * This library is free software; you can redistribute it and/or
@@ -20,7 +18,7 @@
 #ifndef _PANGOMM_TYPES_H
 #define _PANGOMM_TYPES_H
 
-#include <pango/pango-types.h>
+#include <pango/pango.h>
 
 namespace Pango
 {
@@ -29,6 +27,4 @@ typedef PangoMatrix Matrix;
 
 } // namespace Pango
 
-
 #endif /* _PANGOMM_TYPES_H */
-

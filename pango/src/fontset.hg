@@ -1,5 +1,3 @@
-/* $Id: fontset.hg,v 1.3 2005/11/30 14:10:50 murrayc Exp $ */
-
 /* fontset.h
  *
  * Copyright 2001      The gtkmm Development Team
@@ -23,7 +21,7 @@
 #include <pangomm/language.h>
 #include <pangomm/font.h>
 #include <pangomm/fontmetrics.h>
-#include <pango/pango-fontset.h>
+#include <pango/pango.h>
 
 _DEFS(pangomm,pango)
 _PINCLUDE(glibmm/private/object_p.h)

@@ -25,7 +25,7 @@
 #include <pangomm/tabarray.h>
 #include <pangomm/layoutline.h>
 #include <pangomm/layoutiter.h>
-#include <pango/pango-layout.h>
+#include <pango/pango.h>
 
 _DEFS(pangomm,pango)
 _PINCLUDE(glibmm/private/object_p.h)
@@ -33,7 +33,6 @@ _PINCLUDE(glibmm/private/object_p.h)
 namespace Pango
 {
 
-_CC_INCLUDE(pango/pango-enum-types.h)
 _WRAP_ENUM(Alignment, PangoAlignment, decl_prefix PANGOMM_API)
 _WRAP_ENUM(WrapMode, PangoWrapMode, decl_prefix PANGOMM_API)
 _WRAP_ENUM(EllipsizeMode, PangoEllipsizeMode, decl_prefix PANGOMM_API)
