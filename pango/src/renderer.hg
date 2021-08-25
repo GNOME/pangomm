@@ -27,12 +27,10 @@
 
 _DEFS(pangomm,pango)
 _PINCLUDE(glibmm/private/object_p.h)
-_PINCLUDE(pango/pango-renderer.h)
+_PINCLUDE(pango/pango.h)
 
 namespace Pango
 {
-
-_CC_INCLUDE(pango/pango-enum-types.h)
 
 /** Pango::Renderer is a base class that contains the necessary logic for rendering a Pango::Layout or Pango::LayoutLine. 
  * By subclassing Pango::Renderer and overriding operations such as draw_glyphs and draw_rectangle, 

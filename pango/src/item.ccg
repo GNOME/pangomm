@@ -15,7 +15,6 @@
  * Software Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
-#include <pango/pango-enum-types.h> // for pango_shape_flags_get_type()
 #include <pangomm/font.h>
 #include <pangomm/attributes.h>
 #include <pangomm/glyphstring.h>

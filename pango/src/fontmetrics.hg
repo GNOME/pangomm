@@ -20,7 +20,7 @@
 _CONFIGINCLUDE(pangommconfig.h)
 
 #include <glibmm/value.h>
-#include <pango/pango-font.h>
+#include <pango/pango.h>
 
 _DEFS(pangomm,pango)
 
