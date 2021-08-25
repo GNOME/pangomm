@@ -20,16 +20,14 @@
 _CONFIGINCLUDE(pangommconfig.h)
 
 #include <glibmm/arrayhandle.h>
-#include <pango/pango-font.h>
+#include <pango/pango.h>
 
 _DEFS(pangomm,pango)
 
 namespace Pango
 {
 
-_CC_INCLUDE(pango/pango-enum-types.h)
 _WRAP_ENUM(CoverageLevel, PangoCoverageLevel, decl_prefix PANGOMM_API)
-
 
 /** A Pango::Coverage represents a map from ISO-10646 character point to Pango::CoverageLevel.
  * It is often necessary in pango to determine if a particular font can represent a particular character,

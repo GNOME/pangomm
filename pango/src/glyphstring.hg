@@ -21,8 +21,7 @@
 #include <pangomm/glyph.h>
 #include <pangomm/item.h> // for Analysis and ShapeFlags
 #include <cairomm/context.h>
-#include <pango/pango-glyph.h>
-#include <pango/pango-item.h> //For PangoAnalysis.
+#include <pango/pango.h>
 
 _DEFS(pangomm,pango)
 

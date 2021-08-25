@@ -20,7 +20,7 @@
 #include <glibmm/object.h>
 #include <glibmm/arrayhandle.h>
 #include <pangomm/fontface.h>
-#include <pango/pango-font.h>
+#include <pango/pango.h>
 
 _DEFS(pangomm,pango)
 _PINCLUDE(glibmm/private/object_p.h)

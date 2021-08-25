@@ -23,7 +23,7 @@
 #include <pangomm/font.h>
 #include <pangomm/fontset.h>
 #include <pangomm/fontfamily.h>
-#include <pango/pango-fontmap.h>
+#include <pango/pango.h>
 
 _DEFS(pangomm,pango)
 _PINCLUDE(glibmm/private/object_p.h)

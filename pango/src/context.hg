@@ -1,5 +1,3 @@
-/* $Id: context.hg,v 1.7 2006/06/10 15:26:24 murrayc Exp $ */
-
 /* context.h
  * 
  * Copyright (C) 1998-1999 The gtkmm Development Team 
@@ -30,7 +28,7 @@
 #include <pangomm/item.h>
 #include <pangomm/attrlist.h>
 #include <pangomm/types.h> //For Matrix
-#include <pango/pango-context.h>
+#include <pango/pango.h>
 #include <cairomm/context.h>
 #include <cairomm/fontoptions.h>
 
@@ -40,7 +38,6 @@ _PINCLUDE(glibmm/private/object_p.h)
 namespace Pango
 {
 
-_CC_INCLUDE(pango/pango-enum-types.h)
 _WRAP_ENUM(Direction, PangoDirection, decl_prefix PANGOMM_API)
 _WRAP_ENUM(GravityHint, PangoGravityHint, decl_prefix PANGOMM_API)
 

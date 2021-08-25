@@ -19,7 +19,7 @@ _CONFIGINCLUDE(pangommconfig.h)
 
 #include <glibmm/value.h>
 #include <glibmm/arrayhandle.h>
-#include <pango/pango-attributes.h>
+#include <pango/pango.h>
 
 _DEFS(pangomm,pango)
 

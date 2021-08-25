@@ -19,7 +19,7 @@
 
 _CONFIGINCLUDE(pangommconfig.h)
 
-#include <pango/pango-glyph.h>
+#include <pango/pango.h>
 
 _DEFS(pangomm,pango)
 

@@ -28,9 +28,6 @@ _DEFS(pangomm,pango)
 
 namespace Pango
 {
-
-_CC_INCLUDE(pango/pango-enum-types.h)
-
 /** Pango::AttrType distinguishes between different types of attributes.
  * Along with the predefined values, it is possible to allocate additional values for
  * custom attributes using Pango::Attribute::register_type(). The predefined values

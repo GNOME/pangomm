@@ -1,8 +1,4 @@
-// -*- c++ -*-
-/* $Id: renderer.ccg,v 1.2 2006/06/10 15:26:24 murrayc Exp $ */
-
 /* 
- *
  * Copyright 2004 The gtkmm Development Team
  *
  * This library is free software; you can redistribute it and/or
@@ -20,8 +16,7 @@
  * Software Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
-#include <pango/pango-renderer.h>
-#include <pango/pango-types.h> //For PANGO_MATRIX_INIT
+#include <pango/pango.h>
 
 namespace Pango
 {

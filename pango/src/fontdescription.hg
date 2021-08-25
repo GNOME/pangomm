@@ -1,5 +1,3 @@
-/* $Id: fontdescription.hg,v 1.2 2006/06/08 20:39:39 murrayc Exp $ */
-
 /* fontdescription.h
  *
  * Copyright (C) 1998-2002 The gtkmm Development Team
@@ -22,14 +20,13 @@
 _CONFIGINCLUDE(pangommconfig.h)
 
 #include <glibmm/value.h>
-#include <pango/pango-font.h>
+#include <pango/pango.h>
 
 _DEFS(pangomm,pango)
 
 namespace Pango
 {
 
-_CC_INCLUDE(pango/pango-enum-types.h)
 _WRAP_ENUM(Style, PangoStyle, decl_prefix PANGOMM_API)
 _WRAP_ENUM(Variant, PangoVariant, decl_prefix PANGOMM_API)
 _WRAP_ENUM(Stretch, PangoStretch, decl_prefix PANGOMM_API)

@@ -18,7 +18,7 @@
 #include <pangomm/attributes.h>
 #include <pangomm/language.h>
 #include <glibmm/listhandle.h>
-#include <pango/pango-item.h>
+#include <pango/pango.h>
 
 _DEFS(pangomm,pango)
 

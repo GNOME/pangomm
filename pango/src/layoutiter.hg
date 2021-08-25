@@ -19,7 +19,7 @@
 
 #include <pangomm/layoutline.h>
 #include <pangomm/layoutrun.h>
-#include <pango/pango-layout.h>
+#include <pango/pango.h>
 
 _DEFS(pangomm,pango)
 

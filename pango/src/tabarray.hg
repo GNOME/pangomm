@@ -18,8 +18,7 @@
  */
 
 #include <pangomm/attrlist.h>
-#include <pango/pango-tabs.h>
-#include <pango/pango-break.h> /* For PangoLogAttrs */
+#include <pango/pango.h>
 #include <utility>
 
 _DEFS(pangomm,pango)
@@ -27,7 +26,6 @@ _DEFS(pangomm,pango)
 namespace Pango
 {
 
-_CC_INCLUDE(pango/pango-enum-types.h)
 _WRAP_ENUM(TabAlign, PangoTabAlign, decl_prefix PANGOMM_API)
 
 /** A Pango::TabArray contains an array of tab stops.
