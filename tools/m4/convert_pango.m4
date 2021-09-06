@@ -61,6 +61,7 @@ _CONVERSION(`PangoAttrList*',`AttrList',`AttrList(($3))')
 _CONVERSION(`PangoAttrList*',`Pango::AttrList',`Pango::AttrList(($3))')
 _CONVERSION(`AttrList&',`PangoAttrList*',`($3).gobj()')
 _CONVERSION(`Pango::AttrList&',`PangoAttrList*',`($3).gobj()')
+_CONVERSION(`const AttrList&',`PangoAttrList*',`const_cast<PangoAttrList*>(($3).gobj())')
 
 _CONVERSION(`PangoAttrIterator*',`AttrIter',`Glib::wrap(($3))')
 

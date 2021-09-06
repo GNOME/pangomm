@@ -20,6 +20,8 @@
 namespace Pango
 {
 
+using SListHandler_Attribute = Glib::SListHandler<Attribute, AttributeTraits>;
+
 AttrList::AttrList(const Glib::ustring& markup_text, gunichar accel_marker)
 {
   gboolean bTest = pango_parse_markup(markup_text.c_str(), -1 /* means null-terminated */, accel_marker,
