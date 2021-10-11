@@ -51,10 +51,12 @@ hg_ccg_basenames = [
 ]
 
 extra_cc_files = [
+  'cairofontmapimpl.cc',
   'init.cc',
 ]
 
 extra_h_files = [
+  'cairofontmapimpl.h',
   'init.h',
   'types.h',
   'wrap_init.h',

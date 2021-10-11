@@ -32,13 +32,19 @@ namespace Pango
 
 class PANGOMM_API Context;
 
-/** A Pango::FontMap represents the set of fonts available for a particular rendering system.
+/** A %Pango::FontMap represents the set of fonts available for a particular rendering system.
+ *
+ * This is an abstract base class with implementations being specific to
+ * particular rendering systems.
+ *
+ * @see Pango::CairoFontMap::get_default()
  */
 class PANGOMM_API FontMap : public Glib::Object, public Gio::ListModel
 {
-   _CLASS_GOBJECT(FontMap, PangoFontMap, PANGO_FONT_MAP, Glib::Object, GObject, , , PANGOMM_API)
-   _IMPLEMENTS_INTERFACE(Gio::ListModel)
-   _IGNORE(pango_font_map_list_families)
+  _CLASS_GOBJECT(FontMap, PangoFontMap, PANGO_FONT_MAP, Glib::Object, GObject, , , PANGOMM_API)
+  _IMPLEMENTS_INTERFACE(Gio::ListModel)
+  _CUSTOM_WRAP_NEW
+  _IGNORE(pango_font_map_list_families)
 
 public:
   _WRAP_METHOD(Glib::RefPtr<Font> load_font(const Glib::RefPtr<Context>& context, const FontDescription& desc) const, pango_font_map_load_font)
@@ -53,7 +59,7 @@ public:
 
   _WRAP_METHOD(guint get_serial() const, pango_font_map_get_serial)
 
-  _IGNORE(pango_font_map_changed)
+  _IGNORE(pango_font_map_changed)dnl// Shall not be used by applications
 };
 
 } /* namespace Pango */

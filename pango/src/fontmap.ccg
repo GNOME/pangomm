@@ -16,10 +16,21 @@
  * Software Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
+#include <pangomm/cairofontmapimpl.h>
 #include <pangomm/context.h>
+#include <pango/pangocairo.h>
 
 namespace Pango
 {
+
+// Custom wrap_new() because we want to create
+// a CairoFontMapImpl if the underlying C class implements the PangoCairoFontMap interface.
+Glib::ObjectBase* FontMap_Class::wrap_new(GObject* object)
+{
+  if (PANGO_IS_CAIRO_FONT_MAP(object))
+     return new CairoFontMapImpl((PangoFontMap*)object);
+  return new FontMap((PangoFontMap*)object);
+}
 
 std::vector<Glib::RefPtr<FontFamily>> FontMap::list_families() const
 {
@@ -33,4 +44,3 @@ std::vector<Glib::RefPtr<FontFamily>> FontMap::list_families() const
 }
 
 } /* namespace Pango */
-
