@@ -60,6 +60,11 @@ public:
   _WRAP_METHOD(guint get_serial() const, pango_font_map_get_serial)
 
   _IGNORE(pango_font_map_changed)dnl// Shall not be used by applications
+
+  _WRAP_METHOD(Glib::RefPtr<FontFamily> get_family(const Glib::ustring& name),
+    pango_font_map_get_family, refreturn, newin "2,50")
+  _WRAP_METHOD(Glib::RefPtr<const FontFamily> get_family(const Glib::ustring& name) const,
+    pango_font_map_get_family, refreturn, constversion, newin "2,50")
 };
 
 } /* namespace Pango */
