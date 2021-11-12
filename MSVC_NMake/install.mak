@@ -14,7 +14,7 @@ install: all
 	@for %h in ($(files_built_h)) do @if exist ..\untracked\pango\pangomm\%h copy ..\untracked\pango\pangomm\%h "$(PREFIX)\include\pangomm-$(PANGOMM_MAJOR_VERSION).$(PANGOMM_MINOR_VERSION)\pangomm\%h"
 	@for %h in ($(files_built_h)) do @if exist ..\pango\pangomm\%h if not exist ..\untracked\pango\pangomm\%h copy ..\pango\pangomm\%h "$(PREFIX)\include\pangomm-$(PANGOMM_MAJOR_VERSION).$(PANGOMM_MINOR_VERSION)\pangomm\%h"
 	@for %h in ($(files_built_h)) do @if exist vs$(VSVER)\$(CFG)\$(PLAT)\pangomm\%h copy vs$(VSVER)\$(CFG)\$(PLAT)\pangomm\%h "$(PREFIX)\include\pangomm-$(PANGOMM_MAJOR_VERSION).$(PANGOMM_MINOR_VERSION)\pangomm\%h"
-	@for %h in ($(files_built_h)) do @if exist ..\untracked\pango\pangomm\private\%h copy ..\untracked\pango\pangomm\private\%h "$(PREFIX)\include\pangomm-$(PANGOMM_MAJOR_VERSION).$(PANGOMM_MINOR_VERSION)\pangomm\private\%h"
+	@for %h in ($(PANGOMM_BUILD_PRIVATE_HEADERS)) do @if exist ..\untracked\pango\pangomm\private\%h copy ..\untracked\pango\pangomm\private\%h "$(PREFIX)\include\pangomm-$(PANGOMM_MAJOR_VERSION).$(PANGOMM_MINOR_VERSION)\pangomm\private\%h"
 	@for %h in ($(PANGOMM_BUILD_PRIVATE_HEADERS)) do @if exist ..\pango\pangomm\private\%h if not exist ..\untracked\pango\pangomm\private\%h copy ..\pango\pangomm\private\%h "$(PREFIX)\include\pangomm-$(PANGOMM_MAJOR_VERSION).$(PANGOMM_MINOR_VERSION)\pangomm\private\%h"
 	@for %h in ($(PANGOMM_BUILD_PRIVATE_HEADERS)) do @if exist vs$(VSVER)\$(CFG)\$(PLAT)\pangomm\private\%h copy vs$(VSVER)\$(CFG)\$(PLAT)\pangomm\private\%h "$(PREFIX)\include\pangomm-$(PANGOMM_MAJOR_VERSION).$(PANGOMM_MINOR_VERSION)\pangomm\private\%h"
 	@copy ".\pangomm\pangommconfig.h" "$(PREFIX)\lib\pangomm-$(PANGOMM_MAJOR_VERSION).$(PANGOMM_MINOR_VERSION)\include\"
