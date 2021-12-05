@@ -15,7 +15,7 @@
 ## You should have received a copy of the GNU Lesser General Public License
 ## along with this library.  If not, see <http://www.gnu.org/licenses/>.
 
-AC_INIT([pangomm], [2.48.1],
+AC_INIT([pangomm], [2.48.2],
         [https://gitlab.gnome.org/GNOME/pangomm/issues/],
         [pangomm], [http://www.gtkmm.org/])
 AC_PREREQ([2.59])

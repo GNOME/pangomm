@@ -1,3 +1,12 @@
+2.48.2 (stable):
+
+Build:
+* Don't include individual pango headers
+  (Matthias Clasen, Kjell Ahlstedt) Merge request !22
+* Support Visual Studio 2022 builds
+  (Chun-wei Fan)
+
+
 2.48.1 (stable):
 
 * GlyphItem: Fix a memory leak in split()
