@@ -181,6 +181,16 @@ AttrInt Attribute::create_attr_rise(int rise)
   return Glib::wrap((PangoAttrInt*)pango_attr_rise_new(rise));
 }
 
+AttrInt Attribute::create_attr_baseline_shift(int shift)
+{
+  return Glib::wrap((PangoAttrInt*)pango_attr_baseline_shift_new(shift));
+}
+
+AttrInt Attribute::create_attr_font_scale(FontScale scale)
+{
+  return Glib::wrap((PangoAttrInt*)pango_attr_font_scale_new((PangoFontScale)scale));
+}
+
 AttrFloat Attribute::create_attr_scale(double scale_factor)
 {
   return Glib::wrap((PangoAttrFloat*)pango_attr_scale_new(scale_factor));
@@ -221,6 +231,16 @@ AttrInt Attribute::create_attr_allow_breaks(bool allow_breaks)
   return Glib::wrap((PangoAttrInt*)pango_attr_allow_breaks_new(allow_breaks));
 }
 
+AttrInt Attribute::create_attr_word()
+{
+  return Glib::wrap((PangoAttrInt*)pango_attr_word_new());
+}
+
+AttrInt Attribute::create_attr_sentence()
+{
+  return Glib::wrap((PangoAttrInt*)pango_attr_sentence_new());
+}
+
 AttrInt Attribute::create_attr_insert_hyphens(bool insert_hyphens)
 {
   return Glib::wrap((PangoAttrInt*)pango_attr_insert_hyphens_new(insert_hyphens));
@@ -229,6 +249,21 @@ AttrInt Attribute::create_attr_insert_hyphens(bool insert_hyphens)
 AttrInt Attribute::create_attr_show(ShowFlags show)
 {
   return Glib::wrap((PangoAttrInt*)pango_attr_show_new((PangoShowFlags)show));
+}
+
+AttrFloat Attribute::create_attr_line_height(double factor)
+{
+  return Glib::wrap((PangoAttrFloat*)pango_attr_line_height_new(factor));
+}
+
+AttrInt Attribute::create_attr_line_height_absolute(int height)
+{
+  return Glib::wrap((PangoAttrInt*)pango_attr_line_height_new_absolute(height));
+}
+
+AttrInt Attribute::create_attr_text_transform(TextTransform transform)
+{
+  return Glib::wrap((PangoAttrInt*)pango_attr_text_transform_new((PangoTextTransform)transform));
 }
 
 

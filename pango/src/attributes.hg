@@ -39,6 +39,9 @@ _WRAP_ENUM(AttrType, PangoAttrType, s#^SCALE$#SCALE_FACTOR#, decl_prefix PANGOMM
 _WRAP_ENUM(Underline, PangoUnderline, decl_prefix PANGOMM_API)
 _WRAP_ENUM(Overline, PangoOverline, decl_prefix PANGOMM_API)
 _WRAP_ENUM(ShowFlags, PangoShowFlags, decl_prefix PANGOMM_API)
+_WRAP_ENUM(TextTransform, PangoTextTransform, newin "2,50", decl_prefix PANGOMM_API)
+_WRAP_ENUM(BaselineShift, PangoBaselineShift, CONV_TO_INT, newin "2,50", decl_prefix PANGOMM_API)
+_WRAP_ENUM(FontScale, PangoFontScale, newin "2,50", decl_prefix PANGOMM_API)
 
 /** A Pango::LogAttr stores information about the attributes of a single character.
  */
@@ -55,7 +58,7 @@ class PANGOMM_API AttrShape;
 
 enum class PANGOMM_API GravityHint;
 
-/** The Pango::Attribute structure represents the common portions of all attributes.
+/** The %Pango::Attribute structure represents the common portions of all attributes.
  * Particular types of attributes derive this class. It holds the range in which the
  * value in the type-specific part of the attribute applies.
  *
@@ -65,7 +68,7 @@ enum class PANGOMM_API GravityHint;
 class PANGOMM_API Attribute
 {
   _CLASS_GENERIC(Attribute, PangoAttribute)
-  _IGNORE(pango_attribute_copy,pango_attribute_destroy)
+  _IGNORE(pango_attribute_copy, pango_attribute_destroy, pango_attribute_init)
 
 public:
   /** Constructs an invalid attribute.
@@ -283,6 +286,33 @@ public:
    */
   static AttrInt create_attr_rise(int rise);
 
+  /** Create a new baseline displacement attribute.
+   *
+   * The effect of this attribute is to shift the baseline of a run,
+   * relative to the run of preceding run.
+   *
+   * @newin{2,50}
+   *
+   * @param shift Either a Pango::BaselineShift enumeration value or an absolute value (> 1024)
+   *   in %Pango units, relative to the baseline of the previous run.
+   *   Positive values displace the text upwards.
+   * @return An attribute of type AttrInt.
+   */
+  static AttrInt create_attr_baseline_shift(int shift);
+
+  /** Create a new font scale attribute.
+   *
+   * The effect of this attribute is to change the font size of a run,
+   * relative to the size of preceding run.
+   *
+   * @newin{2,50}
+   *
+   * @param scale A Pango::FontScale value, which indicates font size change relative
+   *   to the size of the previous run.
+   * @return An attribute of type AttrInt.
+   */
+  static AttrInt create_attr_font_scale(FontScale scale);
+
   /** Create a new font size scale attribute.
    * The base font for the affected text will have its size multiplied by scale_factor.
    * @param scale_factor Factor to scale the font.
@@ -361,6 +391,28 @@ public:
    */
   static AttrInt create_attr_allow_breaks(bool allow_breaks);
 
+  /** Marks the range of the attribute as a single word.
+   *
+   * Note that this may require adjustments to word and
+   * sentence classification around the range.
+   *
+   * @newin{2,50}
+   *
+   * @return An attribute of type AttrInt.
+   */
+  static AttrInt create_attr_word();
+
+  /** Marks the range of the attribute as a single sentence.
+   *
+   * Note that this may require adjustments to word and
+   * sentence classification around the range.
+   *
+   * @newin{2,50}
+   *
+   * @return An attribute of type AttrInt.
+   */
+  static AttrInt create_attr_sentence();
+
   /** Create a new insert-hyphens attribute.
    *
    * Pangomm will insert hyphens when breaking lines in the middle
@@ -381,6 +433,43 @@ public:
    * @return An attribute of type AttrInt.
    */
   static AttrInt create_attr_show(ShowFlags show);
+
+  /** Modify the height of logical line extents by a factor.
+   *
+   * This affects the values returned by Pango::LayoutLine::get_extents(),
+   * Pango::LayoutLine::get_pixel_extents() and Pango::LayoutIter::get_line_extents().
+   *
+   * @newin{2,50}
+   *
+   * @param factor The scaling factor to apply to the logical height.
+   * @return An attribute of type AttrFloat.
+   */
+  static AttrFloat create_attr_line_height(double factor);
+
+  /** Override the height of logical line extents to be @a height.
+   *
+   * This affects the values returned by Pango::LayoutLine::get_extents(),
+   * Pango::LayoutLine::get_pixel_extents() and Pango::LayoutIter::get_line_extents().
+   *
+   * @newin{2,50}
+   *
+   * @param height The line height, in Pango::SCALE-ths of a point.
+   * @return An attribute of type AttrInt.
+   */
+  static AttrInt create_attr_line_height_absolute(int height);
+
+  /** Create a new attribute that influences how characters are transformed during shaping.
+   *
+   * @newin{2,50}
+   *
+   * @param transform Pango::TextTransform to apply.
+   * @return An attribute of type AttrInt.
+   */
+  static AttrInt create_attr_text_transform(TextTransform transform);
+
+  _IGNORE(pango_attribute_as_string, pango_attribute_as_language, pango_attribute_as_int)
+  _IGNORE(pango_attribute_as_size, pango_attribute_as_float, pango_attribute_as_color)
+  _IGNORE(pango_attribute_as_font_desc, pango_attribute_as_shape, pango_attribute_as_font_features)
 
 protected:
   PangoAttribute* gobject_;
