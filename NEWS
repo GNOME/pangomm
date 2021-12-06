@@ -1,3 +1,26 @@
+2.50.0 (stable):
+
+* AttrList: Add get_attributes(), update(), equal()
+  (Kjell Ahlstedt) Issue #12 (misos1)
+* Make CairoFontMap::set_resolution() usable
+  by adding the CairoFontMapImpl class
+  (Kjell Ahlstedt) Issue #15 (Ievgenii Meshcheriakov)
+* Add FontMap::get_family()
+  (Kjell Ahlstedt)
+* AttrList: Add to_string() and from_string()
+  Attribute: Add TextTransform, BaselineShift and FontScle enums
+  and some create_attr_*() methods
+  (Kjell Ahlstedt)
+
+Build:
+* Don't include individual pango headers
+  (Matthias Clasen, Kjell Ahlstedt) Merge request !22
+* Support Visual Studio 2022 builds
+  (Chun-wei Fan)
+* Require pango >= 1.49.4
+  (Kjell Ahlstedt)
+
+
 2.49.1 (unstable)
 
 * Layout, LayoutIter: Add get_const_line() and get_const_lines()

@@ -1,7 +1,7 @@
 # This file is part of pangomm.
 
 project('pangomm', 'cpp',
-  version: '2.49.1',
+  version: '2.50.0',
   license: 'LGPLv2.1+',
   default_options: [
     'cpp_std=c++17'
