@@ -115,6 +115,13 @@
     '("insert-hyphens" "PANGO_ATTR_INSERT_HYPHENS")
     '("overline" "PANGO_ATTR_OVERLINE")
     '("overline-color" "PANGO_ATTR_OVERLINE_COLOR")
+    '("line-height" "PANGO_ATTR_LINE_HEIGHT")
+    '("absolute-line-height" "PANGO_ATTR_ABSOLUTE_LINE_HEIGHT")
+    '("text-transform" "PANGO_ATTR_TEXT_TRANSFORM")
+    '("word" "PANGO_ATTR_WORD")
+    '("sentence" "PANGO_ATTR_SENTENCE")
+    '("baseline-shift" "PANGO_ATTR_BASELINE_SHIFT")
+    '("font-scale" "PANGO_ATTR_FONT_SCALE")
   )
 )
 
@@ -156,6 +163,41 @@
   )
 )
 
+(define-enum TextTransform
+  (in-module "Pango")
+  (c-name "PangoTextTransform")
+  (gtype-id "PANGO_TYPE_TEXT_TRANSFORM")
+  (values
+    '("none" "PANGO_TEXT_TRANSFORM_NONE")
+    '("lowercase" "PANGO_TEXT_TRANSFORM_LOWERCASE")
+    '("uppercase" "PANGO_TEXT_TRANSFORM_UPPERCASE")
+    '("capitalize" "PANGO_TEXT_TRANSFORM_CAPITALIZE")
+  )
+)
+
+(define-enum BaselineShift
+  (in-module "Pango")
+  (c-name "PangoBaselineShift")
+  (gtype-id "PANGO_TYPE_BASELINE_SHIFT")
+  (values
+    '("none" "PANGO_BASELINE_SHIFT_NONE")
+    '("superscript" "PANGO_BASELINE_SHIFT_SUPERSCRIPT")
+    '("subscript" "PANGO_BASELINE_SHIFT_SUBSCRIPT")
+  )
+)
+
+(define-enum FontScale
+  (in-module "Pango")
+  (c-name "PangoFontScale")
+  (gtype-id "PANGO_TYPE_FONT_SCALE")
+  (values
+    '("none" "PANGO_FONT_SCALE_NONE")
+    '("superscript" "PANGO_FONT_SCALE_SUPERSCRIPT")
+    '("subscript" "PANGO_FONT_SCALE_SUBSCRIPT")
+    '("small-caps" "PANGO_FONT_SCALE_SMALL_CAPS")
+  )
+)
+
 (define-enum BidiType
   (in-module "Pango")
   (c-name "PangoBidiType")
@@ -180,6 +222,10 @@
     '("s" "PANGO_BIDI_TYPE_S")
     '("ws" "PANGO_BIDI_TYPE_WS")
     '("on" "PANGO_BIDI_TYPE_ON")
+    '("lri" "PANGO_BIDI_TYPE_LRI")
+    '("rli" "PANGO_BIDI_TYPE_RLI")
+    '("fsi" "PANGO_BIDI_TYPE_FSI")
+    '("pdi" "PANGO_BIDI_TYPE_PDI")
   )
 )
 
@@ -228,6 +274,11 @@
   (values
     '("normal" "PANGO_VARIANT_NORMAL")
     '("small-caps" "PANGO_VARIANT_SMALL_CAPS")
+    '("all-small-caps" "PANGO_VARIANT_ALL_SMALL_CAPS")
+    '("petite-caps" "PANGO_VARIANT_PETITE_CAPS")
+    '("all-petite-caps" "PANGO_VARIANT_ALL_PETITE_CAPS")
+    '("unicase" "PANGO_VARIANT_UNICASE")
+    '("title-caps" "PANGO_VARIANT_TITLE_CAPS")
   )
 )
 
@@ -349,6 +400,38 @@
     '("start" "PANGO_ELLIPSIZE_START")
     '("middle" "PANGO_ELLIPSIZE_MIDDLE")
     '("end" "PANGO_ELLIPSIZE_END")
+  )
+)
+
+(define-flags LayoutSerializeFlags
+  (in-module "Pango")
+  (c-name "PangoLayoutSerializeFlags")
+  (gtype-id "PANGO_TYPE_LAYOUT_SERIALIZE_FLAGS")
+  (values
+    '("default" "PANGO_LAYOUT_SERIALIZE_DEFAULT")
+    '("context" "PANGO_LAYOUT_SERIALIZE_CONTEXT")
+    '("output" "PANGO_LAYOUT_SERIALIZE_OUTPUT")
+  )
+)
+
+(define-enum LayoutDeserializeError
+  (in-module "Pango")
+  (c-name "PangoLayoutDeserializeError")
+  (gtype-id "PANGO_TYPE_LAYOUT_DESERIALIZE_ERROR")
+  (values
+    '("invalid" "PANGO_LAYOUT_DESERIALIZE_INVALID")
+    '("invalid-value" "PANGO_LAYOUT_DESERIALIZE_INVALID_VALUE")
+    '("missing-value" "PANGO_LAYOUT_DESERIALIZE_MISSING_VALUE")
+  )
+)
+
+(define-flags LayoutDeserializeFlags
+  (in-module "Pango")
+  (c-name "PangoLayoutDeserializeFlags")
+  (gtype-id "PANGO_TYPE_LAYOUT_DESERIALIZE_FLAGS")
+  (values
+    '("default" "PANGO_LAYOUT_DESERIALIZE_DEFAULT")
+    '("context" "PANGO_LAYOUT_DESERIALIZE_CONTEXT")
   )
 )
 
@@ -507,64 +590,25 @@
   (gtype-id "PANGO_TYPE_TAB_ALIGN")
   (values
     '("left" "PANGO_TAB_LEFT")
+    '("right" "PANGO_TAB_RIGHT")
+    '("center" "PANGO_TAB_CENTER")
+    '("decimal" "PANGO_TAB_DECIMAL")
   )
 )
 
 
 ;; From pango-attributes.h
 
-(define-function pango_color_get_type
-  (c-name "pango_color_get_type")
-  (return-type "GType")
-)
-
 (define-function pango_attribute_get_type
   (c-name "pango_attribute_get_type")
   (return-type "GType")
-)
-
-(define-method copy
-  (of-object "PangoColor")
-  (c-name "pango_color_copy")
-  (return-type "PangoColor*")
-)
-
-(define-method free
-  (of-object "PangoColor")
-  (c-name "pango_color_free")
-  (return-type "none")
-)
-
-(define-method parse
-  (of-object "PangoColor")
-  (c-name "pango_color_parse")
-  (return-type "gboolean")
-  (parameters
-    '("const-char*" "spec")
-  )
-)
-
-(define-method parse_with_alpha
-  (of-object "PangoColor")
-  (c-name "pango_color_parse_with_alpha")
-  (return-type "gboolean")
-  (parameters
-    '("guint16*" "alpha")
-    '("const-char*" "spec")
-  )
-)
-
-(define-method to_string
-  (of-object "PangoColor")
-  (c-name "pango_color_to_string")
-  (return-type "gchar*")
 )
 
 (define-function pango_attr_type_register
   (c-name "pango_attr_type_register")
   (return-type "PangoAttrType")
   (parameters
-    '("const-gchar*" "name")
+    '("const-char*" "name")
   )
 )
 
@@ -755,6 +799,24 @@
   )
 )
 
+(define-function pango_attr_baseline_shift_new
+  (c-name "pango_attr_baseline_shift_new")
+  (is-constructor-of "PangoAttrBaselineShift")
+  (return-type "PangoAttribute*")
+  (parameters
+    '("int" "shift")
+  )
+)
+
+(define-function pango_attr_font_scale_new
+  (c-name "pango_attr_font_scale_new")
+  (is-constructor-of "PangoAttrFontScale")
+  (return-type "PangoAttribute*")
+  (parameters
+    '("PangoFontScale" "scale")
+  )
+)
+
 (define-function pango_attr_scale_new
   (c-name "pango_attr_scale_new")
   (is-constructor-of "PangoAttrScale")
@@ -827,7 +889,7 @@
   (is-constructor-of "PangoAttrFontFeatures")
   (return-type "PangoAttribute*")
   (parameters
-    '("const-gchar*" "features")
+    '("const-char*" "features")
   )
 )
 
@@ -856,6 +918,18 @@
   (parameters
     '("gboolean" "allow_breaks")
   )
+)
+
+(define-function pango_attr_word_new
+  (c-name "pango_attr_word_new")
+  (is-constructor-of "PangoAttrWord")
+  (return-type "PangoAttribute*")
+)
+
+(define-function pango_attr_sentence_new
+  (c-name "pango_attr_sentence_new")
+  (is-constructor-of "PangoAttrSentence")
+  (return-type "PangoAttribute*")
 )
 
 (define-function pango_attr_insert_hyphens_new
@@ -894,6 +968,86 @@
   (parameters
     '("PangoShowFlags" "flags")
   )
+)
+
+(define-function pango_attr_line_height_new
+  (c-name "pango_attr_line_height_new")
+  (is-constructor-of "PangoAttrLineHeight")
+  (return-type "PangoAttribute*")
+  (parameters
+    '("double" "factor")
+  )
+)
+
+(define-function pango_attr_line_height_new_absolute
+  (c-name "pango_attr_line_height_new_absolute")
+  (return-type "PangoAttribute*")
+  (parameters
+    '("int" "height")
+  )
+)
+
+(define-function pango_attr_text_transform_new
+  (c-name "pango_attr_text_transform_new")
+  (is-constructor-of "PangoAttrTextTransform")
+  (return-type "PangoAttribute*")
+  (parameters
+    '("PangoTextTransform" "transform")
+  )
+)
+
+(define-method as_string
+  (of-object "PangoAttribute")
+  (c-name "pango_attribute_as_string")
+  (return-type "PangoAttrString*")
+)
+
+(define-method as_language
+  (of-object "PangoAttribute")
+  (c-name "pango_attribute_as_language")
+  (return-type "PangoAttrLanguage*")
+)
+
+(define-method as_int
+  (of-object "PangoAttribute")
+  (c-name "pango_attribute_as_int")
+  (return-type "PangoAttrInt*")
+)
+
+(define-method as_size
+  (of-object "PangoAttribute")
+  (c-name "pango_attribute_as_size")
+  (return-type "PangoAttrSize*")
+)
+
+(define-method as_float
+  (of-object "PangoAttribute")
+  (c-name "pango_attribute_as_float")
+  (return-type "PangoAttrFloat*")
+)
+
+(define-method as_color
+  (of-object "PangoAttribute")
+  (c-name "pango_attribute_as_color")
+  (return-type "PangoAttrColor*")
+)
+
+(define-method as_font_desc
+  (of-object "PangoAttribute")
+  (c-name "pango_attribute_as_font_desc")
+  (return-type "PangoAttrFontDesc*")
+)
+
+(define-method as_shape
+  (of-object "PangoAttribute")
+  (c-name "pango_attribute_as_shape")
+  (return-type "PangoAttrShape*")
+)
+
+(define-method as_font_features
+  (of-object "PangoAttribute")
+  (c-name "pango_attribute_as_font_features")
+  (return-type "PangoAttrFontFeatures*")
 )
 
 (define-function pango_attr_list_get_type
@@ -958,8 +1112,8 @@
   (return-type "none")
   (parameters
     '("PangoAttrList*" "other")
-    '("gint" "pos")
-    '("gint" "len")
+    '("int" "pos")
+    '("int" "len")
   )
 )
 
@@ -999,6 +1153,20 @@
   )
 )
 
+(define-method to_string
+  (of-object "PangoAttrList")
+  (c-name "pango_attr_list_to_string")
+  (return-type "char*")
+)
+
+(define-function pango_attr_list_from_string
+  (c-name "pango_attr_list_from_string")
+  (return-type "PangoAttrList*")
+  (parameters
+    '("const-char*" "text")
+  )
+)
+
 (define-function pango_attr_iterator_get_type
   (c-name "pango_attr_iterator_get_type")
   (return-type "GType")
@@ -1015,8 +1183,8 @@
   (c-name "pango_attr_iterator_range")
   (return-type "none")
   (parameters
-    '("gint*" "start")
-    '("gint*" "end")
+    '("int*" "start")
+    '("int*" "end")
   )
 )
 
@@ -1062,41 +1230,6 @@
   (of-object "PangoAttrIterator")
   (c-name "pango_attr_iterator_get_attrs")
   (return-type "GSList*")
-)
-
-(define-function pango_parse_markup
-  (c-name "pango_parse_markup")
-  (return-type "gboolean")
-  (parameters
-    '("const-char*" "markup_text")
-    '("int" "length")
-    '("gunichar" "accel_marker")
-    '("PangoAttrList**" "attr_list")
-    '("char**" "text")
-    '("gunichar*" "accel_char")
-    '("GError**" "error")
-  )
-)
-
-(define-function pango_markup_parser_new
-  (c-name "pango_markup_parser_new")
-  (is-constructor-of "PangoMarkupParser")
-  (return-type "GMarkupParseContext*")
-  (parameters
-    '("gunichar" "accel_marker")
-  )
-)
-
-(define-function pango_markup_parser_finish
-  (c-name "pango_markup_parser_finish")
-  (return-type "gboolean")
-  (parameters
-    '("GMarkupParseContext*" "context")
-    '("PangoAttrList**" "attr_list")
-    '("char**" "text")
-    '("gunichar*" "accel_char")
-    '("GError**" "error")
-  )
 )
 
 
@@ -1145,22 +1278,11 @@
   (c-name "pango_break")
   (return-type "none")
   (parameters
-    '("const-gchar*" "text")
+    '("const-char*" "text")
     '("int" "length")
     '("PangoAnalysis*" "analysis")
     '("PangoLogAttr*" "attrs")
     '("int" "attrs_len")
-  )
-)
-
-(define-function pango_find_paragraph_boundary
-  (c-name "pango_find_paragraph_boundary")
-  (return-type "none")
-  (parameters
-    '("const-gchar*" "text")
-    '("gint" "length")
-    '("gint*" "paragraph_delimiter_index")
-    '("gint*" "next_paragraph_start")
   )
 )
 
@@ -1172,7 +1294,7 @@
     '("int" "length")
     '("int" "level")
     '("PangoLanguage*" "language")
-    '("PangoLogAttr*" "log_attrs")
+    '("PangoLogAttr*" "attrs")
     '("int" "attrs_len")
   )
 )
@@ -1181,7 +1303,7 @@
   (c-name "pango_default_break")
   (return-type "none")
   (parameters
-    '("const-gchar*" "text")
+    '("const-char*" "text")
     '("int" "length")
     '("PangoAnalysis*" "analysis")
     '("PangoLogAttr*" "attrs")
@@ -1197,8 +1319,21 @@
     '("int" "length")
     '("PangoAnalysis*" "analysis")
     '("int" "offset")
-    '("PangoLogAttr*" "log_attrs")
-    '("int" "log_attrs_len")
+    '("PangoLogAttr*" "attrs")
+    '("int" "attrs_len")
+  )
+)
+
+(define-function pango_attr_break
+  (c-name "pango_attr_break")
+  (return-type "none")
+  (parameters
+    '("const-char*" "text")
+    '("int" "length")
+    '("PangoAttrList*" "attr_list")
+    '("int" "offset")
+    '("PangoLogAttr*" "attrs")
+    '("int" "attrs_len")
   )
 )
 
@@ -1484,6 +1619,52 @@
 
 
 
+;; From pango-color.h
+
+(define-function pango_color_get_type
+  (c-name "pango_color_get_type")
+  (return-type "GType")
+)
+
+(define-method copy
+  (of-object "PangoColor")
+  (c-name "pango_color_copy")
+  (return-type "PangoColor*")
+)
+
+(define-method free
+  (of-object "PangoColor")
+  (c-name "pango_color_free")
+  (return-type "none")
+)
+
+(define-method parse
+  (of-object "PangoColor")
+  (c-name "pango_color_parse")
+  (return-type "gboolean")
+  (parameters
+    '("const-char*" "spec")
+  )
+)
+
+(define-method parse_with_alpha
+  (of-object "PangoColor")
+  (c-name "pango_color_parse_with_alpha")
+  (return-type "gboolean")
+  (parameters
+    '("guint16*" "alpha")
+    '("const-char*" "spec")
+  )
+)
+
+(define-method to_string
+  (of-object "PangoColor")
+  (c-name "pango_color_to_string")
+  (return-type "char*")
+)
+
+
+
 ;; From pango-color-table.h
 
 
@@ -1676,33 +1857,6 @@
   (of-object "PangoContext")
   (c-name "pango_context_get_round_glyph_positions")
   (return-type "gboolean")
-)
-
-(define-function pango_itemize
-  (c-name "pango_itemize")
-  (return-type "GList*")
-  (parameters
-    '("PangoContext*" "context")
-    '("const-char*" "text")
-    '("int" "start_index")
-    '("int" "length")
-    '("PangoAttrList*" "attrs")
-    '("PangoAttrIterator*" "cached_iter")
-  )
-)
-
-(define-function pango_itemize_with_base_dir
-  (c-name "pango_itemize_with_base_dir")
-  (return-type "GList*")
-  (parameters
-    '("PangoContext*" "context")
-    '("PangoDirection" "base_dir")
-    '("const-char*" "text")
-    '("int" "start_index")
-    '("int" "length")
-    '("PangoAttrList*" "attrs")
-    '("PangoAttrIterator*" "cached_iter")
-  )
 )
 
 
@@ -2578,6 +2732,28 @@
   (return-type "hb_font_t*")
 )
 
+(define-method get_languages
+  (of-object "PangoFont")
+  (c-name "pango_font_get_languages")
+  (return-type "PangoLanguage**")
+)
+
+(define-method serialize
+  (of-object "PangoFont")
+  (c-name "pango_font_serialize")
+  (return-type "GBytes*")
+)
+
+(define-function pango_font_deserialize
+  (c-name "pango_font_deserialize")
+  (return-type "PangoFont*")
+  (parameters
+    '("PangoContext*" "context")
+    '("GBytes*" "bytes")
+    '("GError**" "error")
+  )
+)
+
 
 
 ;; From pango-fontmap.h
@@ -2883,6 +3059,11 @@
 
 ;; From pango-glyph.h
 
+(define-function pango_glyph_string_get_type
+  (c-name "pango_glyph_string_get_type")
+  (return-type "GType")
+)
+
 (define-function pango_glyph_string_new
   (c-name "pango_glyph_string_new")
   (is-constructor-of "PangoGlyphString")
@@ -2894,13 +3075,8 @@
   (c-name "pango_glyph_string_set_size")
   (return-type "none")
   (parameters
-    '("gint" "new_len")
+    '("int" "new_len")
   )
-)
-
-(define-function pango_glyph_string_get_type
-  (c-name "pango_glyph_string_get_type")
-  (return-type "GType")
 )
 
 (define-method copy
@@ -2962,7 +3138,7 @@
   (c-name "pango_glyph_string_index_to_x")
   (return-type "none")
   (parameters
-    '("char*" "text")
+    '("const-char*" "text")
     '("int" "length")
     '("PangoAnalysis*" "analysis")
     '("int" "index_")
@@ -2976,12 +3152,27 @@
   (c-name "pango_glyph_string_x_to_index")
   (return-type "none")
   (parameters
-    '("char*" "text")
+    '("const-char*" "text")
     '("int" "length")
     '("PangoAnalysis*" "analysis")
     '("int" "x_pos")
     '("int*" "index_")
     '("int*" "trailing")
+  )
+)
+
+(define-method index_to_x_full
+  (of-object "PangoGlyphString")
+  (c-name "pango_glyph_string_index_to_x_full")
+  (return-type "none")
+  (parameters
+    '("const-char*" "text")
+    '("int" "length")
+    '("PangoAnalysis*" "analysis")
+    '("PangoLogAttr*" "attrs")
+    '("int" "index_")
+    '("gboolean" "trailing")
+    '("int*" "x_pos")
   )
 )
 
@@ -3023,11 +3214,16 @@
   )
 )
 
-(define-function pango_reorder_items
-  (c-name "pango_reorder_items")
-  (return-type "GList*")
+(define-function pango_shape_item
+  (c-name "pango_shape_item")
+  (return-type "none")
   (parameters
-    '("GList*" "logical_items")
+    '("PangoItem*" "item")
+    '("const-char*" "paragraph_text")
+    '("int" "paragraph_length")
+    '("PangoLogAttr*" "log_attrs")
+    '("PangoGlyphString*" "glyphs")
+    '("PangoShapeFlags" "flags")
   )
 )
 
@@ -3189,6 +3385,14 @@
 
 ;; From pango-impl-utils.h
 
+(define-function pango_is_default_ignorable
+  (c-name "pango_is_default_ignorable")
+  (return-type "gboolean")
+  (parameters
+    '("gunichar" "ch")
+  )
+)
+
 
 
 ;; From pango-item.h
@@ -3235,6 +3439,41 @@
   )
 )
 
+(define-function pango_reorder_items
+  (c-name "pango_reorder_items")
+  (return-type "GList*")
+  (parameters
+    '("GList*" "items")
+  )
+)
+
+(define-function pango_itemize
+  (c-name "pango_itemize")
+  (return-type "GList*")
+  (parameters
+    '("PangoContext*" "context")
+    '("const-char*" "text")
+    '("int" "start_index")
+    '("int" "length")
+    '("PangoAttrList*" "attrs")
+    '("PangoAttrIterator*" "cached_iter")
+  )
+)
+
+(define-function pango_itemize_with_base_dir
+  (c-name "pango_itemize_with_base_dir")
+  (return-type "GList*")
+  (parameters
+    '("PangoContext*" "context")
+    '("PangoDirection" "base_dir")
+    '("const-char*" "text")
+    '("int" "start_index")
+    '("int" "length")
+    '("PangoAttrList*" "attrs")
+    '("PangoAttrIterator*" "cached_iter")
+  )
+)
+
 
 
 ;; From pango-language.h
@@ -3242,6 +3481,16 @@
 (define-function pango_language_get_type
   (c-name "pango_language_get_type")
   (return-type "GType")
+)
+
+(define-function pango_language_get_default
+  (c-name "pango_language_get_default")
+  (return-type "PangoLanguage*")
+)
+
+(define-function pango_language_get_preferred
+  (c-name "pango_language_get_preferred")
+  (return-type "PangoLanguage**")
 )
 
 (define-function pango_language_from_string
@@ -3262,16 +3511,6 @@
   (of-object "PangoLanguage")
   (c-name "pango_language_get_sample_string")
   (return-type "const-char*")
-)
-
-(define-function pango_language_get_default
-  (c-name "pango_language_get_default")
-  (return-type "PangoLanguage*")
-)
-
-(define-function pango_language_get_preferred
-  (c-name "pango_language_get_preferred")
-  (return-type "PangoLanguage**")
 )
 
 (define-method matches
@@ -3520,6 +3759,21 @@
   (return-type "gboolean")
 )
 
+(define-method set_justify_last_line
+  (of-object "PangoLayout")
+  (c-name "pango_layout_set_justify_last_line")
+  (return-type "none")
+  (parameters
+    '("gboolean" "justify")
+  )
+)
+
+(define-method get_justify_last_line
+  (of-object "PangoLayout")
+  (c-name "pango_layout_get_justify_last_line")
+  (return-type "gboolean")
+)
+
 (define-method set_auto_dir
   (of-object "PangoLayout")
   (c-name "pango_layout_set_auto_dir")
@@ -3680,6 +3934,17 @@
   )
 )
 
+(define-method get_caret_pos
+  (of-object "PangoLayout")
+  (c-name "pango_layout_get_caret_pos")
+  (return-type "none")
+  (parameters
+    '("int" "index_")
+    '("PangoRectangle*" "strong_pos")
+    '("PangoRectangle*" "weak_pos")
+  )
+)
+
 (define-method move_cursor_visually
   (of-object "PangoLayout")
   (c-name "pango_layout_move_cursor_visually")
@@ -3788,6 +4053,42 @@
   (return-type "GSList*")
 )
 
+(define-method serialize
+  (of-object "PangoLayout")
+  (c-name "pango_layout_serialize")
+  (return-type "GBytes*")
+  (parameters
+    '("PangoLayoutSerializeFlags" "flags")
+  )
+)
+
+(define-method write_to_file
+  (of-object "PangoLayout")
+  (c-name "pango_layout_write_to_file")
+  (return-type "gboolean")
+  (parameters
+    '("PangoLayoutSerializeFlags" "flags")
+    '("const-char*" "filename")
+    '("GError**" "error")
+  )
+)
+
+(define-function pango_layout_deserialize_error_quark
+  (c-name "pango_layout_deserialize_error_quark")
+  (return-type "GQuark")
+)
+
+(define-function pango_layout_deserialize
+  (c-name "pango_layout_deserialize")
+  (return-type "PangoLayout*")
+  (parameters
+    '("PangoContext*" "context")
+    '("GBytes*" "bytes")
+    '("PangoLayoutDeserializeFlags" "flags")
+    '("GError**" "error")
+  )
+)
+
 (define-function pango_layout_line_get_type
   (c-name "pango_layout_line_get_type")
   (return-type "GType")
@@ -3803,6 +4104,30 @@
   (of-object "PangoLayoutLine")
   (c-name "pango_layout_line_unref")
   (return-type "none")
+)
+
+(define-method get_start_index
+  (of-object "PangoLayoutLine")
+  (c-name "pango_layout_line_get_start_index")
+  (return-type "int")
+)
+
+(define-method get_length
+  (of-object "PangoLayoutLine")
+  (c-name "pango_layout_line_get_length")
+  (return-type "int")
+)
+
+(define-method is_paragraph_start
+  (of-object "PangoLayoutLine")
+  (c-name "pango_layout_line_is_paragraph_start")
+  (return-type "gboolean")
+)
+
+(define-method get_resolved_direction
+  (of-object "PangoLayoutLine")
+  (c-name "pango_layout_line_get_resolved_direction")
+  (return-type "PangoDirection")
 )
 
 (define-method x_to_index
@@ -4020,6 +4345,51 @@
   (of-object "PangoLayoutIter")
   (c-name "pango_layout_iter_get_baseline")
   (return-type "int")
+)
+
+(define-method get_run_baseline
+  (of-object "PangoLayoutIter")
+  (c-name "pango_layout_iter_get_run_baseline")
+  (return-type "int")
+)
+
+
+
+;; From pango-markup.h
+
+(define-function pango_markup_parser_new
+  (c-name "pango_markup_parser_new")
+  (is-constructor-of "PangoMarkupParser")
+  (return-type "GMarkupParseContext*")
+  (parameters
+    '("gunichar" "accel_marker")
+  )
+)
+
+(define-function pango_markup_parser_finish
+  (c-name "pango_markup_parser_finish")
+  (return-type "gboolean")
+  (parameters
+    '("GMarkupParseContext*" "context")
+    '("PangoAttrList**" "attr_list")
+    '("char**" "text")
+    '("gunichar*" "accel_char")
+    '("GError**" "error")
+  )
+)
+
+(define-function pango_parse_markup
+  (c-name "pango_parse_markup")
+  (return-type "gboolean")
+  (parameters
+    '("const-char*" "markup_text")
+    '("int" "length")
+    '("gunichar" "accel_marker")
+    '("PangoAttrList**" "attr_list")
+    '("char**" "text")
+    '("gunichar*" "accel_char")
+    '("GError**" "error")
+  )
 )
 
 
@@ -4849,6 +5219,54 @@
   (return-type "gboolean")
 )
 
+(define-method set_positions_in_pixels
+  (of-object "PangoTabArray")
+  (c-name "pango_tab_array_set_positions_in_pixels")
+  (return-type "none")
+  (parameters
+    '("gboolean" "positions_in_pixels")
+  )
+)
+
+(define-method to_string
+  (of-object "PangoTabArray")
+  (c-name "pango_tab_array_to_string")
+  (return-type "char*")
+)
+
+(define-function pango_tab_array_from_string
+  (c-name "pango_tab_array_from_string")
+  (return-type "PangoTabArray*")
+  (parameters
+    '("const-char*" "text")
+  )
+)
+
+(define-method set_decimal_point
+  (of-object "PangoTabArray")
+  (c-name "pango_tab_array_set_decimal_point")
+  (return-type "none")
+  (parameters
+    '("int" "tab_index")
+    '("gunichar" "decimal_point")
+  )
+)
+
+(define-method get_decimal_point
+  (of-object "PangoTabArray")
+  (c-name "pango_tab_array_get_decimal_point")
+  (return-type "gunichar")
+  (parameters
+    '("int" "tab_index")
+  )
+)
+
+(define-method sort
+  (of-object "PangoTabArray")
+  (c-name "pango_tab_array_sort")
+  (return-type "none")
+)
+
 
 
 ;; From pango-types.h
@@ -5018,6 +5436,17 @@
   (return-type "gboolean")
   (parameters
     '("gunichar" "ch")
+  )
+)
+
+(define-function pango_find_paragraph_boundary
+  (c-name "pango_find_paragraph_boundary")
+  (return-type "none")
+  (parameters
+    '("const-char*" "text")
+    '("int" "length")
+    '("int*" "paragraph_delimiter_index")
+    '("int*" "next_paragraph_start")
   )
 )
 
@@ -5490,6 +5919,21 @@
   (return-type "GType")
 )
 
+(define-function pango_text_transform_get_type
+  (c-name "pango_text_transform_get_type")
+  (return-type "GType")
+)
+
+(define-function pango_baseline_shift_get_type
+  (c-name "pango_baseline_shift_get_type")
+  (return-type "GType")
+)
+
+(define-function pango_font_scale_get_type
+  (c-name "pango_font_scale_get_type")
+  (return-type "GType")
+)
+
 (define-function pango_bidi_type_get_type
   (c-name "pango_bidi_type_get_type")
   (return-type "GType")
@@ -5557,6 +6001,21 @@
 
 (define-function pango_ellipsize_mode_get_type
   (c-name "pango_ellipsize_mode_get_type")
+  (return-type "GType")
+)
+
+(define-function pango_layout_serialize_flags_get_type
+  (c-name "pango_layout_serialize_flags_get_type")
+  (return-type "GType")
+)
+
+(define-function pango_layout_deserialize_error_get_type
+  (c-name "pango_layout_deserialize_error_get_type")
+  (return-type "GType")
+)
+
+(define-function pango_layout_deserialize_flags_get_type
+  (c-name "pango_layout_deserialize_flags_get_type")
   (return-type "GType")
 )
 

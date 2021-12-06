@@ -4,36 +4,43 @@
 ;; typedef enum
 ;; {
 ;;   PANGO_ATTR_INVALID,           /* 0 is an invalid attribute type */
-;;   PANGO_ATTR_LANGUAGE,		/* PangoAttrLanguage */
-;;   PANGO_ATTR_FAMILY,		/* PangoAttrString */
-;;   PANGO_ATTR_STYLE,		/* PangoAttrInt */
-;;   PANGO_ATTR_WEIGHT,		/* PangoAttrInt */
-;;   PANGO_ATTR_VARIANT,		/* PangoAttrInt */
-;;   PANGO_ATTR_STRETCH,		/* PangoAttrInt */
-;;   PANGO_ATTR_SIZE,		/* PangoAttrSize */
-;;   PANGO_ATTR_FONT_DESC,		/* PangoAttrFontDesc */
-;;   PANGO_ATTR_FOREGROUND,	/* PangoAttrColor */
-;;   PANGO_ATTR_BACKGROUND,	/* PangoAttrColor */
-;;   PANGO_ATTR_UNDERLINE,		/* PangoAttrInt */
-;;   PANGO_ATTR_STRIKETHROUGH,	/* PangoAttrInt */
-;;   PANGO_ATTR_RISE,		/* PangoAttrInt */
-;;   PANGO_ATTR_SHAPE,		/* PangoAttrShape */
+;;   PANGO_ATTR_LANGUAGE,          /* PangoAttrLanguage */
+;;   PANGO_ATTR_FAMILY,            /* PangoAttrString */
+;;   PANGO_ATTR_STYLE,             /* PangoAttrInt */
+;;   PANGO_ATTR_WEIGHT,            /* PangoAttrInt */
+;;   PANGO_ATTR_VARIANT,           /* PangoAttrInt */
+;;   PANGO_ATTR_STRETCH,           /* PangoAttrInt */
+;;   PANGO_ATTR_SIZE,              /* PangoAttrSize */
+;;   PANGO_ATTR_FONT_DESC,         /* PangoAttrFontDesc */
+;;   PANGO_ATTR_FOREGROUND,        /* PangoAttrColor */
+;;   PANGO_ATTR_BACKGROUND,        /* PangoAttrColor */
+;;   PANGO_ATTR_UNDERLINE,         /* PangoAttrInt */
+;;   PANGO_ATTR_STRIKETHROUGH,     /* PangoAttrInt */
+;;   PANGO_ATTR_RISE,              /* PangoAttrInt */
+;;   PANGO_ATTR_SHAPE,             /* PangoAttrShape */
 ;;   PANGO_ATTR_SCALE,             /* PangoAttrFloat */
 ;;   PANGO_ATTR_FALLBACK,          /* PangoAttrInt */
 ;;   PANGO_ATTR_LETTER_SPACING,    /* PangoAttrInt */
-;;   PANGO_ATTR_UNDERLINE_COLOR,	/* PangoAttrColor */
+;;   PANGO_ATTR_UNDERLINE_COLOR,   /* PangoAttrColor */
 ;;   PANGO_ATTR_STRIKETHROUGH_COLOR,/* PangoAttrColor */
-;;   PANGO_ATTR_ABSOLUTE_SIZE,	/* PangoAttrSize */
-;;   PANGO_ATTR_GRAVITY,		/* PangoAttrInt */
-;;   PANGO_ATTR_GRAVITY_HINT,	/* PangoAttrInt */
-;;   PANGO_ATTR_FONT_FEATURES,	/* PangoAttrString */
-;;   PANGO_ATTR_FOREGROUND_ALPHA,	/* PangoAttrInt */
-;;   PANGO_ATTR_BACKGROUND_ALPHA,	/* PangoAttrInt */
-;;   PANGO_ATTR_ALLOW_BREAKS,	/* PangoAttrInt */
-;;   PANGO_ATTR_SHOW,		/* PangoAttrInt */
-;;   PANGO_ATTR_INSERT_HYPHENS,	/* PangoAttrInt */
-;;   PANGO_ATTR_OVERLINE,		/* PangoAttrInt */
-;;   PANGO_ATTR_OVERLINE_COLOR,	/* PangoAttrColor */
+;;   PANGO_ATTR_ABSOLUTE_SIZE,     /* PangoAttrSize */
+;;   PANGO_ATTR_GRAVITY,           /* PangoAttrInt */
+;;   PANGO_ATTR_GRAVITY_HINT,      /* PangoAttrInt */
+;;   PANGO_ATTR_FONT_FEATURES,     /* PangoAttrFontFeatures */
+;;   PANGO_ATTR_FOREGROUND_ALPHA,  /* PangoAttrInt */
+;;   PANGO_ATTR_BACKGROUND_ALPHA,  /* PangoAttrInt */
+;;   PANGO_ATTR_ALLOW_BREAKS,      /* PangoAttrInt */
+;;   PANGO_ATTR_SHOW,              /* PangoAttrInt */
+;;   PANGO_ATTR_INSERT_HYPHENS,    /* PangoAttrInt */
+;;   PANGO_ATTR_OVERLINE,          /* PangoAttrInt */
+;;   PANGO_ATTR_OVERLINE_COLOR,    /* PangoAttrColor */
+;;   PANGO_ATTR_LINE_HEIGHT,       /* PangoAttrFloat */
+;;   PANGO_ATTR_ABSOLUTE_LINE_HEIGHT, /* PangoAttrInt */
+;;   PANGO_ATTR_TEXT_TRANSFORM,    /* PangoAttrInt */
+;;   PANGO_ATTR_WORD,              /* PangoAttrInt */
+;;   PANGO_ATTR_SENTENCE,          /* PangoAttrInt */
+;;   PANGO_ATTR_BASELINE_SHIFT,    /* PangoAttrSize */
+;;   PANGO_ATTR_FONT_SCALE,        /* PangoAttrInt */
 ;; } PangoAttrType;
 
 (define-enum-extended AttrType
@@ -71,6 +78,13 @@
     '("insert-hyphens" "PANGO_ATTR_INSERT_HYPHENS" "28")
     '("overline" "PANGO_ATTR_OVERLINE" "29")
     '("overline-color" "PANGO_ATTR_OVERLINE_COLOR" "30")
+    '("line-height" "PANGO_ATTR_LINE_HEIGHT" "31")
+    '("absolute-line-height" "PANGO_ATTR_ABSOLUTE_LINE_HEIGHT" "32")
+    '("text-transform" "PANGO_ATTR_TEXT_TRANSFORM" "33")
+    '("word" "PANGO_ATTR_WORD" "34")
+    '("sentence" "PANGO_ATTR_SENTENCE" "35")
+    '("baseline-shift" "PANGO_ATTR_BASELINE_SHIFT" "36")
+    '("font-scale" "PANGO_ATTR_FONT_SCALE" "37")
   )
 )
 
@@ -135,6 +149,61 @@
   )
 )
 
+;; Original typedef:
+;; typedef enum {
+;;   PANGO_TEXT_TRANSFORM_NONE,
+;;   PANGO_TEXT_TRANSFORM_LOWERCASE,
+;;   PANGO_TEXT_TRANSFORM_UPPERCASE,
+;;   PANGO_TEXT_TRANSFORM_CAPITALIZE,
+;; } PangoTextTransform;
+
+(define-enum-extended TextTransform
+  (in-module "Pango")
+  (c-name "PangoTextTransform")
+  (values
+    '("none" "PANGO_TEXT_TRANSFORM_NONE" "0")
+    '("lowercase" "PANGO_TEXT_TRANSFORM_LOWERCASE" "1")
+    '("uppercase" "PANGO_TEXT_TRANSFORM_UPPERCASE" "2")
+    '("capitalize" "PANGO_TEXT_TRANSFORM_CAPITALIZE" "3")
+  )
+)
+
+;; Original typedef:
+;; typedef enum {
+;;   PANGO_BASELINE_SHIFT_NONE,
+;;   PANGO_BASELINE_SHIFT_SUPERSCRIPT,
+;;   PANGO_BASELINE_SHIFT_SUBSCRIPT,
+;; } PangoBaselineShift;
+
+(define-enum-extended BaselineShift
+  (in-module "Pango")
+  (c-name "PangoBaselineShift")
+  (values
+    '("none" "PANGO_BASELINE_SHIFT_NONE" "0")
+    '("superscript" "PANGO_BASELINE_SHIFT_SUPERSCRIPT" "1")
+    '("subscript" "PANGO_BASELINE_SHIFT_SUBSCRIPT" "2")
+  )
+)
+
+;; Original typedef:
+;; typedef enum {
+;;   PANGO_FONT_SCALE_NONE,
+;;   PANGO_FONT_SCALE_SUPERSCRIPT,
+;;   PANGO_FONT_SCALE_SUBSCRIPT,
+;;   PANGO_FONT_SCALE_SMALL_CAPS,
+;; } PangoFontScale;
+
+(define-enum-extended FontScale
+  (in-module "Pango")
+  (c-name "PangoFontScale")
+  (values
+    '("none" "PANGO_FONT_SCALE_NONE" "0")
+    '("superscript" "PANGO_FONT_SCALE_SUPERSCRIPT" "1")
+    '("subscript" "PANGO_FONT_SCALE_SUBSCRIPT" "2")
+    '("small-caps" "PANGO_FONT_SCALE_SMALL_CAPS" "3")
+  )
+)
+
 ;; From pango-bidi-type.h
 
 ;; Original typedef:
@@ -162,7 +231,13 @@
 ;;   PANGO_BIDI_TYPE_B,
 ;;   PANGO_BIDI_TYPE_S,
 ;;   PANGO_BIDI_TYPE_WS,
-;;   PANGO_BIDI_TYPE_ON
+;;   PANGO_BIDI_TYPE_ON,
+;; 
+;;   /* Explicit formatting */
+;;   PANGO_BIDI_TYPE_LRI,
+;;   PANGO_BIDI_TYPE_RLI,
+;;   PANGO_BIDI_TYPE_FSI,
+;;   PANGO_BIDI_TYPE_PDI
 ;; } PangoBidiType;
 
 (define-enum-extended BidiType
@@ -188,6 +263,10 @@
     '("s" "PANGO_BIDI_TYPE_S" "16")
     '("ws" "PANGO_BIDI_TYPE_WS" "17")
     '("on" "PANGO_BIDI_TYPE_ON" "18")
+    '("lri" "PANGO_BIDI_TYPE_LRI" "19")
+    '("rli" "PANGO_BIDI_TYPE_RLI" "20")
+    '("fsi" "PANGO_BIDI_TYPE_FSI" "21")
+    '("pdi" "PANGO_BIDI_TYPE_PDI" "22")
   )
 )
 
@@ -261,7 +340,12 @@
 ;; Original typedef:
 ;; typedef enum {
 ;;   PANGO_VARIANT_NORMAL,
-;;   PANGO_VARIANT_SMALL_CAPS
+;;   PANGO_VARIANT_SMALL_CAPS,
+;;   PANGO_VARIANT_ALL_SMALL_CAPS,
+;;   PANGO_VARIANT_PETITE_CAPS,
+;;   PANGO_VARIANT_ALL_PETITE_CAPS,
+;;   PANGO_VARIANT_UNICASE,
+;;   PANGO_VARIANT_TITLE_CAPS
 ;; } PangoVariant;
 
 (define-enum-extended Variant
@@ -270,6 +354,11 @@
   (values
     '("normal" "PANGO_VARIANT_NORMAL" "0")
     '("small-caps" "PANGO_VARIANT_SMALL_CAPS" "1")
+    '("all-small-caps" "PANGO_VARIANT_ALL_SMALL_CAPS" "2")
+    '("petite-caps" "PANGO_VARIANT_PETITE_CAPS" "3")
+    '("all-petite-caps" "PANGO_VARIANT_ALL_PETITE_CAPS" "4")
+    '("unicase" "PANGO_VARIANT_UNICASE" "5")
+    '("title-caps" "PANGO_VARIANT_TITLE_CAPS" "6")
   )
 )
 
@@ -473,6 +562,55 @@
     '("start" "PANGO_ELLIPSIZE_START" "1")
     '("middle" "PANGO_ELLIPSIZE_MIDDLE" "2")
     '("end" "PANGO_ELLIPSIZE_END" "3")
+  )
+)
+
+;; Original typedef:
+;; typedef enum {
+;;   PANGO_LAYOUT_SERIALIZE_DEFAULT = 0,
+;;   PANGO_LAYOUT_SERIALIZE_CONTEXT = 1 << 0,
+;;   PANGO_LAYOUT_SERIALIZE_OUTPUT = 1 << 1,
+;; } PangoLayoutSerializeFlags;
+
+(define-flags-extended LayoutSerializeFlags
+  (in-module "Pango")
+  (c-name "PangoLayoutSerializeFlags")
+  (values
+    '("default" "PANGO_LAYOUT_SERIALIZE_DEFAULT" "0x0")
+    '("context" "PANGO_LAYOUT_SERIALIZE_CONTEXT" "1 << 0")
+    '("output" "PANGO_LAYOUT_SERIALIZE_OUTPUT" "1 << 1")
+  )
+)
+
+;; Original typedef:
+;; typedef enum {
+;;   PANGO_LAYOUT_DESERIALIZE_INVALID,
+;;   PANGO_LAYOUT_DESERIALIZE_INVALID_VALUE,
+;;   PANGO_LAYOUT_DESERIALIZE_MISSING_VALUE,
+;; } PangoLayoutDeserializeError;
+
+(define-enum-extended LayoutDeserializeError
+  (in-module "Pango")
+  (c-name "PangoLayoutDeserializeError")
+  (values
+    '("invalid" "PANGO_LAYOUT_DESERIALIZE_INVALID" "0")
+    '("invalid-value" "PANGO_LAYOUT_DESERIALIZE_INVALID_VALUE" "1")
+    '("missing-value" "PANGO_LAYOUT_DESERIALIZE_MISSING_VALUE" "2")
+  )
+)
+
+;; Original typedef:
+;; typedef enum {
+;;   PANGO_LAYOUT_DESERIALIZE_DEFAULT = 0,
+;;   PANGO_LAYOUT_DESERIALIZE_CONTEXT = 1 << 0,
+;; } PangoLayoutDeserializeFlags;
+
+(define-flags-extended LayoutDeserializeFlags
+  (in-module "Pango")
+  (c-name "PangoLayoutDeserializeFlags")
+  (values
+    '("default" "PANGO_LAYOUT_DESERIALIZE_DEFAULT" "0x0")
+    '("context" "PANGO_LAYOUT_DESERIALIZE_CONTEXT" "1 << 0")
   )
 )
 
@@ -788,15 +926,10 @@
 ;; Original typedef:
 ;; typedef enum
 ;; {
-;;   PANGO_TAB_LEFT
-;; 
-;;   /* These are not supported now, but may be in the
-;;    * future.
-;;    *
-;;    *  PANGO_TAB_RIGHT,
-;;    *  PANGO_TAB_CENTER,
-;;    *  PANGO_TAB_NUMERIC
-;;    */
+;;   PANGO_TAB_LEFT,
+;;   PANGO_TAB_RIGHT,
+;;   PANGO_TAB_CENTER,
+;;   PANGO_TAB_DECIMAL
 ;; } PangoTabAlign;
 
 (define-enum-extended TabAlign
@@ -804,6 +937,9 @@
   (c-name "PangoTabAlign")
   (values
     '("left" "PANGO_TAB_LEFT" "0")
+    '("right" "PANGO_TAB_RIGHT" "1")
+    '("center" "PANGO_TAB_CENTER" "2")
+    '("decimal" "PANGO_TAB_DECIMAL" "3")
   )
 )
 
