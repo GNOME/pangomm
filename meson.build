@@ -101,7 +101,7 @@ glibmm_req = '>= 2.68.0'
 
 # Pango supported pkg-config files on MSVC files for a good while,
 # so just use that
-pangocairo_req = '>= 1.45.1'
+pangocairo_req = '>= 1.49.4'
 pangocairo_dep = dependency('pangocairo', version: pangocairo_req)
 
 glibmm_req_minor_ver = '68'

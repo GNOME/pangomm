@@ -26,14 +26,14 @@ _DEFS(pangomm,pango)
 namespace Pango
 {
 
-/** A Pango::AttrList represents a list of attributes that apply to a section of text.
+/** A %Pango::AttrList represents a list of attributes that apply to a section of text.
  * The attributes are, in general, allowed to overlap in an arbitrary fashion, however,
  * if the attributes are manipulated only through Pango::AttrList::change(), the overlap between properties will meet stricter criteria.
  *
- * Since the Pango::AttrList structure is stored as a linear list, it is not suitable for storing attributes for large amounts of text.
- * In general, you should not use a single Pango::AttrList for more than one paragraph of text.
+ * Since the %Pango::AttrList structure is stored as a linear list, it is not suitable for storing attributes for large amounts of text.
+ * In general, you should not use a single %Pango::AttrList for more than one paragraph of text.
  *
- * When obtaining an AttrList, you should check that it is valid. For instance, if(attrlist).
+ * When obtaining an %AttrList, you should check that it is valid. For instance, if(attrlist).
  */
 class PANGOMM_API AttrList
 {
@@ -69,7 +69,7 @@ public:
    */
   AttrList(const Glib::ustring& markup_text, gunichar accel_marker, Glib::ustring& text, gunichar& accel_char);
 
-  ///Tests whether the AttrList is valid.
+  ///Tests whether the %AttrList is valid.
   explicit operator bool() const;
 
   void insert(Attribute& attr);
@@ -85,6 +85,11 @@ public:
   _WRAP_METHOD(std::vector<Attribute> get_attributes() const, pango_attr_list_get_attributes, newin "2,50")
 
   _WRAP_METHOD(bool equal(const AttrList& other_list) const, pango_attr_list_equal, newin "2,50")
+  _WRAP_METHOD(Glib::ustring to_string() const, pango_attr_list_to_string, newin "2,50")
+  // Don't replace from_string() by a constructor. A call to such a constructor would be
+  // ambiguous because of AttrList(markup_text, accel_marker=0).
+#m4 _CONVERSION(`PangoAttrList*',`AttrList',`AttrList($3, false)')
+  _WRAP_METHOD(static AttrList from_string(const Glib::ustring& text), pango_attr_list_from_string, newin "2,50")
   _WRAP_METHOD(AttrIter get_iter(), pango_attr_list_get_iterator)
 
   //TODO: Though it doesn't seem important:
