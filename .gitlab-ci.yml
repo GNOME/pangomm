@@ -99,6 +99,10 @@ release_gcc_build:
     # -Ddebug=false + -Doptimization=3 correspond to -Dbuildtype=release
     - meson --prefix=/usr --libdir=lib -Ddebug=false -Doptimization=3 -Dwarnings=fatal
     - meson compile
+    # Must wrap the command in single quotes because of the colon.
+    # See https://gitlab.gnome.org/help/ci/yaml/script.md#use-special-characters-with-script
+    # Don't test subprojects.
+    - 'meson test --suite pangomm:'
     - meson install
   cache:
     key: build-deps
@@ -125,6 +129,8 @@ release_clang_build:
     # -Ddebug=false + -Doptimization=3 correspond to -Dbuildtype=release
     - CC=clang CXX=clang++ meson --prefix=/usr --libdir=lib -Ddebug=false -Doptimization=3 -Dwarnings=fatal
     - meson compile
+    # Don't test subprojects.
+    - 'meson test --suite pangomm:'
     - meson install
   allow_failure: true
   cache:
