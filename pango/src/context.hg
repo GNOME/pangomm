@@ -88,8 +88,8 @@ public:
 
   _WRAP_METHOD(void set_font_map(const Glib::RefPtr<FontMap>& font_map), pango_context_set_font_map)
 
-  _WRAP_METHOD(Glib::RefPtr<FontMap> get_font_map(), pango_context_get_font_map)
-  _WRAP_METHOD(Glib::RefPtr<const FontMap> get_font_map() const, pango_context_get_font_map)
+  _WRAP_METHOD(Glib::RefPtr<FontMap> get_font_map(), pango_context_get_font_map, refreturn)
+  _WRAP_METHOD(Glib::RefPtr<const FontMap> get_font_map() const, pango_context_get_font_map, refreturn, constversion)
 
   _WRAP_METHOD(guint get_serial() const, pango_context_get_serial)
 
@@ -174,4 +174,3 @@ public:
 };
 
 } /* namespace Pango */
-
