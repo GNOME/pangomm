@@ -35,7 +35,7 @@ std::vector<Glib::RefPtr<FontFamily>> Context::list_families() const
 
 Pango::FontMetrics Context::get_metrics(const FontDescription& desc) const
 {
-  return FontMetrics(pango_context_get_metrics(const_cast<PangoContext*>(gobj()), desc.gobj(), 0));
+  return FontMetrics(pango_context_get_metrics(const_cast<PangoContext*>(gobj()), desc.gobj(), nullptr));
 }
 
 struct ItemTraits
@@ -57,7 +57,7 @@ std::vector<Item> Context::itemize(const Glib::ustring& text, const AttrList& at
   return ListHandler_Item::list_to_vector(
       pango_itemize(const_cast<PangoContext*>(gobj()),
                     text.c_str(), 0, text.bytes(),
-                    const_cast<PangoAttrList*>(attrs.gobj()), 0),
+                    const_cast<PangoAttrList*>(attrs.gobj()), nullptr),
       Glib::OWNERSHIP_DEEP);
 }
 
@@ -89,4 +89,3 @@ Matrix Context::get_matrix() const
 }
 
 } /* namespace Pango */
-
