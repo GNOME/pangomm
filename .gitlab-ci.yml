@@ -47,9 +47,12 @@ build_deps:
   extends: .build_default
   stage: deps
   variables:
-    DEPENDENCIES: $MESON_GCC_DEPS
+    DEPENDENCIES: $MESON_GCC_DEPS docbook5-xml docbook-xsl
   script:
     # Build and cache dependencies that can't be installed with apt.
+    # Install to ./installdir, with the contents of the installed files
+    # (notably .pc files) suited for installation to /usr.
+    - export DESTDIR=`pwd`/installdir
     # Build libsigc++3
     - if test ! -d libsigc; then
     - git clone --branch 3.2.0 --depth 1 https://github.com/libsigcplusplus/libsigcplusplus.git libsigc
@@ -57,9 +60,10 @@ build_deps:
     - mkdir _build && cd _build
     - meson --prefix=/usr --libdir=lib -Dvalidation=false -Dbuild-examples=false -Dbuildtype=release
     - meson compile
-    - meson install
     - cd ../..
     - fi
+    - ninja -C libsigc/_build install
+    - cp -r installdir/usr /
     # Build glibmm-2.68
     - if test ! -d glibmm; then
     - git clone --branch 2.70.0 --depth 1 https://gitlab.gnome.org/GNOME/glibmm.git glibmm
@@ -69,6 +73,7 @@ build_deps:
     - meson compile
     - cd ../..
     - fi
+    - ninja -C glibmm/_build install
     # Build cairomm-1.16
     - if test ! -d cairomm; then
     - git clone --branch 1.16.1 --depth 1 https://gitlab.freedesktop.org/cairo/cairomm.git cairomm
@@ -78,6 +83,7 @@ build_deps:
     - meson compile
     - cd ../..
     - fi
+    - ninja -C cairomm/_build install
   cache:
     key: build-deps
     paths:
@@ -85,14 +91,12 @@ build_deps:
       - glibmm/
       - cairomm/
     policy: pull-push
-  # Transfer the built dependencies to later stages as artifacts.
-  # The cache does not always work.
+  # Transfer the installed part of the built dependencies to later stages
+  # as artifacts. The cache does not always work.
   # https://gitlab.gnome.org/Infrastructure/Infrastructure/-/issues/775
   artifacts:
     paths:
-      - libsigc/
-      - glibmm/
-      - cairomm/
+      - installdir/
     expire_in: 1 day
 
 release_gcc_build:
@@ -101,9 +105,7 @@ release_gcc_build:
   variables:
     DEPENDENCIES: $MESON_GCC_DEPS
   script:
-    - ninja -C libsigc/_build install
-    - ninja -C glibmm/_build install
-    - ninja -C cairomm/_build install
+    - cp -r installdir/usr /
     - mkdir _build && cd _build
     # -Ddebug=false + -Doptimization=3 correspond to -Dbuildtype=release
     - meson --prefix=/usr --libdir=lib -Ddebug=false -Doptimization=3 -Dwarnings=fatal
@@ -124,9 +126,7 @@ release_clang_build:
   variables:
     DEPENDENCIES: $MESON_GCC_DEPS clang
   script:
-    - ninja -C libsigc/_build install
-    - ninja -C glibmm/_build install
-    - ninja -C cairomm/_build install
+    - cp -r installdir/usr /
     - mkdir _build && cd _build
     # -Ddebug=false + -Doptimization=3 correspond to -Dbuildtype=release
     - CC=clang CXX=clang++ meson --prefix=/usr --libdir=lib -Ddebug=false -Doptimization=3 -Dwarnings=fatal
