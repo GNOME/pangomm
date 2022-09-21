@@ -1,3 +1,19 @@
+2.50.1 (stable):
+
+* Context::get_font_map(): Fix reference count
+  (Kjell Ahlstedt)
+
+Build:
+* Meson build: Specify 'check' option in run_command()
+  Will be necessary with future versions of Meson.
+  Require Meson >= 0.55.0
+* Meson build: Check if Perl is required for building documentation
+* Meson build: Avoid unnecessary configuration warnings
+  (Kjell Ahlstedt)
+* Meson build: Re-organize warning-related compiler flags for MSVC
+  (Chun-wei Fan)
+
+
 2.50.0 (stable):
 
 * AttrList: Add get_attributes(), update(), equal()
