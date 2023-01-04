@@ -1,6 +1,6 @@
 # MSVC_NMake/pangomm
 
-# Input: pkg_conf_data, pangommconfig_h
+# Input: pkg_conf_data, pangommconfig_h_meson
 # Output: pangomm_rc
 
 pangomm_rc = configure_file(
@@ -9,9 +9,9 @@ pangomm_rc = configure_file(
   configuration: pkg_conf_data,
 )
 
-# Copy the generated configuration header into the MSVC project directory.
+# Make a copy of the generated configuration header in the MSVC project directory.
 configure_file(
-  input: pangommconfig_h,
+  input: pangommconfig_h_meson,
   output: 'pangommconfig.h',
-  copy: true,
+  configuration: pkg_conf_data,
 )
