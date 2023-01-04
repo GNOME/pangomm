@@ -5,7 +5,7 @@
 #        install_pkgconfigdir, install_libdir, build_deprecated_api,
 #        pangomm_major_version, pangomm_minor_version, pangomm_micro_version,
 #        msvc14x_toolset_ver
-# Output: pkg_conf_data, install_includeconfigdir, pangommconfig_h
+# Output: pkg_conf_data, install_includeconfigdir, pangommconfig_h_meson
 
 pkg_conf_data = configuration_data()
 pkg_conf_data.set('prefix', install_prefix)
@@ -42,9 +42,10 @@ configure_file(
   configuration: pkg_conf_data,
 )
 
+pangommconfig_h_meson = files('pangommconfig.h.meson')
 install_includeconfigdir = install_libdir / pangomm_pcname / 'include'
-pangommconfig_h = configure_file(
-  input: 'pangommconfig.h.meson',
+configure_file(
+  input: pangommconfig_h_meson,
   output: 'pangommconfig.h',
   configuration: pkg_conf_data,
   install_dir: install_includeconfigdir,
