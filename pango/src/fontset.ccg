@@ -16,6 +16,8 @@
  * Software Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
+extern "C"
+{
 static gboolean fontset_foreach_callback(PangoFontset* /* fontset */, PangoFont* font, gpointer data)
 {
   try
@@ -32,7 +34,7 @@ static gboolean fontset_foreach_callback(PangoFontset* /* fontset */, PangoFont*
 
   return false; //arbitrary default
 }
-
+} // extern "C"
 
 namespace Pango
 {
