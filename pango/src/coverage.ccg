@@ -18,3 +18,15 @@
  */
 
 using Level = Pango::Coverage::Level;
+
+// The g_object_ref() preprocessor macro can't be used in a _CLASS_OPAQUE_REFCOUNTED.
+// The g_object_ref() function is fine.
+//-- pango/pangomm/coverage.cc: In member function ‘PangoCoverage* Pango::Coverage::gobj_copy() const’:
+//-- glib-2.0/gobject/gobject.h:548:28: error: type qualifiers ignored on cast result type [-Werror=ignored-qualifiers]
+//--   548 | #define g_object_ref(Obj) ((glib_typeof (Obj)) (g_object_ref) (Obj))
+//--       |                            ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//-- pango/pangomm/coverage.cc:109:3: note: in expansion of macro ‘g_object_ref’
+//--   109 |   g_object_ref(gobject);
+//--       |   ^~~~~~~~~~~~
+// gobject is defined as a const pointer to a non-const object (const auto).
+#undef g_object_ref
