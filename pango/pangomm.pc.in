@@ -10,12 +10,12 @@ gmmprocm4dir=${libdir}/@PANGOMM_MODULE_NAME@/proc/m4
 docdir=${datarootdir}/doc/@PANGOMM_MODULE_NAME@
 doxytagfile=${docdir}/reference/@PANGOMM_MODULE_NAME@.tag
 htmlrefdir=${docdir}/reference/html
-htmlrefpub=http://library.gnome.org/devel/@PACKAGE_TARNAME@/unstable/
+htmlrefpub=https://gnome.pages.gitlab.gnome.org/@PACKAGE_TARNAME@/
 
 Name: pangomm
 Description: C++ binding for Pango
 Version: @PACKAGE_VERSION@
-URL: http://www.gtkmm.org/
+URL: https://www.gtkmm.org/
 Requires: @PANGOMM_MODULES@
 Libs: -L${libdir} -lpangomm@MSVC_TOOLSET_VER@-@PANGOMM_API_VERSION@
 Cflags: -I${includedir}/@PANGOMM_MODULE_NAME@  -I${libdir}/@PANGOMM_MODULE_NAME@/include
