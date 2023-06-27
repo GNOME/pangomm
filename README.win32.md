@@ -134,8 +134,9 @@ pkg-config files, which point to the corresponding locations of its headers
 and .lib's and the headers and .lib's of all of its dependencies. You will need to
 set `%LIB%` to include the location where
 `glibmm_generate_extra_defs-vc14[x]-2.68.lib` from glibmm is, if not already in
-there, preferably to the start of your `%LIB%`.
-
+there, preferably to the start of your `%LIB%`. glibmm-2.68 and cairomm-1.16 refer
+to the C++17 branches of glibmm and cairomm, where they refer to glibmm-2.68.x and
+cairomm-1.16.x (and later branches, including their master/main branches).
 
 When building with Meson, if building from a GIT checkout or if building with 
 `maintainer-mode` enabled, you will also need a PERL interpreter and the `m4.exe` 
