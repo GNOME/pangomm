@@ -97,7 +97,6 @@ dependent code.
 For the NMake builds, the following targets are supported:
 
   * `all` (or no target specified): Build the pangomm DLL and .lib
-  * `tests`: Build the test programs for pangomm
   * `install`: Copy the built pangomm DLL, .lib and headers to appropriate
 locations under `$(PREFIX)`.
   * `clean`: Remove all the built files.  This includes the generated sources
@@ -139,9 +138,14 @@ For building with Meson, please see `README.md` for further instructions. Please
 note that using `-Ddefault_library=[static|both]` for Visual Studio builds is not 
 supported and is thus not allowed.
 
-You will need to have a working copy of glibmm, cairomm and PangoCairo's
+You will need to have a working copy of glibmm-2.4, cairomm-1.0 and PangoCairo's
 pkg-config files, which point to the corresponding locations of its headers
-and .lib's and the headers and .lib's of all of its dependencies.
+and .lib's and the headers and .lib's of all of its dependencies. You will need to
+set `%LIB%` to include the location where
+`glibmm_generate_extra_defs-vc14[x]-2.4.lib` from glibmm is, if not already in
+there, preferably to the start of your `%LIB%`. glibmm-2.4 and cairomm-1.0 refer to
+the C++11 branches of glibmm and cairomm, where the latest versions are
+glibmm-2.66.x and cairomm-1.14.x.
 
 When building with Meson, if building from a GIT checkout or if building with 
 `maintainer-mode` enabled, you will also need a PERL interpreter and the `m4.exe` 
