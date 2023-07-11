@@ -1,6 +1,35 @@
 # pangomm
 This is pangomm, a C++ API for Pango. 
-See http://www.gtkmm.org/
+
+# General information
+
+pangomm-1.4 and pangomm-2.48 are different parallel-installable ABIs.
+This file describes pangomm-2.48.
+
+Web site
+ - https://www.gtkmm.org
+
+Download location
+ - https://download.gnome.org/sources/pangomm
+
+Reference documentation
+ - https://gnome.pages.gitlab.gnome.org/pangomm
+
+Tarballs contain reference documentation. In tarballs generated with Meson,
+see the untracked/docs/reference/html directory.
+
+Discussion on GNOME's discourse forum
+ - https://discourse.gnome.org/tag/cplusplus
+ - https://discourse.gnome.org/c/platform
+
+Git repository
+ - https://gitlab.gnome.org/GNOME/pangomm
+
+Bugs can be reported to
+ - https://gitlab.gnome.org/GNOME/pangomm/issues
+
+Patches can be submitted to
+ - https://gitlab.gnome.org/GNOME/pangomm/merge_requests
 
 # Building
 
@@ -9,7 +38,7 @@ supplier of your operating system, such as your Linux distribution.
 
 ## Building on Windows
 
-See README.win32.md
+See [README.win32](README.win32.md)
 
 ## Building from a release tarball
 

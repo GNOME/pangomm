@@ -25,7 +25,7 @@ AC_CONFIG_AUX_DIR([build])
 AC_CONFIG_MACRO_DIR([build])
 AC_CONFIG_HEADERS([config.h pango/pangommconfig.h])
 
-AM_INIT_AUTOMAKE([1.9 -Wno-portability check-news dist-bzip2 no-define nostdinc tar-ustar])
+AM_INIT_AUTOMAKE([1.9 -Wno-portability check-news dist-bzip2 no-define nostdinc tar-ustar foreign])
 # Support silent build rules.
 # Disable by either passing --disable-silent-rules to configure or passing V=1 to make.
 m4_ifdef([AM_SILENT_RULES], [AM_SILENT_RULES([yes])])
