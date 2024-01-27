@@ -1,3 +1,30 @@
+2.50.2 (stable):
+
+* Fontset: Use callback functions with C linkage
+  (Kjell Ahlstedt) Issue glibmm#1 (Murray Cumming)
+* Coverage: Don't use deprecated pango_coverage_ref/unref()
+  (Kjell Ahlstedt)
+
+Documentation:
+* Doxyfile.in: Don't hide undocumented classes
+  (Kjell Ahlstedt)
+* README.win32: Convert to MarkDown and rename to README.win32.md
+  Make dependencies clearer
+  (Chun-wei Fan)
+* Remove AUTHORS, HACKING, README.SUN; add general info to README.md
+  (Kjell Ahlstedt) Issue gtkmm#140
+
+Meson build:
+* Detect if we build from a git subtree
+  (William Roy) Merge request gtkmm!72
+* Don't copy files with configure_file()
+  (Kjell Ahlstedt)
+* Fix the evaluation of is_git_build on Windows
+  (Kjell Ahlstedt) Issue gtkmm#131 (William Roy)
+* Don't fail if warning_level=everything
+  (Daniel Boles, Kjell Ahlstedt) Merge request gtkmm!87
+
+
 2.50.1 (stable):
 
 * Context::get_font_map(): Fix reference count
