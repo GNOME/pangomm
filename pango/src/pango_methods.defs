@@ -2821,6 +2821,18 @@
   )
 )
 
+(define-method reload_font
+  (of-object "PangoFontMap")
+  (c-name "pango_font_map_reload_font")
+  (return-type "PangoFont*")
+  (parameters
+    '("PangoFont*" "font")
+    '("double" "scale")
+    '("PangoContext*" "context")
+    '("const-char*" "variations")
+  )
+)
+
 
 
 ;; From pango-fontset.h
@@ -2829,6 +2841,35 @@
   (c-name "pango_fontset_get_type")
   (return-type "GType")
 )
+
+(define-method get_font
+  (of-object "PangoFontset")
+  (c-name "pango_fontset_get_font")
+  (return-type "PangoFont*")
+  (parameters
+    '("guint" "wc")
+  )
+)
+
+(define-method get_metrics
+  (of-object "PangoFontset")
+  (c-name "pango_fontset_get_metrics")
+  (return-type "PangoFontMetrics*")
+)
+
+(define-method foreach
+  (of-object "PangoFontset")
+  (c-name "pango_fontset_foreach")
+  (return-type "none")
+  (parameters
+    '("PangoFontsetForeachFunc" "func")
+    '("gpointer" "data")
+  )
+)
+
+
+
+;; From pango-fontset-simple.h
 
 (define-function pango_fontset_simple_get_type
   (c-name "pango_fontset_simple_get_type")
@@ -2857,31 +2898,6 @@
   (of-object "PangoFontsetSimple")
   (c-name "pango_fontset_simple_size")
   (return-type "int")
-)
-
-(define-method get_font
-  (of-object "PangoFontset")
-  (c-name "pango_fontset_get_font")
-  (return-type "PangoFont*")
-  (parameters
-    '("guint" "wc")
-  )
-)
-
-(define-method get_metrics
-  (of-object "PangoFontset")
-  (c-name "pango_fontset_get_metrics")
-  (return-type "PangoFontMetrics*")
-)
-
-(define-method foreach
-  (of-object "PangoFontset")
-  (c-name "pango_fontset_foreach")
-  (return-type "none")
-  (parameters
-    '("PangoFontsetForeachFunc" "func")
-    '("gpointer" "data")
-  )
 )
 
 
@@ -4505,6 +4521,12 @@
   )
 )
 
+(define-method get_slant_ratio
+  (of-object "PangoMatrix")
+  (c-name "pango_matrix_get_slant_ratio")
+  (return-type "double")
+)
+
 
 
 ;; From pango-modules.h
@@ -5669,6 +5691,16 @@
   (return-type "PangoFontDescription*")
   (parameters
     '("const-LOGFONTW*" "lfp")
+  )
+)
+
+(define-function pango_win32_font_map_add_font_file
+  (c-name "pango_win32_font_map_add_font_file")
+  (return-type "gboolean")
+  (parameters
+    '("PangoFontMap*" "font_map")
+    '("const-char*" "font_file_path")
+    '("GError**" "error")
   )
 )
 

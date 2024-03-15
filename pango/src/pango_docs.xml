@@ -5,10 +5,10 @@
 within the available space.
 
 If the `PangoLayout` is set to justify using [method@Pango.Layout.set_justify],
-this only has effect for partial lines.
+this only affects partial lines.
 
 See [method@Pango.Layout.set_auto_dir] for how text direction affects
-the interpretation of `PangoAlignment values.
+the interpretation of `PangoAlignment` values.
 
 </description>
 <parameters>
@@ -366,14 +366,14 @@ algorithm.
 
 Not every value in this enumeration makes sense for every usage of
 `PangoDirection`; for example, the return value of [func@unichar_direction]
-and [func@find_base_dir] cannot be %PANGO_DIRECTION_WEAK_LTR or
-%PANGO_DIRECTION_WEAK_RTL, since every character is either neutral
-or has a strong direction; on the other hand %PANGO_DIRECTION_NEUTRAL
+and [func@find_base_dir] cannot be `PANGO_DIRECTION_WEAK_LTR` or
+`PANGO_DIRECTION_WEAK_RTL`, since every character is either neutral
+or has a strong direction; on the other hand `PANGO_DIRECTION_NEUTRAL`
 doesn't make sense to pass to [func@itemize_with_base_dir].
 
-The %PANGO_DIRECTION_TTB_LTR, %PANGO_DIRECTION_TTB_RTL values come from
+The `PANGO_DIRECTION_TTB_LTR`, `PANGO_DIRECTION_TTB_RTL` values come from
 an earlier interpretation of this enumeration as the writing direction
-of a block of text and are no longer used; See `PangoGravity` for how
+of a block of text and are no longer used. See `PangoGravity` for how
 vertical text is handled in Pango.
 
 If you are interested in text direction, you should really use fribidi
@@ -392,12 +392,12 @@ public apis.
 </parameter>
 <parameter name="PANGO_DIRECTION_TTB_LTR">
 <parameter_description> Deprecated value; treated the
-same as %PANGO_DIRECTION_RTL.
+same as `PANGO_DIRECTION_RTL`.
 </parameter_description>
 </parameter>
 <parameter name="PANGO_DIRECTION_TTB_RTL">
 <parameter_description> Deprecated value; treated the
-same as %PANGO_DIRECTION_LTR
+same as `PANGO_DIRECTION_LTR`
 </parameter_description>
 </parameter>
 <parameter name="PANGO_DIRECTION_WEAK_LTR">
@@ -455,6 +455,61 @@ The PangoFc font map this font is associated with.
 <property name="PangoFcFont:pattern">
 <description>
 The fontconfig pattern for this font.
+
+</description>
+</property>
+
+<property name="PangoFontFamily:is-monospace">
+<description>
+Is this a monospace font
+
+Since: 1.52
+
+</description>
+</property>
+
+<property name="PangoFontFamily:is-variable">
+<description>
+Is this a variable font
+
+Since: 1.52
+
+</description>
+</property>
+
+<property name="PangoFontFamily:item-type">
+<description>
+The type of items contained in this list.
+
+</description>
+</property>
+
+<property name="PangoFontFamily:n-items">
+<description>
+The number of items contained in this list.
+
+</description>
+</property>
+
+<property name="PangoFontFamily:name">
+<description>
+The name of the family
+
+Since: 1.52
+
+</description>
+</property>
+
+<property name="PangoFontMap:item-type">
+<description>
+The type of items contained in this list.
+
+</description>
+</property>
+
+<property name="PangoFontMap:n-items">
+<description>
+The number of items contained in this list.
 
 </description>
 </property>
@@ -523,7 +578,7 @@ Since: 1.50
 </parameter_description>
 </parameter>
 <parameter name="PANGO_FONT_SCALE_SMALL_CAPS">
-<parameter_description> Change the font to a size suitable for Small Caps. Since: 1.50
+<parameter_description> Change the font to a size suitable for Small Caps
 </parameter_description>
 </parameter>
 </parameters>
@@ -609,6 +664,8 @@ opposite gravities and both flow top-to-bottom for example.
 <description>
 Errors that can be returned by [func@Pango.Layout.deserialize].
 
+Since: 1.50
+
 </description>
 <parameters>
 <parameter name="PANGO_LAYOUT_DESERIALIZE_INVALID">
@@ -634,6 +691,8 @@ Flags that influence the behavior of [func@Pango.Layout.deserialize].
 
 New members may be added to this enumeration over time.
 
+Since: 1.50
+
 </description>
 <parameters>
 <parameter name="PANGO_LAYOUT_DESERIALIZE_DEFAULT">
@@ -653,6 +712,8 @@ from the serialization to the `PangoContext`
 Flags that influence the behavior of [method@Pango.Layout.serialize].
 
 New members may be added to this enumeration over time.
+
+Since: 1.50
 
 </description>
 <parameters>
@@ -751,9 +812,9 @@ systems.
 The values correspond to the names as defined in the Unicode standard. See
 [Unicode Standard Annex 24: Script names](http://www.unicode.org/reports/tr24/)
 
-Note that this enumeration is deprecated and will not be updated
-to include values in newer versions of the Unicode standard.
-Applications should use the `GUnicodeScript` enumeration instead,
+Note that this enumeration is deprecated and will not be updated to include values
+in newer versions of the Unicode standard. Applications should use the
+[enum@GLib.UnicodeScript] enumeration instead,
 whose values are interchangeable with `PangoScript`.
 
 </description>
@@ -772,7 +833,7 @@ base glyph to which it is attached
 </parameter_description>
 </parameter>
 <parameter name="PANGO_SCRIPT_ARABIC">
-<parameter_description> 	Arabic
+<parameter_description>        Arabic
 </parameter_description>
 </parameter>
 <parameter name="PANGO_SCRIPT_ARMENIAN">
@@ -780,7 +841,7 @@ base glyph to which it is attached
 </parameter_description>
 </parameter>
 <parameter name="PANGO_SCRIPT_BENGALI">
-<parameter_description> 	Bengali
+<parameter_description>       Bengali
 </parameter_description>
 </parameter>
 <parameter name="PANGO_SCRIPT_BOPOMOFO">
@@ -788,247 +849,247 @@ base glyph to which it is attached
 </parameter_description>
 </parameter>
 <parameter name="PANGO_SCRIPT_CHEROKEE">
-<parameter_description> 	Cherokee
+<parameter_description>      Cherokee
 </parameter_description>
 </parameter>
 <parameter name="PANGO_SCRIPT_COPTIC">
-<parameter_description> 	Coptic
+<parameter_description>        Coptic
 </parameter_description>
 </parameter>
 <parameter name="PANGO_SCRIPT_CYRILLIC">
-<parameter_description> 	Cyrillic
+<parameter_description>      Cyrillic
 </parameter_description>
 </parameter>
 <parameter name="PANGO_SCRIPT_DESERET">
-<parameter_description> 	Deseret
+<parameter_description>       Deseret
 </parameter_description>
 </parameter>
 <parameter name="PANGO_SCRIPT_DEVANAGARI">
-<parameter_description> 	Devanagari
+<parameter_description>    Devanagari
 </parameter_description>
 </parameter>
 <parameter name="PANGO_SCRIPT_ETHIOPIC">
-<parameter_description> 	Ethiopic
+<parameter_description>      Ethiopic
 </parameter_description>
 </parameter>
 <parameter name="PANGO_SCRIPT_GEORGIAN">
-<parameter_description> 	Georgian
+<parameter_description>      Georgian
 </parameter_description>
 </parameter>
 <parameter name="PANGO_SCRIPT_GOTHIC">
-<parameter_description> 	Gothic
+<parameter_description>        Gothic
 </parameter_description>
 </parameter>
 <parameter name="PANGO_SCRIPT_GREEK">
-<parameter_description> 	Greek
+<parameter_description>         Greek
 </parameter_description>
 </parameter>
 <parameter name="PANGO_SCRIPT_GUJARATI">
-<parameter_description> 	Gujarati
+<parameter_description>      Gujarati
 </parameter_description>
 </parameter>
 <parameter name="PANGO_SCRIPT_GURMUKHI">
-<parameter_description> 	Gurmukhi
+<parameter_description>      Gurmukhi
 </parameter_description>
 </parameter>
 <parameter name="PANGO_SCRIPT_HAN">
-<parameter_description> 	Han
+<parameter_description>   Han
 </parameter_description>
 </parameter>
 <parameter name="PANGO_SCRIPT_HANGUL">
-<parameter_description> 	Hangul
+<parameter_description>        Hangul
 </parameter_description>
 </parameter>
 <parameter name="PANGO_SCRIPT_HEBREW">
-<parameter_description> 	Hebrew
+<parameter_description>        Hebrew
 </parameter_description>
 </parameter>
 <parameter name="PANGO_SCRIPT_HIRAGANA">
-<parameter_description> 	Hiragana
+<parameter_description>      Hiragana
 </parameter_description>
 </parameter>
 <parameter name="PANGO_SCRIPT_KANNADA">
-<parameter_description> 	Kannada
+<parameter_description>       Kannada
 </parameter_description>
 </parameter>
 <parameter name="PANGO_SCRIPT_KATAKANA">
-<parameter_description> 	Katakana
+<parameter_description>      Katakana
 </parameter_description>
 </parameter>
 <parameter name="PANGO_SCRIPT_KHMER">
-<parameter_description> 	Khmer
+<parameter_description>         Khmer
 </parameter_description>
 </parameter>
 <parameter name="PANGO_SCRIPT_LAO">
-<parameter_description> 	Lao
+<parameter_description>   Lao
 </parameter_description>
 </parameter>
 <parameter name="PANGO_SCRIPT_LATIN">
-<parameter_description> 	Latin
+<parameter_description>         Latin
 </parameter_description>
 </parameter>
 <parameter name="PANGO_SCRIPT_MALAYALAM">
-<parameter_description> 	Malayalam
+<parameter_description>     Malayalam
 </parameter_description>
 </parameter>
 <parameter name="PANGO_SCRIPT_MONGOLIAN">
-<parameter_description> 	Mongolian
+<parameter_description>     Mongolian
 </parameter_description>
 </parameter>
 <parameter name="PANGO_SCRIPT_MYANMAR">
-<parameter_description> 	Myanmar
+<parameter_description>       Myanmar
 </parameter_description>
 </parameter>
 <parameter name="PANGO_SCRIPT_OGHAM">
-<parameter_description> 	Ogham
+<parameter_description>         Ogham
 </parameter_description>
 </parameter>
 <parameter name="PANGO_SCRIPT_OLD_ITALIC">
-<parameter_description> 	Old Italic
+<parameter_description>    Old Italic
 </parameter_description>
 </parameter>
 <parameter name="PANGO_SCRIPT_ORIYA">
-<parameter_description> 	Oriya
+<parameter_description>         Oriya
 </parameter_description>
 </parameter>
 <parameter name="PANGO_SCRIPT_RUNIC">
-<parameter_description> 	Runic
+<parameter_description>         Runic
 </parameter_description>
 </parameter>
 <parameter name="PANGO_SCRIPT_SINHALA">
-<parameter_description> 	Sinhala
+<parameter_description>       Sinhala
 </parameter_description>
 </parameter>
 <parameter name="PANGO_SCRIPT_SYRIAC">
-<parameter_description> 	Syriac
+<parameter_description>        Syriac
 </parameter_description>
 </parameter>
 <parameter name="PANGO_SCRIPT_TAMIL">
-<parameter_description> 	Tamil
+<parameter_description>         Tamil
 </parameter_description>
 </parameter>
 <parameter name="PANGO_SCRIPT_TELUGU">
-<parameter_description> 	Telugu
+<parameter_description>        Telugu
 </parameter_description>
 </parameter>
 <parameter name="PANGO_SCRIPT_THAANA">
-<parameter_description> 	Thaana
+<parameter_description>        Thaana
 </parameter_description>
 </parameter>
 <parameter name="PANGO_SCRIPT_THAI">
-<parameter_description> 	Thai
+<parameter_description>  Thai
 </parameter_description>
 </parameter>
 <parameter name="PANGO_SCRIPT_TIBETAN">
-<parameter_description> 	Tibetan
+<parameter_description>       Tibetan
 </parameter_description>
 </parameter>
 <parameter name="PANGO_SCRIPT_CANADIAN_ABORIGINAL">
-<parameter_description> 	Canadian Aboriginal
+<parameter_description>   Canadian Aboriginal
 </parameter_description>
 </parameter>
 <parameter name="PANGO_SCRIPT_YI">
-<parameter_description> 	Yi
+<parameter_description>    Yi
 </parameter_description>
 </parameter>
 <parameter name="PANGO_SCRIPT_TAGALOG">
-<parameter_description> 	Tagalog
+<parameter_description>       Tagalog
 </parameter_description>
 </parameter>
 <parameter name="PANGO_SCRIPT_HANUNOO">
-<parameter_description> 	Hanunoo
+<parameter_description>       Hanunoo
 </parameter_description>
 </parameter>
 <parameter name="PANGO_SCRIPT_BUHID">
-<parameter_description> 	Buhid
+<parameter_description>         Buhid
 </parameter_description>
 </parameter>
 <parameter name="PANGO_SCRIPT_TAGBANWA">
-<parameter_description> 	Tagbanwa
+<parameter_description>      Tagbanwa
 </parameter_description>
 </parameter>
 <parameter name="PANGO_SCRIPT_BRAILLE">
-<parameter_description> 	Braille
+<parameter_description>       Braille
 </parameter_description>
 </parameter>
 <parameter name="PANGO_SCRIPT_CYPRIOT">
-<parameter_description> 	Cypriot
+<parameter_description>       Cypriot
 </parameter_description>
 </parameter>
 <parameter name="PANGO_SCRIPT_LIMBU">
-<parameter_description> 	Limbu
+<parameter_description>         Limbu
 </parameter_description>
 </parameter>
 <parameter name="PANGO_SCRIPT_OSMANYA">
-<parameter_description> 	Osmanya
+<parameter_description>       Osmanya
 </parameter_description>
 </parameter>
 <parameter name="PANGO_SCRIPT_SHAVIAN">
-<parameter_description> 	Shavian
+<parameter_description>       Shavian
 </parameter_description>
 </parameter>
 <parameter name="PANGO_SCRIPT_LINEAR_B">
-<parameter_description> 	Linear B
+<parameter_description>      Linear B
 </parameter_description>
 </parameter>
 <parameter name="PANGO_SCRIPT_TAI_LE">
-<parameter_description> 	Tai Le
+<parameter_description>        Tai Le
 </parameter_description>
 </parameter>
 <parameter name="PANGO_SCRIPT_UGARITIC">
-<parameter_description> 	Ugaritic
+<parameter_description>      Ugaritic
 </parameter_description>
 </parameter>
 <parameter name="PANGO_SCRIPT_NEW_TAI_LUE">
-<parameter_description> 	New Tai Lue. Since 1.10
+<parameter_description>   New Tai Lue. Since 1.10
 </parameter_description>
 </parameter>
 <parameter name="PANGO_SCRIPT_BUGINESE">
-<parameter_description> 	Buginese. Since 1.10
+<parameter_description>      Buginese. Since 1.10
 </parameter_description>
 </parameter>
 <parameter name="PANGO_SCRIPT_GLAGOLITIC">
-<parameter_description> 	Glagolitic. Since 1.10
+<parameter_description>    Glagolitic. Since 1.10
 </parameter_description>
 </parameter>
 <parameter name="PANGO_SCRIPT_TIFINAGH">
-<parameter_description> 	Tifinagh. Since 1.10
+<parameter_description>      Tifinagh. Since 1.10
 </parameter_description>
 </parameter>
 <parameter name="PANGO_SCRIPT_SYLOTI_NAGRI">
-<parameter_description> 	Syloti Nagri. Since 1.10
+<parameter_description>  Syloti Nagri. Since 1.10
 </parameter_description>
 </parameter>
 <parameter name="PANGO_SCRIPT_OLD_PERSIAN">
-<parameter_description> 	Old Persian. Since 1.10
+<parameter_description>   Old Persian. Since 1.10
 </parameter_description>
 </parameter>
 <parameter name="PANGO_SCRIPT_KHAROSHTHI">
-<parameter_description> 	Kharoshthi. Since 1.10
+<parameter_description>    Kharoshthi. Since 1.10
 </parameter_description>
 </parameter>
 <parameter name="PANGO_SCRIPT_UNKNOWN">
-<parameter_description> 		an unassigned code point. Since 1.14
+<parameter_description>               an unassigned code point. Since 1.14
 </parameter_description>
 </parameter>
 <parameter name="PANGO_SCRIPT_BALINESE">
-<parameter_description> 		Balinese. Since 1.14
+<parameter_description>              Balinese. Since 1.14
 </parameter_description>
 </parameter>
 <parameter name="PANGO_SCRIPT_CUNEIFORM">
-<parameter_description> 	Cuneiform. Since 1.14
+<parameter_description>     Cuneiform. Since 1.14
 </parameter_description>
 </parameter>
 <parameter name="PANGO_SCRIPT_PHOENICIAN">
-<parameter_description> 	Phoenician. Since 1.14
+<parameter_description>    Phoenician. Since 1.14
 </parameter_description>
 </parameter>
 <parameter name="PANGO_SCRIPT_PHAGS_PA">
-<parameter_description> 		Phags-pa. Since 1.14
+<parameter_description>              Phags-pa. Since 1.14
 </parameter_description>
 </parameter>
 <parameter name="PANGO_SCRIPT_NKO">
-<parameter_description> 		N'Ko. Since 1.14
+<parameter_description>           N'Ko. Since 1.14
 </parameter_description>
 </parameter>
 <parameter name="PANGO_SCRIPT_KAYAH_LI">
@@ -1245,14 +1306,12 @@ Since: 1.44
 </description>
 <parameters>
 <parameter name="PANGO_SHAPE_NONE">
-<parameter_description> Default value.
+<parameter_description> Default value
 </parameter_description>
 </parameter>
 <parameter name="PANGO_SHAPE_ROUND_POSITIONS">
-<parameter_description> Round glyph positions
-and widths to whole device units. This option should
-be set if the target renderer can't do subpixel
-positioning of glyphs.
+<parameter_description> Round glyph positions and widths to whole device units
+This option should be set if the target renderer can't do subpixel positioning of glyphs
 </parameter_description>
 </parameter>
 </parameters>
@@ -1359,9 +1418,6 @@ An enumeration specifying the various slant styles possible for a font.
 `PangoTabAlign` specifies where the text appears relative to the tab stop
 position.
 
-Support for tab alignments other than %PANGO_TAB_LEFT was added
-in Pango 1.50.
-
 </description>
 <parameters>
 <parameter name="PANGO_TAB_LEFT">
@@ -1370,18 +1426,18 @@ in Pango 1.50.
 </parameter>
 <parameter name="PANGO_TAB_RIGHT">
 <parameter_description> the text appears to the left of the tab stop position
-until the available space is filled
+until the available space is filled. Since: 1.50
 </parameter_description>
 </parameter>
 <parameter name="PANGO_TAB_CENTER">
 <parameter_description> the text is centered at the tab stop position
-until the available space is filled
+until the available space is filled. Since: 1.50
 </parameter_description>
 </parameter>
 <parameter name="PANGO_TAB_DECIMAL">
-<parameter_description> text before the first '.' appears to the left of the
-tab stop position (until the available space is filled), the rest to
-the right
+<parameter_description> text before the first occurrence of the decimal point
+character appears to the left of the tab stop position (until the available
+space is filled), the rest to the right. Since: 1.50
 </parameter_description>
 </parameter>
 </parameters>
@@ -1492,34 +1548,29 @@ replaced by smaller variants of the capital characters.
 </parameter>
 <parameter name="PANGO_VARIANT_ALL_SMALL_CAPS">
 <parameter_description> A font with all characters
-replaced by smaller variants of the capital characters.
-Since: 1.50
+replaced by smaller variants of the capital characters. Since: 1.50
 </parameter_description>
 </parameter>
 <parameter name="PANGO_VARIANT_PETITE_CAPS">
 <parameter_description> A font with the lower case characters
 replaced by smaller variants of the capital characters.
-Petite Caps can be even smaller than Small Caps.
-Since: 1.50
+Petite Caps can be even smaller than Small Caps. Since: 1.50
 </parameter_description>
 </parameter>
 <parameter name="PANGO_VARIANT_ALL_PETITE_CAPS">
 <parameter_description> A font with all characters
 replaced by smaller variants of the capital characters.
-Petite Caps can be even smaller than Small Caps.
-Since: 1.50
+Petite Caps can be even smaller than Small Caps. Since: 1.50
 </parameter_description>
 </parameter>
 <parameter name="PANGO_VARIANT_UNICASE">
 <parameter_description> A font with the upper case characters
-replaced by smaller variants of the capital letters.
-Since: 1.50
+replaced by smaller variants of the capital letters. Since: 1.50
 </parameter_description>
 </parameter>
 <parameter name="PANGO_VARIANT_TITLE_CAPS">
 <parameter_description> A font with capital letters that
-are more suitable for all-uppercase titles.
-Since: 1.50
+are more suitable for all-uppercase titles. Since: 1.50
 </parameter_description>
 </parameter>
 </parameters>
@@ -1529,13 +1580,13 @@ Since: 1.50
 <description>
 An enumeration specifying the weight (boldness) of a font.
 
-This is a numerical value ranging from 100 to 1000, but there
-are some predefined values.
+Weight is specified as a numeric value ranging from 100 to 1000.
+This enumeration simply provides some common, predefined values.
 
 </description>
 <parameters>
 <parameter name="PANGO_WEIGHT_THIN">
-<parameter_description> the thin weight (= 100; Since: 1.24)
+<parameter_description> the thin weight (= 100) Since: 1.24
 </parameter_description>
 </parameter>
 <parameter name="PANGO_WEIGHT_ULTRALIGHT">
@@ -1547,11 +1598,11 @@ are some predefined values.
 </parameter_description>
 </parameter>
 <parameter name="PANGO_WEIGHT_SEMILIGHT">
-<parameter_description> the semilight weight (= 350; Since: 1.36.7)
+<parameter_description> the semilight weight (= 350) Since: 1.36.7
 </parameter_description>
 </parameter>
 <parameter name="PANGO_WEIGHT_BOOK">
-<parameter_description> the book weight (= 380; Since: 1.24)
+<parameter_description> the book weight (= 380) Since: 1.24)
 </parameter_description>
 </parameter>
 <parameter name="PANGO_WEIGHT_NORMAL">
@@ -1559,7 +1610,7 @@ are some predefined values.
 </parameter_description>
 </parameter>
 <parameter name="PANGO_WEIGHT_MEDIUM">
-<parameter_description> the normal weight (= 500; Since: 1.24)
+<parameter_description> the medium weight (= 500) Since: 1.24
 </parameter_description>
 </parameter>
 <parameter name="PANGO_WEIGHT_SEMIBOLD">
@@ -1579,7 +1630,7 @@ are some predefined values.
 </parameter_description>
 </parameter>
 <parameter name="PANGO_WEIGHT_ULTRAHEAVY">
-<parameter_description> the ultraheavy weight (= 1000; Since: 1.24)
+<parameter_description> the ultraheavy weight (= 1000) Since: 1.24
 </parameter_description>
 </parameter>
 </parameters>
@@ -2475,10 +2526,16 @@ This operation is equivalent to stretching every attribute
 that applies at position @pos in @list by an amount @len,
 and then calling [method@Pango.AttrList.change] with a copy
 of each attribute in @other in sequence (offset in position
-by @pos).
+by @pos, and limited in length to @len).
 
 This operation proves useful for, for instance, inserting
 a pre-edit string in the middle of an edit buffer.
+
+For backwards compatibility, the function behaves differently
+when @len is 0. In this case, the attributes from @other are
+not imited to @len, and are just overlayed on top of @list.
+
+This mode is useful for merging two lists of attributes together.
 
 </description>
 <parameters>
@@ -2508,12 +2565,38 @@ be present at some subsection of this range)
 <description>
 Serializes a `PangoAttrList` to a string.
 
-No guarantees are made about the format of the string,
-it may change between Pango versions.
+In the resulting string, serialized attributes are separated by newlines or commas.
+Individual attributes are serialized to a string of the form
 
-The intended use of this function is testing and
-debugging. The format is not meant as a permanent
-storage format.
+START END TYPE VALUE
+
+Where START and END are the indices (with -1 being accepted in place
+of MAXUINT), TYPE is the nickname of the attribute value type, e.g.
+_weight_ or _stretch_, and the value is serialized according to its type:
+
+- enum values as nick or numeric value
+- boolean values as _true_ or _false_
+- integers and floats as numbers
+- strings as string, optionally quoted
+- font features as quoted string
+- PangoLanguage as string
+- PangoFontDescription as serialized by [method@Pango.FontDescription.to_string], quoted
+- PangoColor as serialized by [method@Pango.Color.to_string]
+
+Examples:
+
+```
+0 10 foreground red, 5 15 weight bold, 0 200 font-desc &quot;Sans 10&quot;
+```
+
+```
+0 -1 weight 700
+0 100 family Times
+```
+
+To parse the returned value, use [func@Pango.AttrList.from_string].
+
+Note that shape attributes can not be serialized.
 
 Since: 1.50
 
@@ -3378,11 +3461,10 @@ Unicode bidirectional algorithm.
 Determines possible line, word, and character breaks
 for a string of Unicode text with a single analysis.
 
-For most purposes you may want to use
-[func@Pango.get_log_attrs].
+For most purposes you may want to use [func@Pango.get_log_attrs].
 
 Deprecated: 1.44: Use [func@Pango.default_break],
-[func@Pango.tailor_break] and func@Pango.attr_break].
+[func@Pango.tailor_break] and [func@Pango.attr_break].
 
 </description>
 <parameters>
@@ -4409,8 +4491,9 @@ Since: 1.6
 </parameter_description>
 </parameter>
 </parameters>
-<return> the font map for the `PangoContext`.
-This value is owned by Pango and should not be unreferenced.
+<return> the font map for the.
+`PangoContext` This value is owned by Pango and should not be
+unreferenced.
 
 </return>
 </function>
@@ -4490,9 +4573,10 @@ Since: 1.6
 </parameter_description>
 </parameter>
 </parameters>
-<return> the matrix, or %NULL if no matrix has
-been set (which is the same as the identity matrix). The returned
-matrix is owned by Pango and must not be modified or freed.
+<return> the matrix, or %NULL if no
+matrix has been set (which is the same as the identity matrix).
+The returned matrix is owned by Pango and must not be modified
+or freed.
 
 </return>
 </function>
@@ -4906,7 +4990,7 @@ with a reference count of one, which should be freed with
 
 <function name="pango_coverage_from_bytes">
 <description>
-Convert data generated from pango_coverage_to_bytes()
+Convert data generated from [method@Pango.Coverage.to_bytes]
 back to a `PangoCoverage`.
 
 Deprecated: 1.44: This returns %NULL
@@ -4988,6 +5072,7 @@ should be freed with [method@Pango.Coverage.unref].
 <description>
 Increase the reference count on the `PangoCoverage` by one.
 
+Deprecated: 1.52: Use g_object_ref instead
 
 </description>
 <parameters>
@@ -4997,6 +5082,7 @@ Increase the reference count on the `PangoCoverage` by one.
 </parameter>
 </parameters>
 <return> @coverage
+
 </return>
 </function>
 
@@ -5053,6 +5139,8 @@ Decrease the reference count on the `PangoCoverage` by one.
 
 If the result is zero, free the coverage and all associated memory.
 
+Deprecated: 1.52: Use g_object_unref instead
+
 </description>
 <parameters>
 <parameter name="coverage">
@@ -5067,8 +5155,8 @@ If the result is zero, free the coverage and all associated memory.
 <description>
 This is the default break algorithm.
 
-It applies Unicode rules without language-specific
-tailoring, therefore the @analyis argument is unused
+It applies rules from the [Unicode Line Breaking Algorithm](http://www.unicode.org/unicode/reports/tr14/)
+without language-specific tailoring, therefore the @analyis argument is unused
 and can be %NULL.
 
 See [func@Pango.tailor_break] for language-specific breaks.
@@ -5274,8 +5362,8 @@ Deprecated: 1.50: Use pango_font_get_language()
 </parameter_description>
 </parameter>
 </parameters>
-<return> a %NULL-terminated
-array of `PangoLanguage`*
+<return> a
+%NULL-terminated array of `PangoLanguage`*
 
 </return>
 </function>
@@ -5958,9 +6046,9 @@ a newline, carriage return, carriage return-newline pair,
 or Unicode paragraph separator character.
 
 The index of the run of delimiters is returned in
-@paragraph_delimiter_index. The index of the start
-of the paragrap (index after all delimiters) is stored
-in @next_paragraph_start.
+@paragraph_delimiter_index. The index of the start of the
+next paragraph (index after all delimiters) is stored n
+@next_paragraph_start.
 
 If no delimiters are found, both @paragraph_delimiter_index
 and @next_paragraph_start are filled with the length of @text
@@ -6219,8 +6307,8 @@ See [method@Pango.FontDescription.set_family].
 </parameter_description>
 </parameter>
 </parameters>
-<return> the family name field for the font
-description, or %NULL if not previously set. This has the same
+<return> the family name field for the
+font description, or %NULL if not previously set. This has the same
 life-time as the font description itself and should not be freed.
 </return>
 </function>
@@ -6504,8 +6592,8 @@ Creates a new font description structure with all fields unset.
 </description>
 <parameters>
 </parameters>
-<return> the newly allocated `PangoFontDescription`, which
-should be freed using [method@Pango.FontDescription.free].
+<return> the newly allocated `PangoFontDescription`,
+which should be freed using [method@Pango.FontDescription.free].
 </return>
 </function>
 
@@ -6723,7 +6811,8 @@ and each VALUE a floating point number. Unknown axes are ignored,
 and values are clamped to their allowed range.
 
 Pango does not currently have a way to find supported axes of
-a font. Both harfbuzz or freetype have API for this.
+a font. Both harfbuzz and freetype have API for this. See
+for example [hb_ot_var_get_axis_infos](https://harfbuzz.github.io/harfbuzz-hb-ot-var.html#hb-ot-var-get-axis-infos).
 
 Since: 1.42
 
@@ -6906,8 +6995,10 @@ Since: 1.50
 
 <function name="pango_font_face_describe">
 <description>
-Returns the family, style, variant, weight and stretch of
-a `PangoFontFace`. The size field of the resulting font description
+Returns a font description that matches the face.
+
+The resulting font description will have the family, style,
+variant, weight and stretch of the face, but its size field
 will be unset.
 
 
@@ -6926,9 +7017,11 @@ to free the result.
 
 <function name="pango_font_face_get_face_name">
 <description>
-Gets a name representing the style of this face among the
-different faces in the `PangoFontFamily` for the face. The
-name is suitable for displaying to users.
+Gets a name representing the style of this face.
+
+Note that a font family may contain multiple faces
+with the same name (e.g. a variable and a non-variable
+face for the same style).
 
 
 </description>
@@ -6963,9 +7056,11 @@ Since: 1.46
 
 <function name="pango_font_face_is_synthesized">
 <description>
-Returns whether a `PangoFontFace` is synthesized by the underlying
-font rendering engine from another face, perhaps by shearing, emboldening,
-or lightening it.
+Returns whether a `PangoFontFace` is synthesized.
+
+This will be the case if the underlying font rendering engine
+creates this face from another face, by shearing, emboldening,
+lightening or modifying it in some other way.
 
 Since: 1.18
 
@@ -6976,7 +7071,7 @@ Since: 1.18
 </parameter_description>
 </parameter>
 </parameters>
-<return> whether @face is synthesized.
+<return> whether @face is synthesized
 
 </return>
 </function>
@@ -7094,6 +7189,9 @@ Since: 1.4
 A variable font is a font which has axes that can be modified to
 produce different faces.
 
+Such axes are also known as _variations_; see
+[method@Pango.FontDescription.set_variations] for more information.
+
 Since: 1.44
 
 </description>
@@ -7114,6 +7212,12 @@ Lists the different font faces that make up @family.
 
 The faces in a family share a common design, but differ in slant, weight,
 width and other aspects.
+
+Note that the returned faces are not in any particular order, and
+multiple faces may have the same name or characteristics.
+
+`PangoFontFamily` also implemented the [iface@Gio.ListModel] interface
+for enumerating faces.
 
 </description>
 <parameters>
@@ -7306,7 +7410,7 @@ Get a `hb_font_t` object backing this font.
 
 Note that the objects returned by this function are cached
 and immutable. If you need to make changes to the `hb_font_t`,
-use hb_font_create_sub_font().
+use [hb_font_create_sub_font()](https://harfbuzz.github.io/harfbuzz-hb-font.html#hb-font-create-sub-font).
 
 Since: 1.44
 
@@ -7395,7 +7499,7 @@ Since: 1.44
 </parameter_description>
 </parameter>
 </parameters>
-<return>%TRUE if @font can render @wc
+<return> `TRUE` if @font can render @wc
 
 </return>
 </function>
@@ -7525,6 +7629,11 @@ for this fontmap
 <description>
 List all families for a fontmap.
 
+Note that the returned families are not in any particular order.
+
+`PangoFontMap` also implemented the [iface@Gio.ListModel] interface
+for enumerating families.
+
 </description>
 <parameters>
 <parameter name="fontmap">
@@ -7597,6 +7706,43 @@ a font matching @desc.
 </parameters>
 <return> the newly allocated
 `PangoFontset` loaded, or %NULL if no font matched.
+</return>
+</function>
+
+<function name="pango_font_map_reload_font">
+<description>
+Returns a new font that is like @font, except that its size
+is multiplied by @scale, its backend-dependent configuration
+(e.g. cairo font options) is replaced by the one in @context,
+and its variations are replaced by @variations.
+
+Since: 1.52
+
+</description>
+<parameters>
+<parameter name="fontmap">
+<parameter_description> a `PangoFontMap`
+</parameter_description>
+</parameter>
+<parameter name="font">
+<parameter_description> a font in @fontmap
+</parameter_description>
+</parameter>
+<parameter name="scale">
+<parameter_description> the scale factor to apply
+</parameter_description>
+</parameter>
+<parameter name="context">
+<parameter_description> a `PangoContext`
+</parameter_description>
+</parameter>
+<parameter name="variations">
+<parameter_description> font variations to use
+</parameter_description>
+</parameter>
+</parameters>
+<return> the modified font
+
 </return>
 </function>
 
@@ -7821,6 +7967,7 @@ Increase the reference count of a font metrics structure by one.
 <function name="pango_font_metrics_unref">
 <description>
 Decrease the reference count of a font metrics structure by one.
+
 If the result is zero, frees the structure and any associated memory.
 
 </description>
@@ -7842,6 +7989,8 @@ versions of Pango.
 
 The intended use of this function is testing, benchmarking and debugging.
 The format is not meant as a permanent storage format.
+
+To recreate a font from its serialized form, use [func@Pango.Font.deserialize].
 
 Since: 1.50
 
@@ -7886,8 +8035,8 @@ Since: 1.4
 
 <function name="pango_fontset_get_font">
 <description>
-Returns the font in the fontset that contains the best glyph for a
-Unicode character.
+Returns the font in the fontset that contains the best
+glyph for a Unicode character.
 
 
 </description>
@@ -8508,8 +8657,8 @@ Returns the mirrored character of a Unicode character.
 
 Mirror characters are determined by the Unicode mirrored property.
 
-Deprecated: 1.30: Use g_unichar_get_mirror_char() instead; the docs for that function
-provide full details.
+Deprecated: 1.30: Use [func@GLib.unichar_get_mirror_char] instead;
+the docs for that function provide full details.
 
 </description>
 <parameters>
@@ -8857,8 +9006,8 @@ start of the item
 </parameter_description>
 </parameter>
 </parameters>
-<return> the newly allocated item representing text before
-@split_index, which should be freed
+<return> the newly allocated item
+representing text before @split_index, which should be freed
 with pango_glyph_item_free().
 
 </return>
@@ -9329,8 +9478,9 @@ Since: 1.16
 Checks if a character that should not be normally rendered.
 
 This includes all Unicode characters with &quot;ZERO WIDTH&quot; in their name,
-as well as *bidi* formatting characters, and a few other ones.  This is
-totally different from g_unichar_iszerowidth() and is at best misnamed.
+as well as *bidi* formatting characters, and a few other ones.
+
+This is totally different from [func@GLib.unichar_iszerowidth] and is at best misnamed.
 
 Since: 1.10
 
@@ -9503,7 +9653,7 @@ after @start_index. This must be &gt;= 0.
 </parameters>
 <return> a `GList` of
 [struct@Pango.Item] structures. The items should be freed using
-[method@Pango.Item.free] probably in combination with g_list_free_full().
+[method@Pango.Item.free] in combination with [func@GLib.List.free_full].
 </return>
 </function>
 
@@ -9512,8 +9662,8 @@ after @start_index. This must be &gt;= 0.
 Like `pango_itemize()`, but with an explicitly specified base direction.
 
 The base direction is used when computing bidirectional levels.
-(see [method@Pango.Context.set_base_dir]). [func@itemize] gets the
-base direction from the `PangoContext`.
+[func@itemize] gets the base direction from the `PangoContext`
+(see [method@Pango.Context.set_base_dir]).
 
 Since: 1.4
 
@@ -9552,7 +9702,7 @@ after @start_index. This must be &gt;= 0.
 </parameters>
 <return> a `GList` of
 [struct@Pango.Item] structures. The items should be freed using
-[method@Pango.Item.free] probably in combination with g_list_free_full().
+[method@Pango.Item.free] probably in combination with [func@GLib.List.free_full].
 
 </return>
 </function>
@@ -9722,8 +9872,7 @@ Since: 1.22
 </parameter_description>
 </parameter>
 <parameter name="num_scripts">
-<parameter_description> location to
-return number of scripts
+<parameter_description> location to return number of scripts
 </parameter_description>
 </parameter>
 </parameters>
@@ -10762,7 +10911,7 @@ between 0 and pango_layout_get_line_count(layout) - 1)
 Converts from an index within a `PangoLayout` to the onscreen position
 corresponding to the grapheme at that index.
 
-The return value is represented as rectangle. Note that `pos-&gt;x` is
+The returns is represented as rectangle. Note that `pos-&gt;x` is
 always the leading edge of the grapheme and `pos-&gt;x + pos-&gt;width` the
 trailing edge of the grapheme. If the directionality of the grapheme
 is right-to-left, then `pos-&gt;width` will be negative.
@@ -12241,8 +12390,10 @@ The default value is %PANGO_WRAP_WORD.
 
 <function name="pango_layout_write_to_file">
 <description>
-This function is equivalent to calling [method@Pango.Layout.serialize]
-followed by g_file_set_contents().
+A convenience method to serialize a layout to a file.
+
+It is equivalent to calling [method@Pango.Layout.serialize]
+followed by [func@GLib.file_set_contents].
 
 See those two functions for details on the arguments.
 
@@ -12322,10 +12473,8 @@ of the grapheme.
 <description>
 Return the bidirectional embedding levels of the input paragraph.
 
-The bidirectional embedding levels are defined by the Unicode Bidirectional
-Algorithm available at:
-
-http://www.unicode.org/reports/tr9/
+The bidirectional embedding levels are defined by the [Unicode Bidirectional
+Algorithm](http://www.unicode.org/reports/tr9/).
 
 If the input base direction is a weak direction, the direction of the
 characters in the text will determine the final resolved direction.
@@ -12349,7 +12498,7 @@ if @text is nul-terminated and the length should be calculated.
 </parameter>
 </parameters>
 <return> a newly allocated array of embedding levels, one item per
-character (not byte), that should be freed using g_free().
+character (not byte), that should be freed using [func@GLib.free].
 
 </return>
 </function>
@@ -12439,9 +12588,9 @@ approximately handle this script.
 <description>
 Finishes parsing markup.
 
-After feeding a Pango markup parser some data with g_markup_parse_context_parse(),
+After feeding a Pango markup parser some data with [method@GLib.MarkupParseContext.parse],
 use this function to get the list of attributes and text out of the
-markup. This function will not free @context, use g_markup_parse_context_free()
+markup. This function will not free @context, use [method@GLib.MarkupParseContext.free]
 to do so.
 
 Since: 1.31.0
@@ -12490,14 +12639,14 @@ and the first character so marked will be returned in @accel_char,
 when calling [func@markup_parser_finish]. Two @accel_marker characters
 following each other produce a single literal @accel_marker character.
 
-To feed markup to the parser, use g_markup_parse_context_parse()
-on the returned `GMarkupParseContext`. When done with feeding markup
+To feed markup to the parser, use [method@GLib.MarkupParseContext.parse]
+on the returned [struct@GLib.MarkupParseContext]. When done with feeding markup
 to the parser, use [func@markup_parser_finish] to get the data out
-of it, and then use g_markup_parse_context_free() to free it.
+of it, and then use [method@GLib.MarkupParseContext.free] to free it.
 
 This function is designed for applications that read Pango markup
 from streams. To simply parse a string containing Pango markup,
-the [func@parse_markup] API is recommended instead.
+the [func@Pango.parse_markup] API is recommended instead.
 
 Since: 1.31.0
 
@@ -12509,7 +12658,7 @@ Since: 1.31.0
 </parameter>
 </parameters>
 <return> a `GMarkupParseContext` that should be
-destroyed with g_markup_parse_context_free().
+destroyed with [method@GLib.MarkupParseContext.free].
 
 </return>
 </function>
@@ -12621,6 +12770,31 @@ Since: 1.38
 </parameter>
 </parameters>
 <return></return>
+</function>
+
+<function name="pango_matrix_get_slant_ratio">
+<description>
+Gets the slant ratio of a matrix.
+
+For a simple shear matrix in the form:
+
+1 λ
+0 1
+
+this is simply λ.
+
+Since: 1.50
+
+</description>
+<parameters>
+<parameter name="matrix">
+<parameter_description> a `PangoMatrix`
+</parameter_description>
+</parameter>
+</parameters>
+<return> the slant ratio of @matrix
+
+</return>
 </function>
 
 <function name="pango_matrix_rotate">
@@ -13816,7 +13990,7 @@ for @error.
 </description>
 <parameters>
 <parameter name="markup_text">
-<parameter_description> markup to parse (see the Pango Markup docs)
+<parameter_description> markup to parse (see the [Pango Markup](pango_markup.html) docs)
 </parameter_description>
 </parameter>
 <parameter name="length">
@@ -13910,7 +14084,8 @@ ignored.
 <description>
 Parses a font variant.
 
-The allowed values are &quot;normal&quot; and &quot;smallcaps&quot; or &quot;small_caps&quot;,
+The allowed values are &quot;normal&quot;, &quot;small-caps&quot;, &quot;all-small-caps&quot;,
+&quot;petite-caps&quot;, &quot;all-petite-caps&quot;, &quot;unicase&quot; and &quot;title-caps&quot;,
 case variations being ignored.
 
 
@@ -14725,13 +14900,15 @@ Deprecated: 1.38
 <description>
 Looks up the script for a particular character.
 
-The script of a character is defined by Unicode Standard Annex \#24.
+The script of a character is defined by
+[Unicode Standard Annex 24: Script names](http://www.unicode.org/reports/tr24/).
+
 No check is made for @ch being a valid Unicode character; if you pass
 in invalid character, the result is undefined.
 
 Note that while the return type of this function is declared
 as `PangoScript`, as of Pango 1.18, this function simply returns
-the return value of g_unichar_get_script(). Callers must be
+the return value of [func@GLib.unichar_get_script]. Callers must be
 prepared to handle unknown values.
 
 Since: 1.4
@@ -14815,12 +14992,13 @@ Since: 1.4
 <function name="pango_script_iter_get_range">
 <description>
 Gets information about the range to which @iter currently points.
+
 The range is the set of locations p where *start &lt;= p &lt; *end.
 (That is, it doesn't include the character stored at *end)
 
 Note that while the type of the @script argument is declared
 as `PangoScript`, as of Pango 1.18, this function simply returns
-GUnicodeScript values. Callers must be prepared to handle unknown
+`GUnicodeScript` values. Callers must be prepared to handle unknown
 values.
 
 Since: 1.4
@@ -14865,7 +15043,7 @@ Since: 1.4
 </parameter_description>
 </parameter>
 <parameter name="length">
-<parameter_description> length of @text, or -1 if @text is nul-terminated.
+<parameter_description> length of @text, or -1 if @text is nul-terminated
 </parameter_description>
 </parameter>
 </parameters>
@@ -14910,6 +15088,10 @@ It is recommended that you use [func@Pango.shape_full] instead, since
 that API allows for shaping interaction happening across text item
 boundaries.
 
+Some aspects of hyphen insertion and text transformation (in particular,
+capitalization) require log attrs, and thus can only be handled by
+[func@Pango.shape_item].
+
 Note that the extra attributes in the @analyis that is returned from
 [func@Pango.itemize] have indices that are relative to the entire paragraph,
 so you need to subtract the item offset from their indices before
@@ -14950,6 +15132,10 @@ the full paragraph text as input, which will then be used to perform
 certain cross-item shaping interactions. If you have access to the broader
 text of which @item_text is part of, provide the broader text as
 @paragraph_text. If @paragraph_text is %NULL, item text is used instead.
+
+Some aspects of hyphen insertion and text transformation (in particular,
+capitalization) require log attrs, and thus can only be handled by
+[func@Pango.shape_item].
 
 Note that the extra attributes in the @analyis that is returned from
 [func@Pango.itemize] have indices that are relative to the entire paragraph,
@@ -14995,8 +15181,9 @@ Convert the characters in @item into glyphs.
 
 This is similar to [func@Pango.shape_with_flags], except it takes a
 `PangoItem` instead of separate @item_text and @analysis arguments.
-It also takes @log_attrs, which may be used in implementing text
-transforms.
+
+It also takes @log_attrs, which are needed for implementing some aspects
+of hyphen insertion and text transforms (in particular, capitalization).
 
 Note that the extra attributes in the @analyis that is returned from
 [func@Pango.itemize] have indices that are relative to the entire paragraph,
@@ -15047,6 +15234,10 @@ You may also pass in only a substring of the item from [func@Pango.itemize].
 
 This is similar to [func@Pango.shape_full], except it also takes flags
 that can influence the shaping process.
+
+Some aspects of hyphen insertion and text transformation (in particular,
+capitalization) require log attrs, and thus can only be handled by
+[func@Pango.shape_item].
 
 Note that the extra attributes in the @analyis that is returned from
 [func@Pango.itemize] have indices that are relative to the entire paragraph,
@@ -15184,9 +15375,11 @@ Since: 1.50
 
 <function name="pango_tab_array_get_decimal_point">
 <description>
-Gets the decimal point to use.
+Gets the Unicode character to use as decimal point.
 
-This is only relevant for %PANGO_TAB_DECIMAL.
+This is only relevant for tabs with %PANGO_TAB_DECIMAL alignment,
+which align content at the first occurrence of the decimal point
+character.
 
 The default value of 0 means that Pango will use the
 decimal point according to the current locale.
@@ -15377,9 +15570,11 @@ that were added as a result of growing the array.
 
 <function name="pango_tab_array_set_decimal_point">
 <description>
-Sets the decimal point to use.
+Sets the Unicode character to use as decimal point.
 
-This is only relevant for %PANGO_TAB_DECIMAL.
+This is only relevant for tabs with %PANGO_TAB_DECIMAL alignment,
+which align content at the first occurrence of the decimal point
+character.
 
 By default, Pango uses the decimal point according
 to the current locale.
@@ -15495,15 +15690,13 @@ Since: 1.50
 <description>
 Apply language-specific tailoring to the breaks in @attrs.
 
-The line breaks are assumed to have been produced
-by [func@Pango.default_break].
+The line breaks are assumed to have been produced by [func@Pango.default_break].
 
-If @offset is not -1, it is used to apply attributes
-from @analysis that are relevant to line breaking.
+If @offset is not -1, it is used to apply attributes from @analysis that are
+relevant to line breaking.
 
-Note that it is better to pass -1 for @offset and
-use [func@Pango.attr_break] to apply attributes to
-the whole paragraph.
+Note that it is better to pass -1 for @offset and use [func@Pango.attr_break]
+to apply attributes to the whole paragraph.
 
 Since: 1.44
 
@@ -15561,13 +15754,13 @@ Deprecated: 1.38
 <description>
 Determines the inherent direction of a character.
 
-The inherent direction is either %PANGO_DIRECTION_LTR, %PANGO_DIRECTION_RTL,
-or %PANGO_DIRECTION_NEUTRAL.
+The inherent direction is either `PANGO_DIRECTION_LTR`, `PANGO_DIRECTION_RTL`,
+or `PANGO_DIRECTION_NEUTRAL`.
 
 This function is useful to categorize characters into left-to-right
 letters, right-to-left letters, and everything else. If full Unicode
-bidirectional type of a character is needed,
-[func@Pango.BidiType.for_unichar] can be used instead.
+bidirectional type of a character is needed, [func@Pango.BidiType.for_unichar]
+can be used instead.
 
 
 </description>
@@ -15949,6 +16142,35 @@ Since: 1.16
 </parameters>
 <return> A newly allocated LOGFONTW struct. It must be
 freed with g_free().
+
+</return>
+</function>
+
+<function name="pango_win32_font_map_add_font_file">
+<description>
+Loads a font file with one or more fonts into the `PangoWin32FontMap` specified
+by the path. The font file must be in a format that is supported by the system's
+DirectWrite APIs.
+
+Since: 1.52.0
+
+</description>
+<parameters>
+<parameter name="font_map">
+<parameter_description> a `PangoWin32FontMap`
+</parameter_description>
+</parameter>
+<parameter name="font_file_path">
+<parameter_description> Path to the actual font file
+</parameter_description>
+</parameter>
+<parameter name="error">
+<parameter_description> return location for an error
+</parameter_description>
+</parameter>
+</parameters>
+<return> TRUE if the font file is successfully loaded into the `PangoWin32FontMap`;
+otherwise FALSE.
 
 </return>
 </function>

@@ -1,0 +1,98 @@
+;; From PangoContext
+
+
+;; From PangoFont
+
+
+;; From PangoFontFace
+
+
+;; From PangoFontFamily
+
+(define-property item-type
+  (of-object "PangoFontFamily")
+  (prop-type "GParamGType")
+  (docs "")
+  (readable #t)
+  (writable #f)
+  (construct-only #f)
+)
+
+(define-property n-items
+  (of-object "PangoFontFamily")
+  (prop-type "GParamUInt")
+  (docs "")
+  (readable #t)
+  (writable #f)
+  (construct-only #f)
+  (default-value "0")
+)
+
+(define-property name
+  (of-object "PangoFontFamily")
+  (prop-type "GParamString")
+  (docs "")
+  (readable #t)
+  (writable #f)
+  (construct-only #f)
+  (default-value "")
+)
+
+(define-property is-monospace
+  (of-object "PangoFontFamily")
+  (prop-type "GParamBoolean")
+  (docs "")
+  (readable #t)
+  (writable #f)
+  (construct-only #f)
+  (default-value "FALSE")
+)
+
+(define-property is-variable
+  (of-object "PangoFontFamily")
+  (prop-type "GParamBoolean")
+  (docs "")
+  (readable #t)
+  (writable #f)
+  (construct-only #f)
+  (default-value "FALSE")
+)
+
+
+;; From PangoFontMap
+
+(define-property item-type
+  (of-object "PangoFontMap")
+  (prop-type "GParamGType")
+  (docs "")
+  (readable #t)
+  (writable #f)
+  (construct-only #f)
+)
+
+(define-property n-items
+  (of-object "PangoFontMap")
+  (prop-type "GParamUInt")
+  (docs "")
+  (readable #t)
+  (writable #f)
+  (construct-only #f)
+  (default-value "0")
+)
+
+
+;; From PangoCairoFont
+
+
+;; From PangoCairoFontMap
+
+
+;; From PangoFontset
+
+
+;; From PangoLayout
+
+
+;; From PangoRenderer
+
+
