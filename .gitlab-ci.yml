@@ -1,4 +1,4 @@
-# 2023-01-04: ubuntu:latest = 22.04, ubuntu:rolling = 22.10, ubuntu:devel = 23.04
+# 2024-03-14: ubuntu:latest = 22.04, ubuntu:rolling = 23.10, ubuntu:devel = 24.04
 # See https://hub.docker.com/_/ubuntu
 image: ubuntu:rolling
 
@@ -41,7 +41,9 @@ release_gcc_build:
   script:
     - mkdir _build && cd _build
     # -Ddebug=false + -Doptimization=3 correspond to -Dbuildtype=release
-    - meson setup --prefix=/usr --libdir=lib -Ddebug=false -Doptimization=3 -Dwarnings=fatal -Dwarning_level=3 -Dwerror=true
+    # Don't use warning_level and werror. They are applied also to subprojects.
+    # meson setup --prefix=/usr --libdir=lib -Ddebug=false -Doptimization=3 -Dwarnings=fatal -Dwarning_level=3 -Dwerror=true
+    - meson setup --prefix=/usr --libdir=lib -Ddebug=false -Doptimization=3 -Dwarnings=fatal
     - meson compile
     # Must wrap the command in single quotes because of the colon.
     # See https://gitlab.gnome.org/help/ci/yaml/script.md#use-special-characters-with-script
@@ -61,7 +63,9 @@ release_clang_build:
   script:
     - mkdir _build && cd _build
     # -Ddebug=false + -Doptimization=3 correspond to -Dbuildtype=release
-    - CC=clang CXX=clang++ meson setup --prefix=/usr --libdir=lib -Ddebug=false -Doptimization=3 -Dwarnings=fatal -Dwarning_level=3 -Dwerror=true
+    # Don't use warning_level and werror. They are applied also to subprojects.
+    # CC=clang CXX=clang++ meson setup --prefix=/usr --libdir=lib -Ddebug=false -Doptimization=3 -Dwarnings=fatal -Dwarning_level=3 -Dwerror=true
+    - CC=clang CXX=clang++ meson setup --prefix=/usr --libdir=lib -Ddebug=false -Doptimization=3 -Dwarnings=fatal
     - meson compile
     # Don't test subprojects.
     - 'meson test --suite pangomm:'
