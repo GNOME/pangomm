@@ -65,6 +65,13 @@ public:
     pango_font_map_get_family, refreturn, newin "2,50")
   _WRAP_METHOD(Glib::RefPtr<const FontFamily> get_family(const Glib::ustring& name) const,
     pango_font_map_get_family, refreturn, constversion, newin "2,50")
+
+  _WRAP_METHOD(Glib::RefPtr<Font> reload_font(const Glib::RefPtr<Font>& font,
+    double scale, const Glib::RefPtr<Context>& context = {},
+    const Glib::ustring& variations{NULL} = {}) const, pango_font_map_reload_font)
+
+  _WRAP_PROPERTY("item-type", GType, newin "2,52")
+  _WRAP_PROPERTY("n-items", unsigned int, newin "2,52")
 };
 
 } /* namespace Pango */

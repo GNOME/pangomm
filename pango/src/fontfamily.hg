@@ -53,6 +53,12 @@ public:
   _WRAP_METHOD(Glib::RefPtr<const FontFace> get_face(const Glib::ustring& name{NULL} = {}) const,
     pango_font_family_get_face, refreturn, constversion)
 
+  _WRAP_PROPERTY("item-type", GType, newin "2,52")
+  _WRAP_PROPERTY("n-items", unsigned int, newin "2,52")
+  _WRAP_PROPERTY("name", Glib::ustring)
+  _WRAP_PROPERTY("is-monospace", bool)
+  _WRAP_PROPERTY("is-variable", bool)
+
 // PangoFontFamilyClass is hidden when PANGO_DISABLE_DEPRECATED is defined.
 // Don't wrap vfuncs.
 };
