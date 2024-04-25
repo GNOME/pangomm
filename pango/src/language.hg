@@ -55,19 +55,25 @@ public:
   _WRAP_METHOD(bool matches(const Glib::ustring & range_list) const, pango_language_matches)
   _WRAP_METHOD(bool includes_script(Script script) const, pango_language_includes_script)
 
-
- /** Determines the scripts used to to write this language.
-   * If nothing is known about the language tag then an empty container is returned.
+  /** Determines the scripts used to write this language.
+   *
+   * If nothing is known about the language tag then an empty vector is returned.
    * The list of scripts returned starts with the script that the
    * language uses most and continues to the one it uses least.
    *
    * Most languages use only one script for writing, but there are
    * some that use two (Latin and Cyrillic for example), and a few
-   * use three (Japanese for example).  Applications should not make
+   * use three (Japanese for example). Applications should not make
    * any assumptions on the maximum number of scripts returned
    * though, except that it is a small number.
    *
-   * @result A container of Script values.
+   * The includes_script() function uses this function internally.
+   *
+   * @note While the return value is declared as `Pango::Script`, the
+   * returned values are from the `GUnicodeScript` enumeration, which
+   * may have more values. Callers need to handle unknown values.
+   *
+   * @result A vector of Script values.
    *
    * @newin{2,14}
    */

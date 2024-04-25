@@ -28,7 +28,7 @@ namespace Pango
  
 inline PangoLanguage* _pango_language_new()
 {
-  return 0;
+  return nullptr;
 }
 
 inline PangoLanguage* _pango_language_copy(const PangoLanguage* language)
@@ -43,7 +43,7 @@ inline void _pango_language_free(PangoLanguage*)
 
 Language::Language()
 :
-  gobject_(0)
+  gobject_(nullptr)
 {}
 
 Language::Language(const Glib::ustring& language)
@@ -65,6 +65,5 @@ std::vector<Script> Language::get_scripts() const
   const auto* carray = pango_language_get_scripts(const_cast<PangoLanguage*>(gobj()), &num_scripts);
   return Glib::ArrayHandler<Script>::array_to_vector((const Script*)carray, num_scripts, Glib::OWNERSHIP_NONE);
 }
-
 
 } /* namespace Pango */
