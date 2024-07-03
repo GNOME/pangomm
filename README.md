@@ -13,11 +13,12 @@ Download location
  - https://download.gnome.org/sources/pangomm
 
 Reference documentation
- - https://developer-old.gnome.org/pangomm/2.46/
+ - https://gnome.pages.gitlab.gnome.org/pangomm
 
-This reference documentation does not document the latest release. If you want
-newer documentation, download a tarball. Tarballs contain reference documentation.
-In tarballs generated with Meson, see the untracked/docs/reference/html directory.
+The documentation on the web describes pangomm-2.48.
+If you want documentation of pangomm-1.4, download a tarball.
+Tarballs contain reference documentation. In tarballs generated with Meson,
+see the untracked/docs/reference/html directory.
 
 Discussion on GNOME's discourse forum
  - https://discourse.gnome.org/tag/cplusplus
