@@ -1,10 +1,10 @@
 doxytagfile=${pc_top_builddir}/docs/reference/@PANGOMM_MODULE_NAME@.tag
-htmlrefpub=http://library.gnome.org/devel/@PACKAGE_TARNAME@/unstable/
+htmlrefpub=https://gnome.pages.gitlab.gnome.org/@PACKAGE_TARNAME@/
 
 Name: pangomm
 Description: C++ binding for Pango, not installed
 Version: @PACKAGE_VERSION@
-URL: http://www.gtkmm.org/
+URL: https://www.gtkmm.org/
 Requires: @PANGOMM_MODULES@
 Libs: ${pc_top_builddir}/${pcfiledir}/pangomm/libpangomm@MSVC_TOOLSET_VER@-@PANGOMM_API_VERSION@.la
 Cflags: -I${pc_top_builddir}/${pcfiledir} -I${pc_top_builddir}/${pcfiledir}/@srcdir@
