@@ -3,7 +3,7 @@
 # Input: pangomm_build_dep, pangomm_pcname, maintainer_mode, project_source_root,
 #        generate_binding_py, m4_files, pangomm_libversion, install_includedir,
 #        python3, pangomm_rc, dummy_header_py, gmmproc_dir, msvc14x_toolset_ver,
-#        can_add_dist_script
+#        pangomm_pc_requires
 # Output: hg_ccg_basenames, extra_h_files, built_h_file_targets, built_files_root,
 #         pangomm_own_dep
 
@@ -218,6 +218,36 @@ else # not maintainer_mode
 
 endif
 
+# Generate .pc files, used by pkg-config.
+pkg_config = import('pkgconfig')
+pc_common_variables = [
+  'doxytagfile=${docdir}/reference/' + pangomm_pcname + '.tag',
+  'htmlrefdir=${docdir}/reference/html',
+  'htmlrefpub=https://gnome.pages.gitlab.gnome.org/' + meson.project_name(),
+]
+pc_variables = [
+  'exec_prefix=${prefix}',
+  'datarootdir=${datadir}',
+  'gmmprocm4dir=${libdir}/' + pangomm_pcname + '/proc/m4',
+  'docdir=${datadir}/doc/' + pangomm_pcname,
+] + pc_common_variables
+pc_uninstalled_variables = [
+  'gmmprocm4dir=${srcdir}/tools/m4',
+  'docdir=${prefix}/docs',
+] + pc_common_variables
+
+pkg_config.generate(pangomm_library,
+  filebase: pangomm_pcname,
+  variables: pc_variables,
+  uninstalled_variables: pc_uninstalled_variables,
+  name: meson.project_name(),
+  description: 'C++ binding for Pango',
+  url: 'https://www.gtkmm.org/',
+  requires: pangomm_pc_requires,
+  subdirs: [pangomm_pcname],
+  extra_cflags: ['-I${libdir}/' + pangomm_pcname + '/include'],
+)
+
 # Install built .h and _p.h files.
 meson.add_install_script(
   python3, generate_binding_py, 'install_built_h_files',
@@ -226,15 +256,13 @@ meson.add_install_script(
   hg_ccg_basenames
 )
 
-if can_add_dist_script
-  # Distribute built files.
-  meson.add_dist_script(
-    python3, generate_binding_py, 'dist_built_files',
-    built_h_cc_dir,
-    untracked_pangomm,
-    hg_ccg_basenames,
-  )
-endif
+# Distribute built files.
+meson.add_dist_script(
+  python3, generate_binding_py, 'dist_built_files',
+  built_h_cc_dir,
+  untracked_pangomm,
+  hg_ccg_basenames,
+)
 
 # This is part of pangomm_dep, when pangomm is a subproject.
 # It can also be used if there are example programs and test programs to build.

@@ -7,8 +7,7 @@ project('pangomm', 'cpp',
     'cpp_std=c++17',
     'warning_level=1',
   ],
-  meson_version: '>= 0.55.0', # required for meson.add_dist_script(python3, ...)
-                              # and meson.add_install_script(python3, ...)
+  meson_version: '>= 0.62.0', # required for variables in pkgconfig.generate()
 )
 
 pangomm_api_version = '2.48'
@@ -122,11 +121,11 @@ glibmm_dep = dependency('glibmm-2.@0@'.format(glibmm_req_minor_ver), version: gl
 giomm_dep = dependency('giomm-2.@0@'.format(glibmm_req_minor_ver), version: glibmm_req)
 
 pangomm_build_dep = [giomm_dep, cairomm_dep, pangocairo_dep]
-pangomm_requires = ' '.join([
-  'giomm-2.@0@'.format(glibmm_req_minor_ver), glibmm_req,
-  'cairomm-1.@0@'.format(cairomm_req_minor_ver), cairomm_req,
-  'pangocairo', pangocairo_req,
-])
+pangomm_pc_requires = [
+  'giomm-2.@0@'.format(glibmm_req_minor_ver) + glibmm_req,
+  'cairomm-1.@0@'.format(cairomm_req_minor_ver) + cairomm_req,
+  'pangocairo' + pangocairo_req,
+]
 
 # Some dependencies are required only in maintainer mode and/or if
 # reference documentation shall be built.
@@ -144,7 +143,7 @@ dot = find_program('dot', required: build_documentation) # Used by Doxygen
 xsltproc = find_program('xsltproc', required: build_documentation)
 
 # Where to find gmmproc and generate_wrap_init.pl.
-gmmproc_dir = glibmm_dep.get_variable(pkgconfig: 'gmmprocdir', internal: 'gmmprocdir')
+gmmproc_dir = glibmm_dep.get_variable('gmmprocdir')
 
 # Script files copied to 'untracked' by mm-common-get.
 script_dir = project_source_root / 'untracked' / 'build_scripts'
@@ -253,42 +252,37 @@ if is_msvc
   )
 endif
 
-# add_dist_script() is not allowed in a subproject if meson.version() < 0.58.0.
-can_add_dist_script = not meson.is_subproject() or meson.version().version_compare('>= 0.58.0')
-
 subdir('tools/extra_defs_gen')
 subdir('pango')
 subdir('MSVC_NMake/pangomm')
 subdir('pango/pangomm')
 subdir('docs/reference')
 
-if can_add_dist_script
-  # Add a ChangeLog file to the distribution directory.
-  meson.add_dist_script(
-    python3, dist_changelog_py,
-    project_source_root,
-  )
+# Add a ChangeLog file to the distribution directory.
+meson.add_dist_script(
+  python3, dist_changelog_py,
+  project_source_root,
+)
 
-  # Don't distribute these files.
-  dont_distribute = [
-    'pangomm.doap',
-    '.gitlab-ci.yml',
-  ]
-  # Add build scripts to the distribution directory, and delete .gitignore
-  # files and an empty $MESON_PROJECT_DIST_ROOT/build/ directory.
-  meson.add_dist_script(
-    python3, dist_build_scripts_py,
-    project_source_root,
-    'untracked' / 'build_scripts',
-    dont_distribute,
-  )
-endif
+# Don't distribute these files.
+dont_distribute = [
+  'pangomm.doap',
+  '.gitlab-ci.yml',
+]
+# Add build scripts to the distribution directory, and delete .gitignore
+# files and an empty $MESON_PROJECT_DIST_ROOT/build/ directory.
+meson.add_dist_script(
+  python3, dist_build_scripts_py,
+  project_source_root,
+  'untracked' / 'build_scripts',
+  dont_distribute,
+)
 
 if meson.is_subproject()
   pkgconfig_vars = {
     'gmmprocm4dir': project_source_root / 'tools' / 'm4',
     'htmlrefdir': install_prefix / install_docdir / 'reference' / 'html',
-    'htmlrefpub': 'https://gnome.pages.gitlab.gnome.org/' + pkg_conf_data.get_unquoted('PACKAGE_TARNAME')
+    'htmlrefpub': 'https://gnome.pages.gitlab.gnome.org/' + meson.project_name(),
   }
   if build_documentation
     pkgconfig_vars += {'doxytagfile': tag_file.full_path()}
