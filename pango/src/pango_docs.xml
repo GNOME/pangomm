@@ -6240,7 +6240,7 @@ Creates a new font description from a string representation.
 
 The string must have the form
 
-&quot;\[FAMILY-LIST] \[STYLE-OPTIONS] \[SIZE] \[VARIATIONS]&quot;,
+&quot;[FAMILY-LIST] [STYLE-OPTIONS] [SIZE] [VARIATIONS]&quot;,
 
 where FAMILY-LIST is a comma-separated list of families optionally
 terminated by a comma, STYLE_OPTIONS is a whitespace-separated list
@@ -6248,7 +6248,7 @@ of words where each word describes one of style, variant, weight,
 stretch, or gravity, and SIZE is a decimal number (size in points)
 or optionally followed by the unit modifier &quot;px&quot; for absolute size.
 VARIATIONS is a comma-separated list of font variation
-specifications of the form &quot;\@axis=value&quot; (the = sign is optional).
+specifications of the form @‍axis=value (the = sign is optional).
 
 The following words are understood as styles:
 &quot;Normal&quot;, &quot;Roman&quot;, &quot;Oblique&quot;, &quot;Italic&quot;.
@@ -6279,7 +6279,7 @@ size in the resulting font description will be set to 0.
 
 A typical example:
 
-&quot;Cantarell Italic Light 15 \@wght=200&quot;
+&quot;Cantarell Italic Light 15 @‍wght=200&quot;
 
 
 </description>
@@ -9554,6 +9554,30 @@ Free a `PangoItem` and all associated memory.
 </parameter>
 </parameters>
 <return></return>
+</function>
+
+<function name="pango_item_get_char_offset">
+<description>
+Returns the character offset of the item from the beginning
+of the itemized text.
+
+If the item has not been obtained from Pango's itemization
+machinery, then the character offset is not available. In
+that case, this function returns -1.
+
+Since: 1.54
+
+</description>
+<parameters>
+<parameter name="item">
+<parameter_description> a `PangoItem`
+</parameter_description>
+</parameter>
+</parameters>
+<return> the character offset of the item from the beginning
+of the itemized text, or -1
+
+</return>
 </function>
 
 <function name="pango_item_new">
@@ -16152,7 +16176,7 @@ Loads a font file with one or more fonts into the `PangoWin32FontMap` specified
 by the path. The font file must be in a format that is supported by the system's
 DirectWrite APIs.
 
-Since: 1.52.0
+Since: 1.52
 
 </description>
 <parameters>

@@ -3436,6 +3436,12 @@
   (return-type "none")
 )
 
+(define-method get_char_offset
+  (of-object "PangoItem")
+  (c-name "pango_item_get_char_offset")
+  (return-type "int")
+)
+
 (define-method split
   (of-object "PangoItem")
   (c-name "pango_item_split")
