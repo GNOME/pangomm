@@ -30,4 +30,12 @@ Color::operator bool() const
   return gobj() != nullptr;
 }
 
+std::pair<bool, guint16>
+Color::parse_with_alpha(const Glib::ustring& spec)
+{
+  guint16 alpha = 0xffff;
+  auto retvalue = pango_color_parse_with_alpha(gobj(), &alpha, spec.c_str());
+  return {retvalue, alpha};
+}
+
 } /* namespace Pango */

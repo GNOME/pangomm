@@ -28,7 +28,7 @@ namespace Pango
 
 _WRAP_ENUM(TabAlign, PangoTabAlign, decl_prefix PANGOMM_API)
 
-/** A Pango::TabArray contains an array of tab stops.
+/** A %Pango::TabArray contains an array of tab stops.
  * Each tab stop has an alignment and a position.
  */
 class PANGOMM_API TabArray
@@ -37,6 +37,27 @@ class PANGOMM_API TabArray
   _IGNORE(pango_tab_array_free, pango_tab_array_copy, pango_tab_array_get_tab, pango_tab_array_get_tabs, pango_tab_array_new_with_positions)
 public:
   explicit TabArray(int initial_size, bool positions_in_pixels = true);
+
+  /** Deserializes a %Pango::TabArray from a string.
+   *
+   * This is the counterpart to to_string().
+   * See that function for details about the format.
+   *
+   * @newin{2,54}
+   *
+   * @param text A string.
+   * @return A new %Pango::TabArray.
+   */
+  explicit TabArray(const Glib::ustring& text);
+  _IGNORE(pango_tab_array_from_string)
+
+  /** Checks whether this %TabArray is valid.
+   *
+   * @newin{2,54}
+   *
+   * @return <tt>true</tt> if the %TabArray is valid.
+   */
+  explicit operator bool() const;
 
   _WRAP_METHOD(int get_size() const, pango_tab_array_get_size)
   _WRAP_METHOD(void resize(int new_size), pango_tab_array_resize)
@@ -53,6 +74,13 @@ public:
   std::vector<std::pair<TabAlign, int>> get_tabs() const;
 
   _WRAP_METHOD(bool get_positions_in_pixels() const, pango_tab_array_get_positions_in_pixels)
+  _WRAP_METHOD(void set_positions_in_pixels(bool positions_in_pixels = true), pango_tab_array_set_positions_in_pixels, newin "2,54")
+  _WRAP_METHOD(Glib::ustring to_string() const, pango_tab_array_to_string, newin "2,54")
+  _WRAP_METHOD(void set_decimal_point(int tab_index, gunichar decimal_point),
+    pango_tab_array_set_decimal_point, newin "2,54")
+  _WRAP_METHOD(gunichar get_decimal_point(int tab_index) const,
+    pango_tab_array_get_decimal_point, newin "2,54")
+  _WRAP_METHOD(void sort(), pango_tab_array_sort, newin "2,54")
 };
 
 } //namespace Pango

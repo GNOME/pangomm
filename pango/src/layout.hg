@@ -137,6 +137,8 @@ public:
   _WRAP_METHOD(float get_line_spacing() const, pango_layout_get_line_spacing)
   _WRAP_METHOD(void set_justify(bool justify = true), pango_layout_set_justify)
   _WRAP_METHOD(bool get_justify() const, pango_layout_get_justify)
+  _WRAP_METHOD(void set_justify_last_line(bool justify = true), pango_layout_set_justify_last_line, newin "2,54")
+  _WRAP_METHOD(bool get_justify_last_line() const, pango_layout_get_justify_last_line, newin "2,54")
 
   _WRAP_METHOD(bool get_auto_dir() const, pango_layout_get_auto_dir)
   _WRAP_METHOD(void set_auto_dir(bool auto_dir = true), pango_layout_set_auto_dir)
@@ -155,6 +157,7 @@ public:
 
   _WRAP_METHOD(bool is_ellipsized() const, pango_layout_is_ellipsized)
   _WRAP_METHOD(int get_unknown_glyphs_count() const, pango_layout_get_unknown_glyphs_count)
+  _WRAP_METHOD(Direction get_direction(int index) const, pango_layout_get_direction, newin "2,54")
 
   _WRAP_METHOD(void context_changed(), pango_layout_context_changed)
 
@@ -184,6 +187,7 @@ public:
   _WRAP_METHOD(void index_to_line_x(int index_, bool trailing, int& line, int& x_pos) const, pango_layout_index_to_line_x)
 
   _WRAP_METHOD(void get_cursor_pos(int index, Rectangle& strong_pos, Rectangle& weak_pos) const, pango_layout_get_cursor_pos)
+  _WRAP_METHOD(void get_caret_pos(int index, Rectangle& strong_pos, Rectangle& weak_pos) const, pango_layout_get_caret_pos, newin "2,54")
 
   /** Given an index within the layout, determine the positions that of the strong cursors if the insertion point is at that index.
    * @param index The byte index of the cursor.

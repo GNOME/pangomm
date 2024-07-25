@@ -37,30 +37,23 @@ std::vector<Attribute> Analysis::get_extra_attrs() const
 }
 
 
+Item::Item()
+:
+  gobject_(pango_item_new())
+{}
+
 Item::Item(const Item& src)
 :
   gobject_ ((src.gobject_) ? pango_item_copy(src.gobject_) : nullptr)
 {}
 
 Item::Item(PangoItem* castitem, bool make_a_copy)
-{
+:
   // For BoxedType wrappers, make_a_copy is true by default.  The static
   // BoxedType wrappers must always take a copy, thus make_a_copy = true
   // ensures identical behaviour if the default argument is used.
-
-  if(make_a_copy)
-  {
-    if(castitem)
-      gobject_ = pango_item_copy(castitem);
-    else
-      gobject_ = nullptr;
-  }
-  else
-  {
-    // It was given to us by a function which has already made a copy for us to keep.
-    gobject_ = castitem;
-  }
-}
+  gobject_((make_a_copy && castitem) ? pango_item_copy(castitem) : castitem)
+{}
 
 Item& Item::operator=(const Item& src)
 {

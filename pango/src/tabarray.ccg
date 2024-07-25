@@ -28,6 +28,16 @@ TabArray::TabArray(int initial_size, bool positions_in_pixels)
   gobject_ = pango_tab_array_new(initial_size, (gboolean)positions_in_pixels);
 }
 
+TabArray::TabArray(const Glib::ustring& text)
+:
+  gobject_(pango_tab_array_from_string(text.c_str()))
+{}
+
+TabArray::operator bool() const
+{
+  return gobj() != nullptr;
+}
+
 std::pair<TabAlign,int> TabArray::get_tab(int tab_index) const
 {
   PangoTabAlign p_alignment;

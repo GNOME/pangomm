@@ -78,24 +78,29 @@ protected:
   PangoAnalysis gobject_;
 };
 
-
-/** A Pango::Item stores information about a segment of text.
- * Pango::Item is used as an output type only so there is no public default constructor.
+//TODO: When we can break API/ABI, consider using _CLASS_BOXEDTYPE. PangoItem is a boxed type.
+/** A %Pango::Item stores information about a segment of text.
+ * %Pango::Item is used as an output type only so there is no public default constructor.
  * You retrieve objects of this type by calling Pango::Context::itemize() with some text.
- * The actual rendering of the segment of text that corresponds to a particular Pango::Item
+ * The actual rendering of the segment of text that corresponds to a particular %Pango::Item
  * (or some sub-string) into a string of glyphs is done with shape().
- * The segment of text that corresponds to a Pango::Item can be computed from the
+ * The segment of text that corresponds to a %Pango::Item can be computed from the
  * text passed into Pango::Context::itemize() with get_segment(). Together with
  * the Pango::Analysis data member that can be accessed with get_analysis()
  * it is needed for further calculations in Pango::GlyphString.
  */
 class PANGOMM_API Item
 {
-  _CLASS_GENERIC(Item, PangoItem) //There is the whole set of functions for _CLASS_BOXEDTYPE but unfortunately PangoItem is not registered as a boxed type and lacks pango_item_get_type...
+  _CLASS_GENERIC(Item, PangoItem)
   _IGNORE(pango_item_copy,pango_item_free)
 
 public:
-  // There is no default constructor. This class is only used as an output type.
+  /** Creates a new %Pango::Item structure initialized to default values.
+   *
+   * @newin{2,54}
+   */
+  Item();
+
   explicit Item(PangoItem* castitem, bool make_a_copy = true);
 
   Item(const Item& src);
@@ -107,6 +112,7 @@ public:
   PangoItem* gobj_copy() const;
 
 public:
+  _WRAP_METHOD(int get_char_offset() const, pango_item_get_char_offset, newin "2,54")
   _WRAP_METHOD(Item split(int split_index, int split_offset), pango_item_split)
 
   /** Gets the offset of the segment from the beginning of the string in bytes.

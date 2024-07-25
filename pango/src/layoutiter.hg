@@ -34,6 +34,13 @@ class PANGOMM_API LayoutIter
   _IGNORE(pango_layout_iter_copy, pango_layout_iter_free)
 
 public:
+  /** Checks whether this iterator is valid.
+   *
+   * @newin{2,54}
+   *
+   * @return <tt>true</tt> if the iterator is valid.
+   */
+  explicit operator bool() const;
 
   _WRAP_METHOD(int get_index() const, pango_layout_iter_get_index)
 
@@ -143,6 +150,7 @@ public:
   Rectangle get_layout_logical_extents() const;
 
   _WRAP_METHOD(int get_baseline() const, pango_layout_iter_get_baseline)
+  _WRAP_METHOD(int get_run_baseline() const, pango_layout_iter_get_run_baseline, newin "2,54")
 };
 
 } //namespace Pango

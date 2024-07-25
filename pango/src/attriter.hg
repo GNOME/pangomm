@@ -23,8 +23,8 @@ _DEFS(pangomm,pango)
 
 namespace Pango
 {
-
-/** A Pango::AttrIter is used to represent an iterator through a Pango::AttrList.
+//TODO: When we can break API/ABI, consider using _CLASS_BOXEDTYPE. PangoAttrIterator is a boxed type.
+/** A %Pango::AttrIter is used to represent an iterator through a Pango::AttrList.
  * A new iterator is created with Pango::AttrList::get_iter(). Once the iterator is created,
  * it can be advanced through the style changes in the text using Pango::AttrIter::next().
  * At each style change, the range of the current style segment and the attributes currently in effect can be queried.

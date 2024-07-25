@@ -20,6 +20,10 @@
 
 namespace Pango
 {
+LayoutIter::operator bool() const
+{
+  return gobj() != nullptr;
+}
 
 Rectangle LayoutIter::get_char_extents() const
 {

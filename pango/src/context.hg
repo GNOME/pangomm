@@ -120,6 +120,11 @@ public:
   Matrix get_matrix() const;
   _IGNORE(pango_context_get_matrix)
 
+  _WRAP_METHOD(void set_round_glyph_positions(bool round_positions = true),
+    pango_context_set_round_glyph_positions, newin "2,54")
+  _WRAP_METHOD(bool get_round_glyph_positions() const,
+    pango_context_get_round_glyph_positions, newin "2,54")
+
   /** Breaks a piece of text into segments with consistent directional level and shaping engine.
    * Each byte of @a text will be contained in exactly one of the items in the returned list.
    * The generated list of items will be in logical order (the start offsets of the items
