@@ -25,6 +25,10 @@ variables:
                   meson
                   ninja-build
                   glib-networking
+
+  PANGO_MESON_OPTIONS: -Dpango:build-testsuite=false
+                       -Dpango:build-examples=false
+
   GIO_EXTRA_MODULES: "/usr/lib/x86_64-linux-gnu/gio/modules"
   GIT_SUBMODULE_STRATEGY: normal
 
@@ -43,7 +47,7 @@ release_gcc_build:
     # -Ddebug=false + -Doptimization=3 correspond to -Dbuildtype=release
     # Don't use warning_level and werror. They are applied also to subprojects.
     # meson setup --prefix=/usr --libdir=lib -Ddebug=false -Doptimization=3 -Dwarnings=fatal -Dwarning_level=3 -Dwerror=true
-    - meson setup --prefix=/usr --libdir=lib -Ddebug=false -Doptimization=3 -Dwarnings=fatal
+    - meson setup --prefix=/usr --libdir=lib -Ddebug=false -Doptimization=3 -Dwarnings=fatal $PANGO_MESON_OPTIONS
     - meson compile
     # Must wrap the command in single quotes because of the colon.
     # See https://gitlab.gnome.org/help/ci/yaml/script.md#use-special-characters-with-script
@@ -65,7 +69,7 @@ release_clang_build:
     # -Ddebug=false + -Doptimization=3 correspond to -Dbuildtype=release
     # Don't use warning_level and werror. They are applied also to subprojects.
     # CC=clang CXX=clang++ meson setup --prefix=/usr --libdir=lib -Ddebug=false -Doptimization=3 -Dwarnings=fatal -Dwarning_level=3 -Dwerror=true
-    - CC=clang CXX=clang++ meson setup --prefix=/usr --libdir=lib -Ddebug=false -Doptimization=3 -Dwarnings=fatal
+    - CC=clang CXX=clang++ meson setup --prefix=/usr --libdir=lib -Ddebug=false -Doptimization=3 -Dwarnings=fatal $PANGO_MESON_OPTIONS
     - meson compile
     # Don't test subprojects.
     - 'meson test --suite pangomm:'
