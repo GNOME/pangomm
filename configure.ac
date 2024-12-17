@@ -17,7 +17,7 @@
 
 AC_INIT([pangomm], [2.54.0],
         [https://gitlab.gnome.org/GNOME/pangomm/issues/],
-        [pangomm], [http://www.gtkmm.org/])
+        [pangomm], [https://gtkmm.gnome.org/])
 AC_PREREQ([2.59])
 
 AC_CONFIG_SRCDIR([pango/pangomm.h])
