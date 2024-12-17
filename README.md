@@ -7,7 +7,7 @@ pangomm-1.4 and pangomm-2.48 are different parallel-installable ABIs.
 This file describes pangomm-1.4.
 
 Web site
- - https://www.gtkmm.org
+ - https://gtkmm.gnome.org
 
 Download location
  - https://download.gnome.org/sources/pangomm

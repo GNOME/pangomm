@@ -15,7 +15,7 @@ htmlrefpub=https://gnome.pages.gitlab.gnome.org/@PACKAGE_TARNAME@/
 Name: pangomm
 Description: C++ binding for Pango
 Version: @PACKAGE_VERSION@
-URL: https://www.gtkmm.org/
+URL: https://gtkmm.gnome.org/
 Requires: @PANGOMM_MODULES@
 Libs: -L${libdir} -lpangomm@MSVC_TOOLSET_VER@-@PANGOMM_API_VERSION@
 Cflags: -I${includedir}/@PANGOMM_MODULE_NAME@  -I${libdir}/@PANGOMM_MODULE_NAME@/include
