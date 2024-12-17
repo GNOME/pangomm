@@ -44,7 +44,7 @@ public:
    * If @a accel_marker is nonzero, the given character will mark the character
    * following it as an accelerator. For example, the accel marker might be an
    * ampersand or underscore. All characters marked as an accelerator will receive
-   * a Pango::UNDERLINE_LOW attribute.
+   * a Pango::Underline::LOW attribute.
    * Two @a accel_marker characters following each other
    * produce a single literal @a accel_marker character.
    *
@@ -58,7 +58,7 @@ public:
    * If @a accel_marker is nonzero, the given character will mark the character 
    * following it as an accelerator. For example, the accel marker might be an 
    * ampersand or underscore. All characters marked as an accelerator will receive
-   * a Pango::UNDERLINE_LOW attribute. The first character so marked will be 
+   * a Pango::Underline::LOW attribute. The first character so marked will be
    * returned in @a accel_char. Two @a accel_marker characters following each other 
    * produce a single literal @a accel_marker character.
    *
@@ -72,12 +72,13 @@ public:
   ///Tests whether the %AttrList is valid.
   explicit operator bool() const;
 
-  void insert(Attribute& attr);
-  _IGNORE(pango_attr_list_insert) // hand code because we need to pass a copy of the attribute
-  void insert_before(Attribute& attr);
-  _IGNORE(pango_attr_list_insert_before) // hand code because we need to pass a copy of the attribute
-  void change(Attribute& attr);
-  _IGNORE(pango_attr_list_change) // hand code because we need to pass a copy of the attribute
+//TODO: When we can break ABI, "const Attribute& attr" in insert(), insert_before()
+// and change(), "const AttrList& other" in splice().
+#m4 _CONVERSION(`Attribute&',`PangoAttribute*',`pango_attribute_copy(($3).gobj())')
+  _WRAP_METHOD(void insert(Attribute& attr), pango_attr_list_insert)
+  _WRAP_METHOD(void insert_before(Attribute& attr), pango_attr_list_insert_before)
+  _WRAP_METHOD(void change(Attribute& attr), pango_attr_list_change)
+
   _WRAP_METHOD(void splice(AttrList& other, int pos, int len), pango_attr_list_splice)
   _WRAP_METHOD(void update(int pos, int remove, int add), pango_attr_list_update, newin "2,50")
 
