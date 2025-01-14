@@ -70,6 +70,9 @@ public:
     double scale, const Glib::RefPtr<Context>& context = {},
     const Glib::ustring& variations{NULL} = {}) const, pango_font_map_reload_font)
 
+  _WRAP_METHOD(bool add_font_file(const std::string& filename),
+    pango_font_map_add_font_file, errthrow, newin "2,56")
+
   _WRAP_PROPERTY("item-type", GType, newin "2,52")
   _WRAP_PROPERTY("n-items", unsigned int, newin "2,52")
 };

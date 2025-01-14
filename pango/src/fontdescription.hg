@@ -87,6 +87,21 @@ public:
   _IGNORE(pango_font_description_set_variations_static)
   _WRAP_METHOD(void set_variations(const Glib::ustring& settings), pango_font_description_set_variations)
   _WRAP_METHOD(Glib::ustring get_variations() const, pango_font_description_get_variations)
+
+  _IGNORE(pango_font_description_set_features_static)
+  _WRAP_METHOD(void set_features(const Glib::ustring& features{NULL}),
+    pango_font_description_set_features, newin "2,56")
+  /** Gets the features field of a font description.
+   *
+   * See set_features().
+   *
+   * @newin{2,56}
+   *
+   * @return The features field for the font description, or an empty string
+   *         if not previously set.
+   */
+  _WRAP_METHOD(Glib::ustring get_features() const, pango_font_description_get_features)
+
   _WRAP_METHOD(FontMask get_set_fields() const, pango_font_description_get_set_fields)
   _WRAP_METHOD(void unset_fields(FontMask to_unset), pango_font_description_unset_fields)
   _WRAP_METHOD(void merge(const FontDescription& desc_to_merge, bool replace_existing), pango_font_description_merge)
