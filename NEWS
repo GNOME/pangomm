@@ -1,3 +1,19 @@
+2.56.0 (stable) 2025-01-14:
+
+* FontDescription: Add set/get_features().
+* FontMap: Add add_font_file().
+  (Kjell Ahlstedt)
+
+Documentation:
+* AttrList: Pango::UNDERLINE_LOW -> Pango::Underline::LOW.
+* www.gtkmm.org -> gtkmm.gnome.org.
+  (Kjell Ahlstedt)
+
+Build:
+* Require pango >= 1.56.0.
+  (Kjell Ahlstedt)
+
+
 2.54.0 (stable) 2024-07-25:
 
 * Color: Add parse_with_alpha().
