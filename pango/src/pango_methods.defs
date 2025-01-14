@@ -332,6 +332,7 @@
     '("size" "PANGO_FONT_MASK_SIZE")
     '("gravity" "PANGO_FONT_MASK_GRAVITY")
     '("variations" "PANGO_FONT_MASK_VARIATIONS")
+    '("features" "PANGO_FONT_MASK_FEATURES")
   )
 )
 
@@ -388,6 +389,7 @@
     '("word" "PANGO_WRAP_WORD")
     '("char" "PANGO_WRAP_CHAR")
     '("word-char" "PANGO_WRAP_WORD_CHAR")
+    '("none" "PANGO_WRAP_NONE")
   )
 )
 
@@ -2421,6 +2423,30 @@
   (return-type "const-char*")
 )
 
+(define-method set_features_static
+  (of-object "PangoFontDescription")
+  (c-name "pango_font_description_set_features_static")
+  (return-type "none")
+  (parameters
+    '("const-char*" "features")
+  )
+)
+
+(define-method set_features
+  (of-object "PangoFontDescription")
+  (c-name "pango_font_description_set_features")
+  (return-type "none")
+  (parameters
+    '("const-char*" "features")
+  )
+)
+
+(define-method get_features
+  (of-object "PangoFontDescription")
+  (c-name "pango_font_description_get_features")
+  (return-type "const-char*")
+)
+
 (define-method get_set_fields
   (of-object "PangoFontDescription")
   (c-name "pango_font_description_get_set_fields")
@@ -2830,6 +2856,16 @@
     '("double" "scale")
     '("PangoContext*" "context")
     '("const-char*" "variations")
+  )
+)
+
+(define-method add_font_file
+  (of-object "PangoFontMap")
+  (c-name "pango_font_map_add_font_file")
+  (return-type "gboolean")
+  (parameters
+    '("const-char*" "filename")
+    '("GError**" "error")
   )
 )
 
@@ -3406,6 +3442,17 @@
   (return-type "gboolean")
   (parameters
     '("gunichar" "ch")
+  )
+)
+
+(define-function pango_parse_variations
+  (c-name "pango_parse_variations")
+  (return-type "none")
+  (parameters
+    '("const-char*" "variations")
+    '("hb_ot_var_axis_info_t*" "axes")
+    '("int" "n_axes")
+    '("float*" "coords")
   )
 )
 

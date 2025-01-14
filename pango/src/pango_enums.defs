@@ -436,6 +436,7 @@
 ;;   PANGO_FONT_MASK_SIZE    = 1 << 5,
 ;;   PANGO_FONT_MASK_GRAVITY = 1 << 6,
 ;;   PANGO_FONT_MASK_VARIATIONS = 1 << 7,
+;;   PANGO_FONT_MASK_FEATURES = 1 << 8,
 ;; } PangoFontMask;
 
 (define-flags-extended FontMask
@@ -450,6 +451,7 @@
     '("size" "PANGO_FONT_MASK_SIZE" "1 << 5")
     '("gravity" "PANGO_FONT_MASK_GRAVITY" "1 << 6")
     '("variations" "PANGO_FONT_MASK_VARIATIONS" "1 << 7")
+    '("features" "PANGO_FONT_MASK_FEATURES" "1 << 8")
   )
 )
 
@@ -533,7 +535,8 @@
 ;; typedef enum {
 ;;   PANGO_WRAP_WORD,
 ;;   PANGO_WRAP_CHAR,
-;;   PANGO_WRAP_WORD_CHAR
+;;   PANGO_WRAP_WORD_CHAR,
+;;   PANGO_WRAP_NONE PANGO_AVAILABLE_ENUMERATOR_IN_1_56
 ;; } PangoWrapMode;
 
 (define-enum-extended WrapMode
@@ -543,6 +546,7 @@
     '("word" "PANGO_WRAP_WORD" "0")
     '("char" "PANGO_WRAP_CHAR" "1")
     '("word-char" "PANGO_WRAP_WORD_CHAR" "2")
+    '("none" "PANGO_WRAP_NONE" "3")
   )
 )
 

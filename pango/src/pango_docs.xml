@@ -545,14 +545,6 @@ The bits in a `PangoFontMask` correspond to the set fields in a
 <parameter_description> the font size is specified.
 </parameter_description>
 </parameter>
-<parameter name="PANGO_FONT_MASK_GRAVITY">
-<parameter_description> the font gravity is specified (Since: 1.16.)
-</parameter_description>
-</parameter>
-<parameter name="PANGO_FONT_MASK_VARIATIONS">
-<parameter_description> OpenType font variations are specified (Since: 1.42)
-</parameter_description>
-</parameter>
 </parameters>
 </enum>
 
@@ -2568,11 +2560,13 @@ Serializes a `PangoAttrList` to a string.
 In the resulting string, serialized attributes are separated by newlines or commas.
 Individual attributes are serialized to a string of the form
 
-START END TYPE VALUE
+[START END] TYPE VALUE
 
 Where START and END are the indices (with -1 being accepted in place
 of MAXUINT), TYPE is the nickname of the attribute value type, e.g.
 _weight_ or _stretch_, and the value is serialized according to its type:
+
+Optionally, START and END can be omitted to indicate unlimited extent.
 
 - enum values as nick or numeric value
 - boolean values as _true_ or _false_
@@ -2585,14 +2579,12 @@ _weight_ or _stretch_, and the value is serialized according to its type:
 
 Examples:
 
-```
 0 10 foreground red, 5 15 weight bold, 0 200 font-desc &quot;Sans 10&quot;
-```
 
-```
 0 -1 weight 700
 0 100 family Times
-```
+
+weight bold
 
 To parse the returned value, use [func@Pango.AttrList.from_string].
 
@@ -6240,15 +6232,13 @@ Creates a new font description from a string representation.
 
 The string must have the form
 
-&quot;[FAMILY-LIST] [STYLE-OPTIONS] [SIZE] [VARIATIONS]&quot;,
+[FAMILY-LIST] [STYLE-OPTIONS] [SIZE] [VARIATIONS] [FEATURES]
 
 where FAMILY-LIST is a comma-separated list of families optionally
 terminated by a comma, STYLE_OPTIONS is a whitespace-separated list
 of words where each word describes one of style, variant, weight,
 stretch, or gravity, and SIZE is a decimal number (size in points)
 or optionally followed by the unit modifier &quot;px&quot; for absolute size.
-VARIATIONS is a comma-separated list of font variation
-specifications of the form @‍axis=value (the = sign is optional).
 
 The following words are understood as styles:
 &quot;Normal&quot;, &quot;Roman&quot;, &quot;Oblique&quot;, &quot;Italic&quot;.
@@ -6271,6 +6261,12 @@ The following words are understood as gravity values:
 &quot;Not-Rotated&quot;, &quot;South&quot;, &quot;Upside-Down&quot;, &quot;North&quot;, &quot;Rotated-Left&quot;,
 &quot;East&quot;, &quot;Rotated-Right&quot;, &quot;West&quot;.
 
+VARIATIONS is a comma-separated list of font variations
+of the form @‍axis1=value,axis2=value,...
+
+FEATURES is a comma-separated list of font features of the form
+\#‍feature1=value,feature2=value,...
+
 Any one of the options may be absent. If FAMILY-LIST is absent, then
 the family_name field of the resulting font description will be
 initialized to %NULL. If STYLE-OPTIONS is missing, then all style
@@ -6279,7 +6275,7 @@ size in the resulting font description will be set to 0.
 
 A typical example:
 
-&quot;Cantarell Italic Light 15 @‍wght=200&quot;
+Cantarell Italic Light 15 @‍wght=200 #‍tnum=1
 
 
 </description>
@@ -6310,6 +6306,28 @@ See [method@Pango.FontDescription.set_family].
 <return> the family name field for the
 font description, or %NULL if not previously set. This has the same
 life-time as the font description itself and should not be freed.
+</return>
+</function>
+
+<function name="pango_font_description_get_features">
+<description>
+Gets the features field of a font description.
+
+See [method@Pango.FontDescription.set_features].
+
+Since: 1.56
+
+</description>
+<parameters>
+<parameter name="desc">
+<parameter_description> a `PangoFontDescription`
+</parameter_description>
+</parameter>
+</parameters>
+<return> the features field for the font
+description, or %NULL if not previously set. This has the same
+life-time as the font description itself and should not be freed.
+
 </return>
 </function>
 
@@ -6664,6 +6682,76 @@ string such as a C string literal, or if @desc is only needed temporarily.
 </parameter>
 <parameter name="family">
 <parameter_description> a string representing the family name
+</parameter_description>
+</parameter>
+</parameters>
+<return></return>
+</function>
+
+<function name="pango_font_description_set_features">
+<description>
+Sets the features field of a font description.
+
+OpenType font features allow to enable or disable certain optional
+features of a font, such as tabular numbers.
+
+The format of the features string is comma-separated list of
+feature assignments, with each assignment being one of these forms:
+
+FEATURE=n
+
+where FEATURE must be a 4 character tag that identifies and OpenType
+feature, and n an integer (depending on the feature, the allowed
+values may be 0, 1 or bigger numbers). Unknown features are ignored.
+
+Note that font features set in this way are enabled for the entire text
+that is using the font, which is not appropriate for all OpenType features.
+The intended use case is to select character variations (features cv01 - c99),
+style sets (ss01 - ss20) and the like.
+
+Pango does not currently have a way to find supported OpenType features
+of a font. Both harfbuzz and freetype have API for this. See for example
+[hb_ot_layout_table_get_feature_tags](https://harfbuzz.github.io/harfbuzz-hb-ot-layout.html#hb-ot-layout-table-get-feature-tags).
+
+Features that are not supported by the font are silently ignored.
+
+Since: 1.56
+
+</description>
+<parameters>
+<parameter name="desc">
+<parameter_description> a `PangoFontDescription`.
+</parameter_description>
+</parameter>
+<parameter name="features">
+<parameter_description> a string representing the features
+</parameter_description>
+</parameter>
+</parameters>
+<return></return>
+</function>
+
+<function name="pango_font_description_set_features_static">
+<description>
+Sets the features field of a font description.
+
+This is like [method@Pango.FontDescription.set_features], except
+that no copy of @featuresis made. The caller must make sure that
+the string passed in stays around until @desc has been freed
+or the name is set again. This function can be used if
+@features is a static string such as a C string literal,
+or if @desc is only needed temporarily.
+
+Since: 1.56
+
+</description>
+<parameters>
+<parameter name="desc">
+<parameter_description> a `PangoFontDescription`
+</parameter_description>
+</parameter>
+<parameter name="features">
+<parameter_description> a string representing the features
 </parameter_description>
 </parameter>
 </parameters>
@@ -7500,6 +7588,36 @@ Since: 1.44
 </parameter>
 </parameters>
 <return> `TRUE` if @font can render @wc
+
+</return>
+</function>
+
+<function name="pango_font_map_add_font_file">
+<description>
+Loads a font file with one or more fonts into the `PangoFontMap`.
+
+The added fonts will take precedence over preexisting
+fonts with the same name.
+
+Since: 1.56
+
+</description>
+<parameters>
+<parameter name="fontmap">
+<parameter_description> a `PangoFontMap`
+</parameter_description>
+</parameter>
+<parameter name="filename">
+<parameter_description> Path to the font file
+</parameter_description>
+</parameter>
+<parameter name="error">
+<parameter_description> return location for an error
+</parameter_description>
+</parameter>
+</parameters>
+<return> True if the font file is successfully loaded
+into the fontmap, false if an error occurred.
 
 </return>
 </function>
@@ -10987,7 +11105,6 @@ Since: 1.16
 Queries whether the layout had to wrap any paragraphs.
 
 This returns %TRUE if a positive width is set on @layout,
-ellipsization mode of @layout is set to %PANGO_ELLIPSIZE_NONE,
 and there are paragraphs exceeding the layout width that have
 to be wrapped.
 
@@ -12369,7 +12486,7 @@ even when @length is positive.
 <function name="pango_layout_set_width">
 <description>
 Sets the width to which the lines of the `PangoLayout` should wrap or
-ellipsized.
+get ellipsized.
 
 The default value is -1: no width set.
 
@@ -15690,12 +15807,23 @@ Since: 1.50
 <description>
 Serializes a `PangoTabArray` to a string.
 
-No guarantees are made about the format of the string,
-it may change between Pango versions.
+In the resulting string, serialized tabs are separated by newlines or commas.
 
-The intended use of this function is testing and
-debugging. The format is not meant as a permanent
-storage format.
+Individual tabs are serialized to a string of the form
+
+[ALIGNMENT:]POSITION[:DECIMAL_POINT]
+
+Where ALIGNMENT is one of _left_, _right_, _center_ or _decimal_, and
+POSITION is the position of the tab, optionally followed by the unit _px_.
+If ALIGNMENT is omitted, it defaults to _left_. If ALIGNMENT is _decimal_,
+the DECIMAL_POINT character may be specified as a Unicode codepoint.
+
+Note that all tabs in the array must use the same unit.
+
+A typical example:
+
+100px 200px center:300px right:400px
+
 
 Since: 1.50
 
@@ -15707,6 +15835,7 @@ Since: 1.50
 </parameter>
 </parameters>
 <return> a newly allocated string
+
 </return>
 </function>
 
@@ -16177,6 +16306,7 @@ by the path. The font file must be in a format that is supported by the system's
 DirectWrite APIs.
 
 Since: 1.52
+Deprecated: 1.56: Use pango_font_map_add_font_file instead
 
 </description>
 <parameters>
