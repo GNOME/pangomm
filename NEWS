@@ -1,3 +1,11 @@
+2.56.1 (stable) 2025-01-15:
+
+Identical to 2.56.0.
+The 2.56.0 tarball has not been stored at download.gnome.org.
+The CI pipeline in GitLab had not been updated when tag 2.56.0
+was added to the git repository.
+
+
 2.56.0 (stable) 2025-01-14:
 
 * FontDescription: Add set/get_features().
