@@ -7,8 +7,8 @@ project('pangomm', 'cpp',
     'cpp_std=c++11',
     'warning_level=1',
   ],
-  meson_version: '>= 0.55.0', # required for meson.add_dist_script(python3, ...)
-                              # and meson.add_install_script(python3, ...)
+  meson_version: '>= 0.58.0', # required for meson.add_dist_script() in subproject
+                              # and dependency().get_variable('varname')
 )
 
 pangomm_api_version = '1.4'
@@ -121,7 +121,7 @@ cairomm_dep = dependency('cairomm-1.@0@'.format(cairomm_req_minor_ver), version:
 glibmm_dep = dependency('glibmm-2.@0@'.format(glibmm_req_minor_ver), version: glibmm_req)
 
 # Where to find gmmproc and generate_wrap_init.pl.
-gmmproc_dir = glibmm_dep.get_variable(pkgconfig: 'gmmprocdir', internal: 'gmmprocdir')
+gmmproc_dir = glibmm_dep.get_variable('gmmprocdir')
 
 if is_msvc
   # Check later whether we compile pangomm without using gendef
@@ -284,9 +284,6 @@ if is_msvc
   )
 endif
 
-# add_dist_script() is not allowed in a subproject if meson.version() < 0.58.0.
-can_add_dist_script = not meson.is_subproject() or meson.version().version_compare('>= 0.58.0')
-
 subdir('tools/extra_defs_gen')
 subdir('MSVC_NMake/gendef')
 subdir('pango')
@@ -294,27 +291,25 @@ subdir('MSVC_NMake/pangomm')
 subdir('pango/pangomm')
 subdir('docs/reference')
 
-if can_add_dist_script
-  # Add a ChangeLog file to the distribution directory.
-  meson.add_dist_script(
-    python3, dist_changelog_py,
-    project_source_root,
-  )
+# Add a ChangeLog file to the distribution directory.
+meson.add_dist_script(
+  python3, dist_changelog_py,
+  project_source_root,
+)
 
-  # Don't distribute these files.
-  dont_distribute = [
-    'pangomm.doap',
-    '.gitlab-ci.yml',
-  ]
-  # Add build scripts to the distribution directory, and delete .gitignore
-  # files and an empty $MESON_PROJECT_DIST_ROOT/build/ directory.
-  meson.add_dist_script(
-    python3, dist_build_scripts_py,
-    project_source_root,
-    'untracked' / 'build_scripts',
-    dont_distribute,
-  )
-endif
+# Don't distribute these files.
+dont_distribute = [
+  'pangomm.doap',
+  '.gitlab-ci.yml',
+]
+# Add build scripts to the distribution directory, and delete .gitignore
+# files and an empty $MESON_PROJECT_DIST_ROOT/build/ directory.
+meson.add_dist_script(
+  python3, dist_build_scripts_py,
+  project_source_root,
+  'untracked' / 'build_scripts',
+  dont_distribute,
+)
 
 if meson.is_subproject()
   pkgconfig_vars = {
