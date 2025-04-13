@@ -1,6 +1,4 @@
-/*
- *
- * Copyright 1998-1999 The Gtk-- Development Team
+/* Copyright 1998-1999 The gtkmm Development Team
  * Copyright 2001      Free Software Foundation
  *
  * This library is free software; you can redistribute it and/or
@@ -14,8 +12,7 @@
  * Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public
- * License along with this library; if not, write to the Free
- * Software Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ * License along with this library; if not, see <https://www.gnu.org/licenses/>.
  */
 
 namespace Pango
@@ -136,10 +133,8 @@ std::vector<Attribute> AttrIter::get_attrs() const
   auto attrs = pango_attr_iterator_get_attrs( const_cast<PangoAttrIterator*>(gobj()) );
   return SListHandler_Attribute::slist_to_vector(attrs, Glib::OWNERSHIP_DEEP);
 }
-   
 
 } /* namespace Pango */
-
 
 namespace Glib
 {
@@ -150,4 +145,3 @@ Pango::AttrIter wrap(PangoAttrIterator* object, bool take_copy)
 }
 
 } /* namespace Glib */
-

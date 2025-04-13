@@ -1,9 +1,5 @@
-// -*- c++ -*-
 #ifndef _PANGOMM_INIT_H
 #define _PANGOMM_INIT_H
-
-/* $Id: init.h 89 2003-12-08 04:46:54Z murrayc $ */
-
 /* Copyright (C) 2002 The gtkmm Development Team
  *
  * This library is free software; you can redistribute it and/or
@@ -17,8 +13,7 @@
  * Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public
- * License along with this library; if not, write to the Free
- * Software Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ * License along with this library; if not, see <https://www.gnu.org/licenses/>.
  */
 
 #include <pangommconfig.h>
@@ -28,7 +23,7 @@ namespace Pango
 
 /** Initialize pangomm.
  * You may call this more than once.
- * You do not need to call this if you are using Gtk::Main,
+ * You do not need to call this if you are using Gtk::Application,
  * because it calls it for you.
  */
 PANGOMM_API
@@ -36,8 +31,4 @@ void init();
 
 } // namespace Pango
 
-
-
 #endif // _PANGOMM_INIT_H
-
-
