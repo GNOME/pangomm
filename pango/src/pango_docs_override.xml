@@ -384,5 +384,37 @@ forms is &apos;#fff&apos; &apos;#ffffff&apos; &apos;#fffffffff&apos; and &apos;#
 </description>
 </function>
 
-</root>
+<!-- New additions to enums are documented by pango in a way that -->
+<!-- glibmm/tools/defs_gen/docextract_to_xml.py does not understand. -->
+<!-- The enum description looks like a class description. It does not -->
+<!-- include documentation of the parameters (enum values). -->
+<!-- The documentation of an enum value looks like the documentation -->
+<!-- of a #define. -->
 
+<enum name="PangoFontMask">
+<parameter name="PANGO_FONT_MASK_GRAVITY">
+<parameter_description>The font gravity is specified. Since: 1.16
+</parameter_description>
+</parameter>
+<parameter name="PANGO_FONT_MASK_VARIATIONS">
+<parameter_description>OpenType font variations are specified. Since: 1.42
+</parameter_description>
+</parameter>
+<parameter name="PANGO_FONT_MASK_FEATURES">
+<parameter_description>OpenType font features are specified. Since: 1.56
+</parameter_description>
+</parameter>
+</enum>
+
+<enum name="PangoWrapMode">
+<parameter name="PANGO_WRAP_NONE">
+<parameter_description>Do not wrap. Since: 1.56
+</parameter_description>
+</parameter>
+<parameter name="">
+<parameter_description>
+</parameter_description>
+</parameter>
+</enum>
+
+</root>
