@@ -2,7 +2,7 @@
 
 project('pangomm', 'cpp',
   version: '2.56.1',
-  license: 'LGPLv2.1+',
+  license: 'LGPL-2.1-or-later',
   default_options: [
     'cpp_std=c++17',
     'warning_level=1',
