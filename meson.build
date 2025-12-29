@@ -219,7 +219,9 @@ if is_msvc
   # Put in the toolset version if the build is done with Visual Studio
   # 2015 or later, unless explicitly told not to
   if use_msvc14x_toolset_ver
-    if cpp_compiler.version().version_compare('>=19.30')
+    if cpp_compiler.version().version_compare('>=19.50')
+      msvc14x_toolset_ver = '-vc145'
+    elif cpp_compiler.version().version_compare('>=19.30')
       msvc14x_toolset_ver = '-vc143'
     elif cpp_compiler.version().version_compare('>=19.20')
       msvc14x_toolset_ver = '-vc142'
