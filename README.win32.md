@@ -99,19 +99,54 @@ locations under `$(PREFIX)`.
   * `clean`: Remove all the built files.  This includes the generated sources
 if building from a GIT checkout, as noted below.
 
+There are also some options that are supported when building with NMake, use as needed:
+
+ * USE_COMPAT_LIBS: Set this to `1` to use the old `vc140` naming scheme. Use only if
+necessary or when rebuilding code using pangomm is inconvenient.
+ * BASE_INCLUDEDIR: Base directory where headers of needed libraries can be found,
+the default is `$(PREFIX)\include`; can be overridden with [DEP]_INCLUDEDIR as needed,
+as noted below. See [DEP]_INCLUDEDIR for more info.
+ * BASE_LIBDIR: Base directory where .lib's of needed libraries can be found as well as
+their architecture-dependent headers, the default is `$(PREFIX)\lib`; can be overridden
+with [DEP]_LIBDIR as needed, as noted below. See [DEP]_LIBDIR for more info.
+ * [DEP]_INCLUDEDIR: Base directory where headers of [DEP] may be found, default is
+`$(BASE_INCLUDEDIR)`; do not include the subdirectory of the headers here, i.e. use
+`GLIB_INCLUDEDIR=<some_dir>` where the GLib headers are under `<some_dir>\glib-2.0`,
+and so on. [DEP] includes PANGO, GLIB, GLIBMM, CAIRO, CAIROMM, HARFBUZZ and SIGC
+(notice that Cairo and HarfBuzz headers are being included in the process). Use as needed.
+ * [DEP]_LIBDIR: Base directory where .lib's and architecture-dependent headers of [DEP]
+may be found, default is `$(BASE_LIBDIR)`; do not include the subdirectory where the
+architecture-dependent headers are, i.e. use `GLIB_LIBDIR=<some_dir>` where the GLib
+architecture-dependent headers (`glibconfig.h`) is located under `<some_dir>\glib-2.0\include`,
+and so on. [DEP] includes PANGO, GLIB, GLIBMM, CAIRO, CAIROMM and SIGC. Use as needed.
+* GMMPROC_DIR: Directory where glibmm's `gmmproc`/`generate_wrap_init.pl` m4/PERL scripts may
+be found, along with their auxiliary m4/PERL scripts, for building from a GIT checkout, default
+is `$(GLIBMM_LIBDIR)\glibmm-2.4\proc`.
+You need to check that the paths in `gmmproc` and `generate_wrap_init.pl` are correct to
+your system setup; you must use the scripts that come with glibmm-2.66.x or earlier here.
+* PERL, M4: Full paths to your PERL interpreter and the `m4` tool if they are not in `%PATH%`.
+PERL is needed for all builds; if building from a GIT checkout, the `XML::Parser` module (that
+depends on libexpat) is also required, and you are responsible for ensuring that `XML::Parser`
+does indeed load in your build env. `m4` is needed if building from GIT, and it is recommended
+that this `m4` is a part of your Cygwin or MSYS2/MSYS64 installation, as other UNIXy tools may
+be used. As an alternative to using `M4`, you may use `UNIX_TOOLS_BINDIR` to point to the `bin`
+directory of your Cygwin or MSYS2/MSYS64 installation so that `m4` and the other UNIXy tools can
+can be found as well.
+
 The NMake Makefiles now support building the pangomm libraries directly from a GIT 
 checkout with a few manual steps required, namely:
 
   * Ensure that you have a copy of Cygwin or MSYS/MSYS64 installed, including
 `m4.exe` and `sh.exe`.  You should also have a PERL for Windows installation
 as well, and your `%PATH%` should contain the paths to your PERL interpreter
-and the bin\ directory of your Cygwin or MSYS/MSYS64 installation, it is 
-recommended that these paths are towards the end of your `%PATH%`. You need to 
+and the bin\ directory of your Cygwin or MSYS/MSYS64 installation, or use `PERL`,
+`M4` and/or `UNIX_TOOLS_BINDIR` as noted above. If including these in `%PATH%`, it
+is recommended that these paths are towards the end of your `%PATH%`. You need to 
 install the `XML::Parser` PERL module as well for your PERL installation, which 
 requires libexpat.
 
   * You may wish to pass in the directory where gmmproc and generate_wrap_init.pl
-from glibmm is found, if they are not in `$(PREFIX)\share\glibmm-2.4\proc`, using 
+from glibmm is found, if they are not in `$(GLIBMM_LIBDIR)\glibmm-2.4\proc`, using 
 `GMMPROC_DIR=...` in the NMake commandline.
 
   * Make a new copy of the entire source tree to some location, where the build
@@ -135,7 +170,7 @@ For building with Meson, please see `README.md` for further instructions. Please
 note that using `-Ddefault_library=[static|both]` for Visual Studio builds is not 
 supported and is thus not allowed.
 
-You will need to have a working copy of glibmm-2.4, cairomm-1.0 and PangoCairo's
+You will need to have a working copy of glibmm-2.4, cairomm-1.0 and PangoCairo/Pango's
 pkg-config files, which point to the corresponding locations of its headers
 and .lib's and the headers and .lib's of all of its dependencies. You will need to
 set `%LIB%` to include the location where
@@ -145,12 +180,13 @@ the C++11 branches of glibmm and cairomm, where the latest versions are
 glibmm-2.66.x and cairomm-1.14.x.
 
 When building with Meson, if building from a GIT checkout or if building with 
-`maintainer-mode` enabled, you will also need a PERL interpreter and the `m4.exe` 
-and `sh.exe` from Cygwin or MSYS/MSYS64, and you will need to also install Doxygen,
-LLVM (likely needed by Doxygen) and GraphViz unless you pass in 
-`-Dbuild-documentation=false` in your Meson configure command line.  You will still
-need to have `mm-common` installed with its `bin` directory in your `%PATH%`, along
-with the `gmmproc` items from glibmm, which will be found with `pkg-config`.
+`maintainer-mode` enabled, you will also need a PERL interpreter with `XML::Parser`
+and the `m4.exe` and `sh.exe` from Cygwin or MSYS/MSYS64, and you will need to also
+install Doxygen, LLVM (likely needed by Doxygen) and GraphViz unless you pass in 
+`-Dbuild-documentation=false` in your Meson configure command line.  You will need
+to have these items in the `%PATH%`, along with an installation of `mm-common` with
+its `bin` directory in your `%PATH%`. You also need the `gmmproc` items from glibmm,
+which will be found with `pkg-config` when glibmm is searched for.
 
 The Ninja build tool is also required if not using
 `--backend=[vs2015|vs2017|vs2019|vs2022]` in the Meson command line, as noted
