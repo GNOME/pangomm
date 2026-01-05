@@ -39,28 +39,28 @@ files_extra_ph_int = $(files_extra_ph:/=\)
 
 # For pangomm
 
-!if [call create-lists.bat header pangomm.mak pangomm_OBJS]
+!if [call create-lists.bat header $(BUILD_MKFILE_SNIPPET) pangomm_OBJS]
 !endif
 
-!if [for %c in ($(files_built_cc)) do @if "%~xc" == ".cc" @call create-lists.bat file pangomm.mak ^$(OUTDIR)\pangomm\%~nc.obj]
+!if [for %c in ($(files_built_cc)) do @if "%~xc" == ".cc" @call create-lists.bat file $(BUILD_MKFILE_SNIPPET) ^$(OUTDIR)\pangomm\%~nc.obj]
 !endif
 
-!if [for %c in ($(files_extra_cc)) do @if "%~xc" == ".cc" @call create-lists.bat file pangomm.mak ^$(OUTDIR)\pangomm\%~nc.obj]
+!if [for %c in ($(files_extra_cc)) do @if "%~xc" == ".cc" @call create-lists.bat file $(BUILD_MKFILE_SNIPPET) ^$(OUTDIR)\pangomm\%~nc.obj]
 !endif
 
-!if [@call create-lists.bat file pangomm.mak ^$(OUTDIR)\pangomm\pangomm.res]
+!if [@call create-lists.bat file $(BUILD_MKFILE_SNIPPET) ^$(OUTDIR)\pangomm\pangomm.res]
 !endif
 
-!if [call create-lists.bat footer pangomm.mak]
+!if [call create-lists.bat footer $(BUILD_MKFILE_SNIPPET)]
 !endif
 
-!if [call create-lists.bat header pangomm.mak pangomm_real_hg]
+!if [call create-lists.bat header $(BUILD_MKFILE_SNIPPET) pangomm_real_hg]
 !endif
 
-!if [for %c in ($(files_hg)) do @call create-lists.bat file pangomm.mak ..\pango\src\%c]
+!if [for %c in ($(files_hg)) do @call create-lists.bat file $(BUILD_MKFILE_SNIPPET) ..\pango\src\%c]
 !endif
 
-!if [call create-lists.bat footer pangomm.mak]
+!if [call create-lists.bat footer $(BUILD_MKFILE_SNIPPET)]
 !endif
 
 # We need to generate a temporary .bat file to generate $(OUTDIR\pangomm\attributes.h from a GIT checkout
@@ -71,12 +71,12 @@ files_extra_ph_int = $(files_extra_ph:/=\)
 !if [if exist $(GENERATE_CHECK_HEADER_BAT) call $(GENERATE_CHECK_HEADER_BAT) & del $(GENERATE_CHECK_HEADER_BAT)]
 !endif
 
-!if [for %d in ($(OUTDIR)\pangomm ..\pango\pangomm ..\untracked\pango\pangomm) do @if exist %d\attributes.h call get-gmmproc-ver %d\attributes.h>>pangomm.mak]
+!if [for %d in ($(OUTDIR)\pangomm ..\pango\pangomm ..\untracked\pango\pangomm) do @if exist %d\attributes.h call get-gmmproc-ver %d\attributes.h>>$(BUILD_MKFILE_SNIPPET)]
 !endif
 
-!include pangomm.mak
+!include $(BUILD_MKFILE_SNIPPET)
 
-!if [del /f /q pangomm.mak]
+!if [del /f /q $(BUILD_MKFILE_SNIPPET)]
 !endif
 
 !if "$(GMMPROC_VER)" >= "2.64.3"
