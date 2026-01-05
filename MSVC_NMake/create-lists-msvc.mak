@@ -42,13 +42,13 @@ files_extra_ph_int = $(files_extra_ph:/=\)
 !if [call create-lists.bat header pangomm.mak pangomm_OBJS]
 !endif
 
-!if [for %c in ($(files_built_cc)) do @if "%~xc" == ".cc" @call create-lists.bat file pangomm.mak vs^$(VSVER)\^$(CFG)\^$(PLAT)\pangomm\%~nc.obj]
+!if [for %c in ($(files_built_cc)) do @if "%~xc" == ".cc" @call create-lists.bat file pangomm.mak ^$(OUTDIR)\pangomm\%~nc.obj]
 !endif
 
-!if [for %c in ($(files_extra_cc)) do @if "%~xc" == ".cc" @call create-lists.bat file pangomm.mak vs^$(VSVER)\^$(CFG)\^$(PLAT)\pangomm\%~nc.obj]
+!if [for %c in ($(files_extra_cc)) do @if "%~xc" == ".cc" @call create-lists.bat file pangomm.mak ^$(OUTDIR)\pangomm\%~nc.obj]
 !endif
 
-!if [@call create-lists.bat file pangomm.mak vs^$(VSVER)\^$(CFG)\^$(PLAT)\pangomm\pangomm.res]
+!if [@call create-lists.bat file pangomm.mak ^$(OUTDIR)\pangomm\pangomm.res]
 !endif
 
 !if [call create-lists.bat footer pangomm.mak]
@@ -63,10 +63,15 @@ files_extra_ph_int = $(files_extra_ph:/=\)
 !if [call create-lists.bat footer pangomm.mak]
 !endif
 
-!if [for %f in (pangomm\attributes.h) do @if not exist ..\pango\%f if not exist ..\untracked\pango\%f if not exist vs$(VSVER)\$(CFG)\$(PLAT)\%f (md vs$(VSVER)\$(CFG)\$(PLAT)\pangomm\private) & ($(PERL) -- $(GMMPROC_DIR)/gmmproc -I ../tools/m4 --defs ../pango/src attributes ../pango/src vs$(VSVER)/$(CFG)/$(PLAT)/pangomm)]
+# We need to generate a temporary .bat file to generate $(OUTDIR\pangomm\attributes.h from a GIT checkout
+# so that we can use that to see whether we need to use gendef.exe, as the UNIXy tools might not be in %PATH%
+!if [for %f in (pangomm\attributes.h) do @if not exist ..\pango\%f if not exist ..\untracked\pango\%f if not exist $(OUTDIR)\%f (echo @echo off>$(GENERATE_CHECK_HEADER_BAT) & echo setlocal EnableDelayedExpansion>>$(GENERATE_CHECK_HEADER_BAT) & echo md $(OUTDIR)\pangomm\private>>$(GENERATE_CHECK_HEADER_BAT) & echo set "PATH=$(PATH);$(UNIX_TOOLS_BINDIR_CHECKED)">>$(GENERATE_CHECK_HEADER_BAT) & echo call $(PERL) -- $(GMMPROC_DIR)/gmmproc -I ../tools/m4 --defs ../pango/src attributes ../pango/src $(OUTDIR:\=/)/pangomm>>$(GENERATE_CHECK_HEADER_BAT))]
 !endif
 
-!if [for %d in (vs$(VSVER)\$(CFG)\$(PLAT)\pangomm ..\pango\pangomm ..\untracked\pango\pangomm) do @if exist %d\attributes.h call get-gmmproc-ver %d\attributes.h>>pangomm.mak]
+!if [if exist $(GENERATE_CHECK_HEADER_BAT) call $(GENERATE_CHECK_HEADER_BAT) & del $(GENERATE_CHECK_HEADER_BAT)]
+!endif
+
+!if [for %d in ($(OUTDIR)\pangomm ..\pango\pangomm ..\untracked\pango\pangomm) do @if exist %d\attributes.h call get-gmmproc-ver %d\attributes.h>>pangomm.mak]
 !endif
 
 !include pangomm.mak
@@ -75,10 +80,13 @@ files_extra_ph_int = $(files_extra_ph:/=\)
 !endif
 
 !if "$(GMMPROC_VER)" >= "2.64.3"
-PANGOMM_INT_TARGET = vs$(VSVER)\$(CFG)\$(PLAT)\pangomm
+PANGOMM_INT_TARGET = $(OUTDIR)\pangomm
 PANGOMM_DEF_LDFLAG =
 !else
-PANGOMM_INT_TARGET = vs$(VSVER)\$(CFG)\$(PLAT)\pangomm\pangomm.def
+PANGOMM_INT_TARGET = $(OUTDIR)\pangomm\pangomm.def
 PANGOMM_DEF_LDFLAG = /def:$(PANGOMM_INT_TARGET)
-PANGOMM_BASE_CFLAGS = $(PANGOMM_BASE_CFLAGS) /DPANGOMM_USE_GENDEF
+LIBPANGOMM_CFLAGS = $(LIBPANGOMM_CFLAGS) /DPANGOMM_USE_GENDEF
+CFLAGS = $(CFLAGS: /GL=)
+LDFLAGS = $(LDFLAGS: /LTCG=)
+ARFLAGS = $(ARFLAGS: /LTCG=)
 !endif

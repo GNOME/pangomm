@@ -4,9 +4,9 @@
 # one is maintaining the NMake build files.
 
 # Create the build directories
-vs$(VSVER)\$(CFG)\$(PLAT)\gendef	\
-vs$(VSVER)\$(CFG)\$(PLAT)\pangomm	\
-vs$(VSVER)\$(CFG)\$(PLAT)\pangomm\private:
+$(OUTDIR)\gendef	\
+$(OUTDIR)\pangomm	\
+$(OUTDIR)\pangomm\private:
 	@-md $@
 
 # Generate .def files
@@ -14,7 +14,7 @@ vs$(VSVER)\$(CFG)\$(PLAT)\pangomm\pangomm.def: $(GENDEF) vs$(VSVER)\$(CFG)\$(PLA
 	vs$(VSVER)\$(CFG)\$(PLAT)\gendef.exe $@ $(PANGOMM_DLLNAME).dll vs$(VSVER)\$(CFG)\$(PLAT)\pangomm\*.obj
 
 # Generate wrap_init.cc files
-vs$(VSVER)\$(CFG)\$(PLAT)\pangomm\wrap_init.cc: $(pangomm_real_hg)
+$(OUTDIR)\pangomm\wrap_init.cc: $(pangomm_real_hg)
 	@if not exist ..\pango\pangomm\wrap_init.cc $(PERL) -- "$(GMMPROC_DIR)/generate_wrap_init.pl" --namespace=Pango --parent_dir=pangomm $(pangomm_real_hg:\=/)>$@
 
 # Generate pre-generated resources and configuration headers (builds from GIT)

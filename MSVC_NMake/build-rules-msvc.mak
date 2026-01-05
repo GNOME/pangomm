@@ -13,29 +13,33 @@
 # 	$(CC)|$(CXX) $(cflags) /Fo$(destdir) /c @<<
 # $<
 # <<
-{vs$(VSVER)\$(CFG)\$(PLAT)\pangomm\}.cc{vs$(VSVER)\$(CFG)\$(PLAT)\pangomm\}.obj::
-	$(CXX) $(PANGOMM_CFLAGS) $(CFLAGS_NOGL) /Fovs$(VSVER)\$(CFG)\$(PLAT)\pangomm\ /Fdvs$(VSVER)\$(CFG)\$(PLAT)\pangomm\ /c @<<
+
+{$(OUTDIR)\pangomm\}.cc{$(OUTDIR)\pangomm\}.obj::
+	$(CXX) $(CFLAGS) $(LIBPANGOMM_CFLAGS) $(PANGOMM_INCLUDES) /Fo$(OUTDIR)\pangomm\ /Fd$(OUTDIR)\pangomm\ /c @<<
 $<
 <<
 
-{..\untracked\pango\pangomm\}.cc{vs$(VSVER)\$(CFG)\$(PLAT)\pangomm\}.obj::
-	$(CXX) $(PANGOMM_CFLAGS) $(CFLAGS_NOGL) /Fovs$(VSVER)\$(CFG)\$(PLAT)\pangomm\ /Fdvs$(VSVER)\$(CFG)\$(PLAT)\pangomm\ /c @<<
+{..\untracked\pango\pangomm\}.cc{$(OUTDIR)\pangomm\}.obj::
+	$(CXX) $(CFLAGS) $(LIBPANGOMM_CFLAGS) $(PANGOMM_INCLUDES) /Fo$(OUTDIR)\pangomm\ /Fd$(OUTDIR)\pangomm\ /c @<<
 $<
 <<
 
-{..\pango\pangomm\}.cc{vs$(VSVER)\$(CFG)\$(PLAT)\pangomm\}.obj::
-	$(CXX) $(PANGOMM_CFLAGS) $(CFLAGS_NOGL) /Fovs$(VSVER)\$(CFG)\$(PLAT)\pangomm\ /Fdvs$(VSVER)\$(CFG)\$(PLAT)\pangomm\ /c @<<
+{..\pango\pangomm\}.cc{$(OUTDIR)\pangomm\}.obj::
+	$(CXX) $(CFLAGS) $(LIBPANGOMM_CFLAGS) $(PANGOMM_INCLUDES) /Fo$(OUTDIR)\pangomm\ /Fd$(OUTDIR)\pangomm\ /c @<<
 $<
 <<
 
-{..\pango\src\}.ccg{vs$(VSVER)\$(CFG)\$(PLAT)\pangomm\}.obj:
-	@if not exist $(@D)\private\ $(MAKE) /f Makefile.vc CFG=$(CFG) $(@D)\private
-	@for %%s in ($(<D)\*.ccg) do @if not exist ..\pango\pangomm\%%~ns.cc if not exist ..\untracked\pango\pangomm\%%~ns.cc if not exist $(@D)\%%~ns.cc $(PERL) -- $(GMMPROC_DIR)/gmmproc -I ../tools/m4 --defs $(<D:\=/) %%~ns $(<D:\=/) $(@D)
-	@if exist $(@D)\$(<B).cc $(CXX) $(PANGOMM_CFLAGS) $(CFLAGS_NOGL) /Fo$(@D)\ /Fd$(@D)\ /c $(@D)\$(<B).cc
-	@if exist ..\pango\pangomm\$(<B).cc $(CXX) $(PANGOMM_CFLAGS) $(CFLAGS_NOGL) /Fo$(@D)\ /Fd$(@D)\ /c ..\pango\pangomm\$(<B).cc
-	@if exist ..\untracked\pango\pangomm\$(<B).cc $(CXX) $(PANGOMM_CFLAGS) $(CFLAGS_NOGL) /Fo$(@D)\ /Fd$(@D)\ /c ..\pango\pangomm\$(<B).cc
+{..\pango\src\}.ccg{$(OUTDIR)\pangomm\}.obj:
+	@if not exist $(@D)\private\ md $(@D)\private
+	@if not exist pangomm\pangommconfig.h $(MAKE) /f Makefile.vc CFG=$(CFG) prep-git-build
+	@if "$(UNIX_TOOLS_BINDIR_CHECKED)" == "" echo Warning: m4 is not in %PATH% or specified M4 or UNIX_TOOLS_BINDIR is not valid. Builds may fail!
+	@set PATH=$(PATH);$(UNIX_TOOLS_BINDIR_CHECKED)
+	@for %%s in ($(<D)\*.ccg) do @if not exist ..\pango\pangomm\%%~ns.cc if not exist $(@D)\%%~ns.cc $(PERL) -- $(GMMPROC_DIR)/gmmproc -I ../tools/m4 --defs $(<D:\=/) %%~ns $(<D:\=/) $(@D)
+	@if exist $(@D)\$(<B).cc $(CXX) $(CFLAGS) $(LIBPANGOMM_CFLAGS) $(PANGOMM_INCLUDES) /Fo$(@D)\ /Fd$(@D)\ /c $(@D)\$(<B).cc
+	@if exist ..\pango\pangomm\$(<B).cc $(CXX) $(CFLAGS) $(LIBPANGOMM_CFLAGS) $(PANGOMM_INCLUDES) /Fo$(@D)\ /Fd$(@D)\ /c ..\pango\pangomm\$(<B).cc
+	@if exist ..\untracked\pango\pangomm\$(<B).cc $(CXX) $(CFLAGS) $(LIBPANGOMM_CFLAGS) $(PANGOMM_INCLUDES) /Fo$(@D)\ /Fd$(@D)\ /c ..\pango\pangomm\$(<B).cc
 
-{.\pangomm\}.rc{vs$(VSVER)\$(CFG)\$(PLAT)\pangomm\}.res:
+{.\pangomm\}.rc{$(OUTDIR)\pangomm\}.res:
 	rc /fo$@ $<
 
 # Rules for building .lib files
@@ -49,7 +53,7 @@ $(PANGOMM_LIB): $(PANGOMM_DLL)
 # <<
 # 	@-if exist $@.manifest mt /manifest $@.manifest /outputresource:$@;2
 $(PANGOMM_DLL): $(PANGOMM_INT_TARGET) $(pangomm_OBJS)
-	link /DLL $(LDFLAGS_NOLTCG) $(PANGO_LIBS) $(CAIROMM_LIB) $(GLIBMM_LIB) $(LIBSIGC_LIB) /implib:$(PANGOMM_LIB) $(PANGOMM_DEF_LDFLAG) -out:$@ @<<
+	link /DLL $(LDFLAGS) $(DEP_LDFLAGS) /implib:$(PANGOMM_LIB) -out:$@ @<<
 $(pangomm_OBJS)
 <<
 	@-if exist $@.manifest mt /manifest $@.manifest /outputresource:$@;2
@@ -63,28 +67,24 @@ $(pangomm_OBJS)
 # 	@-if exist $@.manifest mt /manifest $@.manifest /outputresource:$@;1
 
 # For the gendef tool
-{.\gendef\}.cc{vs$(VSVER)\$(CFG)\$(PLAT)\}.exe:
-	@if not exist vs$(VSVER)\$(CFG)\$(PLAT)\gendef\ $(MAKE) -f Makefile.vc CFG=$(CFG) vs$(VSVER)\$(CFG)\$(PLAT)\gendef
-	$(CXX) $(PANGOMM_BASE_CFLAGS) $(CFLAGS) /Fo$(@D)\gendef\ /Fd$(@D)\gendef\ $< /link $(LDFLAGS) /out:$@
+{.\gendef\}.cc{$(OUTDIR)\}.exe:
+	@if not exist $(OUTDIR)\gendef\ md $(OUTDIR)\gendef
+	$(CXX) $(CFLAGS) /Fo$(@D)\gendef\ /Fd$(@D)\gendef\ $< /link $(LDFLAGS) /out:$@
 
 clean:
-	@-del /f /q vs$(VSVER)\$(CFG)\$(PLAT)\*.exe
-	@-del /f /q vs$(VSVER)\$(CFG)\$(PLAT)\*.dll
-	@-del /f /q vs$(VSVER)\$(CFG)\$(PLAT)\*.pdb
-	@-del /f /q vs$(VSVER)\$(CFG)\$(PLAT)\*.ilk
-	@-del /f /q vs$(VSVER)\$(CFG)\$(PLAT)\*.exp
-	@-del /f /q vs$(VSVER)\$(CFG)\$(PLAT)\*.lib
-	@-del /f /q vs$(VSVER)\$(CFG)\$(PLAT)\pangomm\*.def
-	@-del /f /q vs$(VSVER)\$(CFG)\$(PLAT)\pangomm\*.res
-	@-del /f /q vs$(VSVER)\$(CFG)\$(PLAT)\pangomm\*.pdb
-	@-del /f /q vs$(VSVER)\$(CFG)\$(PLAT)\pangomm\*.obj
-	@-del /f /q vs$(VSVER)\$(CFG)\$(PLAT)\pangomm\private\*.h
-	@-del /f /q vs$(VSVER)\$(CFG)\$(PLAT)\pangomm\*.h
-	@-del /f /q vs$(VSVER)\$(CFG)\$(PLAT)\pangomm\*.cc
-	@-del /f /q vs$(VSVER)\$(CFG)\$(PLAT)\gendef\*.pdb
-	@-del /f /q vs$(VSVER)\$(CFG)\$(PLAT)\gendef\*.obj
-	@-rd vs$(VSVER)\$(CFG)\$(PLAT)\pangomm\private
-	@-rd vs$(VSVER)\$(CFG)\$(PLAT)\pangomm
-	@-rd vs$(VSVER)\$(CFG)\$(PLAT)\gendef
+	@-del /f /q $(OUTDIR)\*.exe
+	@-del /f /q $(OUTDIR)\*.dll
+	@-del /f /q $(OUTDIR)\*.pdb
+	@-del /f /q $(OUTDIR)\*.ilk
+	@-del /f /q $(OUTDIR)\*.exp
+	@-del /f /q $(OUTDIR)\*.lib
+	@-del /f /q $(OUTDIR)\pangomm\*.res
+	@-del /f /q $(OUTDIR)\pangomm\*.pdb
+	@-del /f /q $(OUTDIR)\pangomm\*.obj
+	@-del /f /q $(OUTDIR)\pangomm\private\*.h
+	@-del /f /q $(OUTDIR)\pangomm\*.h
+	@-del /f /q $(OUTDIR)\pangomm\*.cc
+	@-rd $(OUTDIR)\pangomm\private
+	@-rd $(OUTDIR)\pangomm
 
 .SUFFIXES: .cc .h .ccg .hg .obj
