@@ -70,11 +70,13 @@ and .lib that corresponds to the Visual Studio version used
   * 2017: `15`, `pangomm-vc141-2_48.[dll|pdb|lib]`
   * 2019: `16`, `pangomm-vc142-2_48.[dll|pdb|lib]`
   * 2022: `17`: `pangomm-vc143-2_48.[dll|pdb|lib]`
+  * 2026: `18`: `pangomm-vc145-2_48.[dll|pdb|lib]`
 
 For Meson, the DLL/PDB filenames and .lib filenames will be like:
   * 2017: `pangomm-vc141-2.48-1.[dll|pdb]`, `pangomm-vc141-2.48.lib`
   * 2019: `pangomm-vc142-2.48-1.[dll|pdb]`, `pangomm-vc142-2.48.lib`
   * 2022: `pangomm-vc143-2.48-1.[dll|pdb]`, `pangomm-vc143-2.48.lib`
+  * 2026: `pangomm-vc145-2.48-1.[dll|pdb]`, `pangomm-vc145-2.48.lib`
 
 Notice that this is no longer always the `vc$(VSVER)0` that was used before, to be consistent with other common C++ libraries such as Boost.
 Earlier gtkmm versions may still use the former `vc$(VSVER)0` naming scheme, so for 
