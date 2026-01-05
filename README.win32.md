@@ -2,7 +2,7 @@ Building pangomm on Win32
 =
 
 Currently, both the mingw (native win32) gcc compiler and MS Visual
-Studio 2013 and later are supported. pangomm can be built with
+Studio 2015 and later are supported. pangomm can be built with
 mingw32-gcc using the gnu autotools (automake, autoconf, libtool) or
 Meson.
 As explicitly stated in the gtk+ for win32 distribution
@@ -52,13 +52,10 @@ make install
 The standard Meson build instructions for *NIX should work, although it
 is untested at the time of writing.  Please see `README.md` for more details.
 
-### MS Visual Studio 2013 or later
+### MS Visual Studio 2015 or later
 
-Note that it is generally not considered safe to link pangomm built with
-Visual Studio 2013 with items that are built with Visual Studio 2015 and
-later, and packages depending on pangomm can require Visual Studio 2015 or
-later due to the more comprehensive `C++11` support in the later Visual Studio
-versions.
+Visual Studio 2015 or later is required; Visual Studio 2013 and earlier are not
+supported due to the more comprehensive `C++11` later Visual Studio versions.
 
 #### Building using NMake
 In a Visual Studio command prompt, navigate to the `MSVC_NMake` directory.
@@ -71,19 +68,19 @@ in your NMake command line.
 
 The following list lists the `$(VSVER)` and the `vc1xx` in the NMake-built DLL
 and .lib that corresponds to the Visual Studio version used
-(Visual Studio versions before 2012 are not supported):
-  * 2013: `12`, `pangomm-vc120-1_4.[dll|pdb|lib]`
+(Visual Studio versions before 2013 are not supported):
   * 2015: `14`, `pangomm-vc140-1_4.[dll|pdb|lib]`
   * 2017: `15`, `pangomm-vc141-1_4.[dll|pdb|lib]`
   * 2019: `16`, `pangomm-vc142-1_4.[dll|pdb|lib]`
   * 2022: `17`: `pangomm-vc143-1_4.[dll|pdb|lib]`
+  * 2026: `18`: `pangomm-vc145-1_4.[dll|pdb|lib]`
 
 For Meson, the DLL/PDB filenames and .lib filenames will be like:
-  * 2013: `pangomm-vc120-1.4-1.[dll|pdb]`, `pangomm-vc140-1.4.lib`
   * 2015: `pangomm-vc140-1.4-1.[dll|pdb]`, `pangomm-vc140-1.4.lib`
   * 2017: `pangomm-vc141-1.4-1.[dll|pdb]`, `pangomm-vc141-1.4.lib`
   * 2019: `pangomm-vc142-1.4-1.[dll|pdb]`, `pangomm-vc142-1.4.lib`
   * 2022: `pangomm-vc143-1.4-1.[dll|pdb]`, `pangomm-vc143-1.4.lib`
+  * 2026: `pangomm-vc145-1.4-1.[dll|pdb]`, `pangomm-vc145-1.4.lib`
 
 Notice that this is no longer always the `vc$(VSVER)` that was used before, to be consistent with other common C++ libraries such as Boost.
 Earlier gtkmm versions may still use the former `vc140` naming scheme, so for 
@@ -155,13 +152,9 @@ LLVM (likely needed by Doxygen) and GraphViz unless you pass in
 need to have `mm-common` installed with its `bin` directory in your `%PATH%`, along
 with the `gmmproc` items from glibmm, which will be found with `pkg-config`.
 
-Note also that before building, if using Visual Studio 2013, you will
-need to ensure that 'warnings' is not configured to `fatal` (the
-default), as the C++11 support in Visual Studio 2013 is not complete
-enough to avoid compiler warnings.  Visual Studio 2015 and later
-should be able to build without warnings. The Ninja build tool is
-also required if not using `--backend=[vs2015|vs2017|vs2019|vs2022]` in the Meson
-command line, as noted towards the end of this section.
+The Ninja build tool is also required if not using
+`--backend=[vs2015|vs2017|vs2019|vs2022]` in the Meson command line, as noted
+towards the end of this section.
 
 Note that `debug` builds should only be used against dependencies that are built
 as debug builds, and `release`and `debugoptimized` should be only used against
