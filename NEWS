@@ -1,3 +1,27 @@
+2.56.2 (stable) 2026-06-25
+
+Documentation:
+* Remove obsolete FSF (Free Software Foundation) address
+  (Kjell Ahlstedt)
+* README.win32.md: Mention Visual Studio 2026
+* Visual Studio builds: Update build information
+  (Chun-wei Fan) Merge request !25
+
+Meson build:
+* Use the Python installation that Meson uses.
+  See merge request glibmm!67
+  (Kjell Ahlstedt)
+* Meson and NMake builds: Distinguish Visual Studio 2026 builds
+  from Visual Studio 2022 builds
+* NMake Makefiles: Consolidate items and improve flexibility
+* NMake Makefiles: Make build process more robust
+  (Chun-wei Fan) Merge request !25
+* NMake Makefiles: Update .m4 installation location
+  (Chun-wei Fan) Merge request !28
+* Don't require the 'dot' command to build the documentation
+  (Kjell Ahlstedt)
+
+
 2.56.1 (stable) 2025-01-15:
 
 Identical to 2.56.0.
