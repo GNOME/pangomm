@@ -459,6 +459,29 @@ The fontconfig pattern for this font.
 </description>
 </property>
 
+<enum name="PangoFontColor">
+<description>
+Specifies whether a font should or should not have color glyphs.
+
+Since: 1.57
+
+</description>
+<parameters>
+<parameter name="PANGO_FONT_COLOR_FORBIDDEN">
+<parameter_description> The font should not have color glyphs
+</parameter_description>
+</parameter>
+<parameter name="PANGO_FONT_COLOR_REQUIRED">
+<parameter_description> The font should have color glyphs
+</parameter_description>
+</parameter>
+<parameter name="PANGO_FONT_COLOR_DONT_CARE">
+<parameter_description> The font may or may not use color
+</parameter_description>
+</parameter>
+</parameters>
+</enum>
+
 <property name="PangoFontFamily:is-monospace">
 <description>
 Is this a monospace font
@@ -481,12 +504,16 @@ Since: 1.52
 <description>
 The type of items contained in this list.
 
+Since: 1.52
+
 </description>
 </property>
 
 <property name="PangoFontFamily:n-items">
 <description>
 The number of items contained in this list.
+
+Since: 1.52
 
 </description>
 </property>
@@ -504,12 +531,16 @@ Since: 1.52
 <description>
 The type of items contained in this list.
 
+Since: 1.52
+
 </description>
 </property>
 
 <property name="PangoFontMap:n-items">
 <description>
 The number of items contained in this list.
+
+Since: 1.52
 
 </description>
 </property>
@@ -543,6 +574,30 @@ The bits in a `PangoFontMask` correspond to the set fields in a
 </parameter>
 <parameter name="PANGO_FONT_MASK_SIZE">
 <parameter_description> the font size is specified.
+</parameter_description>
+</parameter>
+<parameter name="PANGO_FONT_MASK_GRAVITY">
+<parameter_description>The font gravity is specified.
+
+Since: 1.16
+</parameter_description>
+</parameter>
+<parameter name="PANGO_FONT_MASK_VARIATIONS">
+<parameter_description>OpenType font variations are specified.
+
+Since: 1.42
+</parameter_description>
+</parameter>
+<parameter name="PANGO_FONT_MASK_FEATURES">
+<parameter_description>OpenType font features are specified.
+
+Since: 1.56
+</parameter_description>
+</parameter>
+<parameter name="PANGO_FONT_MASK_COLOR">
+<parameter_description>Font color is specified.
+
+Since: 1.57
 </parameter_description>
 </parameter>
 </parameters>
@@ -1653,6 +1708,12 @@ segmentation algorithm.
 character boundaries if there is not enough space for a full word.
 </parameter_description>
 </parameter>
+<parameter name="PANGO_WRAP_NONE">
+<parameter_description>do not wrap.
+
+Since: 1.56
+</parameter_description>
+</parameter>
 </parameters>
 </enum>
 
@@ -1783,8 +1844,8 @@ Since: 1.50
 </parameter_description>
 </parameter>
 <parameter name="attrs">
-<parameter_description> array with one `PangoLogAttr`
-per character in @text, plus one extra, to be filled in
+<parameter_description> array with one
+`PangoLogAttr` per character in @text, plus one extra, to be filled in
 </parameter_description>
 </parameter>
 <parameter name="attrs_len">
@@ -3473,7 +3534,8 @@ Deprecated: 1.44: Use [func@Pango.default_break],
 </parameter_description>
 </parameter>
 <parameter name="attrs">
-<parameter_description> an array to store character information in
+<parameter_description> an array to
+store character information in
 </parameter_description>
 </parameter>
 <parameter name="attrs_len">
@@ -5170,7 +5232,8 @@ See [func@Pango.attr_break] for attribute-based customization.
 </parameter_description>
 </parameter>
 <parameter name="attrs">
-<parameter_description> logical attributes to fill in
+<parameter_description> logical
+attributes to fill in
 </parameter_description>
 </parameter>
 <parameter name="attrs_len">
@@ -5623,8 +5686,8 @@ Since: 1.4
 
 <function name="pango_fc_font_map_config_changed">
 <description>
-Informs font map that the fontconfig configuration (i.e., FcConfig
-object) used by this font map has changed.
+Informs font map that the fontconfig configuration (i.e.,
+the `FcConfig` object) used by this font map has changed.
 
 This currently calls [method@PangoFc.FontMap.cache_clear] which
 ensures that list of fonts, etc will be regenerated using the
@@ -5742,10 +5805,9 @@ for the given font
 <description>
 Set the `FcConfig` for this font map to use.
 
-The default value
-is %NULL, which causes Fontconfig to use its global &quot;current config&quot;.
-You can create a new `FcConfig` object and use this API to attach it
-to a font map.
+The default value is `NULL`, which causes Fontconfig to use its global
+&quot;current config&quot;. You can create a new `FcConfig` object and use this
+API to attach it to a font map.
 
 This is particularly useful for example, if you want to use application
 fonts with Pango. For that, you would create a fresh `FcConfig`, add your
@@ -5756,6 +5818,9 @@ If @fcconfig is different from the previous config attached to the font map,
 
 This function acquires a reference to the `FcConfig` object; the caller
 does **not** need to retain a reference.
+
+See [method@Pango.FontMap.add_font_file] for a backend-independent way
+of using application fonts with Pango.
 
 Since: 1.38
 
@@ -6057,13 +6122,13 @@ and @next_paragraph_start are filled with the length of @text
 </parameter_description>
 </parameter>
 <parameter name="paragraph_delimiter_index">
-<parameter_description> return location for index of
-delimiter
+<parameter_description> return location
+for index of delimiter
 </parameter_description>
 </parameter>
 <parameter name="next_paragraph_start">
-<parameter_description> return location for start of next
-paragraph
+<parameter_description> return location for
+start of next paragraph
 </parameter_description>
 </parameter>
 </parameters>
@@ -6261,11 +6326,15 @@ The following words are understood as gravity values:
 &quot;Not-Rotated&quot;, &quot;South&quot;, &quot;Upside-Down&quot;, &quot;North&quot;, &quot;Rotated-Left&quot;,
 &quot;East&quot;, &quot;Rotated-Right&quot;, &quot;West&quot;.
 
+The following words are understood as color values:
+&quot;With-Color&quot;, &quot;Without-Color&quot;.
+
 VARIATIONS is a comma-separated list of font variations
 of the form @‍axis1=value,axis2=value,...
 
 FEATURES is a comma-separated list of font features of the form
 \#‍feature1=value,feature2=value,...
+The =value part can be ommitted if the value is 1.
 
 Any one of the options may be absent. If FAMILY-LIST is absent, then
 the family_name field of the resulting font description will be
@@ -6287,6 +6356,25 @@ Cantarell Italic Light 15 @‍wght=200 #‍tnum=1
 </parameters>
 <return> a new `PangoFontDescription`.
 </return>
+</function>
+
+<function name="pango_font_description_get_color">
+<description>
+Returns the color field of the font description.
+
+This field determines whether the font description should
+match fonts that have color glyphs, or fonts that don't.
+
+Since: 1.57
+
+</description>
+<parameters>
+<parameter name="desc">
+<parameter_description> a `PangoFontDescription`
+</parameter_description>
+</parameter>
+</parameters>
+<return></return>
 </function>
 
 <function name="pango_font_description_get_family">
@@ -6634,6 +6722,29 @@ Since: 1.8
 <parameter_description> the new size, in Pango units. There are %PANGO_SCALE Pango units
 in one device unit. For an output backend where a device unit is a pixel,
 a @size value of 10 * PANGO_SCALE gives a 10 pixel font.
+</parameter_description>
+</parameter>
+</parameters>
+<return></return>
+</function>
+
+<function name="pango_font_description_set_color">
+<description>
+Sets the color field of a font description.
+
+This field determines whether the font description should
+match fonts that have color glyphs, or fonts that don't.
+
+Since: 1.57
+
+</description>
+<parameters>
+<parameter name="desc">
+<parameter_description> a `PangoFontDescription`.
+</parameter_description>
+</parameter>
+<parameter name="color">
+<parameter_description> the `PangoFontColor` value
 </parameter_description>
 </parameter>
 </parameters>
@@ -7034,6 +7145,8 @@ The unset fields will get back to their default values.
 <description>
 Frees an array of font descriptions.
 
+Deprecated: 1.56: Just use pango_font_description_free in a loop
+
 </description>
 <parameters>
 <parameter name="descs">
@@ -7379,6 +7492,9 @@ object.
 <description>
 Gets the `PangoFontFace` to which @font belongs.
 
+Note that this function can return `NULL` in cases
+where the font outlives its font map.
+
 Since: 1.46
 
 </description>
@@ -7624,13 +7740,13 @@ into the fontmap, false if an error occurred.
 
 <function name="pango_font_map_changed">
 <description>
-Forces a change in the context, which will cause any `PangoContext`
+Forces a change in the fontmap, which will cause any `PangoContext`
 using this fontmap to change.
 
 This function is only useful when implementing a new backend
 for Pango, something applications won't do. Backends should
 call this function if they have attached extra data to the
-context and such data is changed.
+fontmap and such data is changed.
 
 Since: 1.34
 
@@ -7829,10 +7945,14 @@ a font matching @desc.
 
 <function name="pango_font_map_reload_font">
 <description>
-Returns a new font that is like @font, except that its size
-is multiplied by @scale, its backend-dependent configuration
-(e.g. cairo font options) is replaced by the one in @context,
-and its variations are replaced by @variations.
+Returns a new font that is like @font, except that it is scaled
+by @scale, its backend-dependent configuration (e.g. cairo font options)
+is replaced by the one in @context, and its variations are replaced
+by @variations.
+
+Note that the scaling here is meant to be linear, so this
+scaling can be used to render a font on a hi-dpi display
+without changing its optical size.
 
 Since: 1.52
 
@@ -8757,8 +8877,8 @@ a word to know the word is a word).
 </parameter_description>
 </parameter>
 <parameter name="attrs">
-<parameter_description> array with one `PangoLogAttr`
-per character in @text, plus one extra, to be filled in
+<parameter_description> array with one
+`PangoLogAttr` per character in @text, plus one extra, to be filled in
 </parameter_description>
 </parameter>
 <parameter name="attrs_len">
@@ -8915,9 +9035,10 @@ start of @text)
 </parameter_description>
 </parameter>
 <parameter name="logical_widths">
-<parameter_description> an array whose length is the number of
-characters in glyph_item (equal to glyph_item-&gt;item-&gt;num_chars)
-to be filled in with the resulting character widths.
+<parameter_description> an array whose length
+is the number of characters in glyph_item (equal to
+`glyph_item-&gt;item-&gt;num_chars`) to be filled in with the resulting
+character widths.
 </parameter_description>
 </parameter>
 </parameters>
@@ -9264,9 +9385,10 @@ See also [method@Pango.GlyphItem.get_logical_widths].
 </parameter_description>
 </parameter>
 <parameter name="logical_widths">
-<parameter_description> an array whose length is the number of
-characters in text (equal to `g_utf8_strlen (text, length)` unless
-text has `NUL` bytes) to be filled in with the resulting character widths.
+<parameter_description> an array whose length is
+the number of characters in text (equal to `g_utf8_strlen (text, length)`
+unless text has `NUL` bytes) to be filled in with the resulting character
+widths.
 </parameter_description>
 </parameter>
 </parameters>
@@ -9459,12 +9581,14 @@ attributes for the text to compute the valid cursor position.
 </parameter_description>
 </parameter>
 <parameter name="index_">
-<parameter_description> location to store calculated byte index within @text
+<parameter_description> location to store calculated byte index
+within @text
 </parameter_description>
 </parameter>
 <parameter name="trailing">
-<parameter_description> location to store a boolean indicating whether the
-user clicked on the leading or trailing edge of the character
+<parameter_description> location to store a boolean indicating
+whether the user clicked on the leading or trailing edge of the
+character
 </parameter_description>
 </parameter>
 </parameters>
@@ -12638,8 +12762,9 @@ if @text is nul-terminated and the length should be calculated.
 </parameter_description>
 </parameter>
 </parameters>
-<return> a newly allocated array of embedding levels, one item per
-character (not byte), that should be freed using [func@GLib.free].
+<return> a newly allocated array of embedding
+levels, one item per character (not byte), that should be freed using
+[func@GLib.free].
 
 </return>
 </function>
@@ -15151,11 +15276,13 @@ Since: 1.4
 </parameter_description>
 </parameter>
 <parameter name="start">
-<parameter_description> location to store start position of the range
+<parameter_description> location to store start
+position of the range
 </parameter_description>
 </parameter>
 <parameter name="end">
-<parameter_description> location to store end position of the range
+<parameter_description> location to store end position
+of the range
 </parameter_description>
 </parameter>
 <parameter name="script">
@@ -15873,8 +16000,8 @@ paragraph, or -1 to ignore attributes from @analysis
 </parameter_description>
 </parameter>
 <parameter name="attrs">
-<parameter_description> array with one `PangoLogAttr`
-per character in @text, plus one extra, to be filled in
+<parameter_description> array with one
+`PangoLogAttr` per character in @text, plus one extra, to be filled in
 </parameter_description>
 </parameter>
 <parameter name="attrs_len">

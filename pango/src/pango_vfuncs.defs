@@ -1,8 +1,238 @@
-;; -*- scheme -*-
-; virtual function definitions
-; define-vfunc is gtkmm-specific
+(define-vfunc create_hb_font
+  (of-object "PangoFont")
+  (return-type "hb_font_t*")
+)
 
-; PangoRenderer
+(define-vfunc describe
+  (of-object "PangoFont")
+  (return-type "PangoFontDescription*")
+)
+
+(define-vfunc describe_absolute
+  (of-object "PangoFont")
+  (return-type "PangoFontDescription*")
+)
+
+(define-vfunc get_coverage
+  (of-object "PangoFont")
+  (return-type "PangoCoverage*")
+  (parameters
+    '("PangoLanguage*" "language")
+  )
+)
+
+(define-vfunc get_features
+  (of-object "PangoFont")
+  (return-type "void")
+  (parameters
+    '("hb_feature_t*" "features")
+    '("guint" "len")
+    '("guint*" "num_features")
+  )
+)
+
+(define-vfunc get_font_map
+  (of-object "PangoFont")
+  (return-type "PangoFontMap*")
+)
+
+(define-vfunc get_glyph_extents
+  (of-object "PangoFont")
+  (return-type "void")
+  (parameters
+    '("PangoGlyph" "glyph")
+    '("PangoRectangle*" "ink_rect")
+    '("PangoRectangle*" "logical_rect")
+  )
+)
+
+(define-vfunc get_metrics
+  (of-object "PangoFont")
+  (return-type "PangoFontMetrics*")
+  (parameters
+    '("PangoLanguage*" "language")
+  )
+)
+
+(define-vfunc describe
+  (of-object "PangoFontFace")
+  (return-type "PangoFontDescription*")
+)
+
+(define-vfunc get_face_name
+  (of-object "PangoFontFace")
+  (return-type "const-char*")
+)
+
+(define-vfunc get_family
+  (of-object "PangoFontFace")
+  (return-type "PangoFontFamily*")
+)
+
+(define-vfunc is_synthesized
+  (of-object "PangoFontFace")
+  (return-type "gboolean")
+)
+
+(define-vfunc list_sizes
+  (of-object "PangoFontFace")
+  (return-type "void")
+  (parameters
+    '("int**" "sizes")
+    '("int*" "n_sizes")
+  )
+)
+
+(define-vfunc get_face
+  (of-object "PangoFontFamily")
+  (return-type "PangoFontFace*")
+  (parameters
+    '("const-char*" "name")
+  )
+)
+
+(define-vfunc get_name
+  (of-object "PangoFontFamily")
+  (return-type "const-char*")
+)
+
+(define-vfunc is_monospace
+  (of-object "PangoFontFamily")
+  (return-type "gboolean")
+)
+
+(define-vfunc is_variable
+  (of-object "PangoFontFamily")
+  (return-type "gboolean")
+)
+
+(define-vfunc list_faces
+  (of-object "PangoFontFamily")
+  (return-type "void")
+  (parameters
+    '("PangoFontFace***" "faces")
+    '("int*" "n_faces")
+  )
+)
+
+(define-vfunc changed
+  (of-object "PangoFontMap")
+  (return-type "void")
+)
+
+(define-vfunc get_face
+  (of-object "PangoFontMap")
+  (return-type "PangoFontFace*")
+  (parameters
+    '("PangoFont*" "font")
+  )
+)
+
+(define-vfunc get_family
+  (of-object "PangoFontMap")
+  (return-type "PangoFontFamily*")
+  (parameters
+    '("const-char*" "name")
+  )
+)
+
+(define-vfunc get_serial
+  (of-object "PangoFontMap")
+  (return-type "guint")
+)
+
+(define-vfunc list_families
+  (of-object "PangoFontMap")
+  (return-type "void")
+  (parameters
+    '("PangoFontFamily***" "families")
+    '("int*" "n_families")
+  )
+)
+
+(define-vfunc load_font
+  (of-object "PangoFontMap")
+  (return-type "PangoFont*")
+  (parameters
+    '("PangoContext*" "context")
+    '("const-PangoFontDescription*" "desc")
+  )
+)
+
+(define-vfunc load_fontset
+  (of-object "PangoFontMap")
+  (return-type "PangoFontset*")
+  (parameters
+    '("PangoContext*" "context")
+    '("const-PangoFontDescription*" "desc")
+    '("PangoLanguage*" "language")
+  )
+)
+
+(define-vfunc foreach
+  (of-object "PangoFontset")
+  (return-type "void")
+  (parameters
+    '("PangoFontsetForeachFunc" "func")
+    '("gpointer" "data")
+  )
+)
+
+(define-vfunc get_font
+  (of-object "PangoFontset")
+  (return-type "PangoFont*")
+  (parameters
+    '("guint" "wc")
+  )
+)
+
+(define-vfunc get_language
+  (of-object "PangoFontset")
+  (return-type "PangoLanguage*")
+)
+
+(define-vfunc get_metrics
+  (of-object "PangoFontset")
+  (return-type "PangoFontMetrics*")
+)
+
+(define-vfunc begin
+  (of-object "PangoRenderer")
+  (return-type "void")
+)
+
+(define-vfunc draw_error_underline
+  (of-object "PangoRenderer")
+  (return-type "void")
+  (parameters
+    '("int" "x")
+    '("int" "y")
+    '("int" "width")
+    '("int" "height")
+  )
+)
+
+(define-vfunc draw_glyph
+  (of-object "PangoRenderer")
+  (return-type "void")
+  (parameters
+    '("PangoFont*" "font")
+    '("PangoGlyph" "glyph")
+    '("double" "x")
+    '("double" "y")
+  )
+)
+
+(define-vfunc draw_glyph_item
+  (of-object "PangoRenderer")
+  (return-type "void")
+  (parameters
+    '("const-char*" "text")
+    '("PangoGlyphItem*" "glyph_item")
+    '("int" "x")
+    '("int" "y")
+  )
+)
 
 (define-vfunc draw_glyphs
   (of-object "PangoRenderer")
@@ -27,17 +257,6 @@
   )
 )
 
-(define-vfunc draw_error_underline
-  (of-object "PangoRenderer")
-  (return-type "void")
-  (parameters
-    '("int" "x")
-    '("int" "y")
-    '("int" "width")
-    '("int" "height")
-  )
-)
-
 (define-vfunc draw_shape
   (of-object "PangoRenderer")
   (return-type "void")
@@ -53,7 +272,7 @@
   (return-type "void")
   (parameters
     '("PangoRenderPart" "part")
-    '("double" "y1")
+    '("double" "y1_")
     '("double" "x11")
     '("double" "x21")
     '("double" "y2")
@@ -62,15 +281,9 @@
   )
 )
 
-(define-vfunc draw_glyph
+(define-vfunc end
   (of-object "PangoRenderer")
   (return-type "void")
-  (parameters
-    '("PangoFont*" "font")
-    '("PangoGlyph" "glyph")
-    '("double" "x")
-    '("double" "y")
-  )
 )
 
 (define-vfunc part_changed
@@ -81,33 +294,11 @@
   )
 )
 
-(define-vfunc begin
-  (of-object "PangoRenderer")
-  (return-type "void")
-)
-
-(define-vfunc end
-  (of-object "PangoRenderer")
-  (return-type "void")
-)
-
-; pango-renderer.h has PangoLayoutRun instead of PangoGlyphItem.
-; PangoLayoutRun is an alias for PangoGlyphItem.
 (define-vfunc prepare_run
   (of-object "PangoRenderer")
   (return-type "void")
   (parameters
-    '("PangoGlyphItem*" "run")
+    '("PangoLayoutRun*" "run")
   )
 )
 
-(define-vfunc draw_glyph_item
-  (of-object "PangoRenderer")
-  (return-type "void")
-  (parameters
-    '("const-char*" "text")
-    '("PangoGlyphItem*" "glyph_item")
-    '("int" "x")
-    '("int" "y")
-  )
-)
