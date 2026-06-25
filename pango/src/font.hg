@@ -50,7 +50,6 @@ class PANGOMM_API FontMap;
 class PANGOMM_API Font : public Glib::Object
 {
   _CLASS_GOBJECT(Font, PangoFont, PANGO_FONT, Glib::Object, GObject, , , PANGOMM_API)
-  _IGNORE(pango_font_find_shaper) // Deprecated
 
 public:
   _WRAP_METHOD(FontDescription describe() const, pango_font_describe)
